@@ -18,21 +18,21 @@ import individualData from '../data/individuals_small';
 class Graphic extends Component {
     constructor(props){
         super(props);
-        this.squareSize = 10;
+        // this.squareSize = 10;
         this.magnifySize = 20;
-        this.numCols = 40;
-        this.individualPadding = 1.2
-        this.popMargin = 50;
-        this.genCounts = individualData.map(d => d.pop).filter(unique).map(v => countIndividaulsPerGeneration(individualData, v))
-        this.populations = individualData.map(d => d.pop).filter(unique)
-        this.maxPopVal = maxPerPop(this.genCounts);
+        // this.numCols = 40;
+        // this.individualPadding = 1.2
+        // this.popMargin = 50;
+        // this.genCounts = individualData.map(d => d.pop).filter(unique).map(v => countIndividaulsPerGeneration(individualData, v))
+        // this.populations = individualData.map(d => d.pop).filter(unique)
+        // this.maxPopVal = maxPerPop(this.genCounts);
         this.minPhen = min(individualData, d => d.ind_phen)
         this.maxPhen = max(individualData, d => d.ind_phen)
         this.phenValues = [this.minPhen, this.maxPhen];
-        this.colorScale = scaleLinear()
-                            .domain([this.minPhen, 0, this.maxPhen])
-                            .range(['#C38D9E', '#fffff7', '#E27D60'])
-                            .interpolate(interpolateHcl);
+        // this.colorScale = scaleLinear()
+        //                     .domain([this.minPhen, 0, this.maxPhen])
+        //                     .range(['#C38D9E', '#fffff7', '#E27D60'])
+        //                     .interpolate(interpolateHcl);
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
@@ -253,7 +253,14 @@ class Graphic extends Component {
                 offset={0.35}
                 // debug
               >
-                <Step data={10000}>
+              {stepsArray.map(value => (
+                        <Step data={value} key={value.id}>
+                            <div className="scroller-step">
+                                {value.text}
+                            </div>
+                        </Step>
+                    ))}
+                {/* <Step data={10000}>
                   <div className="scroller-step">
                       <p>At 10,000 generations out, you can still see that individual phenotypes between the two populations don't look too dissimilar from one another. These individuals <span className="try-this">here</span> are the most divergent indiduals between populations. From what we can tell, there is very little difference.</p>
                   </div>
@@ -269,7 +276,7 @@ class Graphic extends Component {
                   <div className="scroller-step">
                     <p>And at 50,000th generation</p>
                   </div>
-                </Step>
+                </Step> */}
               </Scrollama>
             </div>
 
@@ -278,23 +285,38 @@ class Graphic extends Component {
       }
 }
 
-const countIndividaulsPerGeneration = (data, val) => nest()
-  .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
-  .rollup( v => v.length)
-  .entries(data.filter(r => r.pop === val))
+// const countIndividaulsPerGeneration = (data, val) => nest()
+//   .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
+//   .rollup( v => v.length)
+//   .entries(data.filter(r => r.pop === val))
 
-const unique = (value, index, self) => {
-  return self.indexOf(value) === index
-}
+// const unique = (value, index, self) => {
+//   return self.indexOf(value) === index
+// }
 
-const maxPerPop = (data) => {
-  let maxPop = {};
+// const maxPerPop = (data) => {
+//   let maxPop = {};
 
-  Object.keys(data).map((key, i) => {
-    maxPop[key] = max(data[key], d => d.value);
-  })
-  return maxPop;
-}
+//   Object.keys(data).map((key, i) => {
+//     maxPop[key] = max(data[key], d => d.value);
+//   })
+//   return maxPop;
+// }
+
+const stepsArray = [
+  {
+    id: 0,
+    step: 0,
+    output_gen: 0,
+    text: <p>This is some sample text Somethining here</p>
+  },
+  {
+    id: 1,
+    step: 0,
+    output_gen: 0,
+    text: <p>something here</p>
+  }
+]
 
 
 
