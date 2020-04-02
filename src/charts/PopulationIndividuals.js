@@ -21,7 +21,7 @@ class PopulationIndividuals extends Component {
         this.phenRange = [this.minPhen, this.maxPhen];
         this.colorScale = scaleLinear()
             .domain([this.minPhen, 0, this.maxPhen])
-            .range(['#C38D9E', '#fffff7', '#E27D60'])
+            .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl)
     }
 
@@ -29,7 +29,7 @@ class PopulationIndividuals extends Component {
 
     createData() {
         const numCols = this.props.numCols;
-        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == 50000)
+        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == 1000)
         let smallest = min(filteredData, d => d.ind_phen);
         let biggest = max(filteredData, d => d.ind_phen);
         let chosenData = [];
@@ -89,8 +89,31 @@ class PopulationIndividuals extends Component {
             .attr('ry', 2)
             .attr('height', this.props.squareSize)
             .attr('width', this.props.squareSize)
-            .attr('fill', d => this.colorScale(d.ind_phen))
+            // .attr('fill', d => this.colorScale(d.ind_phen))
+            .attr('fill', this.colorScale(0))
 
+
+    }
+
+    componentDidUpdate(){
+        console.log('updated')
+        select(this.popRef.current)
+        .selectAll('.pop_rects')
+        .data(this.createData())
+        .enter()
+        .append('rect')
+        .attr('class', 'pop_rects')
+        .transition(easeSinInOut)
+        .duration(2000)
+        .attr('x', (d, i) => {
+            return ((d.x * (this.props.paddingBetweenIndividuals)) * this.props.squareSize) +d.pop * this.props.marginBetweenPops;
+        })
+        .attr('y', d => d.y * this.props.squareSize)
+        .attr('rx', 2)
+        .attr('ry', 2)
+        .attr('height', this.props.squareSize)
+        .attr('width', this.props.squareSize)
+        .attr('fill', d => this.colorScale(d.ind_phen))
 
     }
     

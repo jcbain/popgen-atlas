@@ -14,6 +14,7 @@ import PopulationIndividuals from './PopulationIndividuals';
 import RangeSlider from '../components/RangeSlider';
 
 import individualData from '../data/individuals_small';
+import { thresholdFreedmanDiaconis } from 'd3';
  
 class Graphic extends Component {
     constructor(props){
@@ -36,7 +37,10 @@ class Graphic extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            data: 1000,
+            data: {
+              marginBetweenPops: 0,
+              output_gen: 1000,
+            },
             steps: [10000, 20000, 50000],
             progress: 0,
             outputGen: 1000,
@@ -154,6 +158,12 @@ class Graphic extends Component {
       // }
     
       onStepEnter = ({ element, data}) => {
+        console.log(data);
+        if(data.onEnterChange){
+          this.setState({data: data})
+        }
+
+        
         // console.log(this.createData().filter(d => d.smallest === true))
         // this.setState({ data });
         // select(this.popRef.current)
@@ -190,7 +200,11 @@ class Graphic extends Component {
         //   .on("mouseout", this.handleMouseOut);
       };
     
-      onStepExit = ({ element }) => {
+      onStepExit = ({ data, element }) => {
+        if(data.onExitChange !== undefined){
+          data.onExitChange()
+        }
+
         // selectAll('.pop_rects')
         //   .transition()
         //   .attr('width', 0)
@@ -231,9 +245,9 @@ class Graphic extends Component {
                     <text x="15" y="350" className="generation-text">{data}</text>
               </svg> */}
               <PopulationIndividuals squareSize={10}
-                                     numCols={30}
+                                     numCols={40}
                                      paddingBetweenIndividuals={1.2}
-                                     marginBetweenPops={100}>
+                                     marginBetweenPops={this.state.data.marginBetweenPops}>
               </PopulationIndividuals>
               <div className="scrolling-slider">
               <RangeSlider 
@@ -303,18 +317,28 @@ class Graphic extends Component {
 //   return maxPop;
 // }
 
+const functs = {
+  remove: () => selectAll('.pop_rects').transition().attr('width', 0).attr('height', 0).duration(1000).remove()
+}
+
 const stepsArray = [
   {
     id: 0,
+    onEnterChange: false,
+    onExitChange: functs.remove,
     step: 0,
     output_gen: 0,
-    text: <p>This is some sample text Somethining here</p>
+    text: <p>This is some sample text Somethining here</p>,
+    marginBetweenPops: 0,
   },
   {
     id: 1,
+    onEnterChange: true,
+    onExitChange: undefined,
     step: 0,
-    output_gen: 0,
-    text: <p>At 10,000 generations out, you can still see that individual phenotypes between the two populations don't look too dissimilar from one another. These individuals <span className="try-this">here</span> are the most divergent indiduals between populations. From what we can tell, there is very little difference.</p>
+    output_gen: 1000,
+    text: <p>At 1,000 generations out, you can still see that individual phenotypes between the two populations don't look too dissimilar from one another. These individuals <span className="try-this">here</span> are the most divergent indiduals between populations. From what we can tell, there is very little difference.</p>,
+    marginBetweenPops: 50,
 
   }
 ]
