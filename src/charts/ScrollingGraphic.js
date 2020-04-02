@@ -10,6 +10,7 @@ import { select, selectAll } from 'd3-selection';
 import { min, max } from 'd3-array';
 import { nest } from 'd3-collection';
 
+import PopulationIndividuals from './PopulationIndividuals';
 import RangeSlider from '../components/RangeSlider';
 
 import individualData from '../data/individuals_small';
@@ -46,91 +47,91 @@ class Graphic extends Component {
       popRef = React.createRef();
 
       handleChange(newValue){
-        this.setState({phenValues: newValue})
-        select(this.popRef.current)
-          .selectAll('.pop_rects')
-          .transition()
-          .attr('opacity', d=>{
-            if(d.ind_phen >= newValue[0] && d.ind_phen <= newValue[1]){
-              return 1.0;
-            } else {
-              return .25;
-            }
-          })
+        // this.setState({phenValues: newValue})
+        // select(this.popRef.current)
+        //   .selectAll('.pop_rects')
+        //   .transition()
+        //   .attr('opacity', d=>{
+        //     if(d.ind_phen >= newValue[0] && d.ind_phen <= newValue[1]){
+        //       return 1.0;
+        //     } else {
+        //       return .25;
+        //     }
+        //   })
       }
 
-      createData(){
-        const numCols = this.numCols;
-        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == this.state.data)
-        let smallest = min(filteredData, d => d.ind_phen);
-        let biggest = max(filteredData, d => d.ind_phen);
-        let chosenData = [];
-        this.populations.map(d => {
-          let val = d;
-          let popIndexes = new Array(this.maxPopVal[val]);
-          [...popIndexes.keys()].map(function(v) {
-            let x = {};
-            x['pop'] = val;
-            let result = filteredData.filter(d => d.pop == val)[v];
-            x['ind_phen'] = (result !== undefined) ? result.ind_phen : 0;
-            x['biggest'] = (x['ind_phen'] === biggest) ? true : false;
-            x['smallest'] = (x['ind_phen'] === smallest) ? true : false;
+      // createData(){
+      //   const numCols = this.numCols;
+      //   let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == this.state.data)
+      //   let smallest = min(filteredData, d => d.ind_phen);
+      //   let biggest = max(filteredData, d => d.ind_phen);
+      //   let chosenData = [];
+      //   this.populations.map(d => {
+      //     let val = d;
+      //     let popIndexes = new Array(this.maxPopVal[val]);
+      //     [...popIndexes.keys()].map(function(v) {
+      //       let x = {};
+      //       x['pop'] = val;
+      //       let result = filteredData.filter(d => d.pop == val)[v];
+      //       x['ind_phen'] = (result !== undefined) ? result.ind_phen : 0;
+      //       x['biggest'] = (x['ind_phen'] === biggest) ? true : false;
+      //       x['smallest'] = (x['ind_phen'] === smallest) ? true : false;
 
-            chosenData.push(x);
-          })
-        })
-
-
-        this.populations.map(d => {
-          let shifter = d * numCols;
-          let currentYIndex = 1;
-          let currentXIndex = 0;
-          chosenData.filter(v => v.pop == d).forEach(function(r, i){
-            if((i + 1)/(numCols) >= currentYIndex) {
-              r['y'] = currentYIndex - 1;
-              currentYIndex++
-            } else {
-              r['y'] = currentYIndex - 1;
-            }
-            if((i + 1) % (numCols) === 0){
-              r['x'] = currentXIndex + shifter;
-              currentXIndex = 0
-            } else {
-              r['x'] = currentXIndex + shifter;
-              currentXIndex++;
-            }
-          })
-        })
+      //       chosenData.push(x);
+      //     })
+      //   })
 
 
-        return chosenData;
+      //   this.populations.map(d => {
+      //     let shifter = d * numCols;
+      //     let currentYIndex = 1;
+      //     let currentXIndex = 0;
+      //     chosenData.filter(v => v.pop == d).forEach(function(r, i){
+      //       if((i + 1)/(numCols) >= currentYIndex) {
+      //         r['y'] = currentYIndex - 1;
+      //         currentYIndex++
+      //       } else {
+      //         r['y'] = currentYIndex - 1;
+      //       }
+      //       if((i + 1) % (numCols) === 0){
+      //         r['x'] = currentXIndex + shifter;
+      //         currentXIndex = 0
+      //       } else {
+      //         r['x'] = currentXIndex + shifter;
+      //         currentXIndex++;
+      //       }
+      //     })
+      //   })
 
-      }
+
+      //   return chosenData;
+
+      // }
 
       handleMouseOver() {
-        selectAll('.biggest')
-        .transition()
-        .duration(500)
-        .attr('width',40)
-        .attr('height', 40);
+        // selectAll('.biggest')
+        // .transition()
+        // .duration(500)
+        // .attr('width',40)
+        // .attr('height', 40);
 
-        selectAll('.smallest')
-        .transition()
-        .duration(500)
-        .attr('width',40)
-        .attr('height', 40);
+        // selectAll('.smallest')
+        // .transition()
+        // .duration(500)
+        // .attr('width',40)
+        // .attr('height', 40);
       }
 
       handleMouseOut() {
-        selectAll('.biggest')
-        .transition()
-        .attr('width', 10)
-        .attr('height', 10);
+        // selectAll('.biggest')
+        // .transition()
+        // .attr('width', 10)
+        // .attr('height', 10);
 
-        selectAll('.smallest')
-        .transition()
-        .attr('width', 10)
-        .attr('height', 10);
+        // selectAll('.smallest')
+        // .transition()
+        // .attr('width', 10)
+        // .attr('height', 10);
       }
 
       // componentDidMount(){
@@ -153,49 +154,49 @@ class Graphic extends Component {
       // }
     
       onStepEnter = ({ element, data}) => {
-        console.log(this.createData().filter(d => d.smallest === true))
-        this.setState({ data });
-        select(this.popRef.current)
-          .selectAll('.pop_rects')  
-          .data(this.createData())
-          .enter()
-          .append('rect')
-          .attr('class', 'pop_rects')
-          .classed('biggest', d => d.biggest)
-          .classed('smallest', d => d.smallest)
-          .attr('x', (d, i) => {
-            return ((d.x * this.individualPadding) * this.squareSize) + d.pop * this.popMargin;
-          })
-          .attr('y', d => (d.y * this.individualPadding) * this.squareSize)
-          .attr('rx', 2)
-          .attr('ry', 2)
-          .attr('opacity', d=>{
-            if(d.ind_phen >= this.state.phenValues[0] && d.ind_phen <= this.state.phenValues[1]){
-              return 1.0;
-            } else {
-              return .25;
-            }
-           })
-          .transition()
-          .attr('height', this.squareSize)
-          .attr('width', this.squareSize)
+        // console.log(this.createData().filter(d => d.smallest === true))
+        // this.setState({ data });
+        // select(this.popRef.current)
+        //   .selectAll('.pop_rects')  
+        //   .data(this.createData())
+        //   .enter()
+        //   .append('rect')
+        //   .attr('class', 'pop_rects')
+        //   .classed('biggest', d => d.biggest)
+        //   .classed('smallest', d => d.smallest)
+        //   .attr('x', (d, i) => {
+        //     return ((d.x * this.individualPadding) * this.squareSize) + d.pop * this.popMargin;
+        //   })
+        //   .attr('y', d => (d.y * this.individualPadding) * this.squareSize)
+        //   .attr('rx', 2)
+        //   .attr('ry', 2)
+        //   .attr('opacity', d=>{
+        //     if(d.ind_phen >= this.state.phenValues[0] && d.ind_phen <= this.state.phenValues[1]){
+        //       return 1.0;
+        //     } else {
+        //       return .25;
+        //     }
+        //    })
+        //   .transition()
+        //   .attr('height', this.squareSize)
+        //   .attr('width', this.squareSize)
           
-          .attr('fill', d => this.colorScale(d.ind_phen))
-          .duration(1000)
-          .ease(easeSinInOut); 
+        //   .attr('fill', d => this.colorScale(d.ind_phen))
+        //   .duration(1000)
+        //   .ease(easeSinInOut); 
            
-          select('.try-this')
-          .on("mouseover", this.handleMouseOver)
-          .on("mouseout", this.handleMouseOut);
+        //   select('.try-this')
+        //   .on("mouseover", this.handleMouseOver)
+        //   .on("mouseout", this.handleMouseOut);
       };
     
       onStepExit = ({ element }) => {
-        selectAll('.pop_rects')
-          .transition()
-          .attr('width', 0)
-          .attr('height', 0)
-          .duration(1000)
-        .remove()
+        // selectAll('.pop_rects')
+        //   .transition()
+        //   .attr('width', 0)
+        //   .attr('height', 0)
+        //   .duration(1000)
+        // .remove()
       };
     
       onStepProgress = ({ element, progress }) => {
@@ -211,7 +212,7 @@ class Graphic extends Component {
         return (
           <div className="scroller-main">
             <div className="scroller-graphic">
-              <svg 
+              {/* <svg 
                   viewBox={[0,
                             0, 
                             (this.squareSize * this.numCols * this.individualPadding * 2)  - this.individualPadding + this.popMargin, 
@@ -228,7 +229,12 @@ class Graphic extends Component {
                       className="pop-graphic"></svg>
                     <text x="20" y="280" className="param-label">GENERATION</text>
                     <text x="15" y="350" className="generation-text">{data}</text>
-              </svg>
+              </svg> */}
+              <PopulationIndividuals squareSize={10}
+                                     numCols={30}
+                                     paddingBetweenIndividuals={1.2}
+                                     marginBetweenPops={100}>
+              </PopulationIndividuals>
               <div className="scrolling-slider">
               <RangeSlider 
                            min={this.phenValues[0]} max={this.phenValues[1]}

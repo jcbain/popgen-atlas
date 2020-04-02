@@ -12,12 +12,7 @@ import individualData from '../data/individuals_small';
 class PopulationIndividuals extends Component {
     constructor(props){
         super(props);
-        console.log(this.props)
-        this.squareSize = 10;
         this.magnifySize = 20;
-        this.numCols = 40;
-        this.paddingBetweenIndividuals = 1.2;
-        this.marginBetweenPops = 50;
         this.genCounts = individualData.map(d => d.pop).filter(unique).map(v => countIndividualsPerGeneration(individualData, v));
         this.populations = individualData.map(d => d.pop).filter(unique);
         this.maxPopVal = maxPerPop(this.genCounts);
@@ -30,7 +25,7 @@ class PopulationIndividuals extends Component {
             .interpolate(interpolateHcl)
     }
 
-    popRef = React.createRef();
+    // popRef = React.createRef();
 
     createData() {
         const numCols = this.props.numCols;
@@ -75,40 +70,28 @@ class PopulationIndividuals extends Component {
           })
           return chosenData;
     }
-
-    componentDidMount(){
-
-        console.log(this.createData())
-
-
-        select(this.popRef.current)
-            .selectAll('.pop_rects')
-            .data(this.createData())
-            .enter()
-            .append('rect')
-            .attr('class', 'pop_rects')
-            .attr('x', (d, i) => {
-                return ((d.x * (this.props.paddingBetweenIndividuals)) * this.props.squareSize) +d.pop * this.marginBetweenPops;
-            })
-            .attr('y', d => d.y * this.props.squareSize)
-            .attr('rx', 2)
-            .attr('ry', 2)
-            .attr('height', this.props.squareSize)
-            .attr('width', this.props.squareSize)
-            .attr('fill', d => this.colorScale(d.ind_phen))
-
-
-    }
     
     render(){
+
+        const squares = this.createData().map(d => (
+            <rect className='pop_rects'
+                  x={((d.x * (this.props.paddingBetweenIndividuals)) * this.props.squareSize) +d.pop * this.props.marginBetweenPops}
+                  y={d.y * this.props.squareSize}
+                  rx={2}
+                  ry={2}
+                  height={this.props.squareSize}
+                  width={this.props.squareSize}
+                  fill={this.colorScale(d.ind_phen)}></rect>
+        ))
         return(
             <svg viewBox={[0, 0,
-                           (this.props.squareSize * this.props.numCols * this.props.paddingBetweenIndividuals * 2) - this.props.paddingBetweenIndividuals + this.marginBetweenPops,
+                           (this.props.squareSize * this.props.numCols * this.props.paddingBetweenIndividuals * 2) - this.props.paddingBetweenIndividuals + this.props.marginBetweenPops,
                            ((max(Object.values(this.maxPopVal))/ this.props.numCols) * this.props.paddingBetweenIndividuals * this.props.squareSize) + 100]
                         }
                  preserveAspectRatio="xMinYMid meet" 
-                 ref={this.popRef}
+                //  ref={this.popRef}
                  className="pop-graphic">
+                    {squares}
 
                  </svg>
         )
