@@ -314,7 +314,8 @@ const stepsArray = [
     id: 1,
     step: 0,
     output_gen: 0,
-    text: <p>something here</p>
+    text: <p>At 10,000 generations out, you can still see that individual phenotypes between the two populations don't look too dissimilar from one another. These individuals <span className="try-this">here</span> are the most divergent indiduals between populations. From what we can tell, there is very little difference.</p>
+
   }
 ]
 
