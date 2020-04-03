@@ -137,59 +137,12 @@ class Graphic extends Component {
         // .attr('width', 10)
         // .attr('height', 10);
       }
-
-      // componentDidMount(){
-      //     select(this.popRef.current)
-      //       .selectAll('.pop_rects')  
-      //       .data(this.createData())
-      //       .enter()
-      //       .append('rect')
-      //       .attr('class', 'pop_rects')
-      //       .attr('x', (d, i) => {
-      //         return ((d.x * (this.individualPadding))* this.squareSize)
-      //       })
-      //       .attr('y', d => d.y * this.squareSize)
-      //       .attr('rx', 2)
-      //       .attr('ry', 2)
-      //       .attr('height', this.squareSize)
-      //       .attr('width', this.squareSize)
-      //       .attr('fill', d => this.colorScale(d.ind_phen))
-          
-      // }
     
       onStepEnter = ({ element, data}) => {
         console.log(data);
         if(data.onEnterChange){
           this.setState({data: data})
         }
-
-        
-        // console.log(this.createData().filter(d => d.smallest === true))
-        // this.setState({ data });
-        // select(this.popRef.current)
-        //   .selectAll('.pop_rects')  
-        //   .data(this.createData())
-        //   .enter()
-        //   .append('rect')
-        //   .attr('class', 'pop_rects')
-        //   .classed('biggest', d => d.biggest)
-        //   .classed('smallest', d => d.smallest)
-        //   .attr('x', (d, i) => {
-        //     return ((d.x * this.individualPadding) * this.squareSize) + d.pop * this.popMargin;
-        //   })
-        //   .attr('y', d => (d.y * this.individualPadding) * this.squareSize)
-        //   .attr('rx', 2)
-        //   .attr('ry', 2)
-        //   .attr('opacity', d=>{
-        //     if(d.ind_phen >= this.state.phenValues[0] && d.ind_phen <= this.state.phenValues[1]){
-        //       return 1.0;
-        //     } else {
-        //       return .25;
-        //     }
-        //    })
-        //   .transition()
-        //   .attr('height', this.squareSize)
-        //   .attr('width', this.squareSize)
           
         //   .attr('fill', d => this.colorScale(d.ind_phen))
         //   .duration(1000)
@@ -204,13 +157,6 @@ class Graphic extends Component {
         if(data.onExitChange !== undefined){
           data.onExitChange()
         }
-
-        // selectAll('.pop_rects')
-        //   .transition()
-        //   .attr('width', 0)
-        //   .attr('height', 0)
-        //   .duration(1000)
-        // .remove()
       };
     
       onStepProgress = ({ element, progress }) => {

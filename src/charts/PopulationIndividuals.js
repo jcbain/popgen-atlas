@@ -103,14 +103,14 @@ class PopulationIndividuals extends Component {
         .enter()
         .append('rect')
         .attr('class', 'pop_rects')
-        .transition(easeSinInOut)
-        .duration(2000)
         .attr('x', (d, i) => {
             return ((d.x * (this.props.paddingBetweenIndividuals)) * this.props.squareSize) +d.pop * this.props.marginBetweenPops;
         })
         .attr('y', d => d.y * this.props.squareSize)
         .attr('rx', 2)
         .attr('ry', 2)
+        .transition(easeSinInOut)
+        .duration(2000)
         .attr('height', this.props.squareSize)
         .attr('width', this.props.squareSize)
         .attr('fill', d => this.colorScale(d.ind_phen))
