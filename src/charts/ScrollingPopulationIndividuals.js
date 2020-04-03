@@ -34,12 +34,17 @@ class ScrollingPop extends Component {
                 output_gen: 1000,
             }
         }
+        this.directionVals =  [(this.props.squareSize * this.props.numCols * this.state.paddingBetweenIndividuals * 2) - this.state.paddingBetweenIndividuals + this.state.marginBetweenPops, 
+            ((max(Object.values(this.maxPopVal))/ this.props.numCols) * this.state.paddingBetweenIndividuals * this.props.squareSize) + 100
+        ]
     }
 
     popRef = React.createRef();
 
-    createData() {
+    createData(direction) {
+        
         const numCols = this.props.numCols;
+        const maxPopVal = this.maxPopVal;
         let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == 1000)
         let smallest = min(filteredData, d => d.ind_phen);
         let biggest = max(filteredData, d => d.ind_phen);
@@ -60,21 +65,22 @@ class ScrollingPop extends Component {
         })
 
         this.populations.map(d => {
-            let shifter = d * numCols;
+            let xShifter = d * numCols * direction;
+            let yShifter = d * Math.ceil(maxPopVal[d]/numCols) * (!direction);
             let currentYIndex = 1;
             let currentXIndex = 0;
             chosenData.filter(v => v.pop == d).forEach(function(r, i){
               if((i + 1)/(numCols) >= currentYIndex) {
-                r['y'] = currentYIndex - 1;
+                r['y'] = currentYIndex - 1 + yShifter;
                 currentYIndex++
               } else {
-                r['y'] = currentYIndex - 1;
+                r['y'] = currentYIndex - 1 + yShifter;
               }
               if((i + 1) % (numCols) === 0){
-                r['x'] = currentXIndex + shifter;
+                r['x'] = currentXIndex + xShifter;
                 currentXIndex = 0
               } else {
-                r['x'] = currentXIndex + shifter;
+                r['x'] = currentXIndex + xShifter;
                 currentXIndex++;
               }
             })
@@ -83,7 +89,7 @@ class ScrollingPop extends Component {
     }
 
     componentDidMount(){
-        functs.create(this.popRef.current, this.createData(), this.props, this.state, this.colorScale(0))
+        functs.create(this.popRef.current, this.createData(this.props.popDirection), this.props, this.state, this.colorScale(0))
     }
 
     onStepEnter = ({ element, data}) => {
@@ -107,8 +113,8 @@ class ScrollingPop extends Component {
 
         let populationChart = <svg viewBox={[0, 
                                              0,
-                                             (this.props.squareSize * this.props.numCols * this.state.paddingBetweenIndividuals * 2) - this.state.paddingBetweenIndividuals + this.state.marginBetweenPops,
-                                             ((max(Object.values(this.maxPopVal))/ this.props.numCols) * this.state.paddingBetweenIndividuals * this.props.squareSize) + 100]
+                                             this.directionVals[0],
+                                             this.directionVals[1]]
                                         }
                                    preserveAspectRatio="xMinYMid meet" 
                                    ref={this.popRef}
