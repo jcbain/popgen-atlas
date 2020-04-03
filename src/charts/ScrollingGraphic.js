@@ -14,7 +14,6 @@ import PopulationIndividuals from './PopulationIndividuals';
 import RangeSlider from '../components/RangeSlider';
 
 import individualData from '../data/individuals_small';
-import { thresholdFreedmanDiaconis } from 'd3';
  
 class Graphic extends Component {
     constructor(props){
