@@ -8,6 +8,8 @@ import { select, selectAll } from 'd3-selection';
 import { min, max } from 'd3-array';
 import { nest } from 'd3-collection';
 
+import Histogram from './Histogram';
+
 import individualData from '../data/individuals_small';
 
 import './styles/scrolling_graphic_styles.css';
@@ -30,13 +32,10 @@ class ScrollingPop extends Component {
             data: {
                 paddingBetweenIndividuals: 1.2,
                 marginBetweenPops: 40,
-                output_gen: 1000,
+                output_gen: 10000,
             }
         }
-        // this.directionVals =  [
-        //     calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops), 
-        //     calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize) 
-        // ]
+
 
         this.directionVals = [
             calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops, this.props.popDirection),
@@ -94,8 +93,7 @@ class ScrollingPop extends Component {
     }
 
     componentDidMount(){
-        console.log(calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops))
-        console.log(calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize) * 2)
+        console.log(this.createData().filter(d => d.pop == 0).map(d => d.ind_phen))
         functs.create(this.popRef.current, this.createData(this.props.popDirection), this.props, this.state, this.colorScale(0))
     }
 
@@ -130,11 +128,16 @@ class ScrollingPop extends Component {
         return(
             <div className="scroller-main">
             <div className="scroller-graphic">
-                {populationChart}
-           
-              <div className="scrolling-slider">
+                <div className="histogram-charts">
+                    <Histogram data={this.createData().filter(d => d.pop == '0')}></Histogram>
+                </div>
+                <div className="population-charts">
+                    {populationChart}
+                </div>
+
+              {/* <div className="scrolling-slider">
      
-              </div>
+              </div> */}
               
             </div>
 

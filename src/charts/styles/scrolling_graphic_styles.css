@@ -9,6 +9,8 @@
 .scroller-graphic {
     position: -webkit-sticky;
     position: sticky;
+    display: grid;
+    grid-template-columns: .5fr 1fr;
     width: 40vw;
     margin: 0;
     top: 10vh;
