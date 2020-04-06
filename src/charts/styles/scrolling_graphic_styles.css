@@ -16,6 +16,7 @@
     top: 10vh;
     height: 80vh;
     left: 60vw;
+    align-items: baseline;
     /* border: 1px dashed gray; */
 }
 

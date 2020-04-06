@@ -129,7 +129,7 @@ class ScrollingPop extends Component {
             <div className="scroller-main">
             <div className="scroller-graphic">
                 <div className="histogram-charts">
-                    <Histogram data={this.createData().filter(d => d.pop == '0')}></Histogram>
+                    <Histogram data={this.createData()}></Histogram>
                 </div>
                 <div className="population-charts">
                     {populationChart}
