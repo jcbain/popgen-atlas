@@ -12,21 +12,6 @@ import individualData from '../data/individuals_small';
 
 import './styles/scrolling_graphic_styles.css';
 
-// function calculateDimensionLong(squareSize, numCols, individualPadding, popMargin){
-//     return (squareSize * numCols * individualPadding * 2) - individualPadding + popMargin;
-// }
-
-function calculateDimensionLong(squareSize, numCols, individualPadding) {
-    return (squareSize * numCols * individualPadding)
-}
-
-// function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize){
-//     return ((max(Object.values(maxPopObj)) / numCols) * individualPadding * squareSize);
-// }
-
-function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize, popMargin) {
-    return (Math.ceil(max(Object.values(maxPopObj))/ numCols) * 2 * squareSize * individualPadding) + popMargin;
-}
 
 class ScrollingPop extends Component {
     constructor(props){
@@ -44,7 +29,7 @@ class ScrollingPop extends Component {
         this.state = {        
             data: {
                 paddingBetweenIndividuals: 1.2,
-                marginBetweenPops: 20,
+                marginBetweenPops: 40,
                 output_gen: 1000,
             }
         }
@@ -54,8 +39,8 @@ class ScrollingPop extends Component {
         // ]
 
         this.directionVals = [
-            calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals),
-            calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize, this.state.data.marginBetweenPops)
+            calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops, this.props.popDirection),
+            calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize, this.state.data.marginBetweenPops, this.props.popDirection)
         ]
     }
 
@@ -180,7 +165,19 @@ class ScrollingPop extends Component {
     }
 }
 
-const definePosition = (data, squareSize, individualPadding, popMargin, addMargin, axis,)  => {
+const calculateDimensionLong =  (squareSize, numCols, individualPadding, popMargin, direction) =>  {
+    const scale = 1 + direction;
+    const marg = popMargin * direction;
+    return (squareSize * numCols * individualPadding * scale) + marg;
+}
+
+const calculateDimensionShort = (maxPopObj, numCols, individualPadding, squareSize, popMargin, direction) => {
+    const scale = 1 + !direction;
+    return (Math.ceil(max(Object.values(maxPopObj))/ numCols) * scale * squareSize * individualPadding) + popMargin;
+}
+
+
+const definePosition = (data, squareSize, individualPadding, popMargin, addMargin, axis)  => {
     let k;
     let marg = data.pop * popMargin * addMargin;
     (axis === 0 ) ? k = 'x' : k = 'y';
@@ -190,11 +187,7 @@ const definePosition = (data, squareSize, individualPadding, popMargin, addMargi
 const functs = {
     create: (ref, data, props, state, colorScale) => select(ref).selectAll('.pop_rects').data(data).enter()
             .append('rect').attr('class', 'pop_rects')
-            // .attr('x', (d, i) => {
-            //     return ((d.x * (state.paddingBetweenIndividuals)) * props.squareSize) +( (d.pop * state.marginBetweenPops) * props.popDirection);
-            // })
             .attr('x', d => definePosition(d, props.squareSize, state.data.paddingBetweenIndividuals, state.data.marginBetweenPops, props.popDirection, 0))
-            // .attr('y', d => (d.y * (state.paddingBetweenIndividuals) * props.squareSize ) + (d.pop * state.marginBetweenPops) * !props.popDirection)
             .attr('y', d => definePosition(d, props.squareSize, state.data.paddingBetweenIndividuals, state.data.marginBetweenPops, !props.popDirection, 1))
             .attr('rx', 2).attr('ry', 2).transition(easeSinInOut).duration(2000)
             .attr('height', props.squareSize)

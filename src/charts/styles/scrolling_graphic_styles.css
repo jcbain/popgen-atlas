@@ -9,11 +9,11 @@
 .scroller-graphic {
     position: -webkit-sticky;
     position: sticky;
-    width: 100%;
+    width: 40vw;
     margin: 0;
     top: 10vh;
     height: 80vh;
-    left: 0;
+    left: 60vw;
     /* border: 1px dashed gray; */
 }
 
