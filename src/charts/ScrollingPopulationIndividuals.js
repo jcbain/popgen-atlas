@@ -12,12 +12,20 @@ import individualData from '../data/individuals_small';
 
 import './styles/scrolling_graphic_styles.css';
 
-function calculateDimensionLong(squareSize, numCols, individualPadding, popMargin){
-    return (squareSize * numCols * individualPadding * 2) - individualPadding + popMargin;
+// function calculateDimensionLong(squareSize, numCols, individualPadding, popMargin){
+//     return (squareSize * numCols * individualPadding * 2) - individualPadding + popMargin;
+// }
+
+function calculateDimensionLong(squareSize, numCols, individualPadding) {
+    return (squareSize * numCols * individualPadding)
 }
 
-function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize){
-    return ((max(Object.values(maxPopObj)) / numCols) * individualPadding * squareSize);
+// function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize){
+//     return ((max(Object.values(maxPopObj)) / numCols) * individualPadding * squareSize);
+// }
+
+function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize, popMargin) {
+    return (Math.ceil(max(Object.values(maxPopObj))/ numCols) * 2 * squareSize * individualPadding) + popMargin;
 }
 
 class ScrollingPop extends Component {
@@ -33,16 +41,21 @@ class ScrollingPop extends Component {
             .domain([this.minPhen, 0, this.maxPhen])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl)
-        this.state = {
-            paddingBetweenIndividuals: 1.2,
-            marginBetweenPops: 0,            
+        this.state = {        
             data: {
-                marginBetweenPops: 0,
+                paddingBetweenIndividuals: 1.2,
+                marginBetweenPops: 20,
                 output_gen: 1000,
             }
         }
-        this.directionVals =  [calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.paddingBetweenIndividuals, this.state.marginBetweenPops), 
-            calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.paddingBetweenIndividuals, this.props.squareSize) 
+        // this.directionVals =  [
+        //     calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops), 
+        //     calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize) 
+        // ]
+
+        this.directionVals = [
+            calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals),
+            calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize, this.state.data.marginBetweenPops)
         ]
     }
 
@@ -52,7 +65,7 @@ class ScrollingPop extends Component {
         
         const numCols = this.props.numCols;
         const maxPopVal = this.maxPopVal;
-        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen == 1000)
+        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen === this.state.data.output_gen)
         let smallest = min(filteredData, d => d.ind_phen);
         let biggest = max(filteredData, d => d.ind_phen);
         let chosenData = [];
@@ -96,8 +109,8 @@ class ScrollingPop extends Component {
     }
 
     componentDidMount(){
-        console.log(calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.paddingBetweenIndividuals, this.state.marginBetweenPops))
-        console.log(calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.paddingBetweenIndividuals, this.props.squareSize) * 2)
+        console.log(calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.state.data.marginBetweenPops))
+        console.log(calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.data.paddingBetweenIndividuals, this.props.squareSize) * 2)
         functs.create(this.popRef.current, this.createData(this.props.popDirection), this.props, this.state, this.colorScale(0))
     }
 
@@ -180,9 +193,9 @@ const functs = {
             // .attr('x', (d, i) => {
             //     return ((d.x * (state.paddingBetweenIndividuals)) * props.squareSize) +( (d.pop * state.marginBetweenPops) * props.popDirection);
             // })
-            .attr('x', d => definePosition(d, props.squareSize, state.paddingBetweenIndividuals, state.marginBetweenPops, props.popDirection, 0))
+            .attr('x', d => definePosition(d, props.squareSize, state.data.paddingBetweenIndividuals, state.data.marginBetweenPops, props.popDirection, 0))
             // .attr('y', d => (d.y * (state.paddingBetweenIndividuals) * props.squareSize ) + (d.pop * state.marginBetweenPops) * !props.popDirection)
-            .attr('y', d => definePosition(d, props.squareSize, state.paddingBetweenIndividuals, state.marginBetweenPops, !props.popDirection, 1))
+            .attr('y', d => definePosition(d, props.squareSize, state.data.paddingBetweenIndividuals, state.data.marginBetweenPops, !props.popDirection, 1))
             .attr('rx', 2).attr('ry', 2).transition(easeSinInOut).duration(2000)
             .attr('height', props.squareSize)
             .attr('width', props.squareSize)

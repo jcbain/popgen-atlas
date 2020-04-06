@@ -86,7 +86,7 @@ class LocalAdaptation extends Component {
         {/* <Graphic></Graphic> */}
         <ScrollingPop squareSize={10}
                       numCols={40}
-                      popDirection={true}></ScrollingPop>
+                      popDirection={false}></ScrollingPop>
 
 
         <section id="divergent-plots">
