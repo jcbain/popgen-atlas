@@ -12,6 +12,13 @@ import individualData from '../data/individuals_small';
 
 import './styles/scrolling_graphic_styles.css';
 
+function calculateDimensionLong(squareSize, numCols, individualPadding, popMargin){
+    return (squareSize * numCols * individualPadding * 2) - individualPadding + popMargin;
+}
+
+function calculateDimensionShort(maxPopObj, numCols, individualPadding, squareSize){
+    return ((max(Object.values(maxPopObj)) / numCols) * individualPadding * squareSize);
+}
 
 class ScrollingPop extends Component {
     constructor(props){
@@ -34,8 +41,8 @@ class ScrollingPop extends Component {
                 output_gen: 1000,
             }
         }
-        this.directionVals =  [(this.props.squareSize * this.props.numCols * this.state.paddingBetweenIndividuals * 2) - this.state.paddingBetweenIndividuals + this.state.marginBetweenPops, 
-            ((max(Object.values(this.maxPopVal))/ this.props.numCols) * this.state.paddingBetweenIndividuals * this.props.squareSize) + 100
+        this.directionVals =  [calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.paddingBetweenIndividuals, this.state.marginBetweenPops), 
+            calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.paddingBetweenIndividuals, this.props.squareSize) 
         ]
     }
 
@@ -89,6 +96,8 @@ class ScrollingPop extends Component {
     }
 
     componentDidMount(){
+        console.log(calculateDimensionLong(this.props.squareSize, this.props.numCols, this.state.paddingBetweenIndividuals, this.state.marginBetweenPops))
+        console.log(calculateDimensionShort(this.maxPopVal, this.props.numCols, this.state.paddingBetweenIndividuals, this.props.squareSize) * 2)
         functs.create(this.popRef.current, this.createData(this.props.popDirection), this.props, this.state, this.colorScale(0))
     }
 
@@ -158,13 +167,23 @@ class ScrollingPop extends Component {
     }
 }
 
+const definePosition = (data, squareSize, individualPadding, popMargin, addMargin, axis,)  => {
+    let k;
+    let marg = data.pop * popMargin * addMargin;
+    (axis === 0 ) ? k = 'x' : k = 'y';
+    return ((data[k] * (individualPadding)) * squareSize) + marg
+}
+
 const functs = {
     create: (ref, data, props, state, colorScale) => select(ref).selectAll('.pop_rects').data(data).enter()
             .append('rect').attr('class', 'pop_rects')
-            .attr('x', (d, i) => {
-                return ((d.x * (state.paddingBetweenIndividuals)) * props.squareSize) + d.pop * state.marginBetweenPops;
-            })
-            .attr('y', d => d.y * props.squareSize).attr('rx', 2).attr('ry', 2).transition(easeSinInOut).duration(2000)
+            // .attr('x', (d, i) => {
+            //     return ((d.x * (state.paddingBetweenIndividuals)) * props.squareSize) +( (d.pop * state.marginBetweenPops) * props.popDirection);
+            // })
+            .attr('x', d => definePosition(d, props.squareSize, state.paddingBetweenIndividuals, state.marginBetweenPops, props.popDirection, 0))
+            // .attr('y', d => (d.y * (state.paddingBetweenIndividuals) * props.squareSize ) + (d.pop * state.marginBetweenPops) * !props.popDirection)
+            .attr('y', d => definePosition(d, props.squareSize, state.paddingBetweenIndividuals, state.marginBetweenPops, !props.popDirection, 1))
+            .attr('rx', 2).attr('ry', 2).transition(easeSinInOut).duration(2000)
             .attr('height', props.squareSize)
             .attr('width', props.squareSize)
             .attr('fill', colorScale) ,

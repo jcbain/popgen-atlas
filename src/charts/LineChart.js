@@ -130,7 +130,7 @@ class LineChart extends Component {
 
 
 
-        return <svg viewBox={[0, 0, this.props.chartDims.width, this.props.chartDims.height]}>
+        return <svg className="line-chart-graph" viewBox={[0, 0, this.props.chartDims.width, this.props.chartDims.height]}>
                     {lineGradients}
                     {/* {contextBackgroundLines} */}
                     {contextLines}
