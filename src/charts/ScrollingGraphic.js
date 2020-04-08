@@ -138,7 +138,6 @@ class Graphic extends Component {
       }
     
       onStepEnter = ({ element, data}) => {
-        console.log(data);
         if(data.onEnterChange){
           this.setState({data: data})
         }

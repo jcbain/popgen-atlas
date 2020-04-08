@@ -56,7 +56,6 @@ class LocalAdaptation extends Component {
   }
 
   render() {
-    console.log(this.props.match);
 
     const margin = {top: 10, right: 0, bottom: 20, left: 0};
     const chartDims = {width: 800, height: 150};
