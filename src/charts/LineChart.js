@@ -15,9 +15,12 @@ class LineChart extends Component {
         this.startExtent = {x0: 1000, x1: 5000};
         
         this.state = { brushExtent: [this.startExtent.x0, this.startExtent.x1]}
-        console.log(this.props)
+        this.dataFiltered = this.props.data.filter(function(d){
+            return d.mu === "1e-6" && d.m === "1e-5" && d.sigsqr === "25";
+        })
+        this.dataGrouped = nest().key(d => d.pop).entries(this.dataFiltered)
     }
-    
+    lineRef = React.createRef();
     yScale = scaleLinear()
         .domain([
             min(this.props.data, d => d.pop_phen),
@@ -44,8 +47,9 @@ class LineChart extends Component {
         .call(axisBottom(this.props.xScale));
 
     componentDidMount() {
+
         if(this.props.renderAxis){
-            let node = select(ReactDOM.findDOMNode(this))
+            let node = select(this.lineRef.current);
             node.append('g').call(this.xAxis);
         }
     }
@@ -130,7 +134,9 @@ class LineChart extends Component {
 
 
 
-        return <svg className="line-chart-graph" viewBox={[0, 0, this.props.chartDims.width, this.props.chartDims.height]}>
+        return <svg className="line-chart-graph" 
+                    viewBox={[0, 0, this.props.chartDims.width, this.props.chartDims.height]}
+                    ref={this.lineRef}>
                     {lineGradients}
                     {/* {contextBackgroundLines} */}
                     {contextLines}
