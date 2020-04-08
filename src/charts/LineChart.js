@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { nest } from 'd3-collection';
@@ -45,6 +44,7 @@ class LineChart extends Component {
     xAxis = g => g
         .attr("transform", `translate(0,${this.props.chartDims.height - this.props.margin.bottom})`)
         .call(axisBottom(this.props.xScale));
+
 
     componentDidMount() {
 
