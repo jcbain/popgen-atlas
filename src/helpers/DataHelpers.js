@@ -24,13 +24,20 @@ const returnRelevantParams = (data, params) => {
     })
 
     return paramCopy
-
 }
 
 
 
 function filterDataByParams(data, parmamSelections){
+    const relevantParams = returnRelevantParams(data, parmamSelections);
 
+    Object.keys(relevantParams).map( d => {
+        data = data.filter( v => {
+            return v[d] === relevantParams[d]
+        })
+    })
+    return data;
 }
 
 returnRelevantParams([{hanes: 'hello', name: 'james'}, {item: 'name', name: 'jennifer', blog: 'somethin'}], {hanes: 'hello', name: 'james', blog: 'yes'})
+console.log(filterDataByParams([{name: 'james', age: 29}, {name: 'james', age: 30}, {name: 'jennifer', age: 29}, {name: 'jennifer', age: 29, gender: 'female'}], {age: 29, name: 'jennifer'}))
