@@ -39,5 +39,7 @@ function filterDataByParams(data, parmamSelections){
     return data;
 }
 
-returnRelevantParams([{hanes: 'hello', name: 'james'}, {item: 'name', name: 'jennifer', blog: 'somethin'}], {hanes: 'hello', name: 'james', blog: 'yes'})
-console.log(filterDataByParams([{name: 'james', age: 29}, {name: 'james', age: 30}, {name: 'jennifer', age: 29}, {name: 'jennifer', age: 29, gender: 'female'}], {age: 29, name: 'jennifer'}))
+// returnRelevantParams([{hanes: 'hello', name: 'james'}, {item: 'name', name: 'jennifer', blog: 'somethin'}], {hanes: 'hello', name: 'james', blog: 'yes'})
+// console.log(filterDataByParams([{name: 'james', age: 29}, {name: 'james', age: 30}, {name: 'jennifer', age: 29}, {name: 'jennifer', age: 29, gender: 'female'}], {age: 29, name: 'jennifer'}))
+
+export {unique, returnRelevantParams, filterDataByParams}
