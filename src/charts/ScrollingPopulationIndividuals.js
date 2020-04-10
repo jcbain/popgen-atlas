@@ -10,19 +10,17 @@ import { nest } from 'd3-collection';
 
 import Histogram from './Histogram';
 
-import individualData from '../data/individuals_small';
-
 import './styles/scrolling_graphic_styles.css';
 
 
 class ScrollingPop extends Component {
     constructor(props){
         super(props);
-        this.genCounts = individualData.map(d => d.pop).filter(unique).map(v => countIndividualsPerGeneration(individualData, v));
-        this.populations = individualData.map(d => d.pop).filter(unique);
+        this.populations = this.props.data.map(d => d.pop).filter(unique);
+        this.genCounts = this.populations.map(v => countIndividualsPerGeneration(this.props.data, v));
         this.maxPopVal = maxPerPop(this.genCounts);
-        this.minPhen = min(individualData, d => d.ind_phen);
-        this.maxPhen = max(individualData, d => d.ind_phen);
+        this.minPhen = min(this.props.data, d => d.ind_phen);
+        this.maxPhen = max(this.props.data, d => d.ind_phen);
         this.phenRange = [this.minPhen, this.maxPhen];
         this.colorScale = scaleLinear()
             .domain([this.minPhen, 0, this.maxPhen])
@@ -49,7 +47,7 @@ class ScrollingPop extends Component {
         
         const numCols = this.props.numCols;
         const maxPopVal = this.maxPopVal;
-        let filteredData = individualData.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen === this.state.data.output_gen)
+        let filteredData = this.props.data.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen === this.state.data.output_gen)
         let smallest = min(filteredData, d => d.ind_phen);
         let biggest = max(filteredData, d => d.ind_phen);
         let chosenData = [];
