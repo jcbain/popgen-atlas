@@ -8,6 +8,8 @@ import { select, selectAll } from 'd3-selection';
 import { min, max } from 'd3-array';
 import { nest } from 'd3-collection';
 
+import { removeParams, filterDataByParams, unique} from '../helpers/DataHelpers';
+
 import Histogram from './Histogram';
 
 import './styles/scrolling_graphic_styles.css';
@@ -16,7 +18,8 @@ import './styles/scrolling_graphic_styles.css';
 class ScrollingPop extends Component {
     constructor(props){
         super(props);
-        console.log(this.props.params)
+        this.params  = removeParams(this.props.params, ['output_gen', 'pop'])
+        this.data = filterDataByParams(this.props.data, this.params)
         this.populations = this.props.data.map(d => d.pop).filter(unique);
         this.genCounts = this.populations.map(v => countIndividualsPerGeneration(this.props.data, v));
         this.maxPopVal = maxPerPop(this.genCounts);
@@ -48,7 +51,7 @@ class ScrollingPop extends Component {
         
         const numCols = this.props.numCols;
         const maxPopVal = this.maxPopVal;
-        let filteredData = this.props.data.filter(d => d.mu === "1e-6" && d.m === "1e-4" && d.sigsqr === "25" && d.output_gen === this.state.data.output_gen)
+        let filteredData = this.data.filter(d => d.output_gen === 10000)
         let smallest = min(filteredData, d => d.ind_phen);
         let biggest = max(filteredData, d => d.ind_phen);
         let chosenData = [];
@@ -225,9 +228,9 @@ const countIndividualsPerGeneration = (data, val) => nest()
     .rollup( v => v.length)
     .entries(data.filter(r => r.pop === val));
 
-const unique = (value, index, self) => {
-    return self.indexOf(value) === index;
-}
+// const unique = (value, index, self) => {
+//     return self.indexOf(value) === index;
+// }
 
 const maxPerPop = (data) => {
     let maxPop = {};
