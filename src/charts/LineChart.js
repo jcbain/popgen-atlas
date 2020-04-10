@@ -7,16 +7,18 @@ import ContextBrush from './ContextBrush';
 import { select } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
 
+import { removeParams, filterDataByParams } from '../helpers/DataHelpers';
+
+
 class LineChart extends Component {
     constructor(props){
         super(props);
+        this.params = removeParams(this.props.params, ['output_gen', 'pop'])
         this.onBrush = this.onBrush.bind(this);
         this.startExtent = {x0: 1000, x1: 5000};
         
         this.state = { brushExtent: [this.startExtent.x0, this.startExtent.x1]}
-        this.dataFiltered = this.props.data.filter(function(d){
-            return d.mu === "1e-6" && d.m === "1e-5" && d.sigsqr === "25";
-        })
+        this.dataFiltered = filterDataByParams(this.props.data, this.params)
         this.dataGrouped = nest().key(d => d.pop).entries(this.dataFiltered)
     }
     lineRef = React.createRef();

@@ -95,7 +95,6 @@ class ScrollingPop extends Component {
     }
 
     componentDidMount(){
-        console.log(this.createData().filter(d => d.pop == 0).map(d => d.ind_phen))
         functs.create(this.popRef.current, this.createData(this.props.popDirection), this.props, this.state, this.colorScale(0))
     }
 

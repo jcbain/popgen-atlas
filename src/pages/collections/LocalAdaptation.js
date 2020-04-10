@@ -97,7 +97,8 @@ class LocalAdaptation extends Component {
 
             <div className={`focus-line-chart container`}> 
               <LineChart chartId = 'non-context'
-                          data={dataPopPhen} 
+                          data={dataPopPhen}
+                          params={this.state.parms} 
                           xScale={xScale2} 
                           margin={margin} 
                           chartDims={{width: chartDims.width, height: 400}}

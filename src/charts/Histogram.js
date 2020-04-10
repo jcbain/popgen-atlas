@@ -3,6 +3,8 @@ import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max, histogram } from 'd3-array';
 import { select } from 'd3-selection';
 
+import { unique } from '../helpers/DataHelpers';
+
 
 class Histogram extends Component {
     constructor(props){
@@ -79,8 +81,5 @@ class Histogram extends Component {
     }
 }
 
-const unique = (value, index, self) => {
-    return self.indexOf(value) === index;
-}
 
 export default Histogram;
