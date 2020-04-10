@@ -1,5 +1,3 @@
-// import { nest } from 'd3-collection';
-
 const unique = (value, index, self) => {
     return self.indexOf(value) === index;
 }
@@ -39,7 +37,11 @@ function filterDataByParams(data, parmamSelections){
     return data;
 }
 
-// returnRelevantParams([{hanes: 'hello', name: 'james'}, {item: 'name', name: 'jennifer', blog: 'somethin'}], {hanes: 'hello', name: 'james', blog: 'yes'})
-// console.log(filterDataByParams([{name: 'james', age: 29}, {name: 'james', age: 30}, {name: 'jennifer', age: 29}, {name: 'jennifer', age: 29, gender: 'female'}], {age: 29, name: 'jennifer'}))
+function closestFromArray (arr){
+    return (target) => arr.reduce(function(prev, curr){
+        return (Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev);
+    })
+}
 
-export {unique, returnRelevantParams, filterDataByParams}
+
+export {unique, returnRelevantParams, filterDataByParams, closestFromArray}
