@@ -15,10 +15,10 @@ const returnRelevantParams = (data, params) => {
             }
         })
     })
-    originalKeys.map(d => {
+    originalKeys.forEach(d => {
         if(!finalDataKeys.includes(d)){
             delete paramCopy[d];
-        }
+        } 
     })
 
     return paramCopy
@@ -29,12 +29,19 @@ const returnRelevantParams = (data, params) => {
 function filterDataByParams(data, parmamSelections){
     const relevantParams = returnRelevantParams(data, parmamSelections);
 
-    Object.keys(relevantParams).map( d => {
+    Object.keys(relevantParams).forEach( d => {
         data = data.filter( v => {
             return v[d] === relevantParams[d]
         })
     })
     return data;
+}
+
+function removeParams(params, keys){
+    const paramCopy = Object.assign({}, params);
+
+    keys.forEach(d => delete paramCopy[d]);
+    return paramCopy;
 }
 
 function closestFromArray (arr){
@@ -44,4 +51,4 @@ function closestFromArray (arr){
 }
 
 
-export {unique, returnRelevantParams, filterDataByParams, closestFromArray}
+export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams}

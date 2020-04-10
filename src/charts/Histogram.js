@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max, histogram } from 'd3-array';
-import { select, selectAll } from 'd3-selection';
+import { select } from 'd3-selection';
 
 
 class Histogram extends Component {
@@ -29,7 +29,7 @@ class Histogram extends Component {
 
         // let bins = hist(this.props.data);
         let binGroups = [];
-        this.props.data.map(d => d.pop).filter(unique).map(d => {
+        this.props.data.map(d => d.pop).filter(unique).forEach(d => {
             binGroups.push(hist(this.props.data.filter(v => v.pop === d)))
         })
 
@@ -41,7 +41,7 @@ class Histogram extends Component {
         let graph = select(this.histRef.current)    
 
         // console.log(binGroups)
-        binGroups.map((d, i) => {
+        binGroups.forEach((d, i) => {
             graph
                 .selectAll(`.bins-${i}`)
                 .data(d)
@@ -72,7 +72,6 @@ class Histogram extends Component {
     render(){
         return(
         <svg viewBox={[0, 0, 200, 200]}
-             preserveAspectRatio="xMidYMid Meet"
              ref={this.histRef}>
 
         </svg>

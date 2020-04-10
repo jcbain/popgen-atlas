@@ -16,6 +16,7 @@ import './styles/scrolling_graphic_styles.css';
 class ScrollingPop extends Component {
     constructor(props){
         super(props);
+        console.log(this.props.params)
         this.populations = this.props.data.map(d => d.pop).filter(unique);
         this.genCounts = this.populations.map(v => countIndividualsPerGeneration(this.props.data, v));
         this.maxPopVal = maxPerPop(this.genCounts);
