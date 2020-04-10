@@ -5,18 +5,20 @@ import { min, max } from 'd3-array';
 import { select } from 'd3-selection';
 import { interpolateHcl } from 'd3-interpolate';
 
+import { removeParams, filterDataByParams } from '../helpers/DataHelpers';
 
 class Genome extends Component {
     constructor(props) {
         super(props);
+        this.params = removeParams(this.props.params, ['output_gen', 'pop']);
         this.template = template;
         this.opacityScale = scaleLinear()
-        .domain([0, max(this.props.data, d => Math.abs(d.positional_phen))])
-        .range([0, 100]);
+            .domain([0, max(this.props.data, d => Math.abs(d.positional_phen))])
+            .range([0, 100]);
         this.colorScale = scaleLinear()
-        .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-        .range(['#C38D9E', '#fffff7', '#E27D60'])
-        .interpolate(interpolateHcl);
+            .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
+            .range(['#C38D9E', '#fffff7', '#E27D60'])
+            .interpolate(interpolateHcl);
     }
 
     genomeRef = React.createRef();
@@ -25,8 +27,8 @@ class Genome extends Component {
         const outputGen = this.props.outputGen;
         const pop = this.props.pop;
 
-        let dataFiltered = this.props.data.filter(function(d) {
-            return d.mu === "1e-6" && d.m === "1e-5" && d.sigsqr === "25" && d.output_gen === outputGen && d.pop === pop;
+        let dataFiltered = filterDataByParams(this.props.data, this.params).filter(d => {
+            return d.output_gen === outputGen && d.pop === pop;
         })
         
         let dataCurrentGenome = []

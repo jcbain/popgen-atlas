@@ -89,6 +89,7 @@ class LocalAdaptation extends Component {
               <Genome  key={`genome_${0}_${0}`}
                         className={'genome1'}
                         data={data} 
+                        params={this.state.params}
                         outputGen={this.state.focusBrushExtent[0]}
                         pop={0}
                         id={0}/>
@@ -111,6 +112,7 @@ class LocalAdaptation extends Component {
               <Genome key={`genome_${1}_${0}`}
                       className={'genome2'}
                       data={data}
+                      params={this.state.params}
                       outputGen={this.state.focusBrushExtent[1]}
                       pop={0}
                       id={1}/>
