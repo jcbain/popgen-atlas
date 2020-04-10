@@ -114,7 +114,7 @@ class LocalAdaptation extends Component {
                       data={data}
                       params={this.state.params}
                       outputGen={this.state.focusBrushExtent[1]}
-                      pop={0}
+                      pop={1}
                       id={1}/>
             </div>
           </div>
