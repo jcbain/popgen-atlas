@@ -85,6 +85,7 @@ class LocalAdaptation extends Component {
                       popDirection={false}></ScrollingPop> */}
 
         <GeneArchitecture data={data}
+                          template={template}
                           params={this.state.params}></GeneArchitecture>
 
         <section id="divergent-plots">

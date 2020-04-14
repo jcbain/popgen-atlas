@@ -16,6 +16,15 @@ class GeneArchitecture extends Component {
 
     componentDidMount(){
         console.log(this)
+        this.props.template.forEach((v,i) => v.ind = i);
+        this.filteredData.forEach(d => {
+            let result = this.props.template.filter(v => {
+                return v.position === d.position
+            })
+            d.position_map = (result[0] !== undefined) ? result[0].ind : null;
+        })
+
+        console.log(this.filteredData)
     }
 
 
