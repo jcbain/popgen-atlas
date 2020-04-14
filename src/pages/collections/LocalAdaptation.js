@@ -8,6 +8,7 @@ import {closestFromArray} from '../../helpers/DataHelpers';
 
 import data from '../../data/mutations_bg.json';
 import individualData from '../../data/individuals_small';
+import template from '../../data/genome_template.json';
 
 
 import LineChart from '../../charts/LineChart';
@@ -92,6 +93,7 @@ class LocalAdaptation extends Component {
               <Genome  key={`genome_${0}_${0}`}
                         className={'genome1'}
                         data={data} 
+                        template={template}
                         params={this.state.params}
                         outputGen={this.state.focusBrushExtent[0]}
                         pop={0}
@@ -115,6 +117,7 @@ class LocalAdaptation extends Component {
               <Genome key={`genome_${1}_${0}`}
                       className={'genome2'}
                       data={data}
+                      template={template}
                       params={this.state.params}
                       outputGen={this.state.focusBrushExtent[1]}
                       pop={1}

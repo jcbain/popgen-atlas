@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import template from '../data/genome_template.json';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { select } from 'd3-selection';
@@ -11,7 +10,6 @@ class Genome extends Component {
     constructor(props) {
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.template = template;
         this.opacityScale = scaleLinear()
             .domain([0, max(this.props.data, d => Math.abs(d.positional_phen))])
             .range([0, 100]);
@@ -32,7 +30,7 @@ class Genome extends Component {
         })
         
         let dataCurrentGenome = []
-        template.forEach((p)=>{
+        this.props.template.forEach((p)=>{
             let result = dataFiltered.filter(function(d){
                 return d.position === p.position;
             })

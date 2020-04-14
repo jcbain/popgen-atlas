@@ -15,7 +15,7 @@ class GeneArchitecture extends Component {
     }
 
     componentDidMount(){
-        console.log(this.filteredData)
+        console.log(this)
     }
 
 
