@@ -50,5 +50,20 @@ function closestFromArray (arr){
     })
 }
 
+function leftJoinByAttr(arrLeft, arrRight, returnAttr, byLeft, byRight) {
+     byRight = (byRight === undefined) ? byLeft : byRight;
+     
+     arrLeft.forEach( d => {
+         let result = arrRight.filter(v => {
+             return v[byRight] === d[byLeft];
+         })
+         Object.keys(returnAttr).forEach(k => {
+             d[k] = (result[0] !== undefined) ? result[0][returnAttr[k]] : null;
+         })
+     })
+     
+     return arrLeft;
+}
 
-export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams}
+
+export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr}

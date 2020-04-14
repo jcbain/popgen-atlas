@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { select } from 'd3-selection';
 
-import { removeParams, filterDataByParams} from '../helpers/DataHelpers';
+import { removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 
 
 class GeneArchitecture extends Component {
@@ -17,14 +17,15 @@ class GeneArchitecture extends Component {
     componentDidMount(){
         console.log(this)
         this.props.template.forEach((v,i) => v.ind = i);
-        this.filteredData.forEach(d => {
-            let result = this.props.template.filter(v => {
-                return v.position === d.position
-            })
-            d.position_map = (result[0] !== undefined) ? result[0].ind : null;
-        })
-
-        console.log(this.filteredData)
+        // this.filteredData.forEach(d => {
+        //     let result = this.props.template.filter(v => {
+        //         return v.position === d.position
+        //     })
+        //     d.position_map = (result[0] !== undefined) ? result[0].ind : null;
+        // })
+        // console.log(this.filteredData)
+        let dat = leftJoinByAttr(this.filteredData, this.props.template, {positional_map: 'ind'}, 'position' )
+        console.log(dat)
     }
 
 
