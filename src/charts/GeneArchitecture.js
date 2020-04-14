@@ -24,7 +24,7 @@ class GeneArchitecture extends Component {
         //     d.position_map = (result[0] !== undefined) ? result[0].ind : null;
         // })
         // console.log(this.filteredData)
-        let dat = leftJoinByAttr(this.filteredData, this.props.template, {positional_map: 'ind'}, 'position' )
+        let dat = leftJoinByAttr(this.filteredData, this.props.template, ['position'], {positional_map: 'ind'})
         console.log(dat)
     }
 
