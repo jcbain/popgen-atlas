@@ -86,7 +86,10 @@ class LocalAdaptation extends Component {
 
         <GeneArchitecture data={data}
                           template={template}
-                          params={this.state.params}></GeneArchitecture>
+                          params={this.state.params}
+                          height={100}
+                          width={200}>
+        </GeneArchitecture>
 
         <section id="divergent-plots">
           <div className="divergent-top">
