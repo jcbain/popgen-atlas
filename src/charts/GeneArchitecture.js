@@ -61,7 +61,7 @@ class GeneArchitecture extends Component {
         }
 
         const gradients = this.generations
-            .map( d => <linearGradient key={`gen-grad-${d}-yes`}
+            .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
                             id={`gen-grad-${d}`}
                             x1={0}
