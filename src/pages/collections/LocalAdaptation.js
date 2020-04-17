@@ -46,7 +46,7 @@ class LocalAdaptation extends Component {
     
     this.state = { 
       focusBrushExtent: [this.focusStartExent.x0, this.focusStartExent.x1],
-      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
+      params: {mu: '1e-6', m: '1e-5', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
     }
     this.interval = closestFromArray(dataPopPhen.map(d => parseInt(d.output_gen)))
   }

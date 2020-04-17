@@ -12,10 +12,10 @@ class GeneArchitecture extends Component {
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
-        this.generations = this.data.map(d => d.output_gen).filter(unique);
+        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
+        this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.genWidth = this.props.width/this.generations.length;
-        this.xScale = scaleLinear().domain([min(this.data, d => d.output_gen), max(this.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
+        this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100])
         this.colorScale = scaleLinear()
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
@@ -26,7 +26,7 @@ class GeneArchitecture extends Component {
     archRef = React.createRef();
 
     componentDidMount(){
-       console.log( this.data.filter(d => d.output_gen === 50000))
+    //    console.log( this.data.filter(d => d.output_gen === 50000))
        console.log(this.xScale(50000))
        console.log(this.generations)
        select(this.archRef.current)
@@ -39,6 +39,7 @@ class GeneArchitecture extends Component {
             .attr('width', this.genWidth)
             .attr('height', this.props.height)
             .attr('fill', d => `url(#gen-grad-${d})`)
+            .attr('stroke-width', 0)
         // select(this.archRef.current)
         //     .selectAll('.genome-cross')
         //     .data(this.data)
@@ -56,12 +57,12 @@ class GeneArchitecture extends Component {
     render(){
 
         function SingleGrandient(props){
-            const selectedData = props.data.filter(d => d.output_gen === props.gen)
-            console.log(selectedData)
-            const gradient = selectedData.map( d =>
-                <stop key={`stop-gen-${props.gen}-ind-${d.positional_map}`}
-                      stopColor={props.colorScale(d.positional_phen)}
-                      offset={props.yScale(d.positional_map) + "%"}>
+            let selectedData = props.data.filter(d => d.output_gen === props.gen)
+            const selectSingle = (i) => selectedData.find(e => e.positional_map === i)
+            const gradient = props.template.map( d =>
+                <stop key={`stop-gen-${props.gen}-ind-${d.ind}`}
+                      stopColor={(selectSingle(d.ind) !== undefined) ? props.colorScale(selectSingle(d.ind).positional_phen) : props.colorScale(0)}
+                      offset={props.yScale(d.ind) + "%"}>
                 </stop>
             )
             return gradient;
@@ -75,7 +76,7 @@ class GeneArchitecture extends Component {
                             x2={0}
                             y1={0}
                             y2={this.props.height}>
-                <SingleGrandient data={this.data} gen={d} colorScale={this.colorScale} yScale={this.yScale}></SingleGrandient>
+                <SingleGrandient data={this.data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={this.yScale}></SingleGrandient>
 
                 
 
