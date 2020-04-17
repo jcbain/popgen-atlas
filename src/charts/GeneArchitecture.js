@@ -12,14 +12,14 @@ class GeneArchitecture extends Component {
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
+        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.genWidth = this.props.width/this.generations.length;
         this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100])
         this.colorScale = scaleLinear()
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-            .range(['#C38D9E', '#fffff7', '#E27D60'])
+            .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
 
     }
@@ -29,28 +29,6 @@ class GeneArchitecture extends Component {
     //    console.log( this.data.filter(d => d.output_gen === 50000))
        console.log(this.xScale(50000))
        console.log(this.generations)
-       select(this.archRef.current)
-            .selectAll('.genome-cross')
-            .data(this.generations)
-            .enter()
-            .append('rect')
-            .attr('x', d => this.xScale(d))
-            .attr('y',  0)
-            .attr('width', this.genWidth)
-            .attr('height', this.props.height)
-            .attr('fill', d => `url(#gen-grad-${d})`)
-            .attr('stroke-width', 0)
-        // select(this.archRef.current)
-        //     .selectAll('.genome-cross')
-        //     .data(this.data)
-        //     .enter()
-        //     .append('rect')
-        //     .attr('x', (d, i) => this.xScale(i))
-        //     .attr('y', 0)
-        //     .attr('height', this.props.height)
-        //     .attr('width', this.xScale(this.genWidth))
-
-
     }
 
 
@@ -68,6 +46,20 @@ class GeneArchitecture extends Component {
             return gradient;
         }
 
+        function SingleGeneration(props){
+            const generation = <rect className="genome-cross"
+                                     x={props.xScale(props.gen)}
+                                     y={0}
+                                     width={props.genWidth}
+                                     height={props.height}
+                                     fill={`url(#gen-grad-${props.gen})`}
+                                     stroke={`url(#gen-grad-${props.gen})`}>
+
+            </rect>
+
+            return generation;
+        }
+
         const gradients = this.generations
             .map( d => <linearGradient key={`gen-grad-${d}-yes`}
                             gradientUnits='userSpaceOnUse'
@@ -76,15 +68,21 @@ class GeneArchitecture extends Component {
                             x2={0}
                             y1={0}
                             y2={this.props.height}>
-                <SingleGrandient data={this.data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={this.yScale}></SingleGrandient>
-
-                
-
+                <SingleGrandient data={this.data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={this.yScale}>
+                </SingleGrandient>
             </linearGradient>)
+
+        const gens = this.generations.map(
+            d => <SingleGeneration key={`genome-cross-${d}`}
+                                   gen={d}
+                                   xScale={this.xScale}
+                                   genWidth={this.genWidth}
+                                   height={this.props.height}></SingleGeneration>
+        )
         return(
-            <svg viewBox={[0, 0, this.props.width, this.props.height]}
-                 ref={this.archRef}>
+            <svg viewBox={[0, 0, this.props.width, this.props.height]}>
                 {gradients}
+                {gens}
 
             </svg>
         )
