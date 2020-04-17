@@ -27,8 +27,19 @@ class GeneArchitecture extends Component {
 
     componentDidMount(){
     //    console.log( this.data.filter(d => d.output_gen === 50000))
-       console.log(this.xScale(50000))
-       console.log(this.generations)
+    //    console.log(this.xScale(50000))
+    //    console.log(this.generations)
+       select(this.archRef.current)
+       .selectAll('.genome-cross')
+       .data(this.generations)
+       .enter()
+       .append('rect')
+       .attr('x', d => this.xScale(d))
+       .attr('y',  0)
+       .attr('width', this.genWidth)
+       .attr('height', this.props.height)
+       .attr('fill', d => `url(#gen-grad-${d})`)
+       .attr('stroke', d => `url(#gen-grad-${d})`)
     }
 
 
@@ -46,19 +57,19 @@ class GeneArchitecture extends Component {
             return gradient;
         }
 
-        function SingleGeneration(props){
-            const generation = <rect className="genome-cross"
-                                     x={props.xScale(props.gen)}
-                                     y={0}
-                                     width={props.genWidth}
-                                     height={props.height}
-                                     fill={`url(#gen-grad-${props.gen})`}
-                                     stroke={`url(#gen-grad-${props.gen})`}>
+        // function SingleGeneration(props){
+        //     const generation = <rect className="genome-cross"
+        //                              x={props.xScale(props.gen)}
+        //                              y={0}
+        //                              width={props.genWidth}
+        //                              height={props.height}
+        //                              fill={`url(#gen-grad-${props.gen})`}
+        //                              stroke={`url(#gen-grad-${props.gen})`}>
 
-            </rect>
+        //     </rect>
 
-            return generation;
-        }
+        //     return generation;
+        // }
 
         const gradients = this.generations
             .map( d => <linearGradient key={`gen-grad-${d}`}
@@ -72,17 +83,17 @@ class GeneArchitecture extends Component {
                 </SingleGrandient>
             </linearGradient>)
 
-        const gens = this.generations.map(
-            d => <SingleGeneration key={`genome-cross-${d}`}
-                                   gen={d}
-                                   xScale={this.xScale}
-                                   genWidth={this.genWidth}
-                                   height={this.props.height}></SingleGeneration>
-        )
+        // const gens = this.generations.map(
+        //     d => <SingleGeneration key={`genome-cross-${d}`}
+        //                            gen={d}
+        //                            xScale={this.xScale}
+        //                            genWidth={this.genWidth}
+        //                            height={this.props.height}></SingleGeneration>
+        // )
         return(
-            <svg viewBox={[0, 0, this.props.width, this.props.height]}>
+            <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
-                {gens}
+                {/* {gens} */}
 
             </svg>
         )
