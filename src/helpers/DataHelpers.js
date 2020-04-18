@@ -52,17 +52,16 @@ function closestFromArray (arr){
     })
 }
 
-function leftJoinByAttr(arrLeft, arrRight, byArr, returnAttr) {
+function leftJoinByAttr(arrLeft, arrRight, byArr, returnAttr, emptyVal) {
     let arrLeftCopy = cloneDeep(arrLeft);
     let byLeft = byArr[0];
     let byRight = (byArr.length < 2) ? byLeft : byArr[1];
-
     arrLeftCopy.forEach( function(d) {
         let result = arrRight.filter(v => {
             return v[byRight] === d[byLeft];
         })
         Object.keys(returnAttr).forEach(k => {
-            d[k] = (result[0] !== undefined) ? result[0][returnAttr[k]] : null;
+            d[k] = (result[0] !== undefined) ? result[0][returnAttr[k]] : emptyVal;
         })
     })
      

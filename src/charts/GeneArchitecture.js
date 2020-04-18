@@ -6,13 +6,16 @@ import { min, max } from 'd3-array';
 import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 import { interpolateHcl } from 'd3-interpolate';
 
+let arr1 = [{name: 'james', color: 'yellow'}, {name: 'jennifer', color: 'purple'}, {name: 'jennifer', color: 'whoknow'}]
+let arr2 = [{name: 'james'}, {name: 'jennifer'}, {name: 'penolope'}]
 
 class GeneArchitecture extends Component {
     constructor(props){
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
+        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}, 'james').filter(d => d.pop === 1);
+        this.newData = leftJoinByAttr(this.props.template, filterDataByParams(this.props.data, this.params), ['position'], {ind: 'ind'})
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.genWidth = this.props.width/this.generations.length;
         this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
@@ -26,20 +29,25 @@ class GeneArchitecture extends Component {
     archRef = React.createRef();
 
     componentDidMount(){
+        console.log(this.data)
+        console.log(leftJoinByAttr(arr2, arr1, ['name'], {color: 'color'}))
     //    console.log( this.data.filter(d => d.output_gen === 50000))
     //    console.log(this.xScale(50000))
     //    console.log(this.generations)
-       select(this.archRef.current)
-       .selectAll('.genome-cross')
-       .data(this.generations)
-       .enter()
-       .append('rect')
-       .attr('x', d => this.xScale(d))
-       .attr('y',  0)
-       .attr('width', this.genWidth)
-       .attr('height', this.props.height)
-       .attr('fill', d => `url(#gen-grad-${d})`)
-       .attr('stroke', d => `url(#gen-grad-${d})`)
+    //    select(this.archRef.current)
+    //    .selectAll('.genome-cross')
+    //    .data(this.generations)
+    //    .enter()
+    //    .append('rect')
+    //    .attr('x', d => this.xScale(d))
+    //    .attr('y',  0)
+    //    .attr('width', this.genWidth)
+    //    .attr('height', this.props.height)
+    //    .attr('fill', d => `url(#gen-grad-${d})`)
+    //    .attr('stroke', d => `url(#gen-grad-${d})`)
+
+
+
     }
 
 
@@ -57,19 +65,19 @@ class GeneArchitecture extends Component {
             return gradient;
         }
 
-        // function SingleGeneration(props){
-        //     const generation = <rect className="genome-cross"
-        //                              x={props.xScale(props.gen)}
-        //                              y={0}
-        //                              width={props.genWidth}
-        //                              height={props.height}
-        //                              fill={`url(#gen-grad-${props.gen})`}
-        //                              stroke={`url(#gen-grad-${props.gen})`}>
+        function SingleGeneration(props){
+            const generation = <rect className="genome-cross"
+                                     x={props.xScale(props.gen)}
+                                     y={0}
+                                     width={props.genWidth}
+                                     height={props.height}
+                                     fill={`url(#gen-grad-${props.gen})`}
+                                     stroke={`url(#gen-grad-${props.gen})`}>
 
-        //     </rect>
+            </rect>
 
-        //     return generation;
-        // }
+            return generation;
+        }
 
         const gradients = this.generations
             .map( d => <linearGradient key={`gen-grad-${d}`}
@@ -83,17 +91,17 @@ class GeneArchitecture extends Component {
                 </SingleGrandient>
             </linearGradient>)
 
-        // const gens = this.generations.map(
-        //     d => <SingleGeneration key={`genome-cross-${d}`}
-        //                            gen={d}
-        //                            xScale={this.xScale}
-        //                            genWidth={this.genWidth}
-        //                            height={this.props.height}></SingleGeneration>
-        // )
+        const gens = this.generations.map(
+            d => <SingleGeneration key={`genome-cross-${d}`}
+                                   gen={d}
+                                   xScale={this.xScale}
+                                   genWidth={this.genWidth}
+                                   height={this.props.height}></SingleGeneration>
+        )
         return(
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
-                {/* {gens} */}
+                {gens}
 
             </svg>
         )
