@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { select } from 'd3-selection';
+import { select, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 
@@ -103,7 +103,14 @@ class GeneArchitecture extends Component {
                                    height={this.props.height}></SingleGeneration>
         )
 
-        const brush = <BrushGeneric></BrushGeneric>
+        function brushed() {
+            const selection = event.selection;
+            console.log(selection)
+        }
+
+        const brush = <BrushGeneric endExtentX={this.props.width}
+                                    endExtentY={this.props.height}
+                                    brushed={brushed}></BrushGeneric>
         return(
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
