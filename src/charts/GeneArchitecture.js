@@ -102,11 +102,13 @@ class GeneArchitecture extends Component {
                                    genWidth={this.genWidth}
                                    height={this.props.height}></SingleGeneration>
         )
+
+        const brush = <BrushGeneric></BrushGeneric>
         return(
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
                 {gens}
-                {BrushGeneric}
+                {brush}
 
             </svg>
         )
