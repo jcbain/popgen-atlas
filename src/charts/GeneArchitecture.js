@@ -7,6 +7,7 @@ import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../help
 import { interpolateHcl } from 'd3-interpolate';
 
 import BrushGeneric from '../components/BrushGeneric';
+import {closestFromArray} from '../helpers/Helpers'
 
 let arr1 = [{name: 'james', color: 'yellow'}, {name: 'jennifer', color: 'purple'}, {name: 'jennifer', color: 'whoknow'}]
 let arr2 = [{name: 'james'}, {name: 'jennifer'}, {name: 'penolope'}]
@@ -26,6 +27,8 @@ class GeneArchitecture extends Component {
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
+
+        this.interval = closestFromArray(this.props.data.map(d => d.output_gen).filter(unique))
 
     }
     archRef = React.createRef();
@@ -54,6 +57,8 @@ class GeneArchitecture extends Component {
 
 
     render(){
+        const xScale = this.xScale;
+        const interval = this.interval;
 
         function SingleGrandient(props){
             let selectedData = props.data.filter(d => d.output_gen === props.gen)
@@ -107,9 +112,10 @@ class GeneArchitecture extends Component {
             const selection = event.selection;
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
-                console.log(selection)
+                let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
+                console.log(x0)
+                console.log(x1)
             }
-            console.log(selection)
         }
 
         const brush = <BrushGeneric endExtentX={this.props.width}
