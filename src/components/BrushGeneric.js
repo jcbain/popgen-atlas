@@ -12,10 +12,14 @@ class BrushGeneric extends Component{
     brushRef = React.createRef()
 
     componentDidMount(){
+        const brushFn = this.props.callBrush;
         const genericBrush = brushX()
             .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
             .on('brush', this.brushed)
-            
+
+        brushFn(genericBrush)
+        console.log(brushFn)
+
         select(this.brushRef.current)
             .call(genericBrush)
             
