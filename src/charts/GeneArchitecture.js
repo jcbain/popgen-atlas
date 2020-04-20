@@ -6,6 +6,8 @@ import { min, max } from 'd3-array';
 import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 import { interpolateHcl } from 'd3-interpolate';
 
+import BrushGeneric from '../components/BrushGeneric';
+
 let arr1 = [{name: 'james', color: 'yellow'}, {name: 'jennifer', color: 'purple'}, {name: 'jennifer', color: 'whoknow'}]
 let arr2 = [{name: 'james'}, {name: 'jennifer'}, {name: 'penolope'}]
 
@@ -80,6 +82,8 @@ class GeneArchitecture extends Component {
         }
 
         const gradients = this.generations
+        // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
+        //       Perhaps look into better data joining or lifecyclee methods
             .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
                             id={`gen-grad-${d}`}
@@ -102,6 +106,7 @@ class GeneArchitecture extends Component {
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
                 {gens}
+                {BrushGeneric}
 
             </svg>
         )
