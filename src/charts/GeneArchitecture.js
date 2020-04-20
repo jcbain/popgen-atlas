@@ -105,6 +105,10 @@ class GeneArchitecture extends Component {
 
         function brushed() {
             const selection = event.selection;
+            if (!event.sourceEvent || !selection) return;
+            if (selection !== null) {
+                console.log(selection)
+            }
             console.log(selection)
         }
 

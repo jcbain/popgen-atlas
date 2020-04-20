@@ -15,6 +15,7 @@ class BrushGeneric extends Component{
         const genericBrush = brushX()
             .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
             .on('brush', this.brushed)
+            
         select(this.brushRef.current)
             .call(genericBrush)
             
