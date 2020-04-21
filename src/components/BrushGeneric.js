@@ -7,23 +7,26 @@ class BrushGeneric extends Component{
     constructor(props){
         super(props);
         this.brushed = this.props.brushed.bind(this)
+        this.genericBrush = brushX()
+            .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
+            .on('brush', this.brushed)
+
     }
 
     brushRef = React.createRef()
 
     componentDidMount(){
-        const brushFn = this.props.callBrush;
-        const genericBrush = brushX()
-            .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
-            .on('brush', this.brushed)
+        // const genericBrush = brushX()
+        //     .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
+        //     .on('brush', this.brushed)
 
-        brushFn(genericBrush)
-        console.log(brushFn)
+
 
         select(this.brushRef.current)
-            .call(genericBrush)
+            .call(this.genericBrush)
             
     }
+
 
     render(){
         

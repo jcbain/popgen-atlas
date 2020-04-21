@@ -68,6 +68,7 @@ class ContextBrush extends Component {
             } else{
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)));
                 select(this).transition().duration(1).call(contextBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+                console.log(this)
                 selectAll(`.${classStopName.start01}`).transition().duration(1).attr('offset', brushScale(x0) + '%');
                 selectAll(`.${classStopName.start02}`).transition().duration(1).attr('offset', brushScale(x0) + '%');
                 selectAll(`.${classStopName.end01}`).transition().duration(1).attr('offset', brushScale(x1) + '%');

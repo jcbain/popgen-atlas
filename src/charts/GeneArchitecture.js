@@ -29,13 +29,12 @@ class GeneArchitecture extends Component {
             .interpolate(interpolateHcl);
 
         this.interval = closestFromArray(this.props.data.map(d => d.output_gen).filter(unique))
-
+        
     }
     archRef = React.createRef();
 
+
     componentDidMount(){
-        console.log(this.data)
-        console.log(leftJoinByAttr(arr2, arr1, ['name'], {color: 'color'}))
     //    console.log( this.data.filter(d => d.output_gen === 50000))
     //    console.log(this.xScale(50000))
     //    console.log(this.generations)
@@ -54,17 +53,12 @@ class GeneArchitecture extends Component {
 
 
     }
-    callBrush(d) {
-        console.log(d)
-        return d;
 
-    }
 
 
     render(){
         const xScale = this.xScale;
         const interval = this.interval;
-        const brushFn = this.callBrush;
 
         function SingleGrandient(props){
             let selectedData = props.data.filter(d => d.output_gen === props.gen)
@@ -119,7 +113,8 @@ class GeneArchitecture extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
-                console.log(brushFn)
+                console.log(this.genericBrush)
+                select(this.brushRef.current).transition().call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 // console.log(x0)
                 // console.log(x1)
             }
@@ -127,7 +122,6 @@ class GeneArchitecture extends Component {
 
         const brush = <BrushGeneric endExtentX={this.props.width}
                                     endExtentY={this.props.height}
-                                    callBrush={this.callBrush}
                                     brushed={brushed}></BrushGeneric>
         return(
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
