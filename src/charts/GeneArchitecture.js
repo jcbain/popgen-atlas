@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { select, selectAll, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
+import { axisBottom } from 'd3-axis';
 
 import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 import { interpolateHcl } from 'd3-interpolate';
@@ -22,7 +23,7 @@ class GeneArchitecture extends Component {
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.genWidth = this.props.width/this.generations.length;
         this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
-        this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100])
+        this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, this.props.height])
         this.colorScale = scaleLinear()
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
@@ -33,28 +34,15 @@ class GeneArchitecture extends Component {
     }
     archRef = React.createRef();
 
+    xAxis = g => g
+        .attr("transform", `translate(0,${this.props.height})`)
+        .call(axisBottom(this.xScale));
 
     componentDidMount(){
-
-    //    console.log( this.data.filter(d => d.output_gen === 50000))
-    //    console.log(this.xScale(50000))
-    //    console.log(this.generations)
-    //    select(this.archRef.current)
-    //    .selectAll('.genome-cross')
-    //    .data(this.generations)
-    //    .enter()
-    //    .append('rect')
-    //    .attr('x', d => this.xScale(d))
-    //    .attr('y',  0)
-    //    .attr('width', this.genWidth)
-    //    .attr('height', this.props.height)
-    //    .attr('fill', d => `url(#gen-grad-${d})`)
-    //    .attr('stroke', d => `url(#gen-grad-${d})`)
-
-
-
+        select(this.archRef.current)
+            .append('g')
+            .call(this.xAxis)
     }
-
 
 
     render(){
@@ -85,7 +73,6 @@ class GeneArchitecture extends Component {
                                     //  stroke={`url(#gen-grad-${props.gen})`}
                                      opacity={0.2}
                                      strokeOpacity={0.5}>
-
             </rect>
 
             return generation;
@@ -122,11 +109,11 @@ class GeneArchitecture extends Component {
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#genome-cross-${d}`)
                 const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#genome-cross-${d}`)
                 if(relevantIds.length !== 0){
-                selectAll(relevantIds.join(", "))
-                    .transition()
-                    .duration(1)
-                    .attr('opacity', 1)}
-
+                    selectAll(relevantIds.join(", "))
+                        .transition()
+                        .duration(1)
+                        .attr('opacity', 1)
+                }
                 if(irrelevantIds.length !== 0){
                     selectAll(irrelevantIds.join(", "))
                         .transition()

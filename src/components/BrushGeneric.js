@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { brushX } from 'd3-brush';
 import { select } from 'd3-selection';
 
+import './styles/brush_generic_styles.css';
+
 
 class BrushGeneric extends Component{
     constructor(props){
