@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { select, event } from 'd3-selection';
+import { select, selectAll, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 
@@ -27,7 +27,8 @@ class GeneArchitecture extends Component {
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
-        this.interval = closestFromArray(this.generations.concat(this.xScale.invert(this.props.width)))
+        this.generationReferences = this.generations.concat(this.xScale.invert(this.props.width))
+        this.interval = closestFromArray(this.generationReferences)
         
     }
     archRef = React.createRef();
@@ -59,6 +60,7 @@ class GeneArchitecture extends Component {
     render(){
         const xScale = this.xScale;
         const interval = this.interval;
+        const generationReferences = this.generationReferences;
 
         function SingleGrandient(props){
             let selectedData = props.data.filter(d => d.output_gen === props.gen)
@@ -74,12 +76,15 @@ class GeneArchitecture extends Component {
 
         function SingleGeneration(props){
             const generation = <rect className="genome-cross"
+                                     id={`genome-cross-${props.gen}`}
                                      x={props.xScale(props.gen)}
                                      y={0}
                                      width={props.genWidth}
                                      height={props.height}
                                      fill={`url(#gen-grad-${props.gen})`}
-                                     stroke={`url(#gen-grad-${props.gen})`}>
+                                    //  stroke={`url(#gen-grad-${props.gen})`}
+                                     opacity={0.5}
+                                     strokeOpacity={0.5}>
 
             </rect>
 
@@ -113,10 +118,14 @@ class GeneArchitecture extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
-                console.log(this.genericBrush)
-                select(this.brushRef.current).transition().call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
-                // console.log(x0)
-                // console.log(x1)
+                select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+                const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#genome-cross-${d}`)
+                console.log(relevantIds.join(", "))
+                if(relevantIds.length !== 0){
+                selectAll(relevantIds.join(", "))
+                    .transition()
+                    .duration(1)
+                    .attr('opacity', 100)}
             }
         }
 
