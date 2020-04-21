@@ -27,7 +27,7 @@ class GeneArchitecture extends Component {
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
-        this.generationReferences = this.generations.concat(this.xScale.invert(this.props.width))
+        this.generationReferences = this.generations.concat(Math.round(this.xScale.invert(this.props.width)))
         this.interval = closestFromArray(this.generationReferences)
         
     }
@@ -83,7 +83,7 @@ class GeneArchitecture extends Component {
                                      height={props.height}
                                      fill={`url(#gen-grad-${props.gen})`}
                                     //  stroke={`url(#gen-grad-${props.gen})`}
-                                     opacity={0.5}
+                                     opacity={0.2}
                                      strokeOpacity={0.5}>
 
             </rect>
@@ -120,12 +120,18 @@ class GeneArchitecture extends Component {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
                 select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#genome-cross-${d}`)
-                console.log(relevantIds.join(", "))
+                const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#genome-cross-${d}`)
                 if(relevantIds.length !== 0){
                 selectAll(relevantIds.join(", "))
                     .transition()
                     .duration(1)
-                    .attr('opacity', 100)}
+                    .attr('opacity', 1)}
+
+                if(irrelevantIds.length !== 0){
+                    selectAll(irrelevantIds.join(", "))
+                        .transition()
+                        .duration(1)
+                        .attr('opacity', .5)}
             }
         }
 
