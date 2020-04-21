@@ -27,14 +27,14 @@ class GeneArchitecture extends Component {
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
-
-        this.interval = closestFromArray(this.props.data.map(d => d.output_gen).filter(unique))
+        this.interval = closestFromArray(this.generations.concat(this.xScale.invert(this.props.width)))
         
     }
     archRef = React.createRef();
 
 
     componentDidMount(){
+
     //    console.log( this.data.filter(d => d.output_gen === 50000))
     //    console.log(this.xScale(50000))
     //    console.log(this.generations)
