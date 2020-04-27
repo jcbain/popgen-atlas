@@ -15,6 +15,7 @@ import LineChart from '../../charts/LineChart';
 import Genome from '../../charts/Genome';
 import ScrollingPop from '../../charts/ScrollingPopulationIndividuals';
 import GeneArchitecture from '../../charts/GeneArchitecture';
+import GeneArchGroup from '../../components/GeneArchGroup';
 
 import './styles/local_adaptation_styles.css';
 
@@ -84,13 +85,18 @@ class LocalAdaptation extends Component {
                       numCols={40}
                       popDirection={false}></ScrollingPop> */}
 
-        <GeneArchitecture data={data}
+        {/* <GeneArchitecture data={data}
                           template={template}
                           params={this.state.params}
                           height={100}
                           width={200}
                           addBrush={true}>
-        </GeneArchitecture>
+        </GeneArchitecture> */}
+        <GeneArchGroup data={data} 
+            template={template}
+            params={this.state.params}>
+
+        </GeneArchGroup>
 
         <section id="divergent-plots">
           <div className="divergent-top">
