@@ -88,7 +88,8 @@ class LocalAdaptation extends Component {
                           template={template}
                           params={this.state.params}
                           height={100}
-                          width={200}>
+                          width={200}
+                          addBrush={true}>
         </GeneArchitecture>
 
         <section id="divergent-plots">

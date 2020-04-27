@@ -8,10 +8,7 @@ import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../help
 import { interpolateHcl } from 'd3-interpolate';
 
 import BrushGeneric from '../components/BrushGeneric';
-import {closestFromArray} from '../helpers/Helpers'
-
-let arr1 = [{name: 'james', color: 'yellow'}, {name: 'jennifer', color: 'purple'}, {name: 'jennifer', color: 'whoknow'}]
-let arr2 = [{name: 'james'}, {name: 'jennifer'}, {name: 'penolope'}]
+import {closestFromArray} from '../helpers/Helpers';
 
 class GeneArchitecture extends Component {
     constructor(props){
@@ -63,6 +60,7 @@ class GeneArchitecture extends Component {
         }
 
         function SingleGeneration(props){
+            const opac = props.addBrush ? 0.2 : 1;
             const generation = <rect className="genome-cross"
                                      id={`genome-cross-${props.gen}`}
                                      x={props.xScale(props.gen)}
@@ -71,7 +69,7 @@ class GeneArchitecture extends Component {
                                      height={props.height}
                                      fill={`url(#gen-grad-${props.gen})`}
                                     //  stroke={`url(#gen-grad-${props.gen})`}
-                                     opacity={0.2}
+                                     opacity={opac}
                                      strokeOpacity={0.5}>
             </rect>
 
@@ -97,7 +95,8 @@ class GeneArchitecture extends Component {
                                    gen={d}
                                    xScale={this.xScale}
                                    genWidth={this.genWidth}
-                                   height={this.props.height}></SingleGeneration>
+                                   height={this.props.height}
+                                   addBrush={this.props.addBrush}></SingleGeneration>
         )
 
         function brushed() {
@@ -122,9 +121,15 @@ class GeneArchitecture extends Component {
             }
         }
 
-        const brush = <BrushGeneric endExtentX={this.props.width}
-                                    endExtentY={this.props.height}
-                                    brushed={brushed}></BrushGeneric>
+
+        let brush;
+        if(this.props.addBrush){
+            brush = <BrushGeneric endExtentX={this.props.width}
+                                  endExtentY={this.props.height}
+                                  brushed={brushed}>
+                    </BrushGeneric>
+        }
+
         return(
             <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
