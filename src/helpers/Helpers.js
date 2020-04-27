@@ -4,4 +4,8 @@ function closestFromArray (arr) {
     })
 }
 
-export {closestFromArray}
+function createLabel(...args) {
+    return args.join('-')
+}
+
+export {closestFromArray, createLabel}
