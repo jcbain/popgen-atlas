@@ -118,7 +118,7 @@ class GeneArchitecture extends Component {
                     selectAll(irrelevantIds.join(", "))
                         .transition()
                         .duration(1)
-                        .attr('opacity', .5)}
+                        .attr('opacity', .2)}
             }
         }
 
