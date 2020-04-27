@@ -35,7 +35,7 @@ class BrushGeneric extends Component{
         return (
             <g ref={this.brushRef} 
                className="generic-brush">
-               </g>
+            </g>
         )
     }
 }

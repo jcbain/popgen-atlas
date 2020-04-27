@@ -16,6 +16,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={100}
                           width={200}
+                          uniqId={'arch-1'}
                           addBrush={false}></GeneArchitecture>
                 <GeneArchitecture key="gene-arch-2" 
                           data={this.props.data}
@@ -23,6 +24,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={100}
                           width={200}
+                          uniqId={'arch-2'}
                           addBrush={true}></GeneArchitecture>
             </div>
         )

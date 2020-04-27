@@ -8,7 +8,7 @@ import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../help
 import { interpolateHcl } from 'd3-interpolate';
 
 import BrushGeneric from '../components/BrushGeneric';
-import {closestFromArray} from '../helpers/Helpers';
+import {closestFromArray, createLabel} from '../helpers/Helpers';
 
 class GeneArchitecture extends Component {
     constructor(props){
@@ -62,12 +62,14 @@ class GeneArchitecture extends Component {
         function SingleGeneration(props){
             const opac = props.addBrush ? 0.2 : 1;
             const generation = <rect className="genome-cross"
-                                     id={`genome-cross-${props.gen}`}
+                                    id={createLabel('genome-cross', props.uniqId, props.gen)}
+                                    //  id={`genome-cross-${props.gen}`}
                                      x={props.xScale(props.gen)}
                                      y={0}
                                      width={props.genWidth}
                                      height={props.height}
-                                     fill={`url(#gen-grad-${props.gen})`}
+                                     fill={`url(#${createLabel('gen-grad', props.uniqId, props.gen)})`}
+                                    //  fill={`url(#gen-grad-${props.gen})`}
                                     //  stroke={`url(#gen-grad-${props.gen})`}
                                      opacity={opac}
                                      strokeOpacity={0.5}>
@@ -81,7 +83,8 @@ class GeneArchitecture extends Component {
         //       Perhaps look into better data joining or lifecyclee methods
             .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
-                            id={`gen-grad-${d}`}
+                            id={createLabel('gen-grad', this.props.uniqId, d)}
+                            // id={`gen-grad-${d}`}
                             x1={0}
                             x2={0}
                             y1={0}
@@ -96,17 +99,21 @@ class GeneArchitecture extends Component {
                                    xScale={this.xScale}
                                    genWidth={this.genWidth}
                                    height={this.props.height}
+                                   uniqId={this.props.uniqId}
                                    addBrush={this.props.addBrush}></SingleGeneration>
         )
 
+        const idSelector = () => this.props.uniqId;
+
         function brushed() {
+            const uniqId = idSelector()
             const selection = event.selection;
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
                 select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
-                const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#genome-cross-${d}`)
-                const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#genome-cross-${d}`)
+                const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
+                const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
                 if(relevantIds.length !== 0){
                     selectAll(relevantIds.join(", "))
                         .transition()
@@ -120,6 +127,9 @@ class GeneArchitecture extends Component {
                         .attr('opacity', .2)}
             }
         }
+        
+
+
 
 
         let brush;
