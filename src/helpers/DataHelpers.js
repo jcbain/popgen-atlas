@@ -30,7 +30,7 @@ const returnRelevantParams = (data, params) => {
 
 function filterDataByParams(data, parmamSelections){
     const relevantParams = returnRelevantParams(data, parmamSelections);
-
+    
     Object.keys(relevantParams).forEach( d => {
         data = data.filter( v => {
             return v[d] === relevantParams[d]

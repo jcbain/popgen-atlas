@@ -4,6 +4,8 @@ import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { axisBottom } from 'd3-axis';
 
+
+
 import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 import { interpolateHcl } from 'd3-interpolate';
 
@@ -15,8 +17,7 @@ class GeneArchitecture extends Component {
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params),this.props.template, ['position'], {positional_map: 'ind'}, 'james').filter(d => d.pop === 1);
-        this.newData = leftJoinByAttr(this.props.template, filterDataByParams(this.props.data, this.params), ['position'], {ind: 'ind'})
+        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.genWidth = this.props.width/this.generations.length;
         this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
@@ -43,6 +44,12 @@ class GeneArchitecture extends Component {
 
 
     render(){
+        if(this.props.uniqId === "arch-1"){
+            console.log(this.props.data)
+            console.log(this.data)
+            console.log(this.generations)
+            console.log(this.props.data.map(d => d.output_gen).filter(unique))
+        }
         const xScale = this.xScale;
         const interval = this.interval;
         const generationReferences = this.generationReferences;
@@ -104,6 +111,8 @@ class GeneArchitecture extends Component {
         )
 
         const idSelector = () => this.props.uniqId;
+        const brushFn = this.props.changeBrush;
+
 
         function brushed() {
             const uniqId = idSelector()
@@ -114,6 +123,7 @@ class GeneArchitecture extends Component {
                 select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
                 const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
+                brushFn([x0, x1])
                 if(relevantIds.length !== 0){
                     selectAll(relevantIds.join(", "))
                         .transition()
@@ -126,6 +136,7 @@ class GeneArchitecture extends Component {
                         .duration(1)
                         .attr('opacity', .2)}
             }
+            
         }
         
 
@@ -141,7 +152,7 @@ class GeneArchitecture extends Component {
         }
 
         return(
-            <svg viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
+            <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
                 {gradients}
                 {gens}
                 {brush}
