@@ -24,7 +24,7 @@ class GeneArchGroup extends Component {
         console.log(this.data)
         const start = this.state.start;
         const end = this.state.end;
-        const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen <= end)
+        const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
         return(
             <div>
                 <GeneArchitecture key="gene-arch-1" 
