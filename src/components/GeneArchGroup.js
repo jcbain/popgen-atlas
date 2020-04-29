@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
+
 import './styles/gene_arch_group_styles.css'
 
 import GeneArchitecture from '../charts/GeneArchitecture';
@@ -7,15 +9,19 @@ class GeneArchGroup extends Component {
     constructor(props){
         super(props);
         this.onBrush = this.onBrush.bind(this);
-        this.state = {start: 20000, end:51000}
+        this.params = removeParams(this.props.params, ['output_gen', 'pop']);
+
+        this.state = {start: 40000, end:44000}
     }
 
     onBrush(d) {
         this.setState({start: d[0], end: d[1]})
         console.log(this.state)
+  
     }
 
     render(){
+        console.log(this.data)
         const start = this.state.start;
         const end = this.state.end;
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen <= end)

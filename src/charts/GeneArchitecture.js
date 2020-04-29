@@ -17,42 +17,50 @@ class GeneArchitecture extends Component {
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
-        this.generations = this.props.data.map(d => d.output_gen).filter(unique);
-        this.genWidth = this.props.width/this.generations.length;
-        this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
-        this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, this.props.height])
+        // this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
+        // this.generations = this.props.data.map(d => d.output_gen).filter(unique);
+        // this.genWidth = this.props.width/this.generations.length;
+        // this.xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - this.genWidth]);
+        // this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, this.props.height])
         this.colorScale = scaleLinear()
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#4056a1', '#f1f0eb', '#f13c20'])
             .interpolate(interpolateHcl);
-        this.generationReferences = this.generations.concat(Math.round(this.xScale.invert(this.props.width)))
-        this.interval = closestFromArray(this.generationReferences)
+        // this.generationReferences = this.generations.concat(Math.round(this.xScale.invert(this.props.width)))
+        // this.interval = closestFromArray(this.generationReferences)
         
     }
     archRef = React.createRef();
 
-    xAxis = g => g
-        .attr("transform", `translate(0,${this.props.height})`)
-        .call(axisBottom(this.xScale));
+    // xAxis = g => g
+    //     .attr("transform", `translate(0,${this.props.height})`)
+    //     .call(axisBottom(this.xScale));
 
-    componentDidMount(){
-        select(this.archRef.current)
-            .append('g')
-            .call(this.xAxis)
-    }
+    // componentDidMount(){
+    //     select(this.archRef.current)
+    //         .append('g')
+    //         .call(this.xAxis)
+    // }
 
 
     render(){
-        if(this.props.uniqId === "arch-1"){
-            console.log(this.props.data)
-            console.log(this.data)
-            console.log(this.generations)
-            console.log(this.props.data.map(d => d.output_gen).filter(unique))
-        }
-        const xScale = this.xScale;
-        const interval = this.interval;
-        const generationReferences = this.generationReferences;
+        // if(this.props.uniqId === "arch-1"){
+        //     console.log(this.props.data)
+        //     console.log(this.data)
+        //     console.log(this.generations)
+        //     console.log(this.props.data.map(d => d.output_gen).filter(unique))
+        // }
+        // const xScale = this.xScale;
+        // const interval = this.interval;
+        // const generationReferences = this.generationReferences;
+        const params = removeParams(this.props.params, ['output_gen', 'pop']);
+        const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
+        const generations = this.props.data.map(d => d.output_gen).filter(unique);
+        const genWidth = this.props.width/generations.length;
+        const xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - genWidth]);
+        const yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, this.props.height])
+        const generationReferences = generations.concat(Math.round(xScale.invert(this.props.width)))
+        const interval = closestFromArray(generationReferences)
 
         function SingleGrandient(props){
             let selectedData = props.data.filter(d => d.output_gen === props.gen)
@@ -85,7 +93,7 @@ class GeneArchitecture extends Component {
             return generation;
         }
 
-        const gradients = this.generations
+        const gradients = generations
         // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
         //       Perhaps look into better data joining or lifecyclee methods
             .map( d => <linearGradient key={`gen-grad-${d}`}
@@ -96,15 +104,15 @@ class GeneArchitecture extends Component {
                             x2={0}
                             y1={0}
                             y2={this.props.height}>
-                <SingleGrandient data={this.data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={this.yScale}>
+                <SingleGrandient data={data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={yScale}>
                 </SingleGrandient>
             </linearGradient>)
 
-        const gens = this.generations.map(
+        const gens = generations.map(
             d => <SingleGeneration key={`genome-cross-${d}`}
                                    gen={d}
-                                   xScale={this.xScale}
-                                   genWidth={this.genWidth}
+                                   xScale={xScale}
+                                   genWidth={genWidth}
                                    height={this.props.height}
                                    uniqId={this.props.uniqId}
                                    addBrush={this.props.addBrush}></SingleGeneration>
