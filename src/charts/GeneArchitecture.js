@@ -5,7 +5,6 @@ import { min, max } from 'd3-array';
 import { axisBottom } from 'd3-axis';
 
 
-
 import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
 import { interpolateHcl } from 'd3-interpolate';
 
