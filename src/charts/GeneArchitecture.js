@@ -5,8 +5,7 @@ import { min, max } from 'd3-array';
 import { axisBottom } from 'd3-axis';
 
 
-import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
-import { interpolateHcl } from 'd3-interpolate';
+import { unique} from '../helpers/DataHelpers';
 
 import BrushGeneric from '../components/BrushGeneric';
 import {closestFromArray, createLabel} from '../helpers/Helpers';
@@ -15,10 +14,6 @@ class GeneArchitecture extends Component {
     constructor(props){
         super(props);
         this.gradients = this.props.gradients;
-        this.colorScale = scaleLinear()
-        .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-            .range(['#4056a1', '#f1f0eb', '#f13c20'])
-            .interpolate(interpolateHcl);
         
     }
     archRef = React.createRef();
@@ -96,10 +91,6 @@ class GeneArchitecture extends Component {
             }
             
         }
-        
-
-
-
 
         let brush;
         if(this.props.addBrush){
@@ -111,7 +102,6 @@ class GeneArchitecture extends Component {
 
         return(
             <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
-                {/* {gradients} */}
                 {this.gradients}
                 {gens}
                 {brush}

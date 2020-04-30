@@ -10,7 +10,6 @@ import {createLabel} from '../helpers/Helpers';
 import './styles/gene_arch_group_styles.css'
 
 import GeneArchitecture from '../charts/GeneArchitecture';
-import { create } from 'd3';
 
 class GeneArchGroup extends Component {
     constructor(props){
