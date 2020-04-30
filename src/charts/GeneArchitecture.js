@@ -14,7 +14,6 @@ import {closestFromArray, createLabel} from '../helpers/Helpers';
 class GeneArchitecture extends Component {
     constructor(props){
         super(props);
-        // this.props.template.forEach((v,i) => v.ind = i);
         this.gradients = this.props.gradients;
         this.colorScale = scaleLinear()
         .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
@@ -36,29 +35,13 @@ class GeneArchitecture extends Component {
 
 
     render(){
-        const params = removeParams(this.props.params, ['output_gen', 'pop']);
-        const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
         const generations = this.props.data.map(d => d.output_gen).filter(unique);
         const genWidth = this.props.width/generations.length;
         const xScale = scaleLinear().domain([min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]).range([0, this.props.width - genWidth]);
-        const yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, this.props.height])
         const generationReferences = generations.concat(Math.round(xScale.invert(this.props.width)))
         const interval = closestFromArray(generationReferences)
         const brushFn = this.props.changeBrush;
         const idSelector = () => this.props.uniqId;
-
-
-        // function SingleGrandient(props){
-        //     let selectedData = props.data.filter(d => d.output_gen === props.gen)
-        //     const selectSingle = (i) => selectedData.find(e => e.positional_map === i)
-        //     const gradient = props.template.map( d =>
-        //         <stop key={`stop-gen-${props.gen}-ind-${d.ind}`}
-        //               stopColor={(selectSingle(d.ind) !== undefined) ? props.colorScale(selectSingle(d.ind).positional_phen) : props.colorScale(0)}
-        //               offset={props.yScale(d.ind) + "%"}>
-        //         </stop>
-        //     )
-        //     return gradient;
-        // }
 
         function SingleGeneration(props){
             const opac = props.addBrush ? 0.2 : 1;
@@ -78,21 +61,6 @@ class GeneArchitecture extends Component {
 
             return generation;
         }
-
-        // const gradients = generations
-        // // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
-        // //       Perhaps look into better data joining or lifecyclee methods
-        //     .map( d => <linearGradient key={`gen-grad-${d}`}
-        //                     gradientUnits='userSpaceOnUse'
-        //                     id={createLabel('gen-grad', this.props.uniqId, d)}
-        //                     // id={`gen-grad-${d}`}
-        //                     x1={0}
-        //                     x2={0}
-        //                     y1={0}
-        //                     y2={this.props.height}>
-        //         <SingleGrandient data={data} template={this.props.template} gen={d} colorScale={this.colorScale} yScale={yScale}>
-        //         </SingleGrandient>
-        //     </linearGradient>)
 
         const gens = generations.map(
             d => <SingleGeneration key={`genome-cross-${d}`}

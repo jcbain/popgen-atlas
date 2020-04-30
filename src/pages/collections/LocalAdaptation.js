@@ -44,7 +44,7 @@ class LocalAdaptation extends Component {
     super(props);
     this.focusStartExent = {x0: 1000, x1: 5000};
     this.onBrush = this.onBrush.bind(this);
-    
+
     this.state = { 
       focusBrushExtent: [this.focusStartExent.x0, this.focusStartExent.x1],
       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
