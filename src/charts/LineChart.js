@@ -15,7 +15,7 @@ class LineChart extends Component {
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop'])
         this.onBrush = this.onBrush.bind(this);
-        this.startExtent = {x0: 1000, x1: 5000};
+        this.startExtent = {x0: 1000, x1: 10000};
         
         this.state = { brushExtent: [this.startExtent.x0, this.startExtent.x1]}
         this.dataFiltered = filterDataByParams(this.props.data, this.params)

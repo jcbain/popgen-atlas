@@ -14,6 +14,7 @@ class GeneArchitecture extends Component {
     constructor(props){
         super(props);
         this.gradients = this.props.gradients;
+        this.startExtent = [1000, 10000]
         
     }
     archRef = React.createRef();
@@ -47,7 +48,7 @@ class GeneArchitecture extends Component {
                                      width={props.genWidth}
                                      height={props.height}
                                      fill={`url(#${createLabel('gen-grad', props.uniqId, props.gen)})`}
-                                     opacity={opac}
+                                     opacity={props.gen >= props.startExtent[0] & props.gen < props.startExtent[1] ? 1 : opac}
                                      strokeOpacity={0.5}>
             </rect>
 
@@ -61,7 +62,8 @@ class GeneArchitecture extends Component {
                                    genWidth={genWidth}
                                    height={this.props.height}
                                    uniqId={this.props.uniqId}
-                                   addBrush={this.props.addBrush}></SingleGeneration>
+                                   addBrush={this.props.addBrush}
+                                   startExtent={this.startExtent}></SingleGeneration>
         )
 
         function brushed() {
@@ -70,6 +72,7 @@ class GeneArchitecture extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
+                console.log([x0, x1])
                 select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
                 const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
@@ -106,6 +109,7 @@ class GeneArchitecture extends Component {
         if(this.props.addBrush){
             brush = <BrushGeneric endExtentX={this.props.width}
                                   endExtentY={this.props.height}
+                                  startExtent={this.startExtent}
                                   brushed={brushed}
                                   xScale={xScale}
                                   touchCentered={centerBrushOnTouch}>

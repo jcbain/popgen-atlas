@@ -46,7 +46,6 @@ class ContextBrush extends Component {
             .append('g')
             .attr('class', 'brush');
         
-        console.log(node)
         select(node)
             .select('g.brush')
             .call(contextBrush)
@@ -68,8 +67,8 @@ class ContextBrush extends Component {
                 selectAll('.right').attr('offset', '0%')
             } else{
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)));
+                console.log([x0, x1])
                 select(this).transition().duration(1).call(contextBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
-                console.log(this)
                 selectAll(`.${classStopName.start01}`).transition().duration(1).attr('offset', brushScale(x0) + '%');
                 selectAll(`.${classStopName.start02}`).transition().duration(1).attr('offset', brushScale(x0) + '%');
                 selectAll(`.${classStopName.end01}`).transition().duration(1).attr('offset', brushScale(x1) + '%');
@@ -81,12 +80,9 @@ class ContextBrush extends Component {
 
         function centerAroundTouch() {
             let dx = xScale(5000);
-            console.log(this)
             let [cx] = mouse(this);
             let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
             let [X0, X1] = xScale.domain();
-            console.log(contextBrush)
-            console.log(this.parentNode)
             select(this.parentNode)
                 .call(contextBrush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
                     : x0 < X0 ? [X0, X0 + dx].map(xScale) 
