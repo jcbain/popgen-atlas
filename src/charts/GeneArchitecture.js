@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { select, selectAll, event } from 'd3-selection';
+import { select, selectAll, event, mouse} from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { axisBottom } from 'd3-axis';
@@ -42,14 +42,11 @@ class GeneArchitecture extends Component {
             const opac = props.addBrush ? 0.2 : 1;
             const generation = <rect className="genome-cross"
                                     id={createLabel('genome-cross', props.uniqId, props.gen)}
-                                    //  id={`genome-cross-${props.gen}`}
                                      x={props.xScale(props.gen)}
                                      y={0}
                                      width={props.genWidth}
                                      height={props.height}
                                      fill={`url(#${createLabel('gen-grad', props.uniqId, props.gen)})`}
-                                    //  fill={`url(#gen-grad-${props.gen})`}
-                                    //  stroke={`url(#gen-grad-${props.gen})`}
                                      opacity={opac}
                                      strokeOpacity={0.5}>
             </rect>
@@ -92,11 +89,15 @@ class GeneArchitecture extends Component {
             
         }
 
+
+
         let brush;
         if(this.props.addBrush){
             brush = <BrushGeneric endExtentX={this.props.width}
                                   endExtentY={this.props.height}
-                                  brushed={brushed}>
+                                  brushed={brushed}
+                                  xScale={xScale}
+                                  interval={interval}>
                     </BrushGeneric>
         }
 
@@ -105,13 +106,10 @@ class GeneArchitecture extends Component {
                 {this.gradients}
                 {gens}
                 {brush}
-
             </svg>
         )
     }
 }
-
-
 
 
 export default GeneArchitecture;

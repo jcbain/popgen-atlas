@@ -59,7 +59,6 @@ class GeneArchGroup extends Component {
             .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
                             id={createLabel('gen-grad', name, d)}
-                            // id={`gen-grad-${d}`}
                             x1={0}
                             x2={0}
                             y1={0}
@@ -94,7 +93,7 @@ class GeneArchGroup extends Component {
                           changeBrush={this.onBrush}
                           addBrush={true}
                           gradients={gradsArch2}>
-                          </GeneArchitecture>
+                </GeneArchitecture>
             </div>
         )
     }

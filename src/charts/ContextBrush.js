@@ -45,7 +45,8 @@ class ContextBrush extends Component {
             .enter()
             .append('g')
             .attr('class', 'brush');
-
+        
+        console.log(node)
         select(node)
             .select('g.brush')
             .call(contextBrush)
@@ -80,6 +81,7 @@ class ContextBrush extends Component {
 
         function centerAroundTouch() {
             let dx = xScale(5000);
+            console.log(this)
             let [cx] = mouse(this);
             let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
             let [X0, X1] = xScale.domain();
