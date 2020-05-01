@@ -18,32 +18,33 @@ class BrushGeneric extends Component{
     brushRef = React.createRef()
 
     componentDidMount(){
-        const xScale = this.props.xScale;
-        const interval = this.props.interval;
         const genericBrush = this.genericBrush;
+        const touchCentered = this.props.touchCentered.bind(this.brushRef.current);
+        function referenceCenterBrush(brush) {
+            return () => touchCentered(brush)
+        }
+        const centerBrushOnTouch = referenceCenterBrush(genericBrush);
 
         select(this.brushRef.current)
             .call(this.genericBrush)
             .call(this.genericBrush.move, [1000, 3000].map(this.props.xScale))
             .call(g => g.select('.overlay')
             .datum({type: 'selection'})
-            .on('mousedown touchstart', centerBrushOnTouch))
-        console.log(this.genericBrush)
-        console.log(this.brushRef.current)
+            .on('mousedown touchstart', centerBrushOnTouch));
 
-        function centerBrushOnTouch(){
-            // perhaps move this out but need to figure out how to reference generic brush
-            const dx = xScale(2000)
-            console.log(this)
-            const [cx] = mouse(this);
-            let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
-            let [X0, X1] = xScale.domain();
+        // function centerBrushOnTouch2(){
+        //     // perhaps move this out but need to figure out how to reference generic brush
+        //     const dx = xScale(2000)
+        //     console.log(this)
+        //     const [cx] = mouse(this);
+        //     let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
+        //     let [X0, X1] = xScale.domain();
             
-            select(this.parentNode)
-                .call(genericBrush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
-                    : x0 < X0 ? [X0, X0 + dx].map(xScale) 
-                    : [x0, x1].map(xScale));
-        }
+        //     select(this.parentNode)
+        //         .call(genericBrush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
+        //             : x0 < X0 ? [X0, X0 + dx].map(xScale) 
+        //             : [x0, x1].map(xScale));
+        // }
         // select(this.brushRef.current)
         //     .call(g => g.select('.overlay')
         //         .datum({type: 'selection'})

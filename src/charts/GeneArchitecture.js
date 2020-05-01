@@ -89,6 +89,17 @@ class GeneArchitecture extends Component {
             
         }
 
+        function centerBrushOnTouch(brush) {
+            const dx  = xScale(2000);
+            const [cx] = mouse(this);
+            const [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
+            const [X0, X1] = xScale.domain();
+            select(this)
+                .call(brush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
+                : x0 < X0 ? [X0, X0 + dx].map(xScale) 
+                : [x0, x1].map(xScale));
+        }
+
 
 
         let brush;
@@ -97,7 +108,7 @@ class GeneArchitecture extends Component {
                                   endExtentY={this.props.height}
                                   brushed={brushed}
                                   xScale={xScale}
-                                  interval={interval}>
+                                  touchCentered={centerBrushOnTouch}>
                     </BrushGeneric>
         }
 

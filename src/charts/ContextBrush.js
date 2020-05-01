@@ -85,6 +85,8 @@ class ContextBrush extends Component {
             let [cx] = mouse(this);
             let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
             let [X0, X1] = xScale.domain();
+            console.log(contextBrush)
+            console.log(this.parentNode)
             select(this.parentNode)
                 .call(contextBrush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
                     : x0 < X0 ? [X0, X0 + dx].map(xScale) 
