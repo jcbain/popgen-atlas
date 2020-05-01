@@ -34,6 +34,7 @@ class BrushGeneric extends Component{
         function centerBrushOnTouch(){
             // perhaps move this out but need to figure out how to reference generic brush
             const dx = xScale(2000)
+            console.log(this)
             const [cx] = mouse(this);
             let [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
             let [X0, X1] = xScale.domain();

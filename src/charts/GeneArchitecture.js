@@ -85,7 +85,7 @@ class GeneArchitecture extends Component {
                         .transition()
                         .duration(1)
                         .attr('opacity', .2)}
-            }
+            }  
             
         }
 
