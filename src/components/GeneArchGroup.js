@@ -36,8 +36,8 @@ class GeneArchGroup extends Component {
         const start = this.state.start;
         const end = this.state.end;
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
-        const gradsArch1 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, this.archLabels[0])
-        const gradsArch2 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, this.archLabels[1])
+        const gradsArch1 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
+        const gradsArch2 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
         
 
         function SingleGradient(props){
@@ -54,7 +54,7 @@ class GeneArchGroup extends Component {
             return gradient;
         }
 
-        function createGradients(generations, data, template, colorScale, yScale, name){
+        function createGradients(generations, data, template, colorScale, yScale, height, name){
             const gradients = generations
             .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
@@ -63,7 +63,7 @@ class GeneArchGroup extends Component {
                             x1={0}
                             x2={0}
                             y1={0}
-                            y2={100}>
+                            y2={height}>
                 <SingleGradient data={data} template={template} gen={d} colorScale={colorScale} yScale={yScale}>
                 </SingleGradient>
             </linearGradient>)
@@ -88,7 +88,7 @@ class GeneArchGroup extends Component {
                           data={this.props.data}
                           template={this.props.template}
                           params={this.props.params}
-                          height={100}
+                          height={200}
                           width={800}
                           uniqId={this.archLabels[1]}
                           changeBrush={this.onBrush}
