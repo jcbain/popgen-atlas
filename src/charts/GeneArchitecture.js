@@ -72,7 +72,6 @@ class GeneArchitecture extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
-                console.log([x0, x1])
                 select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
                 const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)

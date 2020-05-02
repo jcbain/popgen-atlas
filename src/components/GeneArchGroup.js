@@ -88,7 +88,7 @@ class GeneArchGroup extends Component {
                           template={this.props.template}
                           params={this.props.params}
                           height={200}
-                          width={800}
+                          width={2000}
                           uniqId={this.archLabels[1]}
                           changeBrush={this.onBrush}
                           addBrush={true}
