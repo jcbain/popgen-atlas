@@ -56,7 +56,7 @@ class GeneArchGroup extends Component {
 
         function createGradients(generations, data, template, colorScale, yScale, height, name){
             const gradients = generations
-            .map( d => <linearGradient key={`gen-grad-${d}`}
+                .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
                             id={createLabel('gen-grad', name, d)}
                             x1={0}

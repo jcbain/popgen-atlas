@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max } from 'd3-array';
-import { nest } from 'd3-collection';
 import { line } from 'd3-shape';
-import ContextBrush from './ContextBrush';
-import { select } from 'd3-selection';
+import { select, create } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
 
-import { removeParams, filterDataByParams } from '../helpers/DataHelpers';
+import {closestFromArray, createLabel} from '../helpers/Helpers';
 
 
 class LineChart extends Component {
+    constructor(props){
+        super(props);
+        this.gradients = this.props.gradients;
+    }
     lineRef = React.createRef();
 
 
 
     render(){
-        console.log(this)
         const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
         const yScale = this.props.yScale.range([this.props.height, 0]);
         const popKeys = this.props.data.map( d => d.key );
@@ -25,11 +26,11 @@ class LineChart extends Component {
         
         const contextLines = this.props.data
             .map((d, i) => <path
-                key={`line_${i}`}
+                key={createLabel('context-line', i, this.props.uniqId)}
                 fill='none'
                 strokeWidth={2.5}
-                stroke={focusColor(d.key)}
-                className='context-line'
+                stroke={`url(#${createLabel('gradient-pop', d.key, this.props.uniqId)})`}
+                className={createLabel('context-line', this.props.uniqId)}
                 d={drawLine(d.values)}>
             </path>);
 
@@ -37,6 +38,7 @@ class LineChart extends Component {
         return(
             <svg ref={this.lineRef} 
                  viewBox={[0,0,this.props.width, this.props.height]}>
+                {this.gradients}
                 {contextLines}
             </svg>
         )
