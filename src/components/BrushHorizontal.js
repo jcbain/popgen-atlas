@@ -5,7 +5,7 @@ import { select } from 'd3-selection';
 import './styles/brush_generic_styles.css';
 
 
-class BrushGeneric extends Component{
+class BrushHorizontal extends Component{
     constructor(props){
         super(props);
         this.brushed = this.props.brushed.bind(this)
@@ -46,4 +46,4 @@ class BrushGeneric extends Component{
 }
 
 
-export default BrushGeneric;
+export default BrushHorizontal;

@@ -6,9 +6,9 @@ import { axisBottom } from 'd3-axis';
 
 
 import { unique} from '../helpers/DataHelpers';
-
-import BrushGeneric from '../components/BrushGeneric';
 import {closestFromArray, createLabel} from '../helpers/Helpers';
+
+import BrushHorizontal from '../components/BrushHorizontal';
 
 class GeneArchitecture extends Component {
     constructor(props){
@@ -106,13 +106,13 @@ class GeneArchitecture extends Component {
 
         let brush;
         if(this.props.addBrush){
-            brush = <BrushGeneric endExtentX={this.props.width}
+            brush = <BrushHorizontal endExtentX={this.props.width}
                                   endExtentY={this.props.height}
                                   startExtent={this.startExtent}
                                   brushed={brushed}
                                   xScale={xScale}
                                   touchCentered={centerBrushOnTouch}>
-                    </BrushGeneric>
+                    </BrushHorizontal>
         }
 
         return(
