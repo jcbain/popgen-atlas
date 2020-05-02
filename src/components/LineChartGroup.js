@@ -20,7 +20,7 @@ class LineChartGroup extends Component{
         return(
             <div>
                 <LineChart data={this.data}
-                    width={200}
+                    width={400}
                     height={200}
                     domain={[min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]}
                     xScale={xScale}

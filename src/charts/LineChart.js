@@ -25,7 +25,7 @@ class LineChart extends Component {
         
         const contextLines = this.props.data
             .map((d, i) => <path
-                // key={`line_${i}_${this.props.chartId}`}
+                key={`line_${i}`}
                 fill='none'
                 strokeWidth={2.5}
                 stroke={focusColor(d.key)}
