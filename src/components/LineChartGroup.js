@@ -4,7 +4,7 @@ import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max } from 'd3-array';
 
 
-import { removeParams, filterDataByParams} from '../helpers/DataHelpers';
+import { removeParams, filterDataByParams, unique } from '../helpers/DataHelpers';
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 
 import LineChart from '../charts/LineChart';
@@ -14,9 +14,12 @@ class LineChartGroup extends Component{
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
         this.data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, this.params));
+        this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
+
     }
     render(){
+        console.log(this.generations)
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain([min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]);
         const popKeys = this.data.map( d => d.key );
@@ -33,8 +36,8 @@ class LineChartGroup extends Component{
                     x2={width}
                     y1={0}
                     y2={0}>
-                        <stop stopColor={outsideColor(d)} className={`left ${createLabel(name, 'start01')}`} offset={'10%'}></stop>
-                        <stop stopColor={focusColor(d)} className={`left ${createLabel(name, 'start02')}`} offset={'10%'}></stop>
+                        <stop stopColor={outsideColor(d)} className={`left ${createLabel(name, 'start01')}`} offset={'50%'}></stop>
+                        <stop stopColor={focusColor(d)} className={`left ${createLabel(name, 'start02')}`} offset={'50%'}></stop>
                         <stop stopColor={focusColor(d)} className={`right ${createLabel(name, 'end01')}`} offset={'90%'}></stop>
                         <stop stopColor={outsideColor(d)} className={`right ${createLabel(name, 'end02')}`} offset={'90%'}></stop>
                 </linearGradient>)
@@ -49,9 +52,11 @@ class LineChartGroup extends Component{
                     width={400}
                     height={200}
                     uniqId={this.lineLabels[0]}
-                    domain={[min(this.props.data, d => d.output_gen), max(this.props.data, d => d.output_gen)]}
+                    generations={this.generations}
+                    domain={[min(this.generations), max(this.generations)]}
                     xScale={xScale}
                     yScale={yScale}
+                    addBrush={true}
                     gradients={lineGrads}>
 
                 </LineChart>
