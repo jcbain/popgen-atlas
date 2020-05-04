@@ -22,9 +22,10 @@ class LineChart extends Component {
 
 
     render(){
-        console.log(this.props)
+        
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
+        console.log(xScale(2000))
         const yScale = this.props.yScale.range([this.props.height, 0]);
         const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
         const interval = closestFromArray(this.generations)
@@ -46,7 +47,7 @@ class LineChart extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 const [x0, x1] = selection.map(d => interval(xScale.invert(d)))
-                select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+                // select(this.brushRef.current).transition().duration(1).call(this.genericBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
                 selectAll(`.${createLabel(uniqId, 'start01')}`).transition().duration(1).attr('offset', `${brushScale(x0)}%`)
                 selectAll(`.${createLabel(uniqId, 'start02')}`).transition().duration(1).attr('offset', `${brushScale(x0)}%`)
                 selectAll(`.${createLabel(uniqId, 'end01')}`).transition().duration(1).attr('offset', `${brushScale(x1)}%`)

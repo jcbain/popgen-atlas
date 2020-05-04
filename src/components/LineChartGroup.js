@@ -16,7 +16,8 @@ class LineChartGroup extends Component{
         this.data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, this.params));
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
-        this.startExtent = [1000, 5000]
+        this.startExtent = [1000, 10000]
+        this.chartWidths = [400, 1000]
 
     }
     render(){
@@ -26,7 +27,8 @@ class LineChartGroup extends Component{
         const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
         const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
         const outsideColor = scaleOrdinal().domain(popKeys).range(['#f0b7a8', '#d9bac4', '#E8A87C']);
-        const lineGrads = createGradients(popKeys, 400, this.lineLabels[0], this.startExtent)
+        const lineGrads1 = createGradients(popKeys, this.chartWidths[0], this.lineLabels[0], [min(this.generations), max(this.generations)])
+        const lineGrads2 = createGradients(popKeys, this.chartWidths[1], this.lineLabels[1], this.startExtent)
 
         function createGradients(popKeys, width, name, startExtent){
             const gradients = popKeys
@@ -49,10 +51,25 @@ class LineChartGroup extends Component{
 
         return(
             <div>
-                <LineChart data={this.data}
-                    width={400}
+                <LineChart key='line-chart-1'
+                    data={this.data}
+                    width={this.chartWidths[0]}
                     height={200}
                     uniqId={this.lineLabels[0]}
+                    generations={this.generations}
+                    domain={[min(this.generations), max(this.generations)]}
+                    xScale={xScale}
+                    yScale={yScale}
+                    addBrush={false}
+                    brushScale = {brushScale}
+                    startExtent = {this.startExtent}
+                    gradients={lineGrads1}>
+                </LineChart>
+                <LineChart key='line-chart-2'
+                    data={this.data}
+                    width={this.chartWidths[1]}
+                    height={200}
+                    uniqId={this.lineLabels[1]}
                     generations={this.generations}
                     domain={[min(this.generations), max(this.generations)]}
                     xScale={xScale}
@@ -60,8 +77,7 @@ class LineChartGroup extends Component{
                     addBrush={true}
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
-                    gradients={lineGrads}>
-
+                    gradients={lineGrads2}>
                 </LineChart>
 
             </div>
