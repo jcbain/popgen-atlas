@@ -16,18 +16,19 @@ class LineChartGroup extends Component{
         this.data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, this.params));
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
+        this.startExtent = [1000, 5000]
 
     }
     render(){
-        console.log(this.generations)
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain([min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]);
         const popKeys = this.data.map( d => d.key );
+        const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
         const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
         const outsideColor = scaleOrdinal().domain(popKeys).range(['#f0b7a8', '#d9bac4', '#E8A87C']);
-        const lineGrads = createGradients(popKeys, 400, this.lineLabels[0])
+        const lineGrads = createGradients(popKeys, 400, this.lineLabels[0], this.startExtent)
 
-        function createGradients(popKeys, width, name){
+        function createGradients(popKeys, width, name, startExtent){
             const gradients = popKeys
                 .map(d => <linearGradient key={`line-grad-${d}`}
                     gradientUnits={'userSpaceOnUse'}
@@ -36,10 +37,10 @@ class LineChartGroup extends Component{
                     x2={width}
                     y1={0}
                     y2={0}>
-                        <stop stopColor={outsideColor(d)} className={`left ${createLabel(name, 'start01')}`} offset={'50%'}></stop>
-                        <stop stopColor={focusColor(d)} className={`left ${createLabel(name, 'start02')}`} offset={'50%'}></stop>
-                        <stop stopColor={focusColor(d)} className={`right ${createLabel(name, 'end01')}`} offset={'90%'}></stop>
-                        <stop stopColor={outsideColor(d)} className={`right ${createLabel(name, 'end02')}`} offset={'90%'}></stop>
+                        <stop stopColor={outsideColor(d)} className={`left ${createLabel(name, 'start01')}`} offset={`${brushScale(startExtent[0])}%`}></stop>
+                        <stop stopColor={focusColor(d)} className={`left ${createLabel(name, 'start02')}`} offset={`${brushScale(startExtent[0])}%`}></stop>
+                        <stop stopColor={focusColor(d)} className={`right ${createLabel(name, 'end01')}`} offset={`${brushScale(startExtent[1])}%`}></stop>
+                        <stop stopColor={outsideColor(d)} className={`right ${createLabel(name, 'end02')}`} offset={`${brushScale(startExtent[1])}%`}></stop>
                 </linearGradient>)
 
             return gradients;
@@ -57,6 +58,8 @@ class LineChartGroup extends Component{
                     xScale={xScale}
                     yScale={yScale}
                     addBrush={true}
+                    brushScale = {brushScale}
+                    startExtent = {this.startExtent}
                     gradients={lineGrads}>
 
                 </LineChart>

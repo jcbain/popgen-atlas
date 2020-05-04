@@ -14,7 +14,7 @@ class LineChart extends Component {
         super(props);
         this.gradients = this.props.gradients;
         this.generations = this.props.generations;
-        this.startExtent = [1000, 10000]
+        this.startExtent = this.props.startExtent;
 
     }
     lineRef = React.createRef();
@@ -26,11 +26,9 @@ class LineChart extends Component {
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
         const yScale = this.props.yScale.range([this.props.height, 0]);
-        const popKeys = this.props.data.map( d => d.key );
         const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
         const interval = closestFromArray(this.generations)
-        const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
-        const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
+        const brushScale = this.props.brushScale;
         
         const contextLines = this.props.data
             .map((d, i) => <path
@@ -56,8 +54,15 @@ class LineChart extends Component {
             }
         }
 
-        function centerBrushOnTouch(){
-            console.log('hello')
+        function centerBrushOnTouch(brush){
+            const dx = xScale(5000);
+            const [cx] = mouse(this);
+            const [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
+            const [X0, X1] = xScale.domain();
+            select(this)
+                .call(brush.move, x1 > X1 ? [X1 - dx, X1].map(xScale) 
+                    : x0 < X0 ? [X0, X0 + dx].map(xScale) 
+                    : [x0, x1].map(xScale));
         }
 
         let brush;
