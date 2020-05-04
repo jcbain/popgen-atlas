@@ -13,13 +13,20 @@ class LineChartGroup extends Component{
     constructor(props){
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
+        this.onBrush = this.onBrush.bind(this);
         this.data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, this.params));
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
         this.startExtent = [1000, 10000]
         this.chartWidths = [400, 1000]
+        this.state = {start: this.startExtent[0], end: this.startExtent[1]}
 
     }
+
+    onBrush(d) {
+        this.setState({start: d[0], end: d[1]});  
+    }
+
     render(){
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain([min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]);
@@ -57,9 +64,10 @@ class LineChartGroup extends Component{
                     height={200}
                     uniqId={this.lineLabels[0]}
                     generations={this.generations}
-                    domain={[min(this.generations), max(this.generations)]}
+                    domain={[this.state.start, this.state.end]}
                     xScale={xScale}
                     yScale={yScale}
+                    changeBrush={this.onBrush}
                     addBrush={false}
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
@@ -74,6 +82,7 @@ class LineChartGroup extends Component{
                     domain={[min(this.generations), max(this.generations)]}
                     xScale={xScale}
                     yScale={yScale}
+                    changeBrush={this.onBrush}
                     addBrush={true}
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
