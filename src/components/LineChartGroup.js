@@ -5,7 +5,7 @@ import { min, max } from 'd3-array';
 
 
 import { removeParams, filterDataByParams, unique } from '../helpers/DataHelpers';
-import {closestFromArray, createLabel} from '../helpers/Helpers';
+import {createLabel} from '../helpers/Helpers';
 
 import LineChart from '../charts/LineChart';
 
@@ -57,7 +57,7 @@ class LineChartGroup extends Component{
 
 
         return(
-            <div>
+            <div class="line-group">
                 <LineChart key='line-chart-1'
                     data={this.data}
                     width={this.chartWidths[0]}

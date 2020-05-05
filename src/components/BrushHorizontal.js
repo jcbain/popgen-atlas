@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { brushX } from 'd3-brush';
 import { select } from 'd3-selection';
 
-import './styles/brush_generic_styles.css';
+import './styles/brush_horizontal_styles.css';
 
 
 class BrushHorizontal extends Component{
     constructor(props){
         super(props);
         this.brushed = this.props.brushed.bind(this)
-        this.genericBrush = brushX()
+        this.horizontalBrush = brushX()
             .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
             .on('brush', this.brushed)
 
@@ -18,17 +18,17 @@ class BrushHorizontal extends Component{
     brushRef = React.createRef()
 
     componentDidMount(){
-        const genericBrush = this.genericBrush;
+        const horizontalBrush = this.horizontalBrush;
         const touchCentered = this.props.touchCentered.bind(this.brushRef.current);
         const startExtent = this.props.startExtent;
         function referenceBrushForTouch(brush) {
             return () => touchCentered(brush)
         }
-        const brushOnTouch = referenceBrushForTouch(genericBrush);
+        const brushOnTouch = referenceBrushForTouch(horizontalBrush);
 
         select(this.brushRef.current)
-            .call(this.genericBrush)
-            .call(this.genericBrush.move, [startExtent[0], startExtent[1]].map(this.props.xScale))
+            .call(this.horizontalBrush)
+            .call(this.horizontalBrush.move, [startExtent[0], startExtent[1]].map(this.props.xScale))
             .call(g => g.select('.overlay')
             .datum({type: 'selection'})
             .on('mousedown touchstart', brushOnTouch));
@@ -39,7 +39,7 @@ class BrushHorizontal extends Component{
         
         return (
             <g ref={this.brushRef} 
-               className="generic-brush">
+               className="horizontal-brush">
             </g>
         )
     }
