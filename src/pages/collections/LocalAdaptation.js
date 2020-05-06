@@ -9,6 +9,7 @@ import template from '../../data/genome_template.json';
 
 import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
+import ParameterBar from '../../components/ParameterBar';
 import { findUniqParamOptions } from '../../helpers/DataHelpers';
 
 
@@ -43,7 +44,7 @@ class LocalAdaptation extends Component {
   }
 
   render() {
-    console.log(findUniqParamOptions(data, ['output_gen', 'pop', 'm', 'mu', 'r', 'sigsqr']))
+    console.log(findUniqParamOptions(data, ['pop', 'm', 'mu', 'r', 'sigsqr']))
 
     return (
       <div className="local-adaptation">
@@ -69,6 +70,8 @@ class LocalAdaptation extends Component {
             </GeneArchGroup>
           </div>
         </section>
+
+        <ParameterBar></ParameterBar>
 
         <p className="text-container">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet aliquam id diam maecenas ultricies mi eget. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Nibh venenatis cras sed felis. Viverra adipiscing at in tellus integer feugiat scelerisque. Velit ut tortor pretium viverra suspendisse potenti. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Vitae elementum curabitur vitae nunc. Elementum facilisis leo vel fringilla est ullamcorper. Ullamcorper eget nulla facilisi etiam dignissim diam quis.</p>
         <p className="text-container">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet aliquam id diam maecenas ultricies mi eget. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Nibh venenatis cras sed felis. Viverra adipiscing at in tellus integer feugiat scelerisque. Velit ut tortor pretium viverra suspendisse potenti. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Vitae elementum curabitur vitae nunc. Elementum facilisis leo vel fringilla est ullamcorper. Ullamcorper eget nulla facilisi etiam dignissim diam quis.</p>
