@@ -57,7 +57,7 @@ class LineChartGroup extends Component{
 
 
         return(
-            <div class="line-group">
+            <div className="line-group">
                 <LineChart key='line-chart-1'
                     data={this.data}
                     width={this.chartWidths[0]}

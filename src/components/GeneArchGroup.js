@@ -72,7 +72,7 @@ class GeneArchGroup extends Component {
         }
 
         return(
-            <div class="gene-arch-group">
+            <div className="gene-arch-group">
                 <GeneArchitecture key="gene-arch-1" 
                           data={filterData}
                           template={this.props.template}

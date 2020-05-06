@@ -9,6 +9,8 @@ import template from '../../data/genome_template.json';
 
 import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
+import { findUniqParamOptions } from '../../helpers/DataHelpers';
+
 
 import './styles/local_adaptation_styles.css';
 
@@ -41,6 +43,8 @@ class LocalAdaptation extends Component {
   }
 
   render() {
+    console.log(findUniqParamOptions(data, ['output_gen', 'pop', 'm', 'mu', 'r', 'sigsqr']))
+
     return (
       <div className="local-adaptation">
 
@@ -49,7 +53,7 @@ class LocalAdaptation extends Component {
         </div>
 
 
-        <section class="descriptive-chart">
+        <section className="descriptive-chart">
           <div id="line-chart-group-1">
             <LineChartGroup data={dataPopPhen}
                 params={this.state.params}>
@@ -57,7 +61,7 @@ class LocalAdaptation extends Component {
           </div>
         </section>
 
-        <section class="descriptive-chart">
+        <section className="descriptive-chart">
         <div id="arch-chart-group-1">
             <GeneArchGroup data={data} 
                 template={template}
