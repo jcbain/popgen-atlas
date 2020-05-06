@@ -69,10 +69,19 @@ function leftJoinByAttr(arrLeft, arrRight, byArr, returnAttr, emptyVal) {
      return arrLeftCopy;
 }
 
-function adjustParamOptions(data, params){
-    // nest().key() 
-
+function findUniqParamOptions(data, params){
+    let keys = nest().key(d => params.map(v => d[v])).entries(data)
+    let keyVals = keys.map(d => d.key.split(','))
+    let uniqVals = []
+    keyVals.map(d => {
+        let rowVals = {};
+        for(let i = 0; i < d.length; i++){
+            rowVals[params[i]] = d[i]
+        }
+        return uniqVals.push(rowVals);
+    })
+    return uniqVals;
 }
 
 
-export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr}
+export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr, findUniqParamOptions}
