@@ -1,3 +1,4 @@
 .horizontal-brush .selection{
+    stroke: rgb(75, 75, 75);
     fill: none;
 }

@@ -63,3 +63,12 @@ body {
     grid-template-columns: .5fr 2fr .5fr;
 }
 
+#line-chart-group-1 {
+    width: 90vw;
+    margin-left: 5vw;
+}
+
+#arch-chart-group-1 {
+    width: 90vw;
+    margin-left: 5vw;
+}

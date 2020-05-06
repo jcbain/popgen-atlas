@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { nest } from 'd3-collection';
 
 const unique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -66,6 +67,11 @@ function leftJoinByAttr(arrLeft, arrRight, byArr, returnAttr, emptyVal) {
     })
      
      return arrLeftCopy;
+}
+
+function adjustParamOptions(data, params){
+    // nest().key() 
+
 }
 
 
