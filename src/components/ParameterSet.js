@@ -4,16 +4,19 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {createLabel} from '../helpers/Helpers';
 
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-  }));
+
 
   export default function ParameterSet(props) {
+    const useStyles = makeStyles((theme) => ({
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: props.minWidth,
+        },
+      }));
+
     const classes = useStyles();
     const [val, setVal] = React.useState('');
     const [open, setOpen] = React.useState(false);
@@ -31,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
     const menuOpts = props.options
                 .map(d => (
-                    <MenuItem value={d}>{d}</MenuItem>
-                
+                    <MenuItem key={createLabel(props.label, d)} value={d}>{d}</MenuItem>
             ))
   
     return (
