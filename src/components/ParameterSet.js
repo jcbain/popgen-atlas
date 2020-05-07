@@ -1,77 +1,120 @@
 import React, { Component } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import Button from '@material-ui/core/Button';
 
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+  }));
 
-class ParameterSet extends Component{
-    constructor(props){
-        super(props);
-        this.handleOpen = this.handleOpen.bind(this)
-        this.handleClose = this.handleClose.bind(this)
-        this.handleChange = this.handleClose.bind(this)
-        this.state= {
-            age: '',
-            open: false,
-        }
-    }
+  export default function ParameterSet(props) {
+    const classes = useStyles();
+    const [val, setVal] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+    const handleChange = (event) => {
+      setVal(event.target.value);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const handleOpen = () => {
+      setOpen(true);
+    };
 
-    handleChange(event){
-        this.setState({age: event.target.value})
+    const menuOpts = props.options
+                .map(d => (
+                    <MenuItem value={d}>{d}</MenuItem>
+                
+            ))
+  
+    return (
+      <div >
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-controlled-open-select-label">{props.label}</InputLabel>
+          <Select
+            labelId="demo-controlled-open-select-label"
+            id="demo-controlled-open-select"
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={val}
+            onChange={handleChange}
+          >
+              {menuOpts}
+          </Select>
+        </FormControl>
+      </div>
+    );
+  }
 
-    }
+
+// class ParameterSet extends Component{
+//     constructor(props){
+//         super(props);
+//         this.handleOpen = this.handleOpen.bind(this)
+//         this.handleClose = this.handleClose.bind(this)
+//         this.handleChange = this.handleClose.bind(this)
+//         this.state = {
+//             opt: '',
+//             open: false,
+//         }
+//     }
+
+//     handleChange(event){
+//         this.setState({opt: event.target.value})
+
+//     }
 
 
-    handleOpen(){
-        console.log(this.state.open)
-        this.setState({open: true})
-    }
+//     handleOpen(){
+//         this.setState({open: true})
+//     }
 
-    handleClose(){
-        console.log(this.state.open)
-        this.setState({open: false})
-    }
+//     handleClose(){
+//         this.setState({open: false})
+//     }
 
-    render(){
-
-        const menuOpts = this.props.options
-            .map(d => (
-                <MenuItem value={d}>{d}</MenuItem>
+//     render(){
+//         const menuOpts = this.props.options
+//             .map(d => (
+//                 <MenuItem value={d}>{d}</MenuItem>
             
-        ))
-        return(
-            <div>
-                <FormControl >
-                    <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
-                    <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        onOpen={this.handleOpen}
-                        value={this.age}
-                        onChange={this.handleChange}>
-                    {menuOpts}
-                        {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                </FormControl>
+//         ))
+//         return(
+//             <div>
+//                 <FormControl>
+//                     <InputLabel>{this.props.label}</InputLabel>
+//                     <Select
+//                         labelId={`id-${this.props.label}`}
+//                         // id="demo-controlled-open-select"
+//                         open={this.state.open}
+//                         onClose={this.handleClose}
+//                         onOpen={this.handleOpen}
+//                         value={this.opt}
+//                         onChange={this.handleChange}>
+//                     {menuOpts}
+//                         {/* <MenuItem value="">
+//             <em>None</em>
+//           </MenuItem>
+//           <MenuItem value={10}>Ten</MenuItem>
+//           <MenuItem value={20}>Twenty</MenuItem>
+//           <MenuItem value={30}>Thirty</MenuItem> */}
+//                     </Select>
+//                 </FormControl>
 
-            </div>
+//             </div>
 
-        )
+//         )
 
-    }
-}
+//     }
+// }
 
-export default ParameterSet;
+// export default ParameterSet;
