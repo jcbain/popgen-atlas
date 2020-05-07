@@ -71,7 +71,9 @@ class LocalAdaptation extends Component {
           </div>
         </section>
 
-        <ParameterCollection></ParameterCollection>
+        <ParameterCollection data={findUniqParamOptions(data, ['pop', 'm', 'mu', 'r', 'sigsqr'])}
+        labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}>
+        </ParameterCollection>
 
 
 

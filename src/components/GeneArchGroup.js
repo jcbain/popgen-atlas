@@ -23,7 +23,7 @@ class GeneArchGroup extends Component {
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-            .range(['#4056a1', '#f1f0eb', '#f13c20'])
+            .range(['#569dcf', '#dbe3d4', '#fd1743'])
             .interpolate(interpolateHcl);
         this.state = {start: 40000, end:44000};
     }
