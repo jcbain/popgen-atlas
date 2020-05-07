@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -40,10 +40,10 @@ import {createLabel} from '../helpers/Helpers';
     return (
       <div >
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">{props.label}</InputLabel>
+          <InputLabel>{props.label}</InputLabel>
           <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
+            labelId={createLabel('selection', props.label)}
+            id={createLabel('selection', props.label)}
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}
