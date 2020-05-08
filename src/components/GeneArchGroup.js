@@ -19,7 +19,6 @@ class GeneArchGroup extends Component {
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
@@ -35,14 +34,16 @@ class GeneArchGroup extends Component {
 
     componentDidUpdate(){
         console.log(this.state)
+        console.log(this.params)
     }
 
     render(){
         const start = this.state.start;
         const end = this.state.end;
+        const data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
-        const gradsArch1 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
-        const gradsArch2 = createGradients(this.generations, this.data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
+        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
+        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
         
 
         function SingleGradient(props){

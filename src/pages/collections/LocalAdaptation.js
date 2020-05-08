@@ -66,7 +66,8 @@ class LocalAdaptation extends Component {
         <div id="arch-chart-group-1">
             <GeneArchGroup data={data} 
                 template={template}
-                params={this.state.params}>
+                params={this.state.params}
+                useLocalParams={true}>
             </GeneArchGroup>
           </div>
         </section>
