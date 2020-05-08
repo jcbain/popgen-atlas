@@ -18,12 +18,12 @@ class GeneArchGroup extends Component {
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
         this.params = removeParams(this.props.params, ['output_gen', 'pop']);
-        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 1);
+        this.data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-            .range(['#569dcf', '#dbe3d4', '#fd1743'])
+            .range(['#569dcf', '#f5f5e6', '#fd1743'])
             .interpolate(interpolateHcl);
         this.state = {start: 40000, end:44000};
     }
