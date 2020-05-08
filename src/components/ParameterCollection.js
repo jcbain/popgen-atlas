@@ -19,6 +19,7 @@ class ParameterCollection extends Component{
     }
 
     render(){
+        console.log(this.props)
         let functObj = {}
         Object.keys(this.props.labels).map(k => (
             functObj[k] = (d) => this.setState({[k]: d})
@@ -28,7 +29,7 @@ class ParameterCollection extends Component{
                 label={k} 
                 options={this.props.data.map(d => d[this.props.labels[k]]).filter(unique)}
                 minWidth={120}
-                changeSelection={functObj[k].bind(this)}></ParameterSet>
+                changeSelection={this.props.paramFunc[k]}></ParameterSet>
             )
         )
 

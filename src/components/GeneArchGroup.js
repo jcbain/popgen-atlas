@@ -4,8 +4,9 @@ import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
 
 
-import { unique, removeParams, filterDataByParams, leftJoinByAttr} from '../helpers/DataHelpers';
+import { unique, removeParams, filterDataByParams, leftJoinByAttr, findUniqParamOptions} from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
+import ParameterCollection from './ParameterCollection';
 
 import './styles/gene_arch_group_styles.css'
 
@@ -30,6 +31,10 @@ class GeneArchGroup extends Component {
 
     onBrush(d) {
         this.setState({start: d[0], end: d[1]});  
+    }
+
+    componentDidUpdate(){
+        console.log(this.state)
     }
 
     render(){
@@ -68,11 +73,23 @@ class GeneArchGroup extends Component {
             </linearGradient>)
 
             return gradients
-
         }
+
+
+        const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
+        let functObj = {}
+        Object.keys(paramObj).map(k => {
+            functObj[k] = (d) => this.setState({[k]: d})
+            return functObj[k].bind(this);
+        })
+        console.log(functObj)
 
         return(
             <div className="gene-arch-group">
+                <ParameterCollection data={findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr', 'output_gen'])}
+                    labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'}}
+                    paramFunc={functObj}>
+                </ParameterCollection>
                 <GeneArchitecture key="gene-arch-1" 
                           data={filterData}
                           template={this.props.template}
