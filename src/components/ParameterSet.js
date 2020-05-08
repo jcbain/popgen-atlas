@@ -20,8 +20,11 @@ import {createLabel} from '../helpers/Helpers';
     const classes = useStyles();
     const [val, setVal] = React.useState('');
     const [open, setOpen] = React.useState(false);
+
+    const handleSelection = props.changeSelection;
     const handleChange = (event) => {
       setVal(event.target.value);
+      handleSelection(event.target.value);
     };
   
     const handleClose = () => {
