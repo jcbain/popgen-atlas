@@ -21,7 +21,7 @@ class ParameterCollection extends Component{
     render(){
         let functObj = {}
         Object.keys(this.props.labels).map(k => (
-            functObj[k] = (d) => this.setState({k: d})
+            functObj[k] = (d) => this.setState({[k]: d})
         ))
         const paramSelections = Object.keys(this.props.labels).map(k => (
             <ParameterSet key={k} 
