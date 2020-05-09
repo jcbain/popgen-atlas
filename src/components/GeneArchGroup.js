@@ -35,11 +35,13 @@ class GeneArchGroup extends Component {
     componentDidUpdate(){
         console.log(this.state)
         console.log(this.params)
+
     }
 
     render(){
         const start = this.state.start;
         const end = this.state.end;
+        const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
@@ -77,7 +79,6 @@ class GeneArchGroup extends Component {
         }
 
 
-        const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         let functObj = {}
         Object.keys(paramObj).map(k => {
             functObj[k] = (d) => this.setState({[k]: d})

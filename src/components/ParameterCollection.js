@@ -5,12 +5,8 @@ import {unique} from '../helpers/DataHelpers'
 class ParameterCollection extends Component{
     constructor(props){
         super(props);
-        this.onSelection = this.onSelection.bind(this);
     }
 
-    onSelection(d){
-        this.setState({item: d})
-    }
 
     render(){
 
