@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
-
+import { toNumber } from 'lodash'
 
 import { unique, removeParams, filterDataByParams, leftJoinByAttr, findUniqParamOptions} from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
@@ -18,7 +18,7 @@ class GeneArchGroup extends Component {
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
-        this.params = removeParams(this.props.params, ['output_gen', 'pop']);
+        this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
@@ -43,7 +43,7 @@ class GeneArchGroup extends Component {
         const end = this.state.end;
         const params = this.props.useLocalParams ? this.state.params : this.params;
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
-        const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
+        const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
         const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
