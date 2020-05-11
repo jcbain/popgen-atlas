@@ -25,7 +25,7 @@ class GeneArchGroup extends Component {
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#569dcf', '#f5f5e6', '#fd1743'])
             .interpolate(interpolateHcl);
-        this.state = {start: 40000, end:44000, params: {}};
+        this.state = {start: 40000, end:44000, params: {...this.params}};
     }
 
     onBrush(d) {
@@ -41,12 +41,20 @@ class GeneArchGroup extends Component {
     render(){
         const start = this.state.start;
         const end = this.state.end;
+        const params = this.props.useLocalParams ? this.state.params : this.params;
+        const newDat = this.props.data
+        console.log(newDat)
+        const generations = this.generations;
+        const template = this.props.template;
+        const colorScale = this.colorScale
+        const yScale = this.yScale
+        const archLabels = [...this.archLabels]
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
-        const data = leftJoinByAttr(filterDataByParams(this.props.data, this.params), this.props.template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
-        const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
-        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
-        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
-        
+        const data = leftJoinByAttr(filterDataByParams(newDat, params), template, ['position'], {positional_map: 'ind'}).filter(d => d.pop === 0);
+        console.log(data)
+        const filterData = newDat.filter(d => d.output_gen >=start && d.output_gen < end)
+        const gradsArch1 = createGradients(generations, data, template, colorScale, yScale, 100, archLabels[0])
+        const gradsArch2 = createGradients(generations, data, template, colorScale, yScale, 200, archLabels[1])
 
         function SingleGradient(props){
             // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
@@ -63,6 +71,7 @@ class GeneArchGroup extends Component {
         }
 
         function createGradients(generations, data, template, colorScale, yScale, height, name){
+            console.log('run' + ' ' + name)
             const gradients = generations
                 .map( d => <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
@@ -78,21 +87,22 @@ class GeneArchGroup extends Component {
             return gradients
         }
 
+        function saySomething(thing){
+            return thing
+        }
+
 
         let functObj = {}
         Object.keys(paramObj).map(k => {
             functObj[k] = (d) => this.setState(prevState => ({
                 params: {
                     ...prevState.params,
-                    [k] : d
+                    [paramObj[k]] : d
                 }
 
             }))
             return functObj;
-            // functObj[k] = (d) => this.setState({[k]: d})
-            // return functObj[k].bind(this);
         })
-        console.log(functObj)
 
         return(
             <div className="gene-arch-group">
