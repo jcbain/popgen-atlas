@@ -56,7 +56,8 @@ class LocalAdaptation extends Component {
         <section className="descriptive-chart">
           <div id="line-chart-group-1">
             <LineChartGroup data={dataPopPhen}
-                params={this.state.params}>
+                params={this.state.params}
+                useLocalParams={true}>
             </LineChartGroup>
           </div>
         </section>
