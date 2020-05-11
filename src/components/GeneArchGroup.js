@@ -25,7 +25,7 @@ class GeneArchGroup extends Component {
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#569dcf', '#f5f5e6', '#fd1743'])
             .interpolate(interpolateHcl);
-        this.state = {start: 40000, end:44000};
+        this.state = {start: 40000, end:44000, params: {}};
     }
 
     onBrush(d) {
@@ -81,8 +81,16 @@ class GeneArchGroup extends Component {
 
         let functObj = {}
         Object.keys(paramObj).map(k => {
-            functObj[k] = (d) => this.setState({[k]: d})
-            return functObj[k].bind(this);
+            functObj[k] = (d) => this.setState(prevState => ({
+                params: {
+                    ...prevState.params,
+                    [k] : d
+                }
+
+            }))
+            return functObj;
+            // functObj[k] = (d) => this.setState({[k]: d})
+            // return functObj[k].bind(this);
         })
         console.log(functObj)
 
