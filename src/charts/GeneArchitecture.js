@@ -117,7 +117,7 @@ class GeneArchitecture extends Component {
 
         return(
             <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
-                {this.gradients}
+                {this.props.gradients}
                 {gens}
                 {brush}
             </svg>
