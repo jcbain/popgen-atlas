@@ -100,6 +100,7 @@ class GeneArchGroup extends Component {
         if(this.props.useLocalParams){
             paramBar =  <ParameterCollection data={paramMatrix}
                             labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
+                            initParams={this.params}
                             paramFunc={paramFunctions}>
                         </ParameterCollection>
         }

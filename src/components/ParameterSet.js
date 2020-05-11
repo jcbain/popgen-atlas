@@ -18,7 +18,7 @@ import {createLabel} from '../helpers/Helpers';
       }));
 
     const classes = useStyles();
-    const [val, setVal] = React.useState('');
+    const [val, setVal] = React.useState(props.initVal);
     const [open, setOpen] = React.useState(false);
 
     const handleSelection = props.changeSelection;
