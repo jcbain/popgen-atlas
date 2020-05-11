@@ -47,7 +47,7 @@ class GeneArchGroup extends Component {
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
         const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
-        const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr', 'output_gen']).map(d => {
+        const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
         });
@@ -84,26 +84,29 @@ class GeneArchGroup extends Component {
             return gradients
         }
 
-
-
-        let functObj = {}
+        let paramFunctions = {}
         Object.keys(paramObj).map(k => {
-            functObj[k] = (d) => this.setState(prevState => ({
+            paramFunctions[k] = (d) => this.setState(prevState => ({
                 params: {
                     ...prevState.params,
                     [paramObj[k]] : d
                 }
 
             }))
-            return functObj;
+            return paramFunctions;
         })
+
+        let paramBar;
+        if(this.props.useLocalParams){
+            paramBar =  <ParameterCollection data={paramMatrix}
+                            labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
+                            paramFunc={paramFunctions}>
+                        </ParameterCollection>
+        }
 
         return(
             <div className="gene-arch-group">
-                <ParameterCollection data={paramMatrix}
-                    labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'}}
-                    paramFunc={functObj}>
-                </ParameterCollection>
+                {paramBar}
                 <GeneArchitecture key="gene-arch-1" 
                           data={filterData}
                           template={this.props.template}

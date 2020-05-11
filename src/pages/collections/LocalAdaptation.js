@@ -44,7 +44,6 @@ class LocalAdaptation extends Component {
   }
 
   render() {
-    console.log(findUniqParamOptions(data, ['pop', 'm', 'mu', 'r', 'sigsqr']))
 
     return (
       <div className="local-adaptation">
