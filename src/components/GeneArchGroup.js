@@ -47,6 +47,12 @@ class GeneArchGroup extends Component {
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
         const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
+        const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr', 'output_gen']).map(d => {
+            d.pop = toNumber(d.pop)
+            return d;
+        });
+
+
 
         function SingleGradient(props){
             // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
@@ -94,7 +100,7 @@ class GeneArchGroup extends Component {
 
         return(
             <div className="gene-arch-group">
-                <ParameterCollection data={findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr', 'output_gen'])}
+                <ParameterCollection data={paramMatrix}
                     labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'}}
                     paramFunc={functObj}>
                 </ParameterCollection>
