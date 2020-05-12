@@ -11,12 +11,6 @@ import {createLabel} from '../helpers/Helpers';
 
   export default function ParameterSet(props) {
     const useStyles = makeStyles((theme) => ({
-        root: {
-          // '&$focused': {
-          //   color: '#000',
-          // },
-
-        },
         formControl: {
           margin: theme.spacing(1),
           minWidth: props.minWidth,
