@@ -21,9 +21,27 @@ class ChartLister extends Component{
             clickAction(true);
         }
 
+        const cards = this.props.labels.map(d => {
+            const action = () => this.props.clickActions[Object.keys(d)](clickAction)
+            return(
+            <Card>
+            <CardContent>
+                <Typography>{d[Object.keys(d)]}</Typography>
+            </CardContent>
+            <CardActions>
+                <Button onClick={action}>Select</Button>
+            </CardActions>
+            </Card>)
+
+        }
+     
+        
+        )
+
         return(
             <div>
-                <Card>
+                {cards}
+                {/* <Card>
                     <CardContent>
                         <Typography>Line Chart</Typography>
                     </CardContent>
@@ -37,7 +55,7 @@ class ChartLister extends Component{
                     <CardActions>
                         <Button onClick={onClick} size="small">Select</Button>
                     </CardActions>
-                </Card>
+                </Card> */}
             </div>
         )
     }

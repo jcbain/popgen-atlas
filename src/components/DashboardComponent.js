@@ -17,7 +17,7 @@ class DashboardComponent extends Component{
     }
 
     handleClick(d){
-        this.setState({componentView: d})
+        this.setState({componentView: d[0], selectedComponent: d[1]})
     }
 
     render(){
@@ -32,13 +32,27 @@ class DashboardComponent extends Component{
                                             useLocalParams={false}></LineChartGroup>
         }
 
+        const componentLabels = [
+            {geneArchGroup : 'Genome Chart'},
+            {lineChartGroup : 'Line Chart'}
+        ]
+
+        let paramFunctions = {};
+        componentLabels.map(k => {
+            return paramFunctions[Object.keys(k)] = (event) => event([true, Object.keys(k)])
+        })
+        console.log(paramFunctions)
+
         let display;
         if(this.state.componentView){
             display = <div>
-                {charts['lineChartGroup']}
-                <Button onClick={() => this.setState({componentView: false})} size="small">Remove</Button></div>
+                {charts[this.state.selectedComponent]}
+                <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button></div>
         } else {
-            display = <ChartLister clickAction={this.handleClick}></ChartLister>
+            display = <ChartLister 
+                clickAction={this.handleClick} 
+                labels={componentLabels}
+                clickActions={paramFunctions}></ChartLister>
         }
         return(
             <div>
