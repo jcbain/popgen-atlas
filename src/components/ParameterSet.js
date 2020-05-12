@@ -11,10 +11,19 @@ import {createLabel} from '../helpers/Helpers';
 
   export default function ParameterSet(props) {
     const useStyles = makeStyles((theme) => ({
+        root: {
+          // '&$focused': {
+          //   color: '#000',
+          // },
+
+        },
         formControl: {
           margin: theme.spacing(1),
           minWidth: props.minWidth,
         },
+        foo: {
+          color: '#f44336',
+        }
       }));
 
     const classes = useStyles();
@@ -42,8 +51,8 @@ import {createLabel} from '../helpers/Helpers';
   
     return (
       <div >
-        <FormControl className={classes.formControl}>
-          <InputLabel>{props.label}</InputLabel>
+        <FormControl className={`${classes.root} ${classes.formControl}`}>
+          <InputLabel className={classes.foo}>{props.label}</InputLabel>
           <Select
             labelId={createLabel('selection', props.label)}
             id={createLabel('selection', props.label)}
