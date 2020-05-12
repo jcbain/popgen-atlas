@@ -12,10 +12,7 @@ class ChartLister extends Component{
         this.state = {clicked: false}
     }
 
-    // onClick(){
-    //     this.setState({clicked: true})
-    //     this.props.clickAction(this.state.clicked)
-    // }
+ 
 
 
     render(){

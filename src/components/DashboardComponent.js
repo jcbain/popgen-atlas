@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+
 
 import ChartLister from './ChartLister'
 
@@ -17,7 +19,9 @@ class DashboardComponent extends Component{
     render(){
         let display;
         if(this.state.componentView){
-            display = <h1>Hello</h1>
+            display = <div>
+                <h1>Hello</h1>
+                <Button onClick={() => this.setState({componentView: false})} size="small">Remove</Button></div>
         } else {
             display = <ChartLister clickAction={this.handleClick}></ChartLister>
         }
