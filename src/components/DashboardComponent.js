@@ -25,7 +25,7 @@ class DashboardComponent extends Component{
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
                             params={this.state.params}
-                            useLocalParams={false}>
+                            useLocalParams={true}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.state.params}
@@ -41,7 +41,6 @@ class DashboardComponent extends Component{
         componentLabels.map(k => {
             return paramFunctions[Object.keys(k)] = (event) => event([true, Object.keys(k)])
         })
-        console.log(paramFunctions)
 
         let display;
         if(this.state.componentView){
