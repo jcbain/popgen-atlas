@@ -4,7 +4,6 @@ import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup'
 
 import ChartLister from './ChartLister'
-import LineChart from '../charts/LineChart';
 
 class DashboardComponent extends Component{
     constructor(props){
@@ -33,13 +32,14 @@ class DashboardComponent extends Component{
         }
 
         const componentLabels = [
-            {geneArchGroup : 'Genome Chart'},
-            {lineChartGroup : 'Line Chart'}
+            // change this to where the key is some value and the label is also another value
+            {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart'},
+            {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart'}
         ]
 
         let paramFunctions = {};
         componentLabels.map(k => {
-            return paramFunctions[Object.keys(k)] = (event) => event([true, Object.keys(k)])
+            return paramFunctions[k.id] = (event) => event([true, k.id])
         })
 
         let display;
@@ -54,9 +54,8 @@ class DashboardComponent extends Component{
                 clickActions={paramFunctions}></ChartLister>
         }
         return(
-            <div>
+            <div className="dashboard-section">
                 {display}
-
             </div>
         )
     }

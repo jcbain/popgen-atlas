@@ -4,61 +4,49 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+    root: {
+        width: '20%',
+    }
+})
 
 class ChartLister extends Component{
     constructor(props){
         super(props);
-        // this.onClick = this.onClick.bind(this)
         this.state = {clicked: false}
     }
 
- 
-
-
     render(){
+ 
         const clickAction = this.props.clickAction;
-        const onClick = () => {
-            clickAction(true);
-        }
-
-        const cards = this.props.labels.map(d => {
-            const action = () => this.props.clickActions[Object.keys(d)](clickAction)
+        const { classes } = this.props;
+        const cards = this.props.labels.map((d,i) => {
+            const action = () => this.props.clickActions[d.id](clickAction)
             return(
-            <Card>
-            <CardContent>
-                <Typography>{d[Object.keys(d)]}</Typography>
-            </CardContent>
-            <CardActions>
-                <Button onClick={action}>Select</Button>
-            </CardActions>
-            </Card>)
-
-        }
-     
-        
-        )
+            <Card key={i} className={classes.root}>
+                <CardContent>
+                    <Typography>{d.labelReadable}</Typography>
+                </CardContent>
+                <CardActions>
+                    <Button onClick={action}>Select</Button>
+                </CardActions>
+            </Card>
+            )
+        })
 
         return(
-            <div>
+            <div className="chart-cards">
                 {cards}
-                {/* <Card>
-                    <CardContent>
-                        <Typography>Line Chart</Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={onClick} size="small" >Select</Button>
-                    </CardActions>                </Card>
-                <Card>
-                    <CardContent>
-                        <Typography>Genome Chart</Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={onClick} size="small">Select</Button>
-                    </CardActions>
-                </Card> */}
             </div>
         )
     }
 }
 
-export default ChartLister;
+ChartLister.propTypes = {
+    classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles)(ChartLister);

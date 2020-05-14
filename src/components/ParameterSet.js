@@ -10,15 +10,14 @@ import {createLabel} from '../helpers/Helpers';
 
 
   export default function ParameterSet(props) {
-    const useStyles = makeStyles((theme) => ({
+    const useStyles = makeStyles({
         formControl: {
-          margin: theme.spacing(1),
           minWidth: props.minWidth,
         },
         foo: {
           color: '#f44336',
         }
-      }));
+      });
 
     const classes = useStyles();
     const [val, setVal] = React.useState(props.initVal);

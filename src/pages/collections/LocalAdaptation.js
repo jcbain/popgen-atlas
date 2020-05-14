@@ -45,7 +45,6 @@ class LocalAdaptation extends Component {
   }
 
   render() {
-
     return (
       <div className="local-adaptation">
 
