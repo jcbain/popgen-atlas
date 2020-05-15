@@ -26,13 +26,14 @@ class DashboardComponent extends Component{
     render(){
         const StyledChartLister = styled(ChartLister)`
             display: flex;
+            justify-content: center;
         `
 
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
                             params={this.state.params}
-                            useLocalParams={true}>
+                            useLocalParams={false}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.state.params}
@@ -74,5 +75,7 @@ class DashboardComponent extends Component{
 
 export default styled(DashboardComponent)`
     box-shadow: 0px 1px 5px 0px rgba(168,168,168,1);
-    width: 50vw;   
+    width: 50vw;  
+    height: 80vh;
+    margin-bottom: 1vh; 
 `;
