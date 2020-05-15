@@ -9,7 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
     root: {
-        width: '20%',
+        width: '10vw',
+        height: '10vw'
     }
 })
 
@@ -38,7 +39,7 @@ class ChartLister extends Component{
         })
 
         return(
-            <div className="chart-cards">
+            <div className="poot">
                 {cards}
             </div>
         )

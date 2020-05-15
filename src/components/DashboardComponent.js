@@ -4,6 +4,14 @@ import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup'
 
 import ChartLister from './ChartLister'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+    poot: {
+        background: 'black',
+    }
+})
 
 class DashboardComponent extends Component{
     constructor(props){
@@ -20,6 +28,9 @@ class DashboardComponent extends Component{
     }
 
     render(){
+        const { classes } = this.props;
+        console.log(classes)
+
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
@@ -48,7 +59,7 @@ class DashboardComponent extends Component{
                 {charts[this.state.selectedComponent]}
                 <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button></div>
         } else {
-            display = <ChartLister 
+            display = <ChartLister className={classes.poot}
                 clickAction={this.handleClick} 
                 labels={componentLabels}
                 clickActions={paramFunctions}></ChartLister>
@@ -61,4 +72,8 @@ class DashboardComponent extends Component{
     }
 }
 
-export default DashboardComponent;
+DashboardComponent.propTypes = {
+    classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles)(DashboardComponent);
