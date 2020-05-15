@@ -24,6 +24,9 @@ class DashboardComponent extends Component{
     }
 
     render(){
+        const StyledChartLister = styled(ChartLister)`
+            display: flex;
+        `
 
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
@@ -55,10 +58,10 @@ class DashboardComponent extends Component{
                     <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button>
                 </div>
         } else {
-            display = <ChartLister
+            display = <StyledChartLister className={'chart-cards'}
                 clickAction={this.handleClick} 
                 labels={componentLabels}
-                clickActions={paramFunctions}></ChartLister>
+                clickActions={paramFunctions}></StyledChartLister>
         }
         return(
             <div className={this.props.className}>
@@ -69,4 +72,7 @@ class DashboardComponent extends Component{
 }
 
 
-export default DashboardComponent;
+export default styled(DashboardComponent)`
+    box-shadow: 0px 1px 5px 0px rgba(168,168,168,1);
+    width: 50vw;   
+`;

@@ -39,7 +39,7 @@ class ChartLister extends Component{
         })
 
         return(
-            <div>
+            <div className={this.props.className}>
                 {cards}
             </div>
         )
