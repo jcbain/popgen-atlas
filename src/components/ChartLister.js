@@ -39,7 +39,7 @@ class ChartLister extends Component{
         })
 
         return(
-            <div className="poot">
+            <div>
                 {cards}
             </div>
         )

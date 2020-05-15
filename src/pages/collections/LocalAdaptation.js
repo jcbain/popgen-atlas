@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
+import styled from 'styled-components'
 
 import data from '../../data/mutations_bg.json';
 import individualData from '../../data/individuals_small';
@@ -44,7 +45,13 @@ class LocalAdaptation extends Component {
     }
   }
 
+
+
   render() {
+    const StyledDashboardComponent = styled(DashboardComponent)`
+      background-color: black;
+      width: 50vw;
+    `
     return (
       <div className="local-adaptation">
 
@@ -80,10 +87,11 @@ class LocalAdaptation extends Component {
         <p className="text-container">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet aliquam id diam maecenas ultricies mi eget. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Nibh venenatis cras sed felis. Viverra adipiscing at in tellus integer feugiat scelerisque. Velit ut tortor pretium viverra suspendisse potenti. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Vitae elementum curabitur vitae nunc. Elementum facilisis leo vel fringilla est ullamcorper. Ullamcorper eget nulla facilisi etiam dignissim diam quis.</p>
       
       <section id="dashboard">
-        <DashboardComponent data={data} 
+        <StyledDashboardComponent className={'dashboard-component'}
+          data={data} 
           dataPopPhen={dataPopPhen} 
           template={template}>
-        </DashboardComponent>
+        </StyledDashboardComponent>
       </section>
       
       </div>

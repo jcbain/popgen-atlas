@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+import styled from 'styled-components'
+
+
 import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup'
 
 import ChartLister from './ChartLister'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-    poot: {
-        background: 'black',
-    }
-})
 
 class DashboardComponent extends Component{
     constructor(props){
@@ -28,8 +24,6 @@ class DashboardComponent extends Component{
     }
 
     render(){
-        const { classes } = this.props;
-        console.log(classes)
 
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
@@ -53,27 +47,26 @@ class DashboardComponent extends Component{
             return paramFunctions[k.id] = (event) => event([true, k.id])
         })
 
+
         let display;
         if(this.state.componentView){
             display = <div>
-                {charts[this.state.selectedComponent]}
-                <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button></div>
+                    {charts[this.state.selectedComponent]}
+                    <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button>
+                </div>
         } else {
-            display = <ChartLister className={classes.poot}
+            display = <ChartLister
                 clickAction={this.handleClick} 
                 labels={componentLabels}
                 clickActions={paramFunctions}></ChartLister>
         }
         return(
-            <div className="dashboard-section">
+            <div className={this.props.className}>
                 {display}
             </div>
         )
     }
 }
 
-DashboardComponent.propTypes = {
-    classes: PropTypes.object.isRequired,
-}
 
-export default withStyles(styles)(DashboardComponent);
+export default DashboardComponent;
