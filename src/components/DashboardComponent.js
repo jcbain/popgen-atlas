@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
+import ClearIcon from '@material-ui/icons/Clear';
+
 
 
 import LineChartGroup from './LineChartGroup';
@@ -29,6 +31,16 @@ class DashboardComponent extends Component{
             justify-content: center;
         `
 
+        const StyledClearIcon = styled(ClearIcon)`
+            position: absolute;
+            top: 0;
+            right: 0;
+        `
+
+        const StyledDiv = styled.div`
+            position: relative;
+        `
+
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
@@ -54,10 +66,11 @@ class DashboardComponent extends Component{
 
         let display;
         if(this.state.componentView){
-            display = <div>
+            display = <StyledDiv>
                     {charts[this.state.selectedComponent]}
-                    <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button>
-                </div>
+                    <StyledClearIcon onClick={() => this.setState({componentView: false, selectedComponent: ''})}></StyledClearIcon>
+                    {/* <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button> */}
+                </StyledDiv>
         } else {
             display = <StyledChartLister className={'chart-cards'}
                 clickAction={this.handleClick} 
