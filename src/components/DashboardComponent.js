@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import ClearIcon from '@material-ui/icons/Clear';
 
 
-
 import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup'
 
@@ -35,6 +34,10 @@ class DashboardComponent extends Component{
             position: absolute;
             top: 0;
             right: 0;
+            fill: #e8e8e8;
+            &:hover {
+                fill: palevioletred;
+            }
         `
 
         const StyledDiv = styled.div`
