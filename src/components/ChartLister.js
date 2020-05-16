@@ -4,9 +4,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
 import styled from 'styled-components'
-import { withStyles } from '@material-ui/core/styles';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 
 class ChartLister extends Component{
     constructor(props){
@@ -18,6 +17,9 @@ class ChartLister extends Component{
         const StyledCard = styled(Card)`
             width: 40%;
             margin: 1vw;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
+            border: 1px solid #f2f2f2;
         `
  
         const clickAction = this.props.clickAction;
@@ -26,6 +28,7 @@ class ChartLister extends Component{
             return(
             <StyledCard key={i} className={'single-card'}>
                 <CardContent>
+                    <ShowChartIcon></ShowChartIcon>
                     <Typography>{d.labelReadable}</Typography>
                 </CardContent>
                 <CardActions>

@@ -74,7 +74,7 @@ class DashboardComponent extends Component{
 
 
 export default styled(DashboardComponent)`
-    box-shadow: 0px 1px 5px 0px rgba(168,168,168,1);
+    box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
     width: 50vw;  
     height: 80vh;
     margin-bottom: 1vh; 
