@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 class ChartLister extends Component{
     constructor(props){
@@ -16,24 +15,32 @@ class ChartLister extends Component{
     render(){
         const StyledCard = styled(Card)`
             width: 40%;
+            padding-top: 1vh;
+            padding-bottom: 1vh;
             margin: 1vw;
             background-color: #ffffff;
             box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
             border: 1px solid #f2f2f2;
+            display: grid;
+            grid-template-areas: "icon label button";
+            justify-items: center;
+            align-items: center;
+        `;
+
+        const StyledAddBoxIcon = styled(AddBoxIcon)`
+            fill: palevioletred;
         `
+
  
         const clickAction = this.props.clickAction;
         const cards = this.props.labels.map((d,i) => {
             const action = () => this.props.clickActions[d.id](clickAction)
             return(
             <StyledCard key={i} className={'single-card'}>
-                <CardContent>
                     <ShowChartIcon></ShowChartIcon>
                     <Typography>{d.labelReadable}</Typography>
-                </CardContent>
-                <CardActions>
-                    <Button onClick={action}>Select</Button>
-                </CardActions>
+                    {/* <Button onClick={action}><AddBoxIcon></AddBoxIcon></Button> */}
+                    <StyledAddBoxIcon onClick={action}></StyledAddBoxIcon>
             </StyledCard>
             )
         })
