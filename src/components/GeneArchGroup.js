@@ -3,6 +3,7 @@ import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
 import { toNumber } from 'lodash'
+import { v4 as uuidv4 } from 'uuid';
 
 import { unique, removeParams, filterDataByParams, leftJoinByAttr, findUniqParamOptions} from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
@@ -25,7 +26,7 @@ class GeneArchGroup extends Component {
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#569dcf', '#f5f5e6', '#fd1743'])
             .interpolate(interpolateHcl);
-        this.state = {start: 40000, end:44000, params: {...this.params}};
+        this.state = {start: 40000, end:44000, params: {...removeParams(this.props.params, ['output_gen'])}};
     }
 
     onBrush(d) {
@@ -34,23 +35,25 @@ class GeneArchGroup extends Component {
 
     componentDidUpdate(){
         console.log(this.state)
-        console.log(this.params)
+        // console.log(this.params)
 
     }
 
     render(){
+        const uniqId= uuidv4()
         const start = this.state.start;
         const end = this.state.end;
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen']);
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
-        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
-        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
+        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, createLabel(this.archLabels[0], uniqId))
+        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, createLabel(this.archLabels[1], uniqId))
         const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
         });
+        
 
 
 
@@ -100,7 +103,7 @@ class GeneArchGroup extends Component {
         if(this.props.useLocalParams){
             paramBar =  <ParameterCollection data={paramMatrix}
                             labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
-                            initParams={this.params}
+                            initParams={params}
                             paramFunc={paramFunctions}>
                         </ParameterCollection>
         }
@@ -114,7 +117,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={100}
                           width={200}
-                          uniqId={this.archLabels[0]}
+                          uniqId={createLabel(this.archLabels[0], uniqId)}
                           changeBrush={this.onBrush}
                           addBrush={false}
                           gradients={gradsArch1}></GeneArchitecture>
@@ -124,7 +127,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={200}
                           width={2000}
-                          uniqId={this.archLabels[1]}
+                          uniqId={createLabel(this.archLabels[1], uniqId)}
                           changeBrush={this.onBrush}
                           addBrush={true}
                           gradients={gradsArch2}>

@@ -40,7 +40,7 @@ class LocalAdaptation extends Component {
     super(props);
 
     this.state = { 
-      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
+      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 1}
     }
   }
 
@@ -64,7 +64,7 @@ class LocalAdaptation extends Component {
           </div>
         </section>
 
-        {/* <section className="descriptive-chart">
+        <section className="descriptive-chart">
         <div id="arch-chart-group-1">
             <GeneArchGroup data={data} 
                 template={template}
@@ -72,7 +72,7 @@ class LocalAdaptation extends Component {
                 useLocalParams={true}>
             </GeneArchGroup>
           </div>
-        </section> */}
+        </section>
 
 
 

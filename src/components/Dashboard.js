@@ -18,8 +18,8 @@ class Dashboard extends Component{
 
     
     render(){
-        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
-        const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr']).map(d => {
+        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
+        const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
         });
@@ -46,7 +46,7 @@ class Dashboard extends Component{
                     params={this.state.params}></DashboardComponent>
 
                 <ParameterCollection data={paramMatrix}
-                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
+                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
                         initParams={this.state.params}
                         paramFunc={paramFunctions}>
                 </ParameterCollection>
