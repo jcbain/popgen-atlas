@@ -9,7 +9,11 @@ import { removeParams, filterDataByParams, unique, findUniqParamOptions } from '
 class Dashboard extends Component{
     constructor(props){
         super(props);
-        this.params = this.props.params;
+        this.state = { params: {...this.props.params}}
+    }
+
+    componentDidUpdate(){
+        console.log(this.state)
     }
 
     
@@ -31,22 +35,21 @@ class Dashboard extends Component{
             }))
             return paramFunctions;
         })
-
-
-        
+    
 
         return(
             <div>
                 <DashboardComponent className={'dashboard-component-main'}
                     data={this.props.data}
                     dataPopPhen={this.props.dataPopPhen}
-                    template={this.props.template}></DashboardComponent>
+                    template={this.props.template}
+                    params={this.state.params}></DashboardComponent>
 
-<ParameterCollection data={paramMatrix}
-                            labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
-                            initParams={this.params}
-                            paramFunc={paramFunctions}>
-                        </ParameterCollection>
+                <ParameterCollection data={paramMatrix}
+                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
+                        initParams={this.state.params}
+                        paramFunc={paramFunctions}>
+                </ParameterCollection>
             </div>
         )
     }

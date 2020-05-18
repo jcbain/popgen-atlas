@@ -47,11 +47,11 @@ class DashboardComponent extends Component{
         const charts = {
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
-                            params={this.state.params}
+                            params={this.props.params}
                             useLocalParams={false}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
-                                            params={this.state.params}
+                                            params={this.props.params}
                                             useLocalParams={false}></LineChartGroup>
         }
 

@@ -36,7 +36,7 @@ class LineChartGroup extends Component{
             d.pop = toNumber(d.pop)
             return d;
         });
-        const params = this.props.useLocalParams ? this.state.params : this.params;
+        const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
         const data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, params));
         const popKeys = data.map( d => d.key );
         const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
