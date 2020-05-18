@@ -18,7 +18,7 @@ class GeneArchGroup extends Component {
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
-        this.params = removeParams(this.props.params, ['output_gen']);
+        // this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
@@ -42,19 +42,11 @@ class GeneArchGroup extends Component {
         const start = this.state.start;
         const end = this.state.end;
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen']);
-        const generations = this.props.data.map(d => d.output_gen).filter(unique);
-        const yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
-        const colorScale = scaleLinear()
-        .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-        .range(['#569dcf', '#f5f5e6', '#fd1743'])
-        .interpolate(interpolateHcl);
-        const archLabels = ['arch-1', 'arch-2'];
-
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
         const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
-        const gradsArch1 = createGradients(generations, data, this.props.template, colorScale, yScale, 100, archLabels[0])
-        const gradsArch2 = createGradients(generations, data, this.props.template, colorScale, yScale, 200, archLabels[1])
+        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, this.archLabels[0])
+        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, this.archLabels[1])
         const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
             return d;

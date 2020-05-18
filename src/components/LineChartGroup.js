@@ -24,6 +24,7 @@ class LineChartGroup extends Component{
 
     }
 
+
     onBrush(d) {
         this.setState({start: d[0], end: d[1]});  
     }

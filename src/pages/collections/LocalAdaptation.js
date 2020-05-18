@@ -64,15 +64,15 @@ class LocalAdaptation extends Component {
           </div>
         </section>
 
-        <section className="descriptive-chart">
+        {/* <section className="descriptive-chart">
         <div id="arch-chart-group-1">
             <GeneArchGroup data={data} 
                 template={template}
                 params={this.state.params}
-                useLocalParams={false}>
+                useLocalParams={true}>
             </GeneArchGroup>
           </div>
-        </section>
+        </section> */}
 
 
 
