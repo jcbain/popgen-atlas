@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { toNumber } from 'lodash'
+import styled from 'styled-components'
 
 import DashboardComponent from './DashboardComponent';
 import ParameterCollection from './ParameterCollection';
@@ -38,12 +39,19 @@ class Dashboard extends Component{
     
 
         return(
-            <div>
+            <div className={this.props.className}>
                 <DashboardComponent className={'dashboard-component-main'}
                     data={this.props.data}
                     dataPopPhen={this.props.dataPopPhen}
                     template={this.props.template}
                     params={this.state.params}></DashboardComponent>
+
+                <DashboardComponent className={'dashboard-component-secondary'}
+                    data={this.props.data}
+                    dataPopPhen={this.props.dataPopPhen}
+                    template={this.props.template}
+                    params={this.state.params}>
+                </DashboardComponent>
 
                 <ParameterCollection data={paramMatrix}
                         labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
@@ -55,4 +63,7 @@ class Dashboard extends Component{
     }
 }
 
-export default Dashboard;
+export default styled(Dashboard)`
+    display: flex;
+    flex-direction: row;
+`;
