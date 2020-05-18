@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
 import ClearIcon from '@material-ui/icons/Clear';
+import { v4 as uuidv4 } from 'uuid';
 
 
 import LineChartGroup from './LineChartGroup';
@@ -14,6 +15,7 @@ class DashboardComponent extends Component{
     constructor(props){
         super(props);
         this.handleClick = this.handleClick.bind(this)
+        this.identifier = uuidv4();
         this.state = {componentView: false,
                       selectedComponent: '',
                       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
@@ -48,7 +50,8 @@ class DashboardComponent extends Component{
             geneArchGroup: <GeneArchGroup data={this.props.data}
                             template={this.props.template}
                             params={this.props.params}
-                            useLocalParams={false}>
+                            useLocalParams={false}
+                            identifier={this.identifier}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.props.params}

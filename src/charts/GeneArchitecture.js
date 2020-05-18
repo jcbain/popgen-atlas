@@ -56,7 +56,7 @@ class GeneArchitecture extends Component {
         }
 
         const gens = generations.map(
-            d => <SingleGeneration key={`genome-cross-${d}`}
+            d => <SingleGeneration key={createLabel('genome-cross', this.props.uniqId, d)}
                                    gen={d}
                                    xScale={xScale}
                                    genWidth={genWidth}

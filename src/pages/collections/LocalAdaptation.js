@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
+import { v4 as uuidv4 } from 'uuid';
+
 
 import data from '../../data/mutations_bg.json';
 import individualData from '../../data/individuals_small';
@@ -69,7 +71,8 @@ class LocalAdaptation extends Component {
             <GeneArchGroup data={data} 
                 template={template}
                 params={this.state.params}
-                useLocalParams={true}>
+                useLocalParams={true}
+                identifier={uuidv4()}>
             </GeneArchGroup>
           </div>
         </section>
