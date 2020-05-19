@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, flatMap } from 'lodash';
 import { nest } from 'd3-collection';
 
 const unique = (value, index, self) => {
@@ -31,13 +31,41 @@ const returnRelevantParams = (data, params) => {
 
 function filterDataByParams(data, parmamSelections){
     const relevantParams = returnRelevantParams(data, parmamSelections);
-    
     Object.keys(relevantParams).forEach( d => {
         data = data.filter( v => {
             return v[d] === relevantParams[d]
         })
     })
     return data;
+}
+
+function filterDataByMultipleOptsWithinSingleParam(data, paramSelection){
+    let dataCopy = cloneDeep(data);
+    const relevantParams = returnRelevantParams(data, paramSelection);
+    let filteredData = [];
+    Object.keys(relevantParams).forEach( d => {
+        if (Array.isArray(relevantParams[d])){
+            relevantParams[d].map( v => {
+                let newData = cloneDeep(dataCopy);
+                let selection = newData.filter( r => {
+                    return r[d] === v;
+                })
+                return filteredData.push(selection)
+            })
+            console.log(filteredData)
+            dataCopy = flatMap(filteredData)
+        } else {
+            let newData = cloneDeep(data)
+            let selection = newData.filter( r => {
+                return r[d] === relevantParams[d];
+            })
+            
+            return filteredData.push(selection)
+        }
+        console.log(filteredData)
+        dataCopy = flatMap(filteredData)
+    })
+    return dataCopy;
 }
 
 function removeParams(params, keys){
@@ -84,4 +112,4 @@ function findUniqParamOptions(data, params){
 }
 
 
-export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr, findUniqParamOptions}
+export {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam}

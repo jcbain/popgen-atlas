@@ -5,7 +5,7 @@ import { min, max } from 'd3-array';
 import { toNumber } from 'lodash'
 
 
-import { removeParams, filterDataByParams, unique, findUniqParamOptions } from '../helpers/DataHelpers';
+import { removeParams, filterDataByParams, unique, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam } from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
 import ParameterCollection from './ParameterCollection';
 
@@ -37,15 +37,13 @@ class LineChartGroup extends Component{
             d.pop = toNumber(d.pop)
             return d;
         })
-
+        let dummyData = [{name: 'james', age: 10}, {name:'jennifer', age:10}, {name: 'billy', age: 10}]
+        let dummyParams = {age: 10}
+        console.log(filterDataByMultipleOptsWithinSingleParam(dummyData, dummyParams))
         const specialParamMatrix = (this.props.specialParams !== undefined) ? findUniqParamOptions(this.props.data, this.props.specialParams) : undefined;
         console.log(paramMatrix)
         console.log(specialParamMatrix)
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
-        console.log(filterDataByParams(this.props.data.map(d => {
-            d.pop = toNumber(d.pop)
-            return d;
-        }), params))
         const data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data.map(d =>{
             d.pop = toNumber(d.pop);
             return d;
@@ -56,8 +54,6 @@ class LineChartGroup extends Component{
         const outsideColor = scaleOrdinal().domain(popKeys).range(['#f0b7a8', '#d9bac4', '#E8A87C']);
         const lineGrads1 = createGradients(popKeys, this.chartWidths[0], this.lineLabels[0], [min(this.generations), max(this.generations)])
         const lineGrads2 = createGradients(popKeys, this.chartWidths[1], this.lineLabels[1], this.startExtent)
-
-        console.log(data)
 
         function createGradients(popKeys, width, name, startExtent){
             const gradients = popKeys
