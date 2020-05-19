@@ -34,8 +34,9 @@ class ChartLister extends Component{
  
         const clickAction = this.props.clickAction;
         const cards = this.props.labels.map((d,i) => {
-            const action = () => this.props.clickActions[d.id](clickAction)
-            return(
+        const action = () => this.props.clickActions[d.id](clickAction)
+        
+        return(
             <StyledCard key={i} className={'single-card'}>
                     <ShowChartIcon></ShowChartIcon>
                     <Typography>{d.labelReadable}</Typography>

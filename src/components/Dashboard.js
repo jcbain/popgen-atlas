@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import DashboardComponent from './DashboardComponent';
 import ParameterCollection from './ParameterCollection';
-import { removeParams, filterDataByParams, unique, findUniqParamOptions } from '../helpers/DataHelpers';
+import { findUniqParamOptions } from '../helpers/DataHelpers';
 
 
 class Dashboard extends Component{
@@ -13,11 +13,6 @@ class Dashboard extends Component{
         this.state = { params: {...this.props.params}}
     }
 
-    componentDidUpdate(){
-        console.log(this.state)
-    }
-
-    
     render(){
         const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
         const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {

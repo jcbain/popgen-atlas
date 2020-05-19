@@ -36,15 +36,28 @@ class LineChartGroup extends Component{
         const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
-        });
+        })
+
+        const specialParamMatrix = (this.props.specialParams !== undefined) ? findUniqParamOptions(this.props.data, this.props.specialParams) : undefined;
+        console.log(paramMatrix)
+        console.log(specialParamMatrix)
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
-        const data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data, params));
+        console.log(filterDataByParams(this.props.data.map(d => {
+            d.pop = toNumber(d.pop)
+            return d;
+        }), params))
+        const data = nest().key(d => d.pop).entries(filterDataByParams(this.props.data.map(d =>{
+            d.pop = toNumber(d.pop);
+            return d;
+        }), params));
         const popKeys = data.map( d => d.key );
         const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
         const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
         const outsideColor = scaleOrdinal().domain(popKeys).range(['#f0b7a8', '#d9bac4', '#E8A87C']);
         const lineGrads1 = createGradients(popKeys, this.chartWidths[0], this.lineLabels[0], [min(this.generations), max(this.generations)])
         const lineGrads2 = createGradients(popKeys, this.chartWidths[1], this.lineLabels[1], this.startExtent)
+
+        console.log(data)
 
         function createGradients(popKeys, width, name, startExtent){
             const gradients = popKeys

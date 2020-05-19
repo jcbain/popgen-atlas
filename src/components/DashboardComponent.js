@@ -55,7 +55,8 @@ class DashboardComponent extends Component{
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.props.params}
-                                            useLocalParams={false}></LineChartGroup>
+                                            useLocalParams={false}
+                                            specialParams={['pop']}></LineChartGroup>
         }
 
         const componentLabels = [
