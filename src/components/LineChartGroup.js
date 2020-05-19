@@ -37,9 +37,6 @@ class LineChartGroup extends Component{
             d.pop = toNumber(d.pop)
             return d;
         })
-        let dummyData = [{name: 'james', age: 10}, {name:'jennifer', age:20}, {name: 'billy', age: 10}]
-        let dummyParams = {age: 10}
-        console.log(filterDataByMultipleOptsWithinSingleParam(dummyData, dummyParams))
         const specialParamMatrix = (this.props.specialParams !== undefined) ? findUniqParamOptions(this.props.data, this.props.specialParams) : undefined;
         console.log(paramMatrix)
         console.log(specialParamMatrix)

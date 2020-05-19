@@ -11,8 +11,6 @@ import template from '../../data/genome_template.json';
 import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
 import Dashboard from '../../components/Dashboard';
-import ParameterCollection from '../../components/ParameterCollection';
-import { findUniqParamOptions } from '../../helpers/DataHelpers';
 
 
 import './styles/local_adaptation_styles.css';
