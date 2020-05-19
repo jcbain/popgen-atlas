@@ -1,4 +1,4 @@
-import {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr, findUniqParamOptions} from './DataHelpers';
+import {unique, returnRelevantParams, filterDataByParams, closestFromArray, removeParams, leftJoinByAttr, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam} from './DataHelpers';
 
 const tmpdata = [{name: 'jennifer', age: 29}, {name: 'james', age: 29}, {name: 'james', age: 29, hair: 'brown'}];
 const selectedParams = {name: 'james', age: 29, badparam: 'real bad'};
@@ -39,4 +39,8 @@ test('leftJoinByAttr() should map new attribute name properly', () => {
 test('findUniqParamOptions() should return rows containing only unique combinations of parameters passed', () =>{ 
     expect(findUniqParamOptions(tmpdata, ['name', 'age'])).toStrictEqual([{"age": "29", "name": "jennifer"}, {"age": "29", "name": "james"}])
 })
+
+test('filterDataByMultipleOptsWithinSingleParam() should return objects containing names of either `jennifer` or `james`', () => {
+    expect(filterDataByMultipleOptsWithinSingleParam(tmpdata, {name: ['jennifer', 'james']})).toStrictEqual(tmpdata);
+} )
 

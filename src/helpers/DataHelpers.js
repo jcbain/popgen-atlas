@@ -52,7 +52,6 @@ function filterDataByMultipleOptsWithinSingleParam(data, paramSelection){
                 })
                 return filteredData.push(selection)
             })
-            console.log(filteredData)
             dataCopy = flatMap(filteredData)
         } else {
             let newData = cloneDeep(data)
@@ -62,7 +61,6 @@ function filterDataByMultipleOptsWithinSingleParam(data, paramSelection){
             
             return filteredData.push(selection)
         }
-        console.log(filteredData)
         dataCopy = flatMap(filteredData)
     })
     return dataCopy;
