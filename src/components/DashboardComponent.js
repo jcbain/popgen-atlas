@@ -15,15 +15,23 @@ class DashboardComponent extends Component{
     constructor(props){
         super(props);
         this.handleClick = this.handleClick.bind(this)
+        this.handleMultiSelect = this.handleMultiSelect.bind(this)
         this.identifier = uuidv4();
         this.state = {componentView: false,
                       selectedComponent: '',
-                      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0}
+                      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
+                      specialOpts: {lineChartGroup: {pop: {0: true, 1: true}}}
                     };
     }
 
     handleClick(d){
+        
         this.setState({componentView: d[0], selectedComponent: d[1]})
+    }
+
+    handleMultiSelect(d){
+        this.setState({specialOpts: {lineChartGroup: {pop: {[d]: false}}} })
+        console.log(this.state)
     }
 
     render(){
@@ -56,7 +64,8 @@ class DashboardComponent extends Component{
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.props.params}
                                             useLocalParams={false}
-                                            specialParams={['pop']}></LineChartGroup>
+                                            specialParams={['pop']}
+                                            specialOpts={{pop: [0, 1]}}></LineChartGroup>
         }
 
         const componentLabels = [
@@ -70,6 +79,18 @@ class DashboardComponent extends Component{
             return paramFunctions[k.id] = (event) => event([true, k.id])
         })
 
+        let staticFunctionObject = {};
+        componentLabels.map(k => {
+            let staticOptFunctions = {};
+            if(k.staticOpts !== undefined){
+                Object.keys(k.staticOpts).map( v => {
+                    return staticOptFunctions[v] = (event, val) => event(val)
+                })
+                return staticFunctionObject[k.id] = staticOptFunctions;
+            }
+        })
+
+        console.log(staticFunctionObject)
 
         let display;
         if(this.state.componentView){
@@ -80,9 +101,11 @@ class DashboardComponent extends Component{
                 </StyledDiv>
         } else {
             display = <StyledChartLister className={'chart-cards'}
-                clickAction={this.handleClick} 
+                handleClick={this.handleClick}
+                handleMultiSelect={this.handleMultiSelect} 
                 labels={componentLabels}
-                clickActions={paramFunctions}></StyledChartLister>
+                clickActions={paramFunctions}
+                staticOptAction={staticFunctionObject}></StyledChartLister>
         }
         return(
             <div className={this.props.className}>

@@ -34,16 +34,19 @@ class ChartLister extends Component{
             fill: palevioletred;
         `
  
-        const clickAction = this.props.clickAction;
+        const handleClickAction = this.props.handleClick;
+        const handleMultiSelect = this.props.handleMultiSelect;
         const cards = this.props.labels.map((d,i) => {
-            const action = () => this.props.clickActions[d.id](clickAction)
+            const action = () => this.props.clickActions[d.id](handleClickAction)
             let specialOpts;
             if(d.staticOpts !== undefined){
                 specialOpts = Object.keys(d.staticOpts).map(v => {
                     return(
                         <div key={v}>
                         <p>{v}</p>
-                        {d.staticOpts[v].map(i => <button key={i} onClick={() => console.log(i)}>{i}</button>)}
+                        {d.staticOpts[v].map(i => <button key={i} 
+                        onClick={() => this.props.staticOptAction[d.id][v](handleMultiSelect, i)}
+                        >{i}</button>)}
                         </div>
                         
                     )
