@@ -18,6 +18,29 @@ import './styles/local_adaptation_styles.css';
 data.forEach( d => 
   d['positional_phen'] = d.freq * d.select_coef);
 
+const dataDiff = nest()
+  .key(d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr, d.position])
+  .rollup( v => {
+    return v.reduce((prev, curr) => {
+      prev['output_gen'] = curr['output_gen'];
+      prev['m'] = curr['m'];
+      prev['mu'] = curr['mu'];
+      prev['r'] = curr['r'];
+      prev['sigsqr'] = curr['sigsqr'];
+      prev['position'] = curr['position']
+      prev[curr['pop']] = curr.positional_phen
+      return prev;
+    }, {})
+  })
+  .entries(data)
+  .map(d => d.value)
+  .map(d => {
+    const d0 = (d['0'] === undefined) ? 0 : d['0']
+    const d1 = (d['1'] === undefined) ? 0 : d['1']
+    d['positional_phen'] = Math.abs(d0) - Math.abs(d1)
+    return d;
+  })
+
 const dataPopPhen = nest()
   .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
   .rollup( v => {
@@ -68,6 +91,7 @@ class LocalAdaptation extends Component {
 
 
   render() {
+    console.log(data)
     console.log(dataPopPhenDiff);
     return (
       <div className="local-adaptation">
@@ -88,7 +112,7 @@ class LocalAdaptation extends Component {
 
         <section className="descriptive-chart">
         <div id="arch-chart-group-1">
-            <GeneArchGroup data={data} 
+            <GeneArchGroup data={dataDiff} 
                 template={template}
                 params={this.state.params}
                 useLocalParams={true}
