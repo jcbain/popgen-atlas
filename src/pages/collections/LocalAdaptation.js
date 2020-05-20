@@ -18,22 +18,6 @@ import './styles/local_adaptation_styles.css';
 data.forEach( d => 
   d['positional_phen'] = d.freq * d.select_coef);
 
-// const dataPopPhen = [];
-// nest().key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
-//       .rollup( v => sum(v, d => d.positional_phen))
-//       .entries(data)
-//       .forEach( d => {
-//         let vals = d.key.split(",");
-//         d['output_gen'] = parseInt(vals[0]);
-//         d['pop']        = vals[1];
-//         d['m']          = vals[2];
-//         d['mu']         = vals[3];
-//         d['r']          = vals[4];
-//         d['sigsqr']     = vals[5];
-//         d['pop_phen']   = d.value;
-//         dataPopPhen.push(d)
-// });
-
 const dataPopPhen = nest()
   .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
   .rollup( v => {
@@ -52,41 +36,25 @@ const dataPopPhen = nest()
   .entries(data)
   .map(d => d.value);
 
-const dummyDataLong = [
-  {city: 'New York', state: 'NJ', year: 1990, dogs: 3},
-  {city: 'New York', state: 'NJ', year: 2000, dogs: 5},
-  {city: 'New York', state: 'NY', year: 1990, dogs: 10},
-  {city: 'New York', state: 'NY', year: 2000, dogs: 35}
-]
-
-const dummyDataWide = nest()
-  .key(d => [d.city, d.state])
-  .rollup(v => {
-    return v.reduce((prev, curr) => {
-      prev.city = curr.city;
-      prev.state = curr.state;
-      prev[curr['year']] = curr.dogs;
+const dataPopPhenDiff = nest()
+  .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
+  .rollup( v => {
+    return v.reduce((prev, curr) =>{
+      prev['output_gen'] = curr['output_gen'];
+      prev['m'] = curr['m'];
+      prev['mu'] = curr['mu'];
+      prev['r'] = curr['r'];
+      prev['sigsqr'] = curr['sigsqr'];
+      prev[curr['pop']] = curr.pop_phen
       return prev;
     }, {})
   })
-  .entries(dummyDataLong)
+  .entries(dataPopPhen)
   .map(d => d.value)
-
-const dummyDataTest = nest()
-  .key(d => [d.city, d.state])
-  .rollup(v => {
-    const dogSum = sum(v, d => d.dogs);
-    console.log(dogSum)
-    return v.reduce((prev, curr) => {
-      prev.city = curr.city;
-      prev.state = curr.state;
-      prev.dogSum = dogSum;
-      return prev;
-    }, {})
+  .map(d => {
+    d['pop_phen'] = Math.abs(d['0']) - Math.abs(d['1']);
+    return d;
   })
-  .entries(dummyDataLong)
-
-
   
 class LocalAdaptation extends Component {
   constructor(props){
@@ -100,10 +68,7 @@ class LocalAdaptation extends Component {
 
 
   render() {
-    console.log(dataPopPhen)
-    console.log(dummyDataWide)
-    console.log(dummyDataTest)
-    // console.log(dataPopPhen2)
+    console.log(dataPopPhenDiff);
     return (
       <div className="local-adaptation">
 

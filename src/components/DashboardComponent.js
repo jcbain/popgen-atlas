@@ -94,7 +94,6 @@ class DashboardComponent extends Component{
         }
 
         const componentLabels = [
-            // change this to where the key is some value and the label is also another value
             {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart'},
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}}
         ]
