@@ -37,11 +37,7 @@ class LineChartGroup extends Component{
             d.pop = toNumber(d.pop)
             return d;
         })
-        // const specialParamMatrix = (this.props.specialParams !== undefined) ? findUniqParamOptions(this.props.data, this.props.specialParams) : undefined;
-        // console.log(paramMatrix)
-        // console.log(specialParamMatrix)
         const specialParamOpts = (this.props.specialOpts !== undefined) ? this.props.specialOpts : undefined;
-        console.log(specialParamOpts);
         const staticFilterData = (specialParamOpts !== undefined) ? filterDataByMultipleOptsWithinSingleParam(this.props.data, specialParamOpts) : this.props.data
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
         const data = nest().key(d => d.pop).entries(filterDataByParams(staticFilterData.map(d =>{
