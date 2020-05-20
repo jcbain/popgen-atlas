@@ -15,6 +15,10 @@ class ChartLister extends Component{
         this.state = {clicked: false}
     }
 
+    componentDidUpdate(){
+        console.log(this.state);
+    }
+
     render(){
         const StyledCard = styled(Card)`
             width: 40%;

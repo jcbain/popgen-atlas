@@ -20,8 +20,12 @@ class DashboardComponent extends Component{
         this.state = {componentView: false,
                       selectedComponent: '',
                       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
-                      specialOpts: {lineChartGroup: {pop: {0: true, 1: true}}}
+                      specialOpts: {lineChartGroup: {pop: [0, 1]}}
                     };
+    }
+
+    componentDidUpdate(){
+        console.log(this.state)
     }
 
     handleClick(d){
@@ -30,8 +34,30 @@ class DashboardComponent extends Component{
     }
 
     handleMultiSelect(d){
-        this.setState({specialOpts: {lineChartGroup: {pop: {[d]: false}}} })
-        console.log(this.state)
+        const componentLabel = d[0];
+        const paramLabel = d[1];
+        const paramValue = d[2];
+
+        if(this.state['specialOpts'][componentLabel][paramLabel].includes(paramValue)){
+            this.setState(prevState => ({
+                specialOpts : { 
+                    [componentLabel] : {
+                        [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel]].filter(val => val !== paramValue)
+                    }
+                }
+
+            }))
+        } else {
+            this.setState(prevState => ({
+                specialOpts : { 
+                    [componentLabel] : {
+                        [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel], paramValue]
+                    }
+                }
+
+            }))
+
+        }
     }
 
     render(){
@@ -64,8 +90,7 @@ class DashboardComponent extends Component{
             lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
                                             params={this.props.params}
                                             useLocalParams={false}
-                                            specialParams={['pop']}
-                                            specialOpts={{pop: [0, 1]}}></LineChartGroup>
+                                            specialOpts={this.state.specialOpts.lineChartGroup}></LineChartGroup>
         }
 
         const componentLabels = [
@@ -84,13 +109,12 @@ class DashboardComponent extends Component{
             let staticOptFunctions = {};
             if(k.staticOpts !== undefined){
                 Object.keys(k.staticOpts).map( v => {
-                    return staticOptFunctions[v] = (event, val) => event(val)
+                    // return staticOptFunctions[v] = (event, val) => event(val)
+                    return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
                 })
                 return staticFunctionObject[k.id] = staticOptFunctions;
             }
         })
-
-        console.log(staticFunctionObject)
 
         let display;
         if(this.state.componentView){
