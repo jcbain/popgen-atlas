@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
+import { chooseMultiStaticOptions } from './CardActions'
+
 const StyledCard = styled(Card)`
     width: 40%;
     padding-top: 1vh;
@@ -25,6 +27,7 @@ const StyledAddBoxIcon = styled(AddBoxIcon)`
 
 function LineChartCard(props){
     const clickAction = () => props.clickActions[props.identifier](props.handleClick)
+    const staticFunctionObject = chooseMultiStaticOptions(props.labels)
     let specialOpts;
     if(props.staticOpts !== undefined){
         specialOpts = Object.keys(props.staticOpts).map( v => {
@@ -32,7 +35,7 @@ function LineChartCard(props){
                 <div key={v}>
                 <p>{v}</p>
                 {props.staticOpts[v].map(i => <button key={i} 
-                onClick={() => props.staticOptAction[props.identifier][v](props.handleMultiSelect, i)}
+                onClick={() => staticFunctionObject[props.identifier][v](props.handleMultiSelect, i)}
                 >{i}</button>)}
             </div> 
                 
@@ -60,7 +63,7 @@ function GenomeChartCard(props) {
     )
 }
 
-export const cardTypes = {
+export const CardTemplates = {
     'lineChartGroup': LineChartCard,
     'geneArchGroup': GenomeChartCard,
 }

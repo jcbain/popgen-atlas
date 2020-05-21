@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {cardTypes} from './DashboardCards';
+import {CardTemplates} from './CardTemplates';
 
 class ChartLister extends Component{
     constructor(props){
@@ -8,17 +8,17 @@ class ChartLister extends Component{
     }
 
     render() {
+
         const clickActions = this.props.clickActions;
         const handleClickAction = this.props.handleClick;
         const handleMultiSelect = this.props.handleMultiSelect;
-        const staticOptAction = this.props.staticOptAction
         const cards = this.props.labels.map((d,i) => {
             return(
-                cardTypes[d.id]({
+                CardTemplates[d.id]({
+                    labels: this.props.labels,
                     clickActions: clickActions,
                     handleClick: handleClickAction,
                     staticOpts: d.staticOpts,
-                    staticOptAction: staticOptAction,
                     identifier: d.id,
                     handleMultiSelect: handleMultiSelect,
                     labelReadable: d.labelReadable
