@@ -16,16 +16,23 @@ class DashboardComponent extends Component{
         super(props);
         this.handleClick = this.handleClick.bind(this)
         this.handleMultiSelect = this.handleMultiSelect.bind(this)
+        this.handleSwitchDiff = this.handleDiffSwitch.bind(this);
         this.identifier = uuidv4();
         this.state = {componentView: false,
                       selectedComponent: '',
                       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
-                      specialOpts: {lineChartGroup: {pop: [0, 1]}}
+                      specialOpts: {lineChartGroup: {pop: [0, 1]}},
+                      switchOpts: {geneArchGroup: false}
                     };
     }
 
     componentDidUpdate(){
         console.log(this.state)
+    }
+
+    handleDiffSwitch(d){
+        console.log(d)
+        this.setState({switchOpts: { geneArchGroup: !this.state.switchOpts.geneArchGroup}})
     }
 
     handleClick(d){
@@ -93,7 +100,7 @@ class DashboardComponent extends Component{
         }
 
         const componentLabels = [
-            {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart'},
+            {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart', switchDiff: this.state.switchOpts.geneArchGroup},
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}}
         ]
 
@@ -124,6 +131,7 @@ class DashboardComponent extends Component{
             display = <StyledChartLister className={'chart-cards'}
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
+                handleSwitchDiff={this.handleSwitchDiff}
                 labels={componentLabels}
                 // clickActions={paramFunctions}
                 // staticOptAction={staticFunctionObject}

@@ -11,6 +11,7 @@ class ChartLister extends Component{
 
         const handleClickAction = this.props.handleClick;
         const handleMultiSelect = this.props.handleMultiSelect;
+        const handleSwitchDiff = this.props.handleSwitchDiff;
         const cards = this.props.labels.map((d,i) => {
             return(
                 CardTemplates[d.id]({
@@ -19,7 +20,9 @@ class ChartLister extends Component{
                     staticOpts: d.staticOpts,
                     identifier: d.id,
                     handleMultiSelect: handleMultiSelect,
-                    labelReadable: d.labelReadable
+                    handleSwitchDiff: handleSwitchDiff,
+                    labelReadable: d.labelReadable,
+                    switchDiff: d.switchDiff
                 })
             )
         })
