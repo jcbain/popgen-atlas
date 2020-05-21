@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
-import { chooseMultiStaticOptions } from './CardActions'
+import { chooseMultiStaticOptions, chooseComponent } from './CardActions'
 
 const StyledCard = styled(Card)`
     width: 40%;
@@ -26,7 +26,8 @@ const StyledAddBoxIcon = styled(AddBoxIcon)`
     `
 
 function LineChartCard(props){
-    const clickAction = () => props.clickActions[props.identifier](props.handleClick)
+    // const clickAction = () => props.clickActions[props.identifier](props.handleClick)
+    const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     const staticFunctionObject = chooseMultiStaticOptions(props.labels)
     let specialOpts;
     if(props.staticOpts !== undefined){
@@ -53,7 +54,7 @@ function LineChartCard(props){
 }
 
 function GenomeChartCard(props) {
-    const clickAction = () => props.clickActions[props.identifier](props.handleClick)
+    const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     return (
         <StyledCard>
             <ShowChartIcon></ShowChartIcon>

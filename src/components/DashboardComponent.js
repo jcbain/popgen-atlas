@@ -29,7 +29,6 @@ class DashboardComponent extends Component{
     }
 
     handleClick(d){
-        
         this.setState({componentView: d[0], selectedComponent: d[1]})
     }
 
@@ -98,21 +97,21 @@ class DashboardComponent extends Component{
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}}
         ]
 
-        let paramFunctions = {};
-        componentLabels.map(k => {
-            return paramFunctions[k.id] = (event) => event([true, k.id])
-        })
+        // let paramFunctions = {};
+        // componentLabels.map(k => {
+        //     return paramFunctions[k.id] = (event) => event([true, k.id])
+        // })
 
-        let staticFunctionObject = {};
-        componentLabels.map(k => {
-            let staticOptFunctions = {};
-            if(k.staticOpts !== undefined){
-                Object.keys(k.staticOpts).map( v => {
-                    return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
-                })
-                return staticFunctionObject[k.id] = staticOptFunctions;
-            }
-        })
+        // let staticFunctionObject = {};
+        // componentLabels.map(k => {
+        //     let staticOptFunctions = {};
+        //     if(k.staticOpts !== undefined){
+        //         Object.keys(k.staticOpts).map( v => {
+        //             return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
+        //         })
+        //         return staticFunctionObject[k.id] = staticOptFunctions;
+        //     }
+        // })
 
         let display;
         if(this.state.componentView){
@@ -126,8 +125,9 @@ class DashboardComponent extends Component{
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
                 labels={componentLabels}
-                clickActions={paramFunctions}
-                staticOptAction={staticFunctionObject}></StyledChartLister>
+                // clickActions={paramFunctions}
+                // staticOptAction={staticFunctionObject}
+                ></StyledChartLister>
         }
         return(
             <div className={this.props.className}>

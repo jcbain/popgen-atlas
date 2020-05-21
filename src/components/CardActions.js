@@ -8,6 +8,13 @@
 //         return staticFunctionObject[k.id] = staticOptFunctions;
 //     }
 // })
+export function chooseComponent(componentArray){
+    let componentChoiceFunctions = {};
+    componentArray.map(componentItem => {
+        return componentChoiceFunctions[componentItem.id] = (event) => event([true, componentItem.id])
+    })
+    return componentChoiceFunctions;
+}
 
 export function chooseMultiStaticOptions(componentArray){
     let multiStaticFunctionObj = {};

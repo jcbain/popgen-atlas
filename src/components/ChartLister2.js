@@ -9,14 +9,12 @@ class ChartLister extends Component{
 
     render() {
 
-        const clickActions = this.props.clickActions;
         const handleClickAction = this.props.handleClick;
         const handleMultiSelect = this.props.handleMultiSelect;
         const cards = this.props.labels.map((d,i) => {
             return(
                 CardTemplates[d.id]({
                     labels: this.props.labels,
-                    clickActions: clickActions,
                     handleClick: handleClickAction,
                     staticOpts: d.staticOpts,
                     identifier: d.id,
