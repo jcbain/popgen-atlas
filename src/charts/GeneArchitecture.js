@@ -14,7 +14,7 @@ class GeneArchitecture extends Component {
     constructor(props){
         super(props);
         this.gradients = this.props.gradients;
-        this.startExtent = [1000, 10000]
+        this.startExtent = [this.props.startExtent[0], this.props.startExtent[1]]
         
     }
     archRef = React.createRef();

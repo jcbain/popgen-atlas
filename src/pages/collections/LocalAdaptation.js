@@ -37,7 +37,7 @@ const dataDiff = nest()
   .map(d => {
     const d0 = (d['0'] === undefined) ? 0 : d['0']
     const d1 = (d['1'] === undefined) ? 0 : d['1']
-    d['positional_phen'] = Math.abs(d0) - Math.abs(d1)
+    d['positional_phen'] = d0 - d1
     return d;
   })
 
@@ -75,7 +75,7 @@ const dataPopPhenDiff = nest()
   .entries(dataPopPhen)
   .map(d => d.value)
   .map(d => {
-    d['pop_phen'] = Math.abs(d['0']) - Math.abs(d['1']);
+    d['pop_phen'] = d['0']- d['1'];
     return d;
   })
   
@@ -91,8 +91,6 @@ class LocalAdaptation extends Component {
 
 
   render() {
-    console.log(data)
-    console.log(dataPopPhenDiff);
     return (
       <div className="local-adaptation">
 
@@ -112,7 +110,7 @@ class LocalAdaptation extends Component {
 
         <section className="descriptive-chart">
         <div id="arch-chart-group-1">
-            <GeneArchGroup data={dataDiff} 
+            <GeneArchGroup data={data} 
                 template={template}
                 params={this.state.params}
                 useLocalParams={true}

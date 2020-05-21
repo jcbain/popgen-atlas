@@ -25,7 +25,7 @@ class GeneArchGroup extends Component {
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
             .range(['#569dcf', '#f5f5e6', '#fd1743'])
             .interpolate(interpolateHcl);
-        this.state = {start: 40000, end:44000, params: {...removeParams(this.props.params, ['output_gen'])}};
+        this.state = {start: 1000, end: 10000, params: {...removeParams(this.props.params, ['output_gen'])}};
     }
 
     onBrush(d) {
@@ -42,7 +42,7 @@ class GeneArchGroup extends Component {
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen']);
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
-        const filterData = this.props.data.filter(d => d.output_gen >=start && d.output_gen < end)
+        const filterData = this.props.data.filter(d => d.output_gen >= start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, createLabel(this.archLabels[0], this.props.identifier))
         const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, createLabel(this.archLabels[1], this.props.identifier))
         const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr']).map(d => {
@@ -109,6 +109,7 @@ class GeneArchGroup extends Component {
                 {paramBar}
                 <GeneArchitecture key="gene-arch-1" 
                           data={filterData}
+                          startExtent={[this.state.start, this.state.end]}
                           template={this.props.template}
                           params={this.props.params}
                           height={100}
@@ -119,6 +120,7 @@ class GeneArchGroup extends Component {
                           gradients={gradsArch1}></GeneArchitecture>
                 <GeneArchitecture key="gene-arch-2" 
                           data={this.props.data}
+                          startExtent={[this.state.start, this.state.end]}
                           template={this.props.template}
                           params={this.props.params}
                           height={200}

@@ -108,7 +108,6 @@ class DashboardComponent extends Component{
             let staticOptFunctions = {};
             if(k.staticOpts !== undefined){
                 Object.keys(k.staticOpts).map( v => {
-                    // return staticOptFunctions[v] = (event, val) => event(val)
                     return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
                 })
                 return staticFunctionObject[k.id] = staticOptFunctions;
