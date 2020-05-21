@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -34,6 +30,37 @@ class ChartLister extends Component{
             align-items: center;
         `;
 
+        function SecondaryCard(props) {
+            return (
+                <StyledCard>
+                    <ShowChartIcon></ShowChartIcon>
+                    <Typography>{props.labelReadable}</Typography>
+                    <StyledAddBoxIcon onClick={props.action}></StyledAddBoxIcon>
+                    {props.children}
+                </StyledCard>
+            )
+
+        } 
+
+
+        function TertiaryCard(props) {
+            return (
+                <StyledCard>
+                    <ShowChartIcon></ShowChartIcon>
+                    <Typography>{props.labelReadable}</Typography>
+                    <AddBoxIcon onClick={props.action}></AddBoxIcon>
+                    {props.children}
+                </StyledCard>
+            )
+
+        } 
+
+        const cardTypes = {
+            'lineChartGroup': TertiaryCard,
+            'geneArchGroup': SecondaryCard,
+        }
+
+
         const StyledAddBoxIcon = styled(AddBoxIcon)`
             fill: palevioletred;
         `
@@ -47,18 +74,16 @@ class ChartLister extends Component{
                 specialOpts = Object.keys(d.staticOpts).map(v => {
                     return(
                         <div key={v}>
-                        <p>{v}</p>
-                        {d.staticOpts[v].map(i => <button key={i} 
-                        onClick={() => this.props.staticOptAction[d.id][v](handleMultiSelect, i)}
-                        >{i}</button>)}
-                        </div>
-                        
+                            <p>{v}</p>
+                            {d.staticOpts[v].map(i => <button key={i} 
+                            onClick={() => this.props.staticOptAction[d.id][v](handleMultiSelect, i)}
+                            >{i}</button>)}
+                        </div> 
                     )
-
-            })
-                
+                })   
             }
             return(
+                // cardTypes[d.id]({labelReadable: d.labelReadable, action: action})
                 <StyledCard key={i} className={'single-card'}>
                         <ShowChartIcon></ShowChartIcon>
                         <Typography>{d.labelReadable}</Typography>
@@ -66,8 +91,8 @@ class ChartLister extends Component{
                         <StyledAddBoxIcon onClick={action}></StyledAddBoxIcon>
                         {specialOpts}
                 </StyledCard>
-                )
-        })
+                )}
+        )
 
         return(
             <div className={this.props.className}>

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup'
 
-import ChartLister from './ChartLister'
+import ChartLister from './ChartLister2'
 
 
 class DashboardComponent extends Component{
