@@ -129,6 +129,7 @@ class LocalAdaptation extends Component {
       <section id="dashboard">
         <Dashboard className={'dashboard-local-adaptation'}
           data={data} 
+          dataDiff={dataDiff}
           dataPopPhen={dataPopPhen} 
           template={template}
           params={this.state.params}>

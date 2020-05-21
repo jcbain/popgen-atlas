@@ -22,7 +22,7 @@ class DashboardComponent extends Component{
                       selectedComponent: '',
                       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
                       specialOpts: {lineChartGroup: {pop: [0, 1]}},
-                      switchOpts: {geneArchGroup: false}
+                      switchOpts: {geneArchGroup: { switchOpt: false, dataOpt: 0}}
                     };
     }
 
@@ -32,7 +32,8 @@ class DashboardComponent extends Component{
 
     handleDiffSwitch(d){
         console.log(d)
-        this.setState({switchOpts: { geneArchGroup: !this.state.switchOpts.geneArchGroup}})
+        const dataIndex = this.state.switchOpts.geneArchGroup.dataOpt === 0 ? 1 : 0;
+        this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
     }
 
     handleClick(d){
@@ -87,7 +88,7 @@ class DashboardComponent extends Component{
         `
 
         const charts = {
-            geneArchGroup: <GeneArchGroup data={this.props.data}
+            geneArchGroup: <GeneArchGroup data={[this.props.data, this.props.dataDiff][this.state.switchOpts.geneArchGroup.dataOpt]}
                             template={this.props.template}
                             params={this.props.params}
                             useLocalParams={false}
@@ -100,7 +101,7 @@ class DashboardComponent extends Component{
         }
 
         const componentLabels = [
-            {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart', switchDiff: this.state.switchOpts.geneArchGroup},
+            {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart', switchDiff: this.state.switchOpts.geneArchGroup.switchOpt},
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}}
         ]
 

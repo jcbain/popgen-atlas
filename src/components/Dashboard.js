@@ -37,12 +37,14 @@ class Dashboard extends Component{
             <div className={this.props.className}>
                 <DashboardComponent className={'dashboard-component-main'}
                     data={this.props.data}
+                    dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
                     template={this.props.template}
                     params={this.state.params}></DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
                     data={this.props.data}
+                    dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
                     template={this.props.template}
                     params={this.state.params}>
