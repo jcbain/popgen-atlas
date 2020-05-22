@@ -22,7 +22,14 @@ class DashboardComponent extends Component{
                       selectedComponent: '',
                       params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
                       specialOpts: {lineChartGroup: {pop: [0, 1]}},
-                      switchOpts: {geneArchGroup: { switchOpt: false, dataOpt: 0}}
+                      switchOpts: {
+                            geneArchGroup: { 
+                                switchOpt: false, dataOpt: 0
+                            },
+                            lineChartGroup: {
+                                switchOpt: false, dataOpt: 0
+                            }
+                        }
                     };
     }
 
@@ -31,9 +38,20 @@ class DashboardComponent extends Component{
     }
 
     handleDiffSwitch(d){
-        console.log(d)
-        const dataIndex = this.state.switchOpts.geneArchGroup.dataOpt === 0 ? 1 : 0;
-        this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
+        const componentKey = d;
+        const newSwitchOpt = !this.state.switchOpts[[componentKey]].switchOpt
+        const dataIndex = this.state.switchOpts[[componentKey]].dataOpt === 0 ? 1 : 0;
+        // this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
+        this.setState(prevState => ({
+            switchOpts: {
+                ...prevState.switchOpts,
+                [componentKey] : { 
+                    switchOpt: newSwitchOpt, 
+                    dataOpt: dataIndex
+                }
+                
+            }
+        }))
     }
 
     handleClick(d){
@@ -68,6 +86,8 @@ class DashboardComponent extends Component{
     }
 
     render(){
+        console.log(this.props.dataPopPhenDiff)
+
         const StyledChartLister = styled(ChartLister)`
             display: flex;
             justify-content: center;
@@ -94,7 +114,7 @@ class DashboardComponent extends Component{
                             useLocalParams={false}
                             identifier={this.identifier}>
             </GeneArchGroup>,
-            lineChartGroup: <LineChartGroup data={this.props.dataPopPhen}
+            lineChartGroup: <LineChartGroup data={[this.props.dataPopPhen, this.props.dataPopPhenDiff][this.state.switchOpts.lineChartGroup.dataOpt]}
                                             params={this.props.params}
                                             useLocalParams={false}
                                             specialOpts={this.state.specialOpts.lineChartGroup}></LineChartGroup>
@@ -102,24 +122,8 @@ class DashboardComponent extends Component{
 
         const componentLabels = [
             {geneArchGroup : 'Genome Chart', id: 'geneArchGroup', labelReadable: 'Genome Chart', switchDiff: this.state.switchOpts.geneArchGroup.switchOpt},
-            {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}}
+            {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}, switchDiff: this.state.switchOpts.lineChartGroup.switchOpt}
         ]
-
-        // let paramFunctions = {};
-        // componentLabels.map(k => {
-        //     return paramFunctions[k.id] = (event) => event([true, k.id])
-        // })
-
-        // let staticFunctionObject = {};
-        // componentLabels.map(k => {
-        //     let staticOptFunctions = {};
-        //     if(k.staticOpts !== undefined){
-        //         Object.keys(k.staticOpts).map( v => {
-        //             return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
-        //         })
-        //         return staticFunctionObject[k.id] = staticOptFunctions;
-        //     }
-        // })
 
         let display;
         if(this.state.componentView){
@@ -134,8 +138,6 @@ class DashboardComponent extends Component{
                 handleMultiSelect={this.handleMultiSelect} 
                 handleSwitchDiff={this.handleSwitchDiff}
                 labels={componentLabels}
-                // clickActions={paramFunctions}
-                // staticOptAction={staticFunctionObject}
                 ></StyledChartLister>
         }
         return(

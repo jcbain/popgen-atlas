@@ -33,6 +33,7 @@ function LineChartCard(props){
     // const clickAction = () => props.clickActions[props.identifier](props.handleClick)
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     const staticFunctionObject = chooseMultiStaticOptions(props.labels)
+    const switchDiff = () => props.handleSwitchDiff(props.identifier)
     let specialOpts;
     if(props.staticOpts !== undefined){
         specialOpts = Object.keys(props.staticOpts).map( v => {
@@ -53,6 +54,7 @@ function LineChartCard(props){
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
             {specialOpts}
+            <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={props.identifier} />} label="Difference"></FormControlLabel>
         </StyledCard>
     )
 }
@@ -60,7 +62,7 @@ function LineChartCard(props){
 function GenomeChartCard(props) {
 
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
-    const switchDiff = () => props.handleSwitchDiff('My name is awesome')
+    const switchDiff = () => props.handleSwitchDiff(props.identifier)
     return (
         <StyledCard>
             <ShowChartIcon></ShowChartIcon>

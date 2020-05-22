@@ -131,6 +131,7 @@ class LocalAdaptation extends Component {
           data={data} 
           dataDiff={dataDiff}
           dataPopPhen={dataPopPhen} 
+          dataPopPhenDiff={dataPopPhenDiff}
           template={template}
           params={this.state.params}>
         </Dashboard>
