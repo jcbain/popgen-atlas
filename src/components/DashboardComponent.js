@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { v4 as uuidv4 } from 'uuid';
 
