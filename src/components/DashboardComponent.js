@@ -65,6 +65,7 @@ class DashboardComponent extends Component{
 
         if(this.state['specialOpts'][componentLabel][paramLabel].includes(paramValue)){
             this.setState(prevState => ({
+                ...prevState.specialOpts,
                 specialOpts : { 
                     [componentLabel] : {
                         [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel]].filter(val => val !== paramValue)
@@ -74,6 +75,7 @@ class DashboardComponent extends Component{
             }))
         } else {
             this.setState(prevState => ({
+                ...prevState.specialOpts,
                 specialOpts : { 
                     [componentLabel] : {
                         [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel], paramValue]
@@ -86,8 +88,6 @@ class DashboardComponent extends Component{
     }
 
     render(){
-        console.log(this.props.dataPopPhenDiff)
-
         const StyledChartLister = styled(ChartLister)`
             display: flex;
             justify-content: center;
