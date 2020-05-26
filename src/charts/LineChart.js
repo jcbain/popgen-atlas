@@ -4,7 +4,7 @@ import { select, selectAll, event, mouse } from 'd3-selection';
 
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 import BrushHorizontal from '../components/BrushHorizontal';
-
+import Axis from '../components/Axis';
 
 class LineChart extends Component {
     constructor(props){
@@ -15,8 +15,7 @@ class LineChart extends Component {
 
     }
 
-    render(){
-        
+    render(){        
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
         const yScale = this.props.yScale.range([this.props.height, 0]);
@@ -79,6 +78,7 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
+                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height}></Axis>
             </svg>
         )
     }
