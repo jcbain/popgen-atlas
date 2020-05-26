@@ -19,8 +19,9 @@ class LineChartGroup extends Component{
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
         this.startExtent = [1000, 10000]
-        this.chartWidths = [400, 1000]
-        this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
+        this.chartWidths = [1000, 1000]
+        this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params},
+            height: window.innerHeight, width: window.innerWidth}
 
     }
 
@@ -28,6 +29,20 @@ class LineChartGroup extends Component{
     onBrush(d) {
         this.setState({start: d[0], end: d[1]});  
     }
+
+    updateWidthAndHeight = () => {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    componentDidMount() {
+        window.addEventListener('resize', this.updateWidthAndHeight);
+    }
+      
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWidthAndHeight);
+    }
+
+
 
     render(){
         let xScale = scaleLinear();
@@ -92,12 +107,12 @@ class LineChartGroup extends Component{
 
 
         return(
-            <div className="line-group">
+            <div className="line-group" >
                 {paramBar}
                 <LineChart key='line-chart-1'
                     data={data}
                     width={this.chartWidths[0]}
-                    height={200}
+                    height={600}
                     uniqId={this.lineLabels[0]}
                     generations={this.generations}
                     domain={[this.state.start, this.state.end]}
