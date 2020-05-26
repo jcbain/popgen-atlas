@@ -78,7 +78,7 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height}></Axis>
+                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40}></Axis>
             </svg>
         )
     }

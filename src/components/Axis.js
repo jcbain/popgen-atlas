@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
 
-const Axis = ({domain=[0, 100], range=[0, 100], heigth}) => {
+const Axis = ({domain=[0, 100], range=[0, 100], height}) => {
     const ticks = useMemo(() => {
         const xScale = scaleLinear()
           .domain(domain)
@@ -20,19 +20,16 @@ const Axis = ({domain=[0, 100], range=[0, 100], heigth}) => {
             value,
             xOffset: xScale(value)
           }))
-      }, [
-        domain.join("-"),
-        range.join("-")
-      ])
+      })
 
       return (
         <svg>
           <path
             d={[
-              "M", range[0], 6,
-              "v", -6,
+              "M", range[0], 0,
+              "v", height,
               "H", range[1],
-              "v", 6,
+              "v", 0,
             ].join(" ")}
             fill="none"
             stroke="currentColor"
@@ -40,9 +37,10 @@ const Axis = ({domain=[0, 100], range=[0, 100], heigth}) => {
           {ticks.map(({ value, xOffset }) => (
             <g
               key={value}
-              transform={`translate(${xOffset}, 0)`}
+              transform={`translate(${xOffset}, ${height})`}
             >
               <line
+                y1="0"
                 y2="6"
                 stroke="currentColor"
               />
