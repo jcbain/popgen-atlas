@@ -53,7 +53,7 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20}) => {
                 style={{
                   fontSize: "10px",
                   textAnchor: "middle",
-                  transform: "translateY(20px)"
+                  transform: "translateY(20px) translateX(0px) rotate(70deg)"
                 }}>
                 { value }
               </text>
