@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { select, selectAll, event, mouse} from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
-import { axisBottom } from 'd3-axis';
 
 
-import { unique} from '../helpers/DataHelpers';
+import { unique } from '../helpers/DataHelpers';
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 
 import BrushHorizontal from '../components/BrushHorizontal';
@@ -17,18 +16,6 @@ class GeneArchitecture extends Component {
         this.startExtent = [this.props.startExtent[0], this.props.startExtent[1]]
         
     }
-    archRef = React.createRef();
-
-    // xAxis = g => g
-    //     .attr("transform", `translate(0,${this.props.height})`)
-    //     .call(axisBottom(this.xScale));
-
-    // componentDidMount(){
-    //     select(this.archRef.current)
-    //         .append('g')
-    //         .call(this.xAxis)
-    // }
-
 
     render(){
         const generations = this.props.data.map(d => d.output_gen).filter(unique);
@@ -116,7 +103,7 @@ class GeneArchitecture extends Component {
         }
 
         return(
-            <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]} ref={this.archRef}>
+            <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]}>
                 {this.props.gradients}
                 {gens}
                 {brush}

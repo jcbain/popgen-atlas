@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { line } from 'd3-shape';
 import { select, selectAll, event, mouse } from 'd3-selection';
-import { axisBottom } from 'd3-axis';
 
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 import BrushHorizontal from '../components/BrushHorizontal';
@@ -15,9 +14,6 @@ class LineChart extends Component {
         this.startExtent = this.props.startExtent;
 
     }
-    lineRef = React.createRef();
-
-
 
     render(){
         
@@ -78,7 +74,7 @@ class LineChart extends Component {
 
 
         return(
-            <svg ref={this.lineRef} 
+            <svg
                  viewBox={[0,0,this.props.width, this.props.height]}>
                 {this.gradients}
                 {contextLines}
