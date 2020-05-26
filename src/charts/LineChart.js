@@ -18,7 +18,7 @@ class LineChart extends Component {
     render(){        
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
-        const yScale = this.props.yScale.range([this.props.height, 0]);
+        const yScale = this.props.yScale.range([this.props.height - 40, 0]);
         const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
         const interval = closestFromArray(this.generations)
         const brushScale = this.props.brushScale;

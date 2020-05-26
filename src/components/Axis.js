@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
 
-const Axis = ({domain=[0, 100], range=[0, 100], height}) => {
+const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20}) => {
     const ticks = useMemo(() => {
         const xScale = scaleLinear()
           .domain(domain)
@@ -20,21 +20,25 @@ const Axis = ({domain=[0, 100], range=[0, 100], height}) => {
             value,
             xOffset: xScale(value)
           }))
-      })
+      }, [
+          domain.join("-"),
+        range.join("-")
+    ])
+    console.log(ticks.filter(({xOffset})=> xOffset > axisMargin))
 
       return (
         <svg>
           <path
             d={[
-              "M", range[0], 0,
-              "v", height,
-              "H", range[1],
+              "M", range[0] + axisMargin, height,
+              "v", 0,
+              "H", range[1] - axisMargin,
               "v", 0,
             ].join(" ")}
             fill="none"
             stroke="currentColor"
           />
-          {ticks.map(({ value, xOffset }) => (
+          {ticks.filter(({xOffset})=> xOffset > axisMargin && xOffset < range[1] - axisMargin).map(({ value, xOffset }) => (
             <g
               key={value}
               transform={`translate(${xOffset}, ${height})`}
