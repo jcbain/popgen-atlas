@@ -28,7 +28,8 @@ class DashboardComponent extends Component{
                             lineChartGroup: {
                                 switchOpt: false, dataOpt: 0
                             }
-                        }
+                        },
+                        height: window.innerHeight, width: window.innerWidth,
                     };
     }
 
@@ -84,6 +85,18 @@ class DashboardComponent extends Component{
             }))
 
         }
+    }
+
+    updateWidthAndHeight = () => {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    componentDidMount() {
+        window.addEventListener('resize', this.updateWidthAndHeight);
+    }
+      
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWidthAndHeight);
     }
 
     render(){

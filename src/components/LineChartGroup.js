@@ -20,8 +20,7 @@ class LineChartGroup extends Component{
         this.lineLabels = ['line-1', 'line-2']
         this.startExtent = [1000, 10000]
         this.chartWidths = [1000, 1000]
-        this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params},
-            height: window.innerHeight, width: window.innerWidth}
+        this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
     }
 
@@ -29,19 +28,6 @@ class LineChartGroup extends Component{
     onBrush(d) {
         this.setState({start: d[0], end: d[1]});  
     }
-
-    updateWidthAndHeight = () => {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
-    };
-
-    componentDidMount() {
-        window.addEventListener('resize', this.updateWidthAndHeight);
-    }
-      
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWidthAndHeight);
-    }
-
 
 
     render(){
