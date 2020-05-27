@@ -5,6 +5,7 @@ import { min, max } from 'd3-array';
 import { toNumber } from 'lodash'
 
 
+
 import { removeParams, filterDataByParams, unique, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam } from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
 import ParameterCollection from './ParameterCollection';
@@ -18,8 +19,9 @@ class LineChartGroup extends Component{
         this.onBrush = this.onBrush.bind(this);
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
-        this.startExtent = [1000, 10000]
-        this.chartWidths = [1000, 1000]
+        this.startExtent = [1000, 10000];
+        this.chartWidths = [500, 500];
+        this.chartHeights = [500, 200]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
     }
@@ -96,10 +98,12 @@ class LineChartGroup extends Component{
             <div className="line-group" >
                 {paramBar}
                 <LineChart key='line-chart-1'
+                    className={createLabel(this.props.className, 'focus-chart')}
                     data={data}
                     width={this.chartWidths[0]}
-                    height={600}
+                    height={this.chartHeights[0]}
                     uniqId={this.lineLabels[0]}
+                    svgHeight={60}
                     generations={this.generations}
                     domain={[this.state.start, this.state.end]}
                     xScale={xScale}
@@ -111,10 +115,12 @@ class LineChartGroup extends Component{
                     gradients={lineGrads1}>
                 </LineChart>
                 <LineChart key='line-chart-2'
+                    className={createLabel(this.props.className, 'context-chart')}
                     data={data}
                     width={this.chartWidths[1]}
-                    height={200}
+                    height={this.chartHeights[1]}
                     uniqId={this.lineLabels[1]}
+                    svgHeight={20}
                     generations={this.generations}
                     domain={[min(this.generations), max(this.generations)]}
                     xScale={xScale}

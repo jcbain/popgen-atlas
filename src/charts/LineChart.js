@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { line } from 'd3-shape';
-import { select, selectAll, event, mouse } from 'd3-selection';
+import { select, selectAll, event, mouse, style } from 'd3-selection';
+import styled from 'styled-components';
+
 
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 import BrushHorizontal from '../components/BrushHorizontal';
@@ -12,6 +14,10 @@ class LineChart extends Component {
         this.gradients = this.props.gradients;
         this.generations = this.props.generations;
         this.startExtent = this.props.startExtent;
+        this.StyledSVG = styled.svg`
+            width: 40vw;
+            height: ${this.props.svgHeight}vh;
+            `
 
     }
 
@@ -69,17 +75,20 @@ class LineChart extends Component {
                                 xScale={xScale}
                                 touchCentered={centerBrushOnTouch}>
                     </BrushHorizontal>
-}
+        }
+        
 
+
+        
 
         return(
-            <svg
+            <this.StyledSVG className={this.props.className}
                  viewBox={[0,0,this.props.width, this.props.height]}>
                 {this.gradients}
                 {contextLines}
                 {brush}
                 <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40}></Axis>
-            </svg>
+            </this.StyledSVG>
         )
     }
 }

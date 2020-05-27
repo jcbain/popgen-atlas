@@ -127,6 +127,7 @@ class DashboardComponent extends Component{
                             identifier={this.identifier}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={[this.props.dataPopPhen, this.props.dataPopPhenDiff][this.state.switchOpts.lineChartGroup.dataOpt]}
+                                            className={'dashboard-line-chart'}
                                             params={this.props.params}
                                             useLocalParams={false}
                                             specialOpts={this.state.specialOpts.lineChartGroup}></LineChartGroup>
