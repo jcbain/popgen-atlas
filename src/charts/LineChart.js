@@ -33,7 +33,7 @@ class LineChart extends Component {
             .map((d, i) => <path
                 key={createLabel('context-line', i, uniqId)}
                 fill='none'
-                strokeWidth={2.5}
+                strokeWidth={5.5}
                 stroke={`url(#${createLabel('gradient-pop', d.key, uniqId)})`}
                 className={createLabel('context-line', uniqId)}
                 d={drawLine(d.values)}>
@@ -86,7 +86,7 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false}></Axis>
+                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></Axis>
             </this.StyledSVG>
         )
     }

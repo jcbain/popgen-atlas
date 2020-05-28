@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
 
-const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAxisLine=true}) => {
+const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
     const ticks = useMemo(() => {
         const xScale = scaleLinear()
           .domain(domain)
@@ -53,9 +53,9 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
               <text
                 key={value}
                 style={{
-                  fontSize: "10px",
+                  fontSize: `${fontSize}px`,
                   textAnchor: "middle",
-                  transform: "translateY(20px) translateX(0px) rotate(70deg)"
+                  transform: "translateY(20px) translateX(0px)"
                 }}>
                 { value }
               </text>

@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, NavLink, Switch } from "react-router-dom";
 import routes from './routes'
 
-import './App.css';
-
 const routeComponents = routes.map(({path, component, refresh}, key) => <Route exact path={path} refresh={refresh} component={component} key={key} />);
 
 function App() {
