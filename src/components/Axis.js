@@ -2,13 +2,13 @@ import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
 
-const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20}) => {
+const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAxisLine=true}) => {
     const ticks = useMemo(() => {
         const xScale = scaleLinear()
           .domain(domain)
           .range(range)
         const width = range[1] - range[0]
-        const pixelsPerTick = 30
+        const pixelsPerTick = 150
         const numberOfTicksTarget = Math.max(
           1,
           Math.floor(
@@ -22,22 +22,24 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20}) => {
           }))
       }, [
           domain.join("-"),
-        range.join("-")
-    ])
-    console.log(ticks.filter(({xOffset})=> xOffset > axisMargin))
+          range.join("-")
+        ]
+      )
+      let axisLine;
+      if( includeAxisLine ){
+        axisLine = <path d={[
+          "M", range[0] + axisMargin, height,
+          "v", 0,
+          "H", range[1] - axisMargin,
+          "v", 0,
+        ].join(" ")}
+          fill="none"
+          stroke="currentColor" />
+      }
 
       return (
         <svg>
-          <path
-            d={[
-              "M", range[0] + axisMargin, height,
-              "v", 0,
-              "H", range[1] - axisMargin,
-              "v", 0,
-            ].join(" ")}
-            fill="none"
-            stroke="currentColor"
-          />
+          {axisLine} 
           {ticks.filter(({xOffset})=> xOffset > axisMargin && xOffset < range[1] - axisMargin).map(({ value, xOffset }) => (
             <g
               key={value}

@@ -15,10 +15,9 @@ class LineChart extends Component {
         this.generations = this.props.generations;
         this.startExtent = this.props.startExtent;
         this.StyledSVG = styled.svg`
-            width: 40vw;
+            width: 38vw;
             height: ${this.props.svgHeight}vh;
             `
-
     }
 
     render(){        
@@ -69,7 +68,7 @@ class LineChart extends Component {
         let brush;
         if(this.props.addBrush){
             brush = <BrushHorizontal endExtentX={this.props.width}
-                                endExtentY={this.props.height}
+                                endExtentY={this.props.height - 40}
                                 startExtent={this.startExtent}
                                 brushed={brushed}
                                 xScale={xScale}
@@ -87,7 +86,7 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40}></Axis>
+                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false}></Axis>
             </this.StyledSVG>
         )
     }

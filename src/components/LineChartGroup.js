@@ -20,7 +20,7 @@ class LineChartGroup extends Component{
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = ['line-1', 'line-2']
         this.startExtent = [1000, 10000];
-        this.chartWidths = [500, 500];
+        this.chartWidths = [1000, 800];
         this.chartHeights = [500, 200]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
@@ -103,7 +103,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[0]}
                     height={this.chartHeights[0]}
                     uniqId={this.lineLabels[0]}
-                    svgHeight={60}
+                    svgHeight={59}
                     generations={this.generations}
                     domain={[this.state.start, this.state.end]}
                     xScale={xScale}
@@ -120,7 +120,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[1]}
                     height={this.chartHeights[1]}
                     uniqId={this.lineLabels[1]}
-                    svgHeight={20}
+                    svgHeight={19}
                     generations={this.generations}
                     domain={[min(this.generations), max(this.generations)]}
                     xScale={xScale}

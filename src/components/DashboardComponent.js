@@ -117,6 +117,10 @@ class DashboardComponent extends Component{
 
         const StyledDiv = styled.div`
             position: relative;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            padding-top: 1vh;
+            padding-bottom: 1vh;
         `
 
         const charts = {
