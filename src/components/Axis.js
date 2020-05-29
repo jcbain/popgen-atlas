@@ -31,8 +31,7 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
           "M", range[0] + axisMargin, height,
           "v", 0,
           "H", range[1] - axisMargin,
-          "v", 0,
-        ].join(" ")}
+          "v", 0,].join(" ")}
           fill="none"
           stroke="currentColor" />
       }
