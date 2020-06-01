@@ -1,21 +1,18 @@
 import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
-const abbreviateValue = (val) =>{
-   return   `${val/1000}K`;
-}
 
-const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
+const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=40, includeAxisLine=true, fontSize=10}) => {
     const ticks = useMemo(() => {
         const yScale = scaleLinear()
           .domain(domain)
           .range(range)
-        const width = range[1] - range[0]
-        const pixelsPerTick = 150
+        const height = range[1] - range[0]
+        const pixelsPerTick = 20
         const numberOfTicksTarget = Math.max(
           1,
           Math.floor(
-            width / pixelsPerTick
+            height / pixelsPerTick
           )
         )
         return yScale.ticks(numberOfTicksTarget)
@@ -31,10 +28,10 @@ const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=20, includeAx
       let axisLine;
       if( includeAxisLine ){
         axisLine = <path d={[
-          "M", range[0] + axisMargin, width,
-          "v", 0,
-          "H", range[1] - axisMargin,
-          "v", 0,].join(" ")}
+          "M", 0, range[1] - axisMargin,
+          "h", 0,
+          "V", axisMargin,
+          "h", 0].join(" ")}
           fill="none"
           stroke="currentColor" />
       }
@@ -45,11 +42,13 @@ const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=20, includeAx
           {ticks.filter(({yOffset})=> yOffset > axisMargin && yOffset < range[1] - axisMargin).map(({ value, yOffset }) => (
             <g
               key={value}
-              transform={`translate(${width}, ${yOffset})`}
+              transform={`translate(0, ${yOffset})`}
+            //   transform={`translate(${width}, ${yOffset})`}
             >
               <line
                 x1="0"
-                x2="6"
+                x2={width}
+
                 stroke="currentColor"
               />
               <text
@@ -57,9 +56,9 @@ const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=20, includeAx
                 style={{
                   fontSize: `${fontSize}px`,
                   textAnchor: "middle",
-                  transform: "translateY(25px) translateX(0px)"
+                  transform: "translateY(0px) translateX(20px)"
                 }}>
-                { abbreviateValue(value) }
+                { value }
               </text>
             </g>
           ))}

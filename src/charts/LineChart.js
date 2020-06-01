@@ -24,7 +24,7 @@ class LineChart extends Component {
 
     render(){        
         const uniqId = this.props.uniqId;
-        const xScale = this.props.xScale.domain(this.props.domain.map(d => d)).range([0, this.props.width]);
+        const xScale = this.props.xScale.domain(this.props.xDomain.map(d => d)).range([0, this.props.width]);
         const yScale = this.props.yScale.range([this.props.height - 40, 0]);
         const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
         const interval = closestFromArray(this.generations)
@@ -85,11 +85,11 @@ class LineChart extends Component {
         return(
             <this.StyledSVG className={this.props.className}
                  viewBox={[0,0,this.props.width, this.props.height]}>
+                <YAxis domain={this.props.yDomain} range={[0, this.props.height]} width={this.props.width} includeAxisLine={false} fontSize={20}></YAxis>
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <YAxis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={true} fontSize={20}></YAxis>
-                <XAxis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></XAxis>
+                <XAxis domain={this.props.xDomain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></XAxis>
             </this.StyledSVG>
         )
     }

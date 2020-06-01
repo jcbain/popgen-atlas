@@ -34,8 +34,9 @@ class LineChartGroup extends Component{
 
 
     render(){
+        const yDomain = [min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]
         let xScale = scaleLinear();
-        let yScale = scaleLinear().domain([min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]);
+        let yScale = scaleLinear().domain(yDomain);
         const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
@@ -106,7 +107,8 @@ class LineChartGroup extends Component{
                     uniqId={this.lineLabels[0]}
                     svgHeight={59}
                     generations={this.generations}
-                    domain={[this.state.start, this.state.end]}
+                    xDomain={[this.state.start, this.state.end]}
+                    yDomain={yDomain}
                     xScale={xScale}
                     yScale={yScale}
                     changeBrush={this.onBrush}
@@ -124,7 +126,8 @@ class LineChartGroup extends Component{
                     uniqId={this.lineLabels[1]}
                     svgHeight={19}
                     generations={this.generations}
-                    domain={[min(this.generations), max(this.generations)]}
+                    xDomain={[min(this.generations), max(this.generations)]}
+                    yDomain={yDomain}
                     xScale={xScale}
                     yScale={yScale}
                     changeBrush={this.onBrush}
