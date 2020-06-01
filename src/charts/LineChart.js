@@ -25,12 +25,12 @@ class LineChart extends Component {
     render(){        
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.xDomain.map(d => d)).range([0, this.props.width]);
-        const yScale = this.props.yScale.range([this.props.height - 40, 0]);
+        const yScale = this.props.yScale.range([this.props.height, 0]);
         const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
         const interval = closestFromArray(this.generations)
         const brushScale = this.props.brushScale;
         const brushFn = this.props.changeBrush;
-
+        
         const contextLines = this.props.data
             .map((d, i) => <path
                 key={createLabel('context-line', i, uniqId)}
@@ -40,6 +40,11 @@ class LineChart extends Component {
                 className={createLabel('context-line', uniqId)}
                 d={drawLine(d.values)}>
             </path>);
+
+        console.log('This is the data')
+        console.log(this.props.data)
+        console.log(`xScale(1000) = ${xScale(1000)} and is expected to be equal to 0`)
+        console.log(`xScale(50000) = ${xScale(50000)} and is expected to be equal to ${this.props.width}`)
 
         function brushed() {
 
@@ -70,7 +75,7 @@ class LineChart extends Component {
         let brush;
         if(this.props.addBrush){
             brush = <BrushHorizontal endExtentX={this.props.width}
-                                endExtentY={this.props.height - 40}
+                                endExtentY={this.props.height}
                                 startExtent={this.startExtent}
                                 brushed={brushed}
                                 xScale={xScale}

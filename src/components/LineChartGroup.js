@@ -22,7 +22,7 @@ class LineChartGroup extends Component{
         this.startExtent = [1000, 10000];
         this.chartWidths = [1000, 800];
         this.chartHeights = [500, 200];
-        this.popStrokeWidths = [15, 5.5]
+        this.popStrokeWidths = [5.5, 5.5]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
     }
@@ -34,7 +34,7 @@ class LineChartGroup extends Component{
 
 
     render(){
-        const yDomain = [min(this.props.data, d => d.pop_phen), max(this.props.data, d => d.pop_phen)]
+        const yDomain = [max(this.props.data, d => d.pop_phen),min(this.props.data, d => d.pop_phen)]
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain(yDomain);
         const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
@@ -95,6 +95,7 @@ class LineChartGroup extends Component{
                         </ParameterCollection>
         }
 
+        console.log(yDomain)
 
         return(
             <div className="line-group" >

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
 
-const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=40, includeAxisLine=true, fontSize=10}) => {
+const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=0, includeAxisLine=true, fontSize=10}) => {
     const ticks = useMemo(() => {
         const yScale = scaleLinear()
           .domain(domain)
@@ -36,6 +36,8 @@ const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=40, includeAx
           stroke="currentColor" />
       }
 
+      console.log(ticks)
+
       return (
         <svg>
           {axisLine} 
@@ -48,8 +50,7 @@ const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=40, includeAx
               <line
                 x1="0"
                 x2={width}
-
-                stroke="currentColor"
+                stroke={value < 0.01 && value > -0.01 ? "green" : "grey"}
               />
               <text
                 key={value}
