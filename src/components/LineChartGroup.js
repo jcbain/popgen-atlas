@@ -21,7 +21,8 @@ class LineChartGroup extends Component{
         this.lineLabels = ['line-1', 'line-2']
         this.startExtent = [1000, 10000];
         this.chartWidths = [1000, 800];
-        this.chartHeights = [500, 200]
+        this.chartHeights = [500, 200];
+        this.popStrokeWidths = [15, 5.5]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
     }
@@ -112,7 +113,8 @@ class LineChartGroup extends Component{
                     addBrush={false}
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
-                    gradients={lineGrads1}>
+                    gradients={lineGrads1}
+                    popStrokeWidth={this.popStrokeWidths[0]}>
                 </LineChart>
                 <LineChart key='line-chart-2'
                     className={createLabel(this.props.className, 'context-chart')}
@@ -129,7 +131,8 @@ class LineChartGroup extends Component{
                     addBrush={true}
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
-                    gradients={lineGrads2}>
+                    gradients={lineGrads2}
+                    popStrokeWidth={this.popStrokeWidths[1]}>
                 </LineChart>
 
             </div>

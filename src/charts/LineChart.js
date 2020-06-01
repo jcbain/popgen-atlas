@@ -6,7 +6,9 @@ import styled from 'styled-components';
 
 import {closestFromArray, createLabel} from '../helpers/Helpers';
 import BrushHorizontal from '../components/BrushHorizontal';
-import Axis from '../components/Axis';
+import XAxis from '../components/XAxis';
+import YAxis from '../components/YAxis';
+
 
 class LineChart extends Component {
     constructor(props){
@@ -33,7 +35,7 @@ class LineChart extends Component {
             .map((d, i) => <path
                 key={createLabel('context-line', i, uniqId)}
                 fill='none'
-                strokeWidth={5.5}
+                strokeWidth={this.props.popStrokeWidth}
                 stroke={`url(#${createLabel('gradient-pop', d.key, uniqId)})`}
                 className={createLabel('context-line', uniqId)}
                 d={drawLine(d.values)}>
@@ -86,7 +88,8 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <Axis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></Axis>
+                <YAxis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={true} fontSize={20}></YAxis>
+                <XAxis domain={this.props.domain} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></XAxis>
             </this.StyledSVG>
         )
     }
