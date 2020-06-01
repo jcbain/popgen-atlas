@@ -1,10 +1,13 @@
 import React, {useMemo} from 'react';
 import { scaleLinear } from 'd3-scale';
 
+const abbreviateValue = (val) =>{
+   return   `${val/1000}K`;
+}
 
-const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
+const YAxis = ({domain=[0, 100], range=[0, 100], width, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
     const ticks = useMemo(() => {
-        const xScale = scaleLinear()
+        const yScale = scaleLinear()
           .domain(domain)
           .range(range)
         const width = range[1] - range[0]
@@ -15,10 +18,10 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
             width / pixelsPerTick
           )
         )
-        return xScale.ticks(numberOfTicksTarget)
+        return yScale.ticks(numberOfTicksTarget)
           .map(value => ({
             value,
-            xOffset: xScale(value)
+            yOffset: yScale(value)
           }))
       }, [
           domain.join("-"),
@@ -28,7 +31,7 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
       let axisLine;
       if( includeAxisLine ){
         axisLine = <path d={[
-          "M", range[0] + axisMargin, height,
+          "M", range[0] + axisMargin, width,
           "v", 0,
           "H", range[1] - axisMargin,
           "v", 0,].join(" ")}
@@ -39,14 +42,14 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
       return (
         <svg>
           {axisLine} 
-          {ticks.filter(({xOffset})=> xOffset > axisMargin && xOffset < range[1] - axisMargin).map(({ value, xOffset }) => (
+          {ticks.filter(({yOffset})=> yOffset > axisMargin && yOffset < range[1] - axisMargin).map(({ value, yOffset }) => (
             <g
               key={value}
-              transform={`translate(${xOffset}, ${height})`}
+              transform={`translate(${width}, ${yOffset})`}
             >
               <line
-                y1="0"
-                y2="6"
+                x1="0"
+                x2="6"
                 stroke="currentColor"
               />
               <text
@@ -54,9 +57,9 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
                 style={{
                   fontSize: `${fontSize}px`,
                   textAnchor: "middle",
-                  transform: "translateY(20px) translateX(0px)"
+                  transform: "translateY(25px) translateX(0px)"
                 }}>
-                { value }
+                { abbreviateValue(value) }
               </text>
             </g>
           ))}
@@ -65,4 +68,4 @@ const Axis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAx
 
 }
 
-export default Axis;
+export default YAxis;
