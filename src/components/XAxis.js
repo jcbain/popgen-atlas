@@ -5,11 +5,11 @@ const abbreviateValue = (val) =>{
    return   `${val/1000}K`;
 }
 
-const XAxis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
+const XAxis = ({domain=[0, 100], scale, range=[0, 100], height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
     const ticks = useMemo(() => {
-        const xScale = scaleLinear()
-          .domain(domain)
-          .range(range)
+        // const xScale = scaleLinear()
+        //   .domain(domain)
+        //   .range(range)
         const width = range[1] - range[0]
         const pixelsPerTick = 150
         const numberOfTicksTarget = Math.max(
@@ -18,10 +18,10 @@ const XAxis = ({domain=[0, 100], range=[0, 100], height, axisMargin=20, includeA
             width / pixelsPerTick
           )
         )
-        return xScale.ticks(numberOfTicksTarget)
+        return scale.ticks(numberOfTicksTarget)
           .map(value => ({
             value,
-            xOffset: xScale(value)
+            xOffset: scale(value)
           }))
       }, [
           domain.join("-"),
