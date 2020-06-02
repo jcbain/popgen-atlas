@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 
-const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) => {
+const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, includeLabels=true, fontSize=10}) => {
     const rangeMin = scale.range()[0];
     const rangeMax = scale.range()[1];
     const ticks = useMemo(() => {
@@ -33,12 +33,10 @@ const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) 
           stroke="currentColor" />
       }
 
-
-      return (
-        <svg>
-          {axisLine} 
-          {ticks.filter(({yOffset})=> yOffset > axisMargin && yOffset < rangeMax - axisMargin).map(({ value, yOffset }) => (
-            <g
+      let axisLabels;
+      if ( includeLabels ){
+        axisLabels = ticks.filter(({yOffset}) => yOffset > axisMargin && yOffset < rangeMax - axisMargin).map(({ value, yOffset}) => (
+          <g
               key={value}
               transform={`translate(0, ${yOffset})`}
             //   transform={`translate(${width}, ${yOffset})`}
@@ -58,7 +56,14 @@ const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) 
                 { value }
               </text>
             </g>
-          ))}
+        ))
+      }
+
+
+      return (
+        <svg>
+          {axisLine} 
+          {axisLabels}
         </svg>
       )
 

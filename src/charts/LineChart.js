@@ -87,7 +87,7 @@ class LineChart extends Component {
         return(
             <this.StyledSVG className={this.props.className}
                  viewBox={[0,0,this.props.width, this.props.height]}>
-                <YAxis domain={this.props.yDomain} scale={yScale} range={[0, this.props.height]} width={this.props.width} includeAxisLine={false} fontSize={20}></YAxis>
+                <YAxis domain={this.props.yDomain} scale={yScale} range={[0, this.props.height]} width={this.props.width} includeAxisLine={false} includeLabels={this.props.includeYAxisLabels} fontSize={20}></YAxis>
                 {this.gradients}
                 {contextLines}
                 {brush}

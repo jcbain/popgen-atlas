@@ -117,6 +117,7 @@ class LineChartGroup extends Component{
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
                     gradients={lineGrads1}
+                    includeYAxisLabels={true}
                     popStrokeWidth={this.popStrokeWidths[0]}>
                 </LineChart>
                 <LineChart key='line-chart-2'
@@ -136,6 +137,7 @@ class LineChartGroup extends Component{
                     brushScale = {brushScale}
                     startExtent = {this.startExtent}
                     gradients={lineGrads2}
+                    includeYAxisLabels={false}
                     popStrokeWidth={this.popStrokeWidths[1]}>
                 </LineChart>
 
