@@ -1,13 +1,10 @@
 import React, {useMemo} from 'react';
-import { scaleLinear } from 'd3-scale';
 
-
-const YAxis = ({domain=[0, 100], scale, range=[0, 100], width, axisMargin=0, includeAxisLine=true, fontSize=10}) => {
+const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) => {
+    const rangeMin = scale.range()[0];
+    const rangeMax = scale.range()[1];
     const ticks = useMemo(() => {
-        // const yScale = scaleLinear()
-        //   .domain(domain)
-        //   .range(range)
-        const height = range[1] - range[0]
+        const height = rangeMax - rangeMin
         const pixelsPerTick = 20
         const numberOfTicksTarget = Math.max(
           1,
@@ -21,14 +18,14 @@ const YAxis = ({domain=[0, 100], scale, range=[0, 100], width, axisMargin=0, inc
             yOffset: scale(value)
           }))
       }, [
-          domain.join("-"),
-          range.join("-")
+        scale.range().join('-'), 
+        scale.domain().join('-')
         ]
       )
       let axisLine;
       if( includeAxisLine ){
         axisLine = <path d={[
-          "M", 0, range[1] - axisMargin,
+          "M", 0, rangeMax - axisMargin,
           "h", 0,
           "V", axisMargin,
           "h", 0].join(" ")}
@@ -40,7 +37,7 @@ const YAxis = ({domain=[0, 100], scale, range=[0, 100], width, axisMargin=0, inc
       return (
         <svg>
           {axisLine} 
-          {ticks.filter(({yOffset})=> yOffset > axisMargin && yOffset < range[1] - axisMargin).map(({ value, yOffset }) => (
+          {ticks.filter(({yOffset})=> yOffset > axisMargin && yOffset < rangeMax - axisMargin).map(({ value, yOffset }) => (
             <g
               key={value}
               transform={`translate(0, ${yOffset})`}
@@ -49,7 +46,7 @@ const YAxis = ({domain=[0, 100], scale, range=[0, 100], width, axisMargin=0, inc
               <line
                 x1="0"
                 x2={width}
-                stroke={value < 0.01 && value > -0.01 ? "green" : "grey"}
+                stroke={"grey"}
               />
               <text
                 key={value}

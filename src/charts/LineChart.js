@@ -42,6 +42,7 @@ class LineChart extends Component {
             </path>);
 
 
+
         function brushed() {
 
             const selection = event.selection;
@@ -90,7 +91,7 @@ class LineChart extends Component {
                 {this.gradients}
                 {contextLines}
                 {brush}
-                <XAxis domain={this.props.xDomain} scale={xScale} range={[0, this.props.width]} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></XAxis>
+                <XAxis scale={xScale} height={this.props.height - 40} includeAxisLine={false} fontSize={20}></XAxis>
             </this.StyledSVG>
         )
     }
