@@ -1,13 +1,3 @@
-// let staticFunctionObject = {};
-// props.labels.map(k => {
-//     let staticOptFunctions = {};
-//     if(k.staticOpts !== undefined){
-//         Object.keys(k.staticOpts).map( v => {
-//             return staticOptFunctions[v] = (event, val) => event([k.id, v, val])
-//         })
-//         return staticFunctionObject[k.id] = staticOptFunctions;
-//     }
-// })
 export function chooseComponent(componentArray){
     let componentChoiceFunctions = {};
     componentArray.map(componentItem => {

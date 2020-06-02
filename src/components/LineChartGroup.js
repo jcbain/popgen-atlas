@@ -3,6 +3,8 @@ import { nest } from 'd3-collection';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { toNumber } from 'lodash'
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -18,7 +20,7 @@ class LineChartGroup extends Component{
         this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
         this.onBrush = this.onBrush.bind(this);
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
-        this.lineLabels = ['line-1', 'line-2']
+        this.lineLabels = [`line-${uuidv4()}`, `line-${uuidv4()}`]
         this.startExtent = [1000, 10000];
         this.chartWidths = [1000, 800];
         this.chartHeights = [500, 200];
@@ -52,7 +54,7 @@ class LineChartGroup extends Component{
         const popKeys = data.map( d => d.key );
         const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
         const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
-        const outsideColor = scaleOrdinal().domain(popKeys).range(['#f0b7a8', '#d9bac4', '#E8A87C']);
+        const outsideColor = scaleOrdinal().domain(popKeys).range(['#dbd9d9', '#dbd9d9', '#dbd9d9']);
         const lineGrads1 = createGradients(popKeys, this.chartWidths[0], this.lineLabels[0], [min(this.generations), max(this.generations)])
         const lineGrads2 = createGradients(popKeys, this.chartWidths[1], this.lineLabels[1], this.startExtent)
 
@@ -94,7 +96,7 @@ class LineChartGroup extends Component{
                             paramFunc={paramFunctions}>
                         </ParameterCollection>
         }
-
+        
         return(
             <div className="line-group" >
                 {paramBar}
