@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { select, selectAll, event, mouse} from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
+import styled from 'styled-components';
 
 
 import { unique } from '../helpers/DataHelpers';
@@ -14,6 +15,10 @@ class GeneArchitecture extends Component {
         super(props);
         this.gradients = this.props.gradients;
         this.startExtent = [this.props.startExtent[0], this.props.startExtent[1]]
+        this.StyledSVG = styled.svg`
+            width: 38vw;
+            height: ${this.props.svgHeight}vh;
+        `
         
     }
 
@@ -103,11 +108,11 @@ class GeneArchitecture extends Component {
         }
 
         return(
-            <svg className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]}>
+            <this.StyledSVG className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]}>
                 {this.props.gradients}
                 {gens}
                 {brush}
-            </svg>
+            </this.StyledSVG>
         )
     }
 }

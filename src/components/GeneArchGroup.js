@@ -18,6 +18,8 @@ class GeneArchGroup extends Component {
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
+        this.chartWidths = [1000, 800];
+        this.chartHeights = [500, 200];
         // this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
@@ -43,8 +45,8 @@ class GeneArchGroup extends Component {
         const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
         const filterData = this.props.data.filter(d => d.output_gen >= start && d.output_gen < end)
-        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 100, createLabel(this.archLabels[0], this.props.identifier))
-        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, 200, createLabel(this.archLabels[1], this.props.identifier))
+        const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, this.chartHeights[0], createLabel(this.archLabels[0], this.props.identifier))
+        const gradsArch2 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, this.chartHeights[1], createLabel(this.archLabels[1], this.props.identifier))
         const paramMatrix = findUniqParamOptions(this.props.data, ['pop', 'm', 'mu', 'r', 'sigsqr']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
@@ -112,8 +114,9 @@ class GeneArchGroup extends Component {
                           startExtent={[this.state.start, this.state.end]}
                           template={this.props.template}
                           params={this.props.params}
-                          height={100}
-                          width={200}
+                          height={this.chartHeights[0]}
+                          width={this.chartWidths[0]}
+                          svgHeight={59}
                           uniqId={createLabel(this.archLabels[0], this.props.identifier)}
                           changeBrush={this.onBrush}
                           addBrush={false}
@@ -123,8 +126,9 @@ class GeneArchGroup extends Component {
                           startExtent={[this.state.start, this.state.end]}
                           template={this.props.template}
                           params={this.props.params}
-                          height={200}
-                          width={2000}
+                          height={this.chartHeights[1]}
+                          width={this.chartWidths[1]}
+                          svgHeight={19}
                           uniqId={createLabel(this.archLabels[1], this.props.identifier)}
                           changeBrush={this.onBrush}
                           addBrush={true}
