@@ -95,8 +95,6 @@ class LineChartGroup extends Component{
                         </ParameterCollection>
         }
 
-        console.log(yDomain)
-
         return(
             <div className="line-group" >
                 {paramBar}

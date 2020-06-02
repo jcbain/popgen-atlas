@@ -36,7 +36,6 @@ const YAxis = ({domain=[0, 100], scale, range=[0, 100], width, axisMargin=0, inc
           stroke="currentColor" />
       }
 
-      console.log(ticks)
 
       return (
         <svg>

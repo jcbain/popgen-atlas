@@ -8,7 +8,6 @@ import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
 import { chooseMultiStaticOptions, chooseComponent } from './CardActions'
-import { FormControl } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
     width: 40%;
@@ -49,7 +48,7 @@ function LineChartCard(props){
         })
     }
     return (
-        <StyledCard>
+        <StyledCard key="linechart-card">
             <ShowChartIcon></ShowChartIcon>
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
@@ -64,7 +63,7 @@ function GenomeChartCard(props) {
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     const switchDiff = () => props.handleSwitchDiff(props.identifier)
     return (
-        <StyledCard>
+        <StyledCard key="genomechart-card">
             <ShowChartIcon></ShowChartIcon>
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
