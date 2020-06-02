@@ -5,7 +5,7 @@ const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) 
     const rangeMax = scale.range()[1];
     const ticks = useMemo(() => {
         const height = rangeMax - rangeMin
-        const pixelsPerTick = 20
+        const pixelsPerTick = 50
         const numberOfTicksTarget = Math.max(
           1,
           Math.floor(
@@ -46,14 +46,14 @@ const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, fontSize=10}) 
               <line
                 x1="0"
                 x2={width}
-                stroke={"grey"}
+                stroke={"#e0e0e0"}
               />
               <text
                 key={value}
                 style={{
                   fontSize: `${fontSize}px`,
-                  textAnchor: "middle",
-                  transform: "translateY(0px) translateX(20px)"
+                  textAnchor: "end",
+                  transform: "translateY(0px) translateX(50px)"
                 }}>
                 { value }
               </text>
