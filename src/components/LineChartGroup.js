@@ -24,7 +24,7 @@ class LineChartGroup extends Component{
         this.startExtent = [1000, 10000];
         this.chartWidths = [1000, 800];
         this.chartHeights = [500, 200];
-        this.popStrokeWidths = [5.5, 5.5]
+        this.popStrokeWidths = [12, 5.5]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
     }

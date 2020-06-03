@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { line, arc } from 'd3-shape';
+import { line, curveMonotoneX } from 'd3-shape';
 import { select, selectAll, event, mouse, style } from 'd3-selection';
 import styled from 'styled-components';
 
@@ -26,7 +26,7 @@ class LineChart extends Component {
         const uniqId = this.props.uniqId;
         const xScale = this.props.xScale.domain(this.props.xDomain.map(d => d)).range([0, this.props.width]);
         const yScale = this.props.yScale.range([0, this.props.height - 40]);
-        const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen))
+        const drawLine = line().x(d => xScale(d.output_gen)).y(d => yScale(d.pop_phen)).curve(curveMonotoneX)
         const interval = closestFromArray(this.generations)
         const brushScale = this.props.brushScale;
         const brushFn = this.props.changeBrush;
