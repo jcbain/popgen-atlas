@@ -35,8 +35,6 @@ class BrushHorizontal extends Component{
             .on('mousedown touchstart', brushOnTouch));
 
         
-
-        
     }
 
 

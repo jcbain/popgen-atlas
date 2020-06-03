@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { line, arc } from 'd3-shape';
 import { select, selectAll, event, mouse, style } from 'd3-selection';
 import styled from 'styled-components';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 
 import {closestFromArray, createLabel} from '../helpers/Helpers';
@@ -42,35 +41,11 @@ class LineChart extends Component {
                 d={drawLine(d.values)}>
             </path>);
 
-        // const arce = arc()
-        //     .innerRadius(0)
-        //     .outerRadius(150 / 2)
-        //     .startAngle(0)
-        //     .endAngle((d, i) => i ? Math.PI : -Math.PI);
-        
-
-        // const brushHandle = (g, selection) => g
-        //     .selectAll(".handle--custom")
-        //     .data([{type: "w"}, {type: "e"}])
-        //     .join(
-        //         enter => enter.append("path")
-        //         .attr("class", "handle--custom")
-        //         .attr("fill", "#666")
-        //         .attr("fill-opacity", 0.8)
-        //         .attr("stroke", "#000")
-        //         .attr("stroke-width", 1.5)
-        //         .attr("cursor", "ew-resize")
-        //         .attr("d", arce)
-        //     )
-        //     .attr("display", selection === null ? "none" : null)
-        //     .attr("transform", selection === null ? null : (d, i) => `translate(${selection[i]},${(150) / 2})`)
-
         function brushed() {
 
             const selection = event.selection;
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
-                // select(this.brushRef.current).call(brushHandle, selection.map(d => xScale(interval(xScale.invert(d)))))
                 const [x0, x1] = selection.map(d => interval(xScale.invert(d)))
                 brushFn([x0, x1])
                 select(this.brushRef.current).transition().duration(1).call(this.horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
