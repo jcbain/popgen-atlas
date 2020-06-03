@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { brushX } from 'd3-brush';
 import { select } from 'd3-selection';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import './styles/brush_horizontal_styles.css';
 
@@ -11,7 +12,7 @@ class BrushHorizontal extends Component{
         this.brushed = this.props.brushed.bind(this)
         this.horizontalBrush = brushX()
             .extent([[0, 0], [this.props.endExtentX, this.props.endExtentY]])
-            .on('brush', this.brushed)
+            .on('start brush end', this.brushed)
 
     }
 
@@ -32,6 +33,10 @@ class BrushHorizontal extends Component{
             .call(g => g.select('.overlay')
             .datum({type: 'selection'})
             .on('mousedown touchstart', brushOnTouch));
+
+        
+
+        
     }
 
 
