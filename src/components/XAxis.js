@@ -21,10 +21,7 @@ const XAxis = ({scale, height, axisMargin=20, includeAxisLine=true, fontSize=10}
             value,
             xOffset: scale(value)
           }))
-      }, [
-        scale.range().join('-'), 
-        scale.domain().join('-')
-        ]
+      }, [rangeMax, rangeMin, scale]
       )
       let axisLine;
       if( includeAxisLine ){

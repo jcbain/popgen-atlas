@@ -17,9 +17,7 @@ const YAxis = ({scale, width, axisMargin=0, includeAxisLine=true, includeLabels=
             value,
             yOffset: scale(value)
           }))
-      }, [
-        scale.range().join('-'), 
-        scale.domain().join('-')
+      }, [rangeMax, rangeMin, scale
         ]
       )
       let axisLine;

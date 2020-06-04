@@ -15,6 +15,7 @@ class GeneArchitecture extends Component {
         super(props);
         this.gradients = this.props.gradients;
         this.startExtent = [this.props.startExtent[0], this.props.startExtent[1]]
+        this.gradients = this.props.gradients;
         this.StyledSVG = styled.svg`
             width: 38vw;
             height: ${this.props.svgHeight}vh;
@@ -32,11 +33,12 @@ class GeneArchitecture extends Component {
         const idSelector = () => this.props.uniqId;
 
         function SingleGeneration(props){
-            const opac = props.addBrush ? 0.2 : 1;
+            const opac = props.addBrush ? 0.3 : 1;
             const generation = <rect className="genome-cross"
                                     id={createLabel('genome-cross', props.uniqId, props.gen)}
                                      x={props.xScale(props.gen)}
                                      y={0}
+                                     stroke={"black"}
                                      width={props.genWidth}
                                      height={props.height}
                                      fill={`url(#${createLabel('gen-grad', props.uniqId, props.gen)})`}
@@ -78,7 +80,7 @@ class GeneArchitecture extends Component {
                     selectAll(irrelevantIds.join(", "))
                         .transition()
                         .duration(1)
-                        .attr('opacity', .2)}
+                        .attr('opacity', .3)}
             }            
         }
 
@@ -105,10 +107,12 @@ class GeneArchitecture extends Component {
                                   touchCentered={centerBrushOnTouch}>
                     </BrushHorizontal>
         }
-
         return(
             <this.StyledSVG className={this.props.uniqId} viewBox={[0, 0, this.props.width, this.props.height]}>
-                {this.props.gradients}
+
+                {this.gradients}
+
+     
                 {gens}
                 {brush}
             </this.StyledSVG>

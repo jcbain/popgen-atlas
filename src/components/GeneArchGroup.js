@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useMemo } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
@@ -55,15 +55,17 @@ class GeneArchGroup extends Component {
 
 
 
-        function SingleGradient(props){
+        function SingleGradient({data, template, gen, colorScale, yScale}){
             // TODO: I need to speed this up with few joins on the fly. It is slowing down other compoents
         //       Perhaps look into better data joining or lifecyclee methods
-            let selectedData = props.data.filter(d => d.output_gen === props.gen)
+  
+            let selectedData = data.filter(d => d.output_gen === gen)
             const selectSingle = (i) => selectedData.find(e => e.positional_map === i)
-            const gradient = props.template.map( d =>
-                <stop key={`stop-gen-${props.gen}-ind-${d.ind}`}
-                      stopColor={(selectSingle(d.ind) !== undefined) ? props.colorScale(selectSingle(d.ind).positional_phen) : props.colorScale(0)}
-                      offset={props.yScale(d.ind) + "%"}>
+            const gradient = template.map( d =>
+                <stop key={`stop-gen-${gen}-ind-${d.ind}`}
+                      stopColor={(selectSingle(d.ind) !== undefined) ? colorScale(selectSingle(d.ind).positional_phen) : colorScale(0)}
+                      offset={yScale(d.ind) + "%"}
+                      >
                 </stop>
             )
             return gradient;
@@ -71,7 +73,8 @@ class GeneArchGroup extends Component {
 
         function createGradients(generations, data, template, colorScale, yScale, height, name){
             const gradients = generations
-                .map( d => <linearGradient key={`gen-grad-${d}`}
+                .map( d => {
+                const linearGradient = <linearGradient key={`gen-grad-${d}`}
                             gradientUnits='userSpaceOnUse'
                             id={createLabel('gen-grad', name, d)}
                             x1={0}
@@ -80,7 +83,9 @@ class GeneArchGroup extends Component {
                             y2={height}>
                 <SingleGradient data={data} template={template} gen={d} colorScale={colorScale} yScale={yScale}>
                 </SingleGradient>
-            </linearGradient>)
+            </linearGradient>
+            return linearGradient
+        })
 
             return gradients
         }
@@ -132,6 +137,7 @@ class GeneArchGroup extends Component {
                           uniqId={createLabel(this.archLabels[1], this.props.identifier)}
                           changeBrush={this.onBrush}
                           addBrush={true}
+                          name={createLabel(this.archLabels[1], this.props.identifier)}
                           gradients={gradsArch2}>
                 </GeneArchitecture>
             </div>
