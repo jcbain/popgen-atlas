@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {CardTemplates} from './CardTemplates';
+import {CardTemplates, LineChartCard, GenomeChartCard} from './CardTemplates';
+import LineChart from '../charts/LineChart';
 
 class ChartLister extends Component{
     constructor(props){
@@ -26,9 +27,19 @@ class ChartLister extends Component{
                 })
             )
         })
+
         return(
             <div className={this.props.className}>
-                {cards} 
+                {/* {cards}  */}
+                <LineChartCard labels={this.props.labels}
+                    handleClick={handleClickAction}
+                    staticOpts={this.props.labels.find(d => d.id === 'lineChartGroup').staticOpts}
+                    identifier={this.props.labels.find(d => d.id === 'lineChartGroup').id}
+                    handleMultiSelect={handleMultiSelect}
+                    handleSwitchDiff={handleSwitchDiff}
+                    labelReadable={this.props.labels.find(d => d.id === 'lineChartGroup').labelReadable}
+                    switchDiff={this.props.labels.find(d => d.id === 'lineChartGroup').switchDiff}
+                ></LineChartCard>
             </div>
         )
     }

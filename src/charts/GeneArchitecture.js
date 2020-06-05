@@ -38,7 +38,6 @@ class GeneArchitecture extends Component {
                                     id={createLabel('genome-cross', props.uniqId, props.gen)}
                                      x={props.xScale(props.gen)}
                                      y={0}
-                                     stroke={"black"}
                                      width={props.genWidth}
                                      height={props.height}
                                      fill={`url(#${createLabel('gen-grad', props.uniqId, props.gen)})`}
@@ -66,10 +65,17 @@ class GeneArchitecture extends Component {
             if (!event.sourceEvent || !selection) return;
             if (selection !== null) {
                 let [x0, x1] = selection.map(d => interval(xScale.invert(d)))
-                select(this.brushRef.current).transition().duration(1).call(this.horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+
                 const relevantIds = generationReferences.filter(d => d >= x0 && d < x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
                 const irrelevantIds = generationReferences.filter(d => d < x0 || d >= x1).map(d => `#${createLabel('genome-cross', uniqId, d)}`)
+                select(this.brushRef.current).transition()
+                    .duration(1)
+                    .call(this.horizontalBrush.move, x1 > x0 ? [x0, x1]
+                        .map(xScale) : null);
+
+                
                 brushFn([x0, x1])
+
                 if(relevantIds.length !== 0){
                     selectAll(relevantIds.join(", "))
                         .transition()

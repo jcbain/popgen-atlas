@@ -28,7 +28,7 @@ const StyledAddBoxIcon = styled(AddBoxIcon)`
     fill: palevioletred;
     `
 
-function LineChartCard(props){
+export function LineChartCard(props){
     // const clickAction = () => props.clickActions[props.identifier](props.handleClick)
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     const staticFunctionObject = chooseMultiStaticOptions(props.labels)
@@ -58,16 +58,18 @@ function LineChartCard(props){
     )
 }
 
-function GenomeChartCard(props) {
+export function GenomeChartCard(props) {
 
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
     const switchDiff = () => props.handleSwitchDiff(props.identifier)
+    const switchFST = () => props.handleSwitchFST(props.identifier)
     return (
         <StyledCard key="genomechart-card">
             <ShowChartIcon></ShowChartIcon>
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
             <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={props.identifier} />} label="Difference"></FormControlLabel>
+            <FormControlLabel control={<Switch checked={props.switchFST} onChange={switchFST} name={props.identifier} />} label="FST"></FormControlLabel>
         </StyledCard>
     )
 }

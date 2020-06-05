@@ -1,4 +1,4 @@
-import React, { Component, useMemo } from 'react';
+import React, { Component } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
@@ -19,15 +19,15 @@ class GeneArchGroup extends Component {
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
         this.chartWidths = [1000, 800];
-        this.chartHeights = [500, 200];
+        this.chartHeights = [1000, 200];
         // this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
         this.colorScale = scaleLinear()
             .domain([min(this.props.data, d => d.positional_phen), 0, max(this.props.data, d => d.positional_phen)])
-            .range(['#569dcf', '#f5f5e6', '#fd1743'])
+            .range(['#569dcf', '#f7f7f7', '#fd1743'])
             .interpolate(interpolateHcl);
-        this.state = {start: 1000, end: 10000, params: {...removeParams(this.props.params, ['output_gen'])}};
+        this.state = {start: 1000, end: 51000, params: {...removeParams(this.props.params, ['output_gen'])}};
     }
 
     onBrush(d) {
@@ -61,7 +61,7 @@ class GeneArchGroup extends Component {
   
             let selectedData = data.filter(d => d.output_gen === gen)
             const selectSingle = (i) => selectedData.find(e => e.positional_map === i)
-            const gradient = template.map( d =>
+            const gradient = template.map( d => 
                 <stop key={`stop-gen-${gen}-ind-${d.ind}`}
                       stopColor={(selectSingle(d.ind) !== undefined) ? colorScale(selectSingle(d.ind).positional_phen) : colorScale(0)}
                       offset={yScale(d.ind) + "%"}
