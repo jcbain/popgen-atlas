@@ -117,13 +117,13 @@ class DashboardComponent extends Component{
         const charts = {
             geneArchGroup: <GeneArchGroup data={[this.props.data, this.props.dataDiff][this.state.switchOpts.geneArchGroup.dataOpt]}
                             template={this.props.template}
-                            params={this.props.params}
+                            params={this.state.params}
                             useLocalParams={false}
                             identifier={this.identifier}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={[this.props.dataPopPhen, this.props.dataPopPhenDiff][this.state.switchOpts.lineChartGroup.dataOpt]}
                                             className={'dashboard-line-chart'}
-                                            params={this.props.params}
+                                            params={this.state.params}
                                             useLocalParams={false}
                                             specialOpts={this.state.specialOpts.lineChartGroup}></LineChartGroup>
         }

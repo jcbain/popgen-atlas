@@ -3,7 +3,6 @@ import { toNumber } from 'lodash'
 import styled from 'styled-components'
 
 import DashboardComponent from './DashboardComponent';
-import ParameterCollection from './ParameterCollection';
 import { findUniqParamOptions } from '../helpers/DataHelpers';
 
 
@@ -14,23 +13,10 @@ class Dashboard extends Component{
     }
 
     render(){
-        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
         const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
             d.pop = toNumber(d.pop)
             return d;
         });
-
-        let paramFunctions = {}
-        Object.keys(paramObj).map(k => {
-            paramFunctions[k] = (d) => this.setState(prevState => ({
-                params: {
-                    ...prevState.params,
-                    [paramObj[k]] : d
-                }
-
-            }))
-            return paramFunctions;
-        })
     
 
         return(
@@ -54,11 +40,6 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
-                <ParameterCollection data={paramMatrix}
-                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
-                        initParams={this.state.params}
-                        paramFunc={paramFunctions}>
-                </ParameterCollection>
             </div>
         )
     }
