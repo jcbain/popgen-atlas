@@ -37,9 +37,19 @@ class ChartLister extends Component{
                     identifier={this.props.labels.find(d => d.id === 'lineChartGroup').id}
                     handleMultiSelect={handleMultiSelect}
                     handleSwitchDiff={handleSwitchDiff}
-                    labelReadable={this.props.labels.find(d => d.id === 'lineChartGroup').labelReadable}
+                    labelReadable={'Line Chart'}
                     switchDiff={this.props.labels.find(d => d.id === 'lineChartGroup').switchDiff}
                 ></LineChartCard>
+                <GenomeChartCard labels={this.props.labels}
+                    handleClick={handleClickAction}
+                    staticOpts={this.props.labels.find(d => d.id === 'geneArchGroup').staticOpts}
+                    identifier={this.props.labels.find(d => d.id === 'geneArchGroup').id}
+                    labelReadable={'Genome Chart'}
+                    handleSwitchDiff={handleSwitchDiff}
+                    handleMultiSelect={handleMultiSelect}
+                    switchDiff={this.props.labels.find(d => d.id === 'geneArchGroup').switchDiff}
+                    handleSwitchFST={()=> console.log('hello')}>
+                </GenomeChartCard>
             </div>
         )
     }

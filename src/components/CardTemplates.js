@@ -68,8 +68,8 @@ export function GenomeChartCard(props) {
             <ShowChartIcon></ShowChartIcon>
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={props.identifier} />} label="Difference"></FormControlLabel>
-            <FormControlLabel control={<Switch checked={props.switchFST} onChange={switchFST} name={props.identifier} />} label="FST"></FormControlLabel>
+            <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={`${props.identifier}-diff`} />} label="Difference"></FormControlLabel>
+            <FormControlLabel control={<Switch checked={props.switchFST} onChange={switchFST} name={`${props.identifier}-fst`} />} label="FST"></FormControlLabel>
         </StyledCard>
     )
 }

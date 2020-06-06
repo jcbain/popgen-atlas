@@ -40,6 +40,7 @@ class DashboardComponent extends Component{
     handleDiffSwitch(d){
         const componentKey = d;
         const newSwitchOpt = !this.state.switchOpts[[componentKey]].switchOpt
+        console.log(newSwitchOpt)
         const dataIndex = this.state.switchOpts[[componentKey]].dataOpt === 0 ? 1 : 0;
         // this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
         this.setState(prevState => ({
