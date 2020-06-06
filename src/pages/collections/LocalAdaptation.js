@@ -94,7 +94,7 @@ class LocalAdaptation extends Component {
     return (
       <div className="local-adaptation">
 
-        <section className="descriptive-chart">
+        {/* <section className="descriptive-chart">
           <div id="line-chart-group-1">
             <LineChartGroup data={dataPopPhen}
                 params={this.state.params}
@@ -112,7 +112,7 @@ class LocalAdaptation extends Component {
                 identifier={uuidv4()}>
             </GeneArchGroup>
           </div>
-        </section>
+        </section> */}
         
       <section id="dashboard">
         <Dashboard className={'dashboard-local-adaptation'}

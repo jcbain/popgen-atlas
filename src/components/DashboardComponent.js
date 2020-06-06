@@ -109,6 +109,13 @@ class DashboardComponent extends Component{
             padding-bottom: 1vh;
         `
 
+        const StyledMainDiv = styled.div`
+            box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
+            margin-bottom: 1vh; 
+            grid-area: ${this.props.gridArea};
+
+        `
+
         const StyledParameterCollection = styled(ParameterCollection)`
             display: flex;
         `
@@ -170,17 +177,12 @@ class DashboardComponent extends Component{
             </StyledDiv>
         }
         return(
-            <div className={this.props.className}>
+            <StyledMainDiv className={this.props.className}>
                 {display}
-            </div>
+            </StyledMainDiv>
         )
     }
 }
 
 
-export default styled(DashboardComponent)`
-    box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
-    width: 40vw;  
-    height: 80vh;
-    margin-bottom: 1vh; 
-`;
+export default DashboardComponent;

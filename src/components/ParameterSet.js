@@ -33,7 +33,8 @@ export default function ParameterSet(props) {
 
     const StyledFormControl = styled(FormControl)`
       && {
-        min-width: 7vw;
+        min-width: 75px;
+        margin-right: 1vw;
       }
     `;
     const StyledInputLabel = styled(InputLabel)`

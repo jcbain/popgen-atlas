@@ -22,6 +22,7 @@ class Dashboard extends Component{
         return(
             <div className={this.props.className}>
                 <DashboardComponent className={'dashboard-component-main'}
+                    gridArea={"main"}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -31,6 +32,18 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}></DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
+                    gridArea={"secondary"}
+                    data={this.props.data}
+                    dataDiff={this.props.dataDiff}
+                    dataPopPhen={this.props.dataPopPhen}
+                    dataPopPhenDiff={this.props.dataPopPhenDiff}
+                    template={this.props.template}
+                    params={this.state.params}
+                    paramMatrix={paramMatrix}>
+                </DashboardComponent>
+
+                <DashboardComponent className={'dashboard-component-tertiary'}
+                    gridAree={"tertiary"}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -46,6 +59,17 @@ class Dashboard extends Component{
 }
 
 export default styled(Dashboard)`
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 32vw 32vw 32vw;
+    grid-template-rows: 32vh 32vh 32vh;
+    grid-template-areas: 
+        "main main secondary"
+        "main main secondary"
+        "tertiary tertiary tertiary";
+    height: 100vh;
+    width: 100vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
 `;
