@@ -41,7 +41,8 @@ class Dashboard extends Component{
                     dataPopPhen={this.props.dataPopPhen}
                     dataPopPhenDiff={this.props.dataPopPhenDiff}
                     template={this.props.template}
-                    params={this.state.params}></DashboardComponent>
+                    params={this.state.params}
+                    paramMatrix={paramMatrix}></DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
                     data={this.props.data}
@@ -49,7 +50,8 @@ class Dashboard extends Component{
                     dataPopPhen={this.props.dataPopPhen}
                     dataPopPhenDiff={this.props.dataPopPhenDiff}
                     template={this.props.template}
-                    params={this.state.params}>
+                    params={this.state.params}
+                    paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
                 <ParameterCollection data={paramMatrix}

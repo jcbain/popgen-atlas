@@ -141,12 +141,33 @@ class DashboardComponent extends Component{
                     {/* <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button> */}
                 </StyledDiv>
         } else {
-            display = <StyledChartLister className={'chart-cards'}
+            const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
+            let paramFunctions = {}
+            Object.keys(paramObj).map(k => {
+                paramFunctions[k] = (d) => this.setState(prevState => ({
+                    params: {
+                        ...prevState.params,
+                        [paramObj[k]] : d
+                    }
+    
+                }))
+                return paramFunctions;
+            })
+        
+            display = <div>
+            <StyledChartLister className={'chart-cards'}
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
                 handleSwitchDiff={this.handleSwitchDiff}
                 labels={componentLabels}
                 ></StyledChartLister>
+                
+                <ParameterCollection data={this.props.paramMatrix}
+                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
+                        initParams={this.state.params}
+                        paramFunc={paramFunctions}>
+                </ParameterCollection>
+            </div>
         }
         return(
             <div className={this.props.className}>
