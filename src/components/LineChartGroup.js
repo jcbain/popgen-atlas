@@ -22,7 +22,7 @@ class LineChartGroup extends Component{
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = [`line-${uuidv4()}`, `line-${uuidv4()}`]
         this.startExtent = [1000, 10000];
-        this.chartWidths = [1000, 800];
+        this.chartWidths = [1500, 1500];
         this.chartHeights = [1000, 200];
         this.popStrokeWidths = [12, 5.5]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}

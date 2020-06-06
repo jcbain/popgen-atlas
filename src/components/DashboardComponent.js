@@ -34,14 +34,9 @@ class DashboardComponent extends Component{
                     };
     }
 
-    componentDidUpdate(){
-        console.log(this.state)
-    }
-
     handleDiffSwitch(d){
         const componentKey = d;
         const newSwitchOpt = !this.state.switchOpts[[componentKey]].switchOpt
-        console.log(newSwitchOpt)
         const dataIndex = this.state.switchOpts[[componentKey]].dataOpt === 0 ? 1 : 0;
         // this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
         this.setState(prevState => ({
@@ -114,6 +109,10 @@ class DashboardComponent extends Component{
             padding-bottom: 1vh;
         `
 
+        const StyledParameterCollection = styled(ParameterCollection)`
+            display: flex;
+        `
+
         const charts = {
             geneArchGroup: <GeneArchGroup data={[this.props.data, this.props.dataDiff][this.state.switchOpts.geneArchGroup.dataOpt]}
                             template={this.props.template}
@@ -133,6 +132,19 @@ class DashboardComponent extends Component{
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}, switchDiff: this.state.switchOpts.lineChartGroup.switchOpt}
         ]
 
+        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
+        let paramFunctions = {}
+        Object.keys(paramObj).map(k => {
+            paramFunctions[k] = (d) => this.setState(prevState => ({
+                params: {
+                    ...prevState.params,
+                    [paramObj[k]] : d
+                }
+
+            }))
+            return paramFunctions;
+        })
+
         let display;
         if(this.state.componentView){
             display = <StyledDiv>
@@ -141,20 +153,8 @@ class DashboardComponent extends Component{
                     {/* <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button> */}
                 </StyledDiv>
         } else {
-            const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
-            let paramFunctions = {}
-            Object.keys(paramObj).map(k => {
-                paramFunctions[k] = (d) => this.setState(prevState => ({
-                    params: {
-                        ...prevState.params,
-                        [paramObj[k]] : d
-                    }
-    
-                }))
-                return paramFunctions;
-            })
         
-            display = <div>
+            display = <StyledDiv>
             <StyledChartLister className={'chart-cards'}
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
@@ -162,12 +162,12 @@ class DashboardComponent extends Component{
                 labels={componentLabels}
                 ></StyledChartLister>
                 
-                <ParameterCollection data={this.props.paramMatrix}
+                <StyledParameterCollection className={`parameter-collection-${uuidv4()}`} data={this.props.paramMatrix}
                         labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
                         initParams={this.state.params}
                         paramFunc={paramFunctions}>
-                </ParameterCollection>
-            </div>
+                </StyledParameterCollection>
+            </StyledDiv>
         }
         return(
             <div className={this.props.className}>

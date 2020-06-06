@@ -16,13 +16,12 @@ class ParameterCollection extends Component{
                 label={k} 
                 initVal={this.initParams[this.props.labels[k]]}
                 options={this.props.data.map(d => d[this.props.labels[k]]).filter(unique)}
-                minWidth={120}
                 changeSelection={this.props.paramFunc[k]}></ParameterSet>
             )
         )
 
         return(
-            <div>
+            <div className={this.props.className}>
                 {paramSelections}
             </div>
         )

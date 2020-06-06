@@ -4,22 +4,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import styled from 'styled-components';
 import {createLabel} from '../helpers/Helpers';
 
+export default function ParameterSet(props) {
 
-
-
-  export default function ParameterSet(props) {
-    const useStyles = makeStyles({
-        formControl: {
-          minWidth: props.minWidth,
-        },
-        foo: {
-          color: '#f44336',
-        }
-      });
-
-    const classes = useStyles();
     const [val, setVal] = React.useState(props.initVal);
     const [open, setOpen] = React.useState(false);
 
@@ -41,11 +30,22 @@ import {createLabel} from '../helpers/Helpers';
                 .map(d => (
                     <MenuItem key={createLabel(props.label, d)} value={d}>{d}</MenuItem>
             ))
+
+    const StyledFormControl = styled(FormControl)`
+      && {
+        min-width: 7vw;
+      }
+    `;
+    const StyledInputLabel = styled(InputLabel)`
+      && {
+        color: #000;
+      }
+    `;
   
     return (
       <div >
-        <FormControl className={`${classes.root} ${classes.formControl}`}>
-          <InputLabel className={classes.foo}>{props.label}</InputLabel>
+        <StyledFormControl>
+          <StyledInputLabel className="tmp-class">{props.label}</StyledInputLabel>
           <Select
             labelId={createLabel('selection', props.label)}
             id={createLabel('selection', props.label)}
@@ -57,7 +57,7 @@ import {createLabel} from '../helpers/Helpers';
           >
               {menuOpts}
           </Select>
-        </FormControl>
+        </StyledFormControl>
       </div>
     );
   }

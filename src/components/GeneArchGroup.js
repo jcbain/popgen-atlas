@@ -18,7 +18,7 @@ class GeneArchGroup extends Component {
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
-        this.chartWidths = [1000, 800];
+        this.chartWidths = [1500, 1500];
         this.chartHeights = [1000, 200];
         // this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
