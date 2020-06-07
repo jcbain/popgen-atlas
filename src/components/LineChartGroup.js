@@ -19,11 +19,13 @@ class LineChartGroup extends Component{
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
         this.onBrush = this.onBrush.bind(this);
+        this.viewScaleHeight = scaleLinear().domain([0, 100]).range([0, 1350])
+        this.viewScaleWidth = scaleLinear().domain([0, 100]).range([0, 3000])
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = [`line-${uuidv4()}`, `line-${uuidv4()}`]
         this.startExtent = [1000, 10000];
-        this.chartWidths = [2000, 2000];
-        this.chartHeights = [300, 100];
+        this.chartWidths = [this.viewScaleWidth(this.props.displayDims.width), this.viewScaleWidth(this.props.displayDims.width)];
+        this.chartHeights = [this.viewScaleHeight(this.props.displayDims.height * (7/9)), this.viewScaleHeight(this.props.displayDims.height * (2/9))];
         this.popStrokeWidths = [12, 5.5]
         this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
 
@@ -36,6 +38,8 @@ class LineChartGroup extends Component{
 
 
     render(){
+        console.log(this.props.displayDims.height)
+        console.log(this.viewScaleHeight(this.props.displayDims.height) * (2/9))
         const yDomain = [max(this.props.data, d => d.pop_phen),min(this.props.data, d => d.pop_phen)]
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain(yDomain);
