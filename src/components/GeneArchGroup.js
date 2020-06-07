@@ -18,8 +18,10 @@ class GeneArchGroup extends Component {
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
-        this.chartWidths = [1500, 1500];
-        this.chartHeights = [1000, 200];
+        this.viewScaleHeight = scaleLinear().domain([0, 100]).range([0, 1350])
+        this.viewScaleWidth = scaleLinear().domain([0, 100]).range([0, 3000])
+        this.chartWidths = [this.viewScaleWidth(this.props.displayDims.width), this.viewScaleWidth(this.props.displayDims.width)];
+        this.chartHeights = [this.viewScaleHeight(this.props.displayDims.height * (7/9)), this.viewScaleHeight(this.props.displayDims.height * (2/9))];
         // this.params = removeParams(this.props.params, ['output_gen']);
         this.generations = this.props.data.map(d => d.output_gen).filter(unique);
         this.yScale = scaleLinear().domain([min(this.props.template, d => d.ind), max(this.props.template, d => d.ind)]).range([0, 100]);
