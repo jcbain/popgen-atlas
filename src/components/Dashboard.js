@@ -22,7 +22,7 @@ class Dashboard extends Component{
         return(
             <div className={this.props.className}>
                 <DashboardComponent className={'dashboard-component-main'}
-                    gridArea={"main"}
+                    gridArea={{name: "main", displayDims: {width:62, height: 62}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -32,7 +32,7 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}></DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
-                    gridArea={"secondary"}
+                    gridArea={{name: "secondary", displayDims: {width:30, height: 62}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -43,7 +43,7 @@ class Dashboard extends Component{
                 </DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-tertiary'}
-                    gridAree={"tertiary"}
+                    gridArea={{name: "tertiary", displayDims: {width:94, height: 30}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}

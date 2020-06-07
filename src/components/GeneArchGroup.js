@@ -121,7 +121,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={this.chartHeights[0]}
                           width={this.chartWidths[0]}
-                          svgHeight={59}
+                          displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (4/5)) }}
                           uniqId={createLabel(this.archLabels[0], this.props.identifier)}
                           changeBrush={this.onBrush}
                           addBrush={false}
@@ -133,7 +133,7 @@ class GeneArchGroup extends Component {
                           params={this.props.params}
                           height={this.chartHeights[1]}
                           width={this.chartWidths[1]}
-                          svgHeight={19}
+                          displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (1/5)) }}
                           uniqId={createLabel(this.archLabels[1], this.props.identifier)}
                           changeBrush={this.onBrush}
                           addBrush={true}

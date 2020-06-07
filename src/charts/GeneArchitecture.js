@@ -17,8 +17,8 @@ class GeneArchitecture extends Component {
         this.startExtent = [this.props.startExtent[0], this.props.startExtent[1]]
         this.gradients = this.props.gradients;
         this.StyledSVG = styled.svg`
-            width: 38vw;
-            height: ${this.props.svgHeight}vh;
+            width: ${this.props.displayDims.width}vw;
+            height: ${this.props.displayDims.height}vh;
         `
         
     }

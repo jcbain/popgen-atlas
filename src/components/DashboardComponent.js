@@ -112,7 +112,7 @@ class DashboardComponent extends Component{
         const StyledMainDiv = styled.div`
             box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
             margin-bottom: 1vh; 
-            grid-area: ${this.props.gridArea};
+            grid-area: ${this.props.gridArea.name};
 
         `
 
@@ -125,13 +125,15 @@ class DashboardComponent extends Component{
                             template={this.props.template}
                             params={this.state.params}
                             useLocalParams={false}
-                            identifier={this.identifier}>
+                            identifier={this.identifier}
+                            displayDims={this.props.gridArea.displayDims}>
             </GeneArchGroup>,
             lineChartGroup: <LineChartGroup data={[this.props.dataPopPhen, this.props.dataPopPhenDiff][this.state.switchOpts.lineChartGroup.dataOpt]}
                                             className={'dashboard-line-chart'}
                                             params={this.state.params}
                                             useLocalParams={false}
-                                            specialOpts={this.state.specialOpts.lineChartGroup}></LineChartGroup>
+                                            specialOpts={this.state.specialOpts.lineChartGroup}
+                                            displayDims={this.props.gridArea.displayDims}></LineChartGroup>
         }
 
         const componentLabels = [

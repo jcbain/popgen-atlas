@@ -17,8 +17,8 @@ class LineChart extends Component {
         this.generations = this.props.generations;
         this.startExtent = this.props.startExtent;
         this.StyledSVG = styled.svg`
-            width: 38vw;
-            height: ${this.props.svgHeight}vh;
+            width: ${this.props.displayDims.width}vw;
+            height: ${this.props.displayDims.height}vh;
             `
     }
 

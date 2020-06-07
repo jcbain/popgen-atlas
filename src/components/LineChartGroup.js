@@ -106,7 +106,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[0]}
                     height={this.chartHeights[0]}
                     uniqId={this.lineLabels[0]}
-                    svgHeight={59}
+                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (4/5)) }}
                     generations={this.generations}
                     xDomain={[this.state.start, this.state.end]}
                     yDomain={yDomain}
@@ -126,7 +126,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[1]}
                     height={this.chartHeights[1]}
                     uniqId={this.lineLabels[1]}
-                    svgHeight={19}
+                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (1/5))}}
                     generations={this.generations}
                     xDomain={[min(this.generations), max(this.generations)]}
                     yDomain={yDomain}
