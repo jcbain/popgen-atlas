@@ -43,7 +43,18 @@ class Dashboard extends Component{
                 </DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-tertiary'}
-                    gridArea={{name: "tertiary", displayDims: {width:94, height: 30}}}
+                    gridArea={{name: "tertiary", displayDims: {width:61, height: 30}}}
+                    data={this.props.data}
+                    dataDiff={this.props.dataDiff}
+                    dataPopPhen={this.props.dataPopPhen}
+                    dataPopPhenDiff={this.props.dataPopPhenDiff}
+                    template={this.props.template}
+                    params={this.state.params}
+                    paramMatrix={paramMatrix}>
+                </DashboardComponent>
+
+                <DashboardComponent className={'dashboard-component-fourth'}
+                    gridArea={{name: "fourth", displayDims: {width:30, height: 30}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -63,9 +74,9 @@ export default styled(Dashboard)`
     grid-template-columns: 32vw 32vw 32vw;
     grid-template-rows: 32vh 32vh 32vh;
     grid-template-areas: 
+        "main main fourth"
         "main main secondary"
-        "main main secondary"
-        "tertiary tertiary tertiary";
+        "tertiary tertiary secondary";
     height: 100vh;
     width: 100vw;
     padding-left: 1vw;

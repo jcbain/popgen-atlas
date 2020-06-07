@@ -112,6 +112,8 @@ class DashboardComponent extends Component{
         const StyledMainDiv = styled.div`
             box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
             margin-bottom: 1vh; 
+            padding-right: 1vw;
+            padding-left: 1vw;
             grid-area: ${this.props.gridArea.name};
 
         `
