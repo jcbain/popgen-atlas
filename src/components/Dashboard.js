@@ -22,7 +22,7 @@ class Dashboard extends Component{
         return(
             <div className={this.props.className}>
                 <DashboardComponent className={'dashboard-component-main'}
-                    gridArea={{name: "main", displayDims: {width:61, height: 62}}}
+                    gridArea={{name: "main", displayDims: {width:61, height: 61}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -32,7 +32,7 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}></DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
-                    gridArea={{name: "secondary", displayDims: {width:29, height: 62}}}
+                    gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -43,7 +43,7 @@ class Dashboard extends Component{
                 </DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-tertiary'}
-                    gridArea={{name: "tertiary", displayDims: {width:61, height: 30}}}
+                    gridArea={{name: "tertiary", displayDims: {width:61, height: 29}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}
@@ -54,7 +54,7 @@ class Dashboard extends Component{
                 </DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-fourth'}
-                    gridArea={{name: "fourth", displayDims: {width:29, height: 30}}}
+                    gridArea={{name: "fourth", displayDims: {width:29, height: 29}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
                     dataPopPhen={this.props.dataPopPhen}

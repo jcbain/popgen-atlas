@@ -103,17 +103,19 @@ class DashboardComponent extends Component{
 
         const StyledDiv = styled.div`
             position: relative;
-            padding-left: 1vw;
-            padding-right: 1vw;
-            padding-top: 1vh;
-            padding-bottom: 1vh;
+            // padding-left: 1vw;
+            // padding-right: 1vw;
+            // padding-top: 1vh;
+            // padding-bottom: 1vh;
         `
 
         const StyledMainDiv = styled.div`
             box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
             margin-bottom: 1vh; 
-            padding-right: 1vw;
-            padding-left: 1vw;
+            padding-top: 1vh;
+            padding-right: 1.5vw;
+            padding-left: 1.5vw;
+            padding-bottom: 1vw;
             grid-area: ${this.props.gridArea.name};
 
         `
