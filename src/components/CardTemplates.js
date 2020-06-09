@@ -39,28 +39,17 @@ const StyledAddBoxIcon = styled(AddBoxIcon)`
 
 
 export function LineChartCard(props){
-    const [dummyData, setDummyData] = useState(0);
-
     const [expanded, setExpanded] = useState(false);
+    const [switched, setSwitched] = useState(props.switchDiff);
     const handleExpandClick = (event) => {
         setExpanded(!expanded);
     };
-    const [switched, setSwitched] = useState(false);
     const handleSwitch = () => setSwitched(!switched)
-
-      const handleDummyData = (event) => {
-        setDummyData(dummyData + 1);
-        props.setParentDummy(event, dummyData + 1, props.identifier)
-    }
     const clickAction = (event) => {
-        if (switched) {
-            props.handleSwitchDiff(event, props.identifier)
-        }
+        props.handleSwitchDiff(event, props.identifier, switched)
         chooseComponent(props.labels)[props.identifier](props.handleClick)
     };
     const staticFunctionObject = chooseMultiStaticOptions(props.labels)
-    // const switchDiff = () => props.handleSwitchDiff(props.identifier);
-    // const switchDiff = event => props.handleSwitchDiff(event, props.identifier)
 
     let specialOpts;
     if(props.staticOpts !== undefined){
@@ -86,7 +75,6 @@ export function LineChartCard(props){
                 <ExpandMoreIcon />
             </IconButton>
             <Collapse in={expanded} timeout="auto" unmountOnExit={false} >
-                 <Button size="small" onClick={handleDummyData}>Click Me: {dummyData}</Button>
                  <Switch checked={switched} onChange={handleSwitch}></Switch>
             </Collapse>
         </StyledCard>

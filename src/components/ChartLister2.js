@@ -4,12 +4,8 @@ import {LineChartCard, GenomeChartCard} from './CardTemplates';
 class ChartLister extends Component{
     constructor(props){
         super(props);
-        this.state = {clicked: false, initDummy: 0, handleSwitchDiff: this.props.handleSwitchDiff}
+        this.state = {clicked: false}
 
-    }
-
-    setParentDummy = (event, d, v) => {
-        this.setState({initDummy: d})
     }
 
     render() {
@@ -20,9 +16,7 @@ class ChartLister extends Component{
   
         return(
             <div className={this.props.className}>
-                <div>something : {this.state.initDummy}</div>
                 <LineChartCard labels={this.props.labels}
-                    setParentDummy={this.setParentDummy}
                     handleClick={handleClickAction}
                     staticOpts={this.props.labels.find(d => d.id === 'lineChartGroup').staticOpts}
                     identifier={this.props.labels.find(d => d.id === 'lineChartGroup').id}

@@ -35,13 +35,10 @@ class DashboardComponent extends Component{
     }
 
 
-    handleDiffSwitch(e, d){
-        e.stopPropagation();
-        console.log(e)
-        console.log(d)
+    handleDiffSwitch(e, d, s){
         const componentKey = d;
-        const newSwitchOpt = !this.state.switchOpts[[componentKey]].switchOpt
-        const dataIndex = this.state.switchOpts[[componentKey]].dataOpt === 0 ? 1 : 0;
+        const newSwitchOpt = s
+        const dataIndex = newSwitchOpt ? 1 : 0;
         this.setState(prevState => ({
             switchOpts: {
                 ...prevState.switchOpts,
@@ -184,6 +181,7 @@ class DashboardComponent extends Component{
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
                 handleSwitchDiff={this.handleSwitchDiff}
+                switchOpts={this.state.switchOpts}
                 labels={componentLabels}
                 ></StyledChartLister>
                 
