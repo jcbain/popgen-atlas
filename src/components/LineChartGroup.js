@@ -38,8 +38,6 @@ class LineChartGroup extends Component{
 
 
     render(){
-        console.log(this.props.displayDims.height)
-        console.log(this.viewScaleHeight(this.props.displayDims.height) * (2/9))
         const yDomain = [max(this.props.data, d => d.pop_phen),min(this.props.data, d => d.pop_phen)]
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain(yDomain);

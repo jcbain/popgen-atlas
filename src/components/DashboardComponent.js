@@ -56,6 +56,7 @@ class DashboardComponent extends Component{
     }
 
     handleMultiSelect(d){
+        console.log(d)
         const componentLabel = d[0];
         const paramLabel = d[1];
         const paramValue = d[2];
@@ -65,7 +66,9 @@ class DashboardComponent extends Component{
                 ...prevState.specialOpts,
                 specialOpts : { 
                     [componentLabel] : {
-                        [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel]].filter(val => val !== paramValue)
+                        // [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel]].filter(val => val !== paramValue)
+                        [paramLabel]: paramValue
+
                     }
                 }
 
@@ -75,7 +78,8 @@ class DashboardComponent extends Component{
                 ...prevState.specialOpts,
                 specialOpts : { 
                     [componentLabel] : {
-                        [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel], paramValue]
+                        // [paramLabel] : [...prevState['specialOpts'][componentLabel][paramLabel], paramValue]
+                        [paramLabel]: paramValue
                     }
                 }
 
@@ -182,6 +186,7 @@ class DashboardComponent extends Component{
                 handleMultiSelect={this.handleMultiSelect} 
                 handleSwitchDiff={this.handleSwitchDiff}
                 switchOpts={this.state.switchOpts}
+                specialOpts={this.state.specialOpts}
                 labels={componentLabels}
                 ></StyledChartLister>
                 

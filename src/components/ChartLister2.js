@@ -9,7 +9,6 @@ class ChartLister extends Component{
     }
 
     render() {
-
         const handleClickAction = this.props.handleClick;
         const handleMultiSelect = this.props.handleMultiSelect;
         const handleSwitchDiff= this.props.handleSwitchDiff;
@@ -22,6 +21,7 @@ class ChartLister extends Component{
                     identifier={this.props.labels.find(d => d.id === 'lineChartGroup').id}
                     handleMultiSelect={handleMultiSelect}
                     handleSwitchDiff={this.props.handleSwitchDiff}
+                    specialOpts={this.props.specialOpts['lineChartGroup']}
                     labelReadable={'Line Chart'}
                     switchDiff={this.props.labels.find(d => d.id === 'lineChartGroup').switchDiff}
                 ></LineChartCard>
