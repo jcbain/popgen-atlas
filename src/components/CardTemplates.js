@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -20,26 +21,61 @@ import { Button } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
     &&{
-        width: 40%;
+        width: 45%;
         padding-top: 1vh;
         padding-bottom: 1vh;
-        margin: 1vw;
+        margin: .5vw;
         background-color: #ffffff;
         box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
         border: 1px solid #f2f2f2;
-        display: grid;
-        grid-template-columns: .25fr 1fr .25fr .5fr;
-        justify-items: center;
-        align-items: center;
+
     }
     `;
 
+const StyledCardHeader = styled(CardContent)`
+    && {
+        display: grid;
+        grid-template-columns: .25fr .5fr .25fr .5fr;
+        justify-items: center;
+        align-items: center;
+    }
+`;
+
+const LineChartCollapse = styled(Collapse)`
+    && {
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        & .MuiCollapse-wrapperInner{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+
+    }
+`
+
+const GenomeChartCollapse = styled(Collapse)`
+    && {
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        & .MuiCollapse-wrapperInner{
+            display: grid;
+            grid-template-rows: 1fr;
+        }
+
+    }
+`
+
 const StyledAddBoxIcon = styled(AddBoxIcon)`
     &&{
-        font-size: xx-large;
+        font-size: xxx-large;
         fill: palevioletred;
     }
     `
+const StyledTypography = styled(Typography)`
+    && {
+        font-size: clamp(12px, 1 * (1vw + 1vh) / 2, 15px);
+    }
+`;
 
 
 export function LineChartCard(props){
@@ -73,18 +109,20 @@ export function LineChartCard(props){
     }
     return (
         <StyledCard key="linchart-cart">
-            <ShowChartIcon></ShowChartIcon>
-            <Typography>{props.labelReadable}</Typography>
-            <IconButton onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more">
-                <ExpandMoreIcon />
-            </IconButton>
-            <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            <Collapse in={expanded} timeout="auto" unmountOnExit={false} >
+            <StyledCardHeader className="linechart-header">
+                <ShowChartIcon></ShowChartIcon>
+                <StyledTypography>{props.labelReadable}</StyledTypography>
+                <IconButton onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                    <ExpandMoreIcon />
+                </IconButton>
+                <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
+            </StyledCardHeader>
+            <LineChartCollapse className="linechart-collapse" in={expanded} timeout="auto" unmountOnExit={false} >
                 <FormControlLabel label="Difference" control={<Switch checked={switched} onChange={handleSwitch}></Switch>}></FormControlLabel>
-                 {populationOpts}
-            </Collapse>
+                {populationOpts}
+            </LineChartCollapse>
         </StyledCard>
     )
 }
@@ -104,17 +142,19 @@ export function GenomeChartCard(props) {
     // const switchFST = (event) => props.handleSwitchFST(event, props.identifier)
     return (
         <StyledCard key="genomechart-card">
-            <ShowChartIcon></ShowChartIcon>
-            <Typography>{props.labelReadable}</Typography>
-            <IconButton onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more">
-                <ExpandMoreIcon />
-            </IconButton>
-            <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            <Collapse in={expanded} timeout="auto" unmountOnExit={false} >
+            <StyledCardHeader className="genomechart-header">
+                <ShowChartIcon></ShowChartIcon>
+                <StyledTypography>{props.labelReadable}</StyledTypography>
+                <IconButton onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                    <ExpandMoreIcon />
+                </IconButton>
+                <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
+            </StyledCardHeader>
+            <GenomeChartCollapse in={expanded} timeout="auto" unmountOnExit={false} >
                 <FormControlLabel label="Difference" control={<Switch checked={switched} onChange={handleSwitch}></Switch>}></FormControlLabel>
-            </Collapse>
+            </GenomeChartCollapse>
             {/* <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={`${props.identifier}-diff`} />} label="Difference"></FormControlLabel>
             <FormControlLabel control={<Switch checked={props.switchFST} onChange={switchFST} name={`${props.identifier}-fst`} />} label="FST"></FormControlLabel> */}
         </StyledCard>
