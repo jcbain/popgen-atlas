@@ -10,6 +10,52 @@ import GeneArchGroup from './GeneArchGroup'
 import ChartLister from './ChartLister2'
 import ParameterCollection from './ParameterCollection';
 
+const StyledChartLister = styled(ChartLister)`
+    display: flex;
+    justify-content: center;    
+`
+
+const StyledClearIcon = styled(ClearIcon)`
+    position: absolute;
+    top: 0;
+    right: 0;
+    fill: #e8e8e8;
+    &:hover {
+        fill: palevioletred;
+    }
+`
+
+
+const StyledChartDiv = styled.div`
+    position: relative;
+    // padding-left: 1vw;
+    // padding-right: 1vw;
+    // padding-top: 1vh;
+    // padding-bottom: 1vh;
+`
+
+const StyledWidgetDiv = styled.div`
+    position: relative;
+    // padding-left: 1vw;
+    // padding-right: 1vw;
+    // padding-top: 1vh;
+    // padding-bottom: 1vh;
+`
+
+const StyledMainDiv =  styled.div`
+    background-color: #fff;
+    box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
+    margin-bottom: 1vh; 
+    padding-top: 1vh;
+    padding-right: 1.5vw;
+    padding-left: 1.5vw;
+    padding-bottom: 1vw;
+    grid-area: ${props => props.gridArea.name};
+`;
+
+const StyledParameterCollection = styled(ParameterCollection)`
+    display: flex;
+`
 
 
 class DashboardComponent extends Component{
@@ -90,52 +136,6 @@ class DashboardComponent extends Component{
 
 
     render(){
-        const StyledChartLister = styled(ChartLister)`
-            display: flex;
-            justify-content: center;
-        `
-
-        const StyledClearIcon = styled(ClearIcon)`
-            position: absolute;
-            top: 0;
-            right: 0;
-            fill: #e8e8e8;
-            &:hover {
-                fill: palevioletred;
-            }
-        `
-
-        const StyledChartDiv = styled.div`
-            position: relative;
-            // padding-left: 1vw;
-            // padding-right: 1vw;
-            // padding-top: 1vh;
-            // padding-bottom: 1vh;
-        `
-
-        const StyledWidgetDiv = styled.div`
-            position: relative;
-            // padding-left: 1vw;
-            // padding-right: 1vw;
-            // padding-top: 1vh;
-            // padding-bottom: 1vh;
-        `
-
-        const StyledMainDiv = styled.div`
-            background-color: #fff;
-            box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
-            margin-bottom: 1vh; 
-            padding-top: 1vh;
-            padding-right: 1.5vw;
-            padding-left: 1.5vw;
-            padding-bottom: 1vw;
-            grid-area: ${this.props.gridArea.name};
-
-        `
-
-        const StyledParameterCollection = styled(ParameterCollection)`
-            display: flex;
-        `
 
         const charts = {
             geneArchGroup: <GeneArchGroup data={[this.props.data, this.props.dataDiff][this.state.switchOpts.geneArchGroup.dataOpt]}
@@ -176,7 +176,6 @@ class DashboardComponent extends Component{
             display = <StyledWidgetDiv>
                     {charts[this.state.selectedComponent]}
                     <StyledClearIcon onClick={() => this.setState({componentView: false, selectedComponent: ''})}></StyledClearIcon>
-                    {/* <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button> */}
                 </StyledWidgetDiv>
         } else {
         
@@ -198,7 +197,7 @@ class DashboardComponent extends Component{
             </StyledChartDiv>
         }
         return(
-            <StyledMainDiv className={this.props.className}>
+            <StyledMainDiv gridArea={this.props.gridArea} className={this.props.className}>
                 {display}
             </StyledMainDiv>
         )

@@ -21,7 +21,7 @@ class Dashboard extends Component{
 
         return(
             <div className={this.props.className}>
-                <DashboardComponent className={'dashboard-component-main'}
+                <DashboardComponent key="1" className={'dashboard-component-main'}
                     gridArea={{name: "main", displayDims: {width:61, height: 61}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
@@ -32,7 +32,7 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
-                <DashboardComponent className={'dashboard-component-secondary'}
+                <DashboardComponent key="2" className={'dashboard-component-secondary'}
                     gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
@@ -43,7 +43,7 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
-                <DashboardComponent className={'dashboard-component-tertiary'}
+                <DashboardComponent key="3" className={'dashboard-component-tertiary'}
                     gridArea={{name: "tertiary", displayDims: {width:61, height: 29}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
@@ -54,7 +54,7 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
-                <DashboardComponent className={'dashboard-component-fourth'}
+                <DashboardComponent key="4" className={'dashboard-component-fourth'}
                     gridArea={{name: "fourth", displayDims: {width:29, height: 29}}}
                     data={this.props.data}
                     dataDiff={this.props.dataDiff}
