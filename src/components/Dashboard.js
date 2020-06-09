@@ -29,7 +29,8 @@ class Dashboard extends Component{
                     dataPopPhenDiff={this.props.dataPopPhenDiff}
                     template={this.props.template}
                     params={this.state.params}
-                    paramMatrix={paramMatrix}></DashboardComponent>
+                    paramMatrix={paramMatrix}>
+                </DashboardComponent>
 
                 <DashboardComponent className={'dashboard-component-secondary'}
                     gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
@@ -70,6 +71,7 @@ class Dashboard extends Component{
 }
 
 export default styled(Dashboard)`
+    background-color: #f2f2f2;
     display: grid;
     grid-template-columns: 32vw 32vw 32vw;
     grid-template-rows: 32vh 32vh 32vh;
@@ -77,8 +79,10 @@ export default styled(Dashboard)`
         "main main fourth"
         "main main secondary"
         "tertiary tertiary secondary";
-    height: 100vh;
-    width: 100vw;
+    height: 98vh;
+    width: 98vw;
+    column-gap: 1vw;
+    row-gap: 1vh;
     padding-left: 1vw;
     padding-right: 1vw;
     padding-bottom: 1vh;

@@ -34,11 +34,14 @@ class DashboardComponent extends Component{
                     };
     }
 
-    handleDiffSwitch(d){
+
+    handleDiffSwitch(e, d){
+        e.stopPropagation();
+        console.log(e)
+        console.log(d)
         const componentKey = d;
         const newSwitchOpt = !this.state.switchOpts[[componentKey]].switchOpt
         const dataIndex = this.state.switchOpts[[componentKey]].dataOpt === 0 ? 1 : 0;
-        // this.setState({switchOpts: { geneArchGroup: {switchOpt : !this.state.switchOpts.geneArchGroup.switchOpt, dataOpt: dataIndex} }})
         this.setState(prevState => ({
             switchOpts: {
                 ...prevState.switchOpts,
@@ -101,7 +104,15 @@ class DashboardComponent extends Component{
             }
         `
 
-        const StyledDiv = styled.div`
+        const StyledChartDiv = styled.div`
+            position: relative;
+            // padding-left: 1vw;
+            // padding-right: 1vw;
+            // padding-top: 1vh;
+            // padding-bottom: 1vh;
+        `
+
+        const StyledWidgetDiv = styled.div`
             position: relative;
             // padding-left: 1vw;
             // padding-right: 1vw;
@@ -110,6 +121,7 @@ class DashboardComponent extends Component{
         `
 
         const StyledMainDiv = styled.div`
+            background-color: #fff;
             box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
             margin-bottom: 1vh; 
             padding-top: 1vh;
@@ -160,14 +172,14 @@ class DashboardComponent extends Component{
 
         let display;
         if(this.state.componentView){
-            display = <StyledDiv>
+            display = <StyledWidgetDiv>
                     {charts[this.state.selectedComponent]}
                     <StyledClearIcon onClick={() => this.setState({componentView: false, selectedComponent: ''})}></StyledClearIcon>
                     {/* <Button onClick={() => this.setState({componentView: false, selectedComponent: ''})} size="small">Remove</Button> */}
-                </StyledDiv>
+                </StyledWidgetDiv>
         } else {
         
-            display = <StyledDiv>
+            display = <StyledChartDiv>
             <StyledChartLister className={'chart-cards'}
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
@@ -180,7 +192,7 @@ class DashboardComponent extends Component{
                         initParams={this.state.params}
                         paramFunc={paramFunctions}>
                 </StyledParameterCollection>
-            </StyledDiv>
+            </StyledChartDiv>
         }
         return(
             <StyledMainDiv className={this.props.className}>

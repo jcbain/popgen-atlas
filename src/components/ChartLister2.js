@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
-import {CardTemplates, LineChartCard, GenomeChartCard} from './CardTemplates';
+import {LineChartCard, GenomeChartCard} from './CardTemplates';
 
 class ChartLister extends Component{
     constructor(props){
         super(props);
-        this.state = {clicked: false}
+        this.state = {clicked: false, initDummy: 0, handleSwitchDiff: this.props.handleSwitchDiff}
+
+    }
+
+    setParentDummy = (event, d, v) => {
+        this.setState({initDummy: d})
     }
 
     render() {
 
         const handleClickAction = this.props.handleClick;
         const handleMultiSelect = this.props.handleMultiSelect;
-        const handleSwitchDiff = this.props.handleSwitchDiff;
-
+        const handleSwitchDiff= this.props.handleSwitchDiff;
+  
         return(
             <div className={this.props.className}>
+                <div>something : {this.state.initDummy}</div>
                 <LineChartCard labels={this.props.labels}
+                    setParentDummy={this.setParentDummy}
                     handleClick={handleClickAction}
                     staticOpts={this.props.labels.find(d => d.id === 'lineChartGroup').staticOpts}
                     identifier={this.props.labels.find(d => d.id === 'lineChartGroup').id}
                     handleMultiSelect={handleMultiSelect}
-                    handleSwitchDiff={handleSwitchDiff}
+                    handleSwitchDiff={this.props.handleSwitchDiff}
                     labelReadable={'Line Chart'}
                     switchDiff={this.props.labels.find(d => d.id === 'lineChartGroup').switchDiff}
                 ></LineChartCard>

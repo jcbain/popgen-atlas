@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components'
@@ -6,8 +6,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import CardContent from '@material-ui/core/CardContent';
+import Collapse from '@material-ui/core/Collapse';
+import CardHeader from '@material-ui/core/CardHeader';
+
 
 import { chooseMultiStaticOptions, chooseComponent } from './CardActions'
+import { Button } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
     width: 40%;
@@ -25,14 +32,36 @@ const StyledCard = styled(Card)`
     `;
 
 const StyledAddBoxIcon = styled(AddBoxIcon)`
-    fill: palevioletred;
+    &&{
+        fill: palevioletred;
+    }
     `
 
+
 export function LineChartCard(props){
-    // const clickAction = () => props.clickActions[props.identifier](props.handleClick)
-    const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
+    const [dummyData, setDummyData] = useState(0);
+
+    const [expanded, setExpanded] = useState(false);
+    const handleExpandClick = (event) => {
+        setExpanded(!expanded);
+    };
+    const [switched, setSwitched] = useState(false);
+    const handleSwitch = () => setSwitched(!switched)
+
+      const handleDummyData = (event) => {
+        setDummyData(dummyData + 1);
+        props.setParentDummy(event, dummyData + 1, props.identifier)
+    }
+    const clickAction = (event) => {
+        if (switched) {
+            props.handleSwitchDiff(event, props.identifier)
+        }
+        chooseComponent(props.labels)[props.identifier](props.handleClick)
+    };
     const staticFunctionObject = chooseMultiStaticOptions(props.labels)
-    const switchDiff = () => props.handleSwitchDiff(props.identifier)
+    // const switchDiff = () => props.handleSwitchDiff(props.identifier);
+    // const switchDiff = event => props.handleSwitchDiff(event, props.identifier)
+
     let specialOpts;
     if(props.staticOpts !== undefined){
         specialOpts = Object.keys(props.staticOpts).map( v => {
@@ -48,21 +77,44 @@ export function LineChartCard(props){
         })
     }
     return (
-        <StyledCard key="linechart-card">
-            <ShowChartIcon></ShowChartIcon>
+        <StyledCard key="linchart-cart">
             <Typography>{props.labelReadable}</Typography>
             <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            {specialOpts}
-            <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={props.identifier} />} label="Difference"></FormControlLabel>
+            <IconButton onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more">
+                <ExpandMoreIcon />
+            </IconButton>
+            <Collapse in={expanded} timeout="auto" unmountOnExit={false} >
+                 <Button size="small" onClick={handleDummyData}>Click Me: {dummyData}</Button>
+                 <Switch checked={switched} onChange={handleSwitch}></Switch>
+            </Collapse>
         </StyledCard>
+    //     <StyledCard key="linechart-card">
+    //         <ShowChartIcon></ShowChartIcon>
+    //         <Typography>{props.labelReadable}</Typography>
+    //         <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
+            
+    //         <IconButton
+    //             onClick={handleExpandClick}
+    //             aria-expanded={expanded}
+    //             aria-label="show more"
+    //         >
+    //             <ExpandMoreIcon />
+    //         </IconButton>
+    //         <Collapse in={expanded} timeout="auto">
+    //         <FormControlLabel aria-label="clicky" onClick={event => event.stopPropagation()} onFocus={event => event.stopPropagation()} control={<Switch checked={props.switchDiff} onChange={switchDiff} name={props.identifier} />} label="Difference"></FormControlLabel>
+    //         {specialOpts}
+    //   </Collapse>
+    //     </StyledCard>
     )
 }
 
 export function GenomeChartCard(props) {
 
     const clickAction = () => chooseComponent(props.labels)[props.identifier](props.handleClick)
-    const switchDiff = () => props.handleSwitchDiff(props.identifier)
-    const switchFST = () => props.handleSwitchFST(props.identifier)
+    const switchDiff = (event) => props.handleSwitchDiff(event ,props.identifier)
+    const switchFST = (event) => props.handleSwitchFST(event, props.identifier)
     return (
         <StyledCard key="genomechart-card">
             <ShowChartIcon></ShowChartIcon>
