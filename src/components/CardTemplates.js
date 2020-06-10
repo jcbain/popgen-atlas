@@ -9,12 +9,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Switch from '@material-ui/core/Switch';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Chip from '@material-ui/core/Chip';
 import {omitBy, keys, toInteger} from 'lodash'
-import Avatar from '@material-ui/core/Avatar';
 
 
 import { chooseComponent } from './CardActions'
@@ -72,14 +69,20 @@ const ChipDiv = styled.div`
 `
 const StyledChip = styled(Chip)`
     && {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
         margin-left: 2px;
         width: 72px;
-        // height: 22px;
+        height: 28px;
         color: ${props => props.labelcolor};
-        border: .5px solid ${props => props.bordercolor};
+        border: 1px solid ${props => props.bordercolor};
         background-color: ${props => props.newcolor};
         &:focus{
             background-color: ${props => props.newcolor};
+        }
+        &:hover{
+            color: ${props => props.hoverlabelcolor};
+            background-color: ${props => props.bordercolor};
         }
     }
 `;
@@ -125,19 +128,20 @@ export function LineChartCard(props){
                     {props.staticOpts[v].map(i => <StyledChip component='div'
                         onClick={() => handleDisable(i)} 
                         key={i} 
-                        label={`pop ${i}`}
-                         newcolor={disabled[i]? "#fff" : "rgb(236, 225, 253)"} 
-                         labelcolor={disabled[i]? "#cccacb" : "rgb(163, 99, 252)"} 
-                         bordercolor={disabled[i]? "#f2f0f1" :"rgb(218, 199, 250)"}
-                         >
-                         </StyledChip> )}
+                        label={`Pop ${i}`}
+                        newcolor={disabled[i]? "#fff" : "rgba(227, 132, 197, .1)"} 
+                        labelcolor={disabled[i]? "#cccacb" : "palevioletred"} 
+                        bordercolor={disabled[i]? "#f2f0f1" :"#fc81a9"}
+                        hoverlabelcolor={disabled[i]? "#fff" :"#fffff7"}
+                        >
+                        </StyledChip> )}
                          </ChipDiv>
                 </FormControl>
             )
         })
     }
     return (
-        <StyledCard key="linchart-cart">
+        <StyledCard key="linchart-card">
             <StyledCardContent className="linechart-header">
                 <ShowChartIcon></ShowChartIcon>
                 <StyledTypography>{props.labelReadable}</StyledTypography>
