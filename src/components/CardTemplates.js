@@ -14,10 +14,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Chip from '@material-ui/core/Chip';
 import {omitBy, keys, toInteger} from 'lodash'
+import Avatar from '@material-ui/core/Avatar';
 
 
 import { chooseComponent } from './CardActions'
-import { Button } from '@material-ui/core';
+import { Button, CardActions, Divider } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
     &&{
@@ -32,10 +33,10 @@ const StyledCard = styled(Card)`
     }
     `;
 
-const StyledCardHeader = styled(CardContent)`
+const StyledCardContent = styled(CardContent)`
     && {
         display: grid;
-        grid-template-columns: .25fr .5fr .25fr .5fr;
+        grid-template-columns: 1fr 1fr 1fr;
         justify-items: center;
         align-items: center;
     }
@@ -64,6 +65,24 @@ const GenomeChartCollapse = styled(Collapse)`
 
     }
 `
+const ChipDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+
+`
+const StyledChip = styled(Chip)`
+    && {
+        margin-left: 2px;
+        width: 72px;
+        // height: 22px;
+        color: ${props => props.labelcolor};
+        border: .5px solid ${props => props.bordercolor};
+        background-color: ${props => props.newcolor};
+        &:focus{
+            background-color: ${props => props.newcolor};
+        }
+    }
+`;
 
 const StyledAddBoxIcon = styled(AddBoxIcon)`
     &&{
@@ -73,7 +92,7 @@ const StyledAddBoxIcon = styled(AddBoxIcon)`
     `
 const StyledTypography = styled(Typography)`
     && {
-        font-size: clamp(12px, 1 * (1vw + 1vh) / 2, 15px);
+        font-size: (1vh + 1vw)/2;
     }
 `;
 
@@ -101,28 +120,44 @@ export function LineChartCard(props){
         populationOpts = Object.keys(props.staticOpts).map( v => {
             return(
                 <FormControl>
-                    <FormLabel component="legend">Population</FormLabel>
-                    {props.staticOpts[v].map(i => <Chip onClick={() => handleDisable(i)} key={i} label={i} variant={disabled[i]? "outlined" : "default"}></Chip> )}
+                    <FormLabel>Select Populations</FormLabel>
+                    <ChipDiv>
+                    {props.staticOpts[v].map(i => <StyledChip component='div'
+                        onClick={() => handleDisable(i)} 
+                        key={i} 
+                        label={`pop ${i}`}
+                         newcolor={disabled[i]? "#fff" : "rgb(236, 225, 253)"} 
+                         labelcolor={disabled[i]? "#cccacb" : "rgb(163, 99, 252)"} 
+                         bordercolor={disabled[i]? "#f2f0f1" :"rgb(218, 199, 250)"}
+                         >
+                         </StyledChip> )}
+                         </ChipDiv>
                 </FormControl>
             )
         })
     }
     return (
         <StyledCard key="linchart-cart">
-            <StyledCardHeader className="linechart-header">
+            <StyledCardContent className="linechart-header">
                 <ShowChartIcon></ShowChartIcon>
                 <StyledTypography>{props.labelReadable}</StyledTypography>
-                <IconButton onClick={handleExpandClick}
+                {/* <IconButton onClick={handleExpandClick}
                             aria-expanded={expanded}
                             aria-label="show more">
                     <ExpandMoreIcon />
-                </IconButton>
+                </IconButton> */}
                 <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            </StyledCardHeader>
+            </StyledCardContent>
+            <Divider variant="middle"></Divider>
             <LineChartCollapse className="linechart-collapse" in={expanded} timeout="auto" unmountOnExit={false} >
                 <FormControlLabel label="Difference" control={<Switch checked={switched} onChange={handleSwitch}></Switch>}></FormControlLabel>
                 {populationOpts}
             </LineChartCollapse>
+            <CardActions onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                <Button>{!expanded ? 'Expand': 'Collapse'}</Button>
+            </CardActions>
         </StyledCard>
     )
 }
@@ -142,19 +177,25 @@ export function GenomeChartCard(props) {
     // const switchFST = (event) => props.handleSwitchFST(event, props.identifier)
     return (
         <StyledCard key="genomechart-card">
-            <StyledCardHeader className="genomechart-header">
+            <StyledCardContent className="genomechart-header">
                 <ShowChartIcon></ShowChartIcon>
                 <StyledTypography>{props.labelReadable}</StyledTypography>
-                <IconButton onClick={handleExpandClick}
+                {/* <IconButton onClick={handleExpandClick}
                             aria-expanded={expanded}
                             aria-label="show more">
                     <ExpandMoreIcon />
-                </IconButton>
+                </IconButton> */}
                 <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
-            </StyledCardHeader>
+            </StyledCardContent>
+            <Divider variant="middle"></Divider>
             <GenomeChartCollapse in={expanded} timeout="auto" unmountOnExit={false} >
                 <FormControlLabel label="Difference" control={<Switch checked={switched} onChange={handleSwitch}></Switch>}></FormControlLabel>
             </GenomeChartCollapse>
+            <CardActions onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                <Button>{!expanded ? 'Expand': 'Collapse'}</Button>
+            </CardActions>
             {/* <FormControlLabel control={<Switch checked={props.switchDiff} onChange={switchDiff} name={`${props.identifier}-diff`} />} label="Difference"></FormControlLabel>
             <FormControlLabel control={<Switch checked={props.switchFST} onChange={switchFST} name={`${props.identifier}-fst`} />} label="FST"></FormControlLabel> */}
         </StyledCard>
