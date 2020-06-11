@@ -11,7 +11,7 @@ import template from '../../data/genome_template.json';
 import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
 import Dashboard from '../../components/Dashboard';
-
+import Histogram from '../../charts/Histogram2';
 
 import './styles/local_adaptation_styles.css';
 
@@ -93,6 +93,12 @@ class LocalAdaptation extends Component {
   render() {
     return (
       <div className="local-adaptation">
+        <section className="testChart">
+          <Histogram data={individualData} width={200} height={200}>
+
+          </Histogram>
+
+        </section>
 
         {/* <section className="descriptive-chart">
           <div id="line-chart-group-1">

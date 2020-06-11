@@ -9,7 +9,7 @@ import {createLabel} from '../helpers/Helpers';
 
 const StyledFormControl = styled(FormControl)`
 && {
-  min-width: ${props => props.optionSize}vw;
+  min-width: ${props => props.optionsize}vw;
   margin-right: 1px;
 }
 `;
@@ -42,7 +42,7 @@ export default function ParameterSet(props) {
   
     return (
       <div >
-        <StyledFormControl optionSize={props.optionSize}>
+        <StyledFormControl optionsize={props.optionSize}>
           <InputLabel className="tmp-class">{props.label}</InputLabel>
           <Select
             labelId={createLabel('selection', props.label)}
