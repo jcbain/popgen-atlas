@@ -55,6 +55,7 @@ const StyledMainDiv =  styled.div`
 
 const StyledParameterCollection = styled(ParameterCollection)`
     display: flex;
+    justify-content: space-between;
 `
 
 
@@ -180,6 +181,12 @@ class DashboardComponent extends Component{
         } else {
         
             display = <StyledChartDiv>
+            <StyledParameterCollection className={`parameter-collection-${uuidv4()}`} data={this.props.paramMatrix}
+                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
+                        initParams={this.state.params}
+                        paramFunc={paramFunctions}
+                        gridArea={this.props.gridArea}>
+            </StyledParameterCollection>
             <StyledChartLister className={'chart-cards'}
                 handleClick={this.handleClick}
                 handleMultiSelect={this.handleMultiSelect} 
@@ -188,12 +195,6 @@ class DashboardComponent extends Component{
                 specialOpts={this.state.specialOpts}
                 labels={componentLabels}
                 ></StyledChartLister>
-                
-                <StyledParameterCollection className={`parameter-collection-${uuidv4()}`} data={this.props.paramMatrix}
-                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
-                        initParams={this.state.params}
-                        paramFunc={paramFunctions}>
-                </StyledParameterCollection>
             </StyledChartDiv>
         }
         return(

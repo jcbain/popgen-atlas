@@ -122,12 +122,12 @@ export function LineChartCard(props){
     if(props.staticOpts !== undefined){
         populationOpts = Object.keys(props.staticOpts).map( v => {
             return(
-                <FormControl>
+                <FormControl key="chips">
                     <FormLabel>Select Populations</FormLabel>
                     <ChipDiv>
-                    {props.staticOpts[v].map(i => <StyledChip component='div'
+                    {props.staticOpts[v].map(i => <StyledChip key={i}
+                        component='div'
                         onClick={() => handleDisable(i)} 
-                        key={i} 
                         label={`Pop ${i}`}
                         newcolor={disabled[i]? "#fff" : "rgba(227, 132, 197, .1)"} 
                         labelcolor={disabled[i]? "#cccacb" : "palevioletred"} 
@@ -145,11 +145,6 @@ export function LineChartCard(props){
             <StyledCardContent className="linechart-header">
                 <ShowChartIcon></ShowChartIcon>
                 <StyledTypography>{props.labelReadable}</StyledTypography>
-                {/* <IconButton onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more">
-                    <ExpandMoreIcon />
-                </IconButton> */}
                 <StyledAddBoxIcon onClick={clickAction}></StyledAddBoxIcon>
             </StyledCardContent>
             <Divider variant="middle"></Divider>
