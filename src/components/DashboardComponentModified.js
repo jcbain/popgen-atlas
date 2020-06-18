@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from './LineChartGroup';
+import GeneArchGroup from './GeneArchGroup';
+
 
 const StyledDashboardComponentDiv = styled.div`
     background-color: #fffff7;
@@ -27,6 +30,7 @@ const StyledClearIcon = styled(ClearIcon)`
 `
 
 export const ChartView = (props) => {
+    const identifier = uuidv4();
     
     const displayCharts = {
         lineChartGroup: (
@@ -38,7 +42,18 @@ export const ChartView = (props) => {
                 displayDims={props.displayDims}
             >
             </LineChartGroup>
-            )
+            ),
+        geneArchGroup: (
+            <GeneArchGroup data={props.geneArchData}
+                template={props.template}
+                params={props.params}
+                useLocalParams={props.useLocalParams}
+                identifier={identifier}
+                displayDims={props.displayDims}
+            >
+            </GeneArchGroup>
+
+        )
 
     };
     
@@ -57,13 +72,15 @@ export const DashboardComponentModified = (props) => {
     const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
     
     const xAction = () => setSelectedChart({chartView: false, selectedChart: ''});
-
+    const chooseChart = (chartId) => () => setSelectedChart({chartView: true, selectedChart: chartId})
 
     let viewDisplay;
     if( selectedChart.chartView){
         viewDisplay = (
             <ChartView xAction={xAction}
                 lineChartData={props.dataPopPhen}
+                geneArchData={props.data}
+                template={props.template}
                 params={params}
                 useLocalParams={false}
                 paramOpts={paramOpts}
@@ -75,6 +92,8 @@ export const DashboardComponentModified = (props) => {
     } else {
         viewDisplay = (
             <ChartViewDiv>
+                <button onClick={chooseChart('lineChartGroup')}>LineChart</button>
+                <button onClick={chooseChart('geneArchGroup')}>GenomeChart</button>
             </ChartViewDiv>
         )
     }
