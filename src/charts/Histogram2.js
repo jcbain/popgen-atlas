@@ -14,7 +14,6 @@ const MainSvg= styled.svg`
 `
 
 export default function Histogram(props){
-    const popSize = 1000 // calculate popsize from data in future
     const xScale = scaleLinear().domain(
         [
             min(props.data, d => d.ind_phen),
@@ -42,7 +41,6 @@ export default function Histogram(props){
                     fill={focusColor(i)}
                     opacity={0.6}
                 >
-
                 </rect>
             )
         })
