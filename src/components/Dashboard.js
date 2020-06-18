@@ -6,6 +6,27 @@ import DashboardComponent from './DashboardComponent';
 import { findUniqParamOptions } from '../helpers/DataHelpers';
 
 
+const DashboardDiv = styled.div`
+    background-color: #f2f2f2;
+    display: grid;
+    grid-template-columns: 48.5vw 48.5vw;
+    grid-template-rows:  48.5vh 48.5vh;
+    grid-template-areas: 
+        "main fourth"
+        "secondary tertiary";
+    height: 98vh;
+    width: 98vw;
+    column-gap: 1vw;
+    row-gap: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+`
+
+
+
+
 class Dashboard extends Component{
     constructor(props){
         super(props);
@@ -20,7 +41,7 @@ class Dashboard extends Component{
     
 
         return(
-            <div className={this.props.className}>
+            <DashboardDiv className={this.props.className}>
                 <DashboardComponent key="1" className={'dashboard-component-main'}
                     gridArea={{name: "main", displayDims: {width:61, height: 61}}}
                     data={this.props.data}
@@ -65,25 +86,9 @@ class Dashboard extends Component{
                     paramMatrix={paramMatrix}>
                 </DashboardComponent>
 
-            </div>
+            </DashboardDiv>
         )
     }
 }
 
-export default styled(Dashboard)`
-    background-color: #f2f2f2;
-    display: grid;
-    grid-template-columns: 48.5vw 48.5vw;
-    grid-template-rows:  48.5vh 48.5vh;
-    grid-template-areas: 
-        "main fourth"
-        "secondary tertiary";
-    height: 98vh;
-    width: 98vw;
-    column-gap: 1vw;
-    row-gap: 1vh;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    padding-bottom: 1vh;
-    padding-top: 1vh;
-`;
+export default Dashboard
