@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { toNumber } from 'lodash'
 import styled from 'styled-components'
 
@@ -24,71 +24,64 @@ const DashboardDiv = styled.div`
     padding-top: 1vh;
 `
 
+const Dashboard = (props) => {
+    const [params, setParams] = useState({...props.params})
+    const paramMatrix = findUniqParamOptions(props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
+        d.pop = toNumber(d.pop)
+        return d;
+    });
+
+    return(
+        <DashboardDiv className={props.className}>
+            <DashboardComponent key="1" className={'dashboard-component-main'}
+                gridArea={{name: "main", displayDims: {width:61, height: 61}}}
+                data={props.data}
+                dataDiff={props.dataDiff}
+                dataPopPhen={props.dataPopPhen}
+                dataPopPhenDiff={props.dataPopPhenDiff}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}>
+            </DashboardComponent>
+
+            <DashboardComponent key="2" className={'dashboard-component-secondary'}
+                gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
+                data={props.data}
+                dataDiff={props.dataDiff}
+                dataPopPhen={props.dataPopPhen}
+                dataPopPhenDiff={props.dataPopPhenDiff}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}>
+            </DashboardComponent>
+
+            <DashboardComponent key="3" className={'dashboard-component-tertiary'}
+                gridArea={{name: "tertiary", displayDims: {width:61, height: 29}}}
+                data={props.data}
+                dataDiff={props.dataDiff}
+                dataPopPhen={props.dataPopPhen}
+                dataPopPhenDiff={props.dataPopPhenDiff}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}>
+            </DashboardComponent>
+
+            <DashboardComponent key="4" className={'dashboard-component-fourth'}
+                gridArea={{name: "fourth", displayDims: {width:29, height: 29}}}
+                data={props.data}
+                dataDiff={props.dataDiff}
+                dataPopPhen={props.dataPopPhen}
+                dataPopPhenDiff={props.dataPopPhenDiff}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}>
+            </DashboardComponent>
+
+        </DashboardDiv>
+    )
 
 
 
-class Dashboard extends Component{
-    constructor(props){
-        super(props);
-        this.state = { params: {...this.props.params}}
-    }
-
-    render(){
-        const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
-            d.pop = toNumber(d.pop)
-            return d;
-        });
-    
-
-        return(
-            <DashboardDiv className={this.props.className}>
-                <DashboardComponent key="1" className={'dashboard-component-main'}
-                    gridArea={{name: "main", displayDims: {width:61, height: 61}}}
-                    data={this.props.data}
-                    dataDiff={this.props.dataDiff}
-                    dataPopPhen={this.props.dataPopPhen}
-                    dataPopPhenDiff={this.props.dataPopPhenDiff}
-                    template={this.props.template}
-                    params={this.state.params}
-                    paramMatrix={paramMatrix}>
-                </DashboardComponent>
-
-                <DashboardComponent key="2" className={'dashboard-component-secondary'}
-                    gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
-                    data={this.props.data}
-                    dataDiff={this.props.dataDiff}
-                    dataPopPhen={this.props.dataPopPhen}
-                    dataPopPhenDiff={this.props.dataPopPhenDiff}
-                    template={this.props.template}
-                    params={this.state.params}
-                    paramMatrix={paramMatrix}>
-                </DashboardComponent>
-
-                <DashboardComponent key="3" className={'dashboard-component-tertiary'}
-                    gridArea={{name: "tertiary", displayDims: {width:61, height: 29}}}
-                    data={this.props.data}
-                    dataDiff={this.props.dataDiff}
-                    dataPopPhen={this.props.dataPopPhen}
-                    dataPopPhenDiff={this.props.dataPopPhenDiff}
-                    template={this.props.template}
-                    params={this.state.params}
-                    paramMatrix={paramMatrix}>
-                </DashboardComponent>
-
-                <DashboardComponent key="4" className={'dashboard-component-fourth'}
-                    gridArea={{name: "fourth", displayDims: {width:29, height: 29}}}
-                    data={this.props.data}
-                    dataDiff={this.props.dataDiff}
-                    dataPopPhen={this.props.dataPopPhen}
-                    dataPopPhenDiff={this.props.dataPopPhenDiff}
-                    template={this.props.template}
-                    params={this.state.params}
-                    paramMatrix={paramMatrix}>
-                </DashboardComponent>
-
-            </DashboardDiv>
-        )
-    }
 }
 
 export default Dashboard
