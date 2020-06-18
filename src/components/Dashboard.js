@@ -73,12 +73,11 @@ class Dashboard extends Component{
 export default styled(Dashboard)`
     background-color: #f2f2f2;
     display: grid;
-    grid-template-columns: 32vw 32vw 32vw;
-    grid-template-rows: 32vh 32vh 32vh;
+    grid-template-columns: 48.5vw 48.5vw;
+    grid-template-rows:  48.5vh 48.5vh;
     grid-template-areas: 
-        "main main fourth"
-        "main main secondary"
-        "tertiary tertiary secondary";
+        "main fourth"
+        "secondary tertiary";
     height: 98vh;
     width: 98vw;
     column-gap: 1vw;
