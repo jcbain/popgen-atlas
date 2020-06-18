@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,10 +36,7 @@ const StyledChartDiv = styled.div`
 
 const StyledWidgetDiv = styled.div`
     position: relative;
-    // padding-left: 1vw;
-    // padding-right: 1vw;
-    // padding-top: 1vh;
-    // padding-bottom: 1vh;
+    width: 100%;
 `
 
 const StyledMainDiv =  styled.div`
@@ -58,6 +55,13 @@ const StyledParameterCollection = styled(ParameterCollection)`
     justify-content: space-between;
 `
 
+const ChartDisplayComponent = (props) => {
+    return (
+        <StyledWidgetDiv>
+            {props.children}
+        </StyledWidgetDiv>
+    )
+}
 
 class DashboardComponent extends Component{
     constructor(props){
@@ -174,10 +178,10 @@ class DashboardComponent extends Component{
 
         let display;
         if(this.state.componentView){
-            display = <StyledWidgetDiv>
+            display = <ChartDisplayComponent>
                     {charts[this.state.selectedComponent]}
                     <StyledClearIcon onClick={() => this.setState({componentView: false, selectedComponent: ''})}></StyledClearIcon>
-                </StyledWidgetDiv>
+                    </ChartDisplayComponent>
         } else {
         
             display = <StyledChartDiv>

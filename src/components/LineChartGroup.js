@@ -4,7 +4,7 @@ import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { toNumber } from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
-
+import styled from 'styled-components';
 
 
 
@@ -13,6 +13,11 @@ import {createLabel} from '../helpers/Helpers';
 import ParameterCollection from './ParameterCollection';
 
 import LineChart from '../charts/LineChart';
+
+const ChartDiv = styled.div`
+    width: 100%;
+    height: 100%;
+`
 
 class LineChartGroup extends Component{
     constructor(props){
@@ -100,7 +105,7 @@ class LineChartGroup extends Component{
         }
         
         return(
-            <div className="line-group" >
+            <ChartDiv className="line-group">
                 {paramBar}
                 <LineChart key='line-chart-1'
                     className={createLabel(this.props.className, 'focus-chart')}
@@ -143,7 +148,7 @@ class LineChartGroup extends Component{
                     popStrokeWidth={this.popStrokeWidths[1]}>
                 </LineChart>
 
-            </div>
+            </ChartDiv>
         )
     }
 }

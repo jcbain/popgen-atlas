@@ -1,8 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { toNumber } from 'lodash'
 import styled from 'styled-components'
 
 import DashboardComponent from './DashboardComponent';
+import {DashboardComponentModified} from './DashboardComponentModified';
 import { findUniqParamOptions } from '../helpers/DataHelpers';
 
 
@@ -34,7 +35,7 @@ const Dashboard = (props) => {
     return(
         <DashboardDiv className={props.className}>
             <DashboardComponent key="1" className={'dashboard-component-main'}
-                gridArea={{name: "main", displayDims: {width:61, height: 61}}}
+                gridArea={{name: "main", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
                 dataPopPhen={props.dataPopPhen}
@@ -45,7 +46,7 @@ const Dashboard = (props) => {
             </DashboardComponent>
 
             <DashboardComponent key="2" className={'dashboard-component-secondary'}
-                gridArea={{name: "secondary", displayDims: {width:29, height: 61}}}
+                gridArea={{name: "secondary", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
                 dataPopPhen={props.dataPopPhen}
@@ -56,7 +57,7 @@ const Dashboard = (props) => {
             </DashboardComponent>
 
             <DashboardComponent key="3" className={'dashboard-component-tertiary'}
-                gridArea={{name: "tertiary", displayDims: {width:61, height: 29}}}
+                gridArea={{name: "tertiary", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
                 dataPopPhen={props.dataPopPhen}
@@ -66,8 +67,15 @@ const Dashboard = (props) => {
                 paramMatrix={paramMatrix}>
             </DashboardComponent>
 
-            <DashboardComponent key="4" className={'dashboard-component-fourth'}
-                gridArea={{name: "fourth", displayDims: {width:29, height: 29}}}
+            <DashboardComponentModified
+                gridArea={{name: "fourth", displayDims: {width:45, height: 44.5}}}
+                dataPopPhen={props.dataPopPhen}
+                params={params}
+            >
+            </DashboardComponentModified>
+
+            {/* <DashboardComponent key="4" className={'dashboard-component-fourth'}
+                gridArea={{name: "fourth", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
                 dataPopPhen={props.dataPopPhen}
@@ -75,7 +83,7 @@ const Dashboard = (props) => {
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}>
-            </DashboardComponent>
+            </DashboardComponent> */}
 
         </DashboardDiv>
     )
