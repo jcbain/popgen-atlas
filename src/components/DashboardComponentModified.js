@@ -29,6 +29,24 @@ const StyledClearIcon = styled(ClearIcon)`
     }
 `
 
+const ChartCardDiv = styled.div`
+    width: 20vw;
+    height: 10vh;
+    background-color: #fff;
+    box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
+    border: 1px solid #f2f2f2;
+    border-radius: 3px;
+`;
+
+const CardViewDiv = styled(ChartViewDiv)`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1vw;
+    justify-items: center;
+    align-items: center;
+
+`;
+
 export const ChartView = (props) => {
     const identifier = uuidv4();
     
@@ -66,6 +84,21 @@ export const ChartView = (props) => {
 
 }
 
+const ChartCard = (props) => {
+    return (
+        <ChartCardDiv onClick={props.onClick}>{props.label}</ChartCardDiv>
+    )
+}
+
+const ChartCardLister = (props) => {
+    return(
+        <CardViewDiv>
+            <ChartCard label={'Line Chart'} onClick={props.onClickLineChartGroup}>Line Chart</ChartCard>
+            <ChartCard label={'Genome Chart'} onClick={props.onClickGeneArchGroup}>Genome Chart</ChartCard>
+        </CardViewDiv>
+    )
+}
+
 export const DashboardComponentModified = (props) => {
     const [selectedChart, setSelectedChart] = useState({chartView: true, selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
@@ -92,8 +125,13 @@ export const DashboardComponentModified = (props) => {
     } else {
         viewDisplay = (
             <ChartViewDiv>
-                <button onClick={chooseChart('lineChartGroup')}>LineChart</button>
-                <button onClick={chooseChart('geneArchGroup')}>GenomeChart</button>
+                <ChartCardLister
+                    onClickLineChartGroup={chooseChart('lineChartGroup')}
+                    onClickGeneArchGroup={chooseChart('geneArchGroup')}>
+
+                </ChartCardLister>
+                {/* <button onClick={chooseChart('lineChartGroup')}>LineChart</button>
+                <button onClick={chooseChart('geneArchGroup')}>GenomeChart</button> */}
             </ChartViewDiv>
         )
     }
