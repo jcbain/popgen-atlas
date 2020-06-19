@@ -36,6 +36,8 @@ const ChartCardDiv = styled.div`
     box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
     border: 1px solid #f2f2f2;
     border-radius: 3px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-weight: 500;
 `;
 
 const CardViewDiv = styled(ChartViewDiv)`
@@ -44,6 +46,7 @@ const CardViewDiv = styled(ChartViewDiv)`
     column-gap: 1vw;
     justify-items: center;
     align-items: center;
+
 
 `;
 
