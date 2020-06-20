@@ -8,7 +8,7 @@ import GeneArchGroup from './GeneArchGroup';
 
 
 const StyledDashboardComponentDiv = styled.div`
-    background-color: #fffff7;
+    background-color: #ffffff;
     box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
     grid-area: ${props => props.gridArea.name};
 `;
@@ -30,14 +30,17 @@ const StyledClearIcon = styled(ClearIcon)`
 `
 
 const ChartCardDiv = styled.div`
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
     width: 20vw;
     height: 10vh;
     background-color: #fff;
     box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
     border: 1px solid #f2f2f2;
     border-radius: 3px;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-weight: 500;
+    font-family: 'Assistant', sans-serif;
 `;
 
 const CardViewDiv = styled(ChartViewDiv)`
@@ -88,8 +91,9 @@ export const ChartView = (props) => {
 }
 
 const ChartCard = (props) => {
+    const label = props.label.toUpperCase();
     return (
-        <ChartCardDiv onClick={props.onClick}>{props.label}</ChartCardDiv>
+        <ChartCardDiv onClick={props.onClick}>{label}</ChartCardDiv>
     )
 }
 
