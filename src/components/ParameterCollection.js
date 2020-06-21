@@ -11,7 +11,7 @@ class ParameterCollection extends Component{
 
     render(){
         const numParams = Object.keys(this.props.labels).length;
-        const optionSize = (this.props.gridArea.displayDims.width - 4) / numParams;
+        const optionSize = (this.props.gridArea.displayDims.width - 6) / numParams;
 
         const paramSelections = Object.keys(this.props.labels).map(k => (
             <ParameterSet key={k} 

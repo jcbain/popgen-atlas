@@ -66,6 +66,8 @@ const CardViewDiv = styled(ChartViewDiv)`
 
 const ChartOptionsDiv = styled(ChartViewDiv)`
     background-color: #ffffff;
+    padding-left: 1vw;
+    padding-right: 1vw;
 `
 
 const StyledParameterCollection = styled(ParameterCollection)`
@@ -135,7 +137,7 @@ const ParamOptionContainerDiv = styled.div`
 
 const ParamOptionTitle = styled.h2`
     font-family: 'Assistant', sans-serif;
-    font-size: .5rem;
+    font-size: .8rem;
 `
 
 const ParamOptionBox = (props) => {
@@ -153,18 +155,16 @@ const AllParamOptionsDiv = styled.div`
 `;
 
 const LineChartGroupOptions = (props) => {
-
     return(
         <AllParamOptionsDiv>
             <ParamOptionBox key="params" description={'choose your model parameters'}>
                 <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
                     data={props.paramMatrix}
-                    labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
+                    labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
                     initParams={props.initParams}
                     gridArea={props.gridArea}
                     paramFunc={props.paramFunc}
                 >
-
                 </StyledParameterCollection>
             </ParamOptionBox>
             <ParamOptionBox key="pop" description={'choose your populations'}>
@@ -172,7 +172,6 @@ const LineChartGroupOptions = (props) => {
             <Button onClick={props.renderChart}>RENDER</Button>
 
         </AllParamOptionsDiv>
-
     )
 }
 
@@ -181,7 +180,16 @@ const GenomeChartOptions = (props) => {
     return(
         <AllParamOptionsDiv>
             <ParamOptionBox key="params" description={'choose your model parameters'}>
+                <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
+                        data={props.paramMatrix}
+                        labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
+                        initParams={props.initParams}
+                        gridArea={props.gridArea}
+                        paramFunc={props.paramFunc}
+                    >
+                    </StyledParameterCollection>
             </ParamOptionBox>
+            <Button onClick={props.renderChart}>RENDER</Button>
         </AllParamOptionsDiv>
 
     )
@@ -195,13 +203,17 @@ const ChartOptions = (props) => {
                 gridArea={props.gridArea}
                 paramFunc={props.paramFunc}
                 renderChart={props.renderChart}
-
             >
 
             </LineChartGroupOptions>
         ),
         geneArchGroup: (
-            <GenomeChartOptions>
+            <GenomeChartOptions paramMatrix={props.paramMatrix} 
+                initParams={props.initParams}
+                gridArea={props.gridArea}
+                paramFunc={props.paramFunc}
+                renderChart={props.renderChart}
+            >
 
             </GenomeChartOptions>
         )
@@ -221,7 +233,7 @@ export const DashboardComponentModified = (props) => {
     const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
-
+    console.log(props.gridArea)
     const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
     let paramFunctions = {};
     Object.keys(paramObj).map(k => {
