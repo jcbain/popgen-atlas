@@ -73,6 +73,7 @@ const Dashboard = (props) => {
                 data={props.data}
                 template={props.template}
                 params={params}
+                paramMatrix={paramMatrix}
             >
             </DashboardComponentModified>
 

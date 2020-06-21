@@ -7,6 +7,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup';
+import ParameterCollection from './ParameterCollection';
+import { Button } from '@material-ui/core';
+
 
 
 const StyledDashboardComponentDiv = styled.div`
@@ -65,6 +68,10 @@ const ChartOptionsDiv = styled(ChartViewDiv)`
     background-color: #ffffff;
 `
 
+const StyledParameterCollection = styled(ParameterCollection)`
+    display: flex;
+    justify-content: space-between;
+`
 
 export const ChartView = (props) => {
     const identifier = uuidv4();
@@ -150,9 +157,20 @@ const LineChartGroupOptions = (props) => {
     return(
         <AllParamOptionsDiv>
             <ParamOptionBox key="params" description={'choose your model parameters'}>
+                <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
+                    data={props.paramMatrix}
+                    labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
+                    initParams={props.initParams}
+                    gridArea={props.gridArea}
+                    paramFunc={props.paramFunc}
+                >
+
+                </StyledParameterCollection>
             </ParamOptionBox>
             <ParamOptionBox key="pop" description={'choose your populations'}>
             </ParamOptionBox>
+            <Button onClick={props.renderChart}>RENDER</Button>
+
         </AllParamOptionsDiv>
 
     )
@@ -172,7 +190,13 @@ const GenomeChartOptions = (props) => {
 const ChartOptions = (props) => {
     const chartSpecificOptions = {
         lineChartGroup: (
-            <LineChartGroupOptions>
+            <LineChartGroupOptions paramMatrix={props.paramMatrix} 
+                initParams={props.initParams}
+                gridArea={props.gridArea}
+                paramFunc={props.paramFunc}
+                renderChart={props.renderChart}
+
+            >
 
             </LineChartGroupOptions>
         ),
@@ -197,9 +221,21 @@ export const DashboardComponentModified = (props) => {
     const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
+
+    const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
+    let paramFunctions = {};
+    Object.keys(paramObj).map(k => {
+        paramFunctions[k] = (d) => setParams(prevState => {
+            return {...prevState, [paramObj[k]]: d}
+        })
+        return paramFunctions;
+    })
     
     const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
+    const renderChart = () => setSelectedChart(prevState => {
+        return {...prevState, chartView: 'chartview'}
+    })
 
     let viewDisplay;
     switch (selectedChart.chartView){
@@ -228,7 +264,14 @@ export const DashboardComponentModified = (props) => {
         break;
         case('chartoptions'):
                 viewDisplay = (
-                    <ChartOptions onBackClick={xAction} chosenChart={selectedChart.selectedChart}>
+                    <ChartOptions onBackClick={xAction} 
+                        chosenChart={selectedChart.selectedChart}
+                        initParams={params}
+                        paramMatrix={props.paramMatrix}
+                        gridArea={props.gridArea}
+                        paramFunc={paramFunctions}
+                        renderChart={renderChart}
+                    >
                     </ChartOptions>
                 )
         break;
