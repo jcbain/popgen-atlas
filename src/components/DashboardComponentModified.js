@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from './LineChartGroup';
@@ -37,10 +39,18 @@ const ChartCardDiv = styled.div`
     width: 20vw;
     height: 10vh;
     background-color: #fff;
-    box-shadow: 0px 0px 0px 0px rgba(168,168,168,1);
+    box-shadow: 0px 1px 2px 0px rgba(168,168,168,1);
     border: 1px solid #f2f2f2;
     border-radius: 3px;
     font-family: 'Assistant', sans-serif;
+    transition: .5s;
+    &:hover {
+        box-shadow: none;
+        background-color: #ffdbbf;
+        color: #fffff7;
+        border: 1px solid #ffdbbf;
+        font-weight: 600;
+    }
 `;
 
 const CardViewDiv = styled(ChartViewDiv)`
@@ -49,9 +59,12 @@ const CardViewDiv = styled(ChartViewDiv)`
     column-gap: 1vw;
     justify-items: center;
     align-items: center;
-
-
 `;
+
+const ChartOptionsDiv = styled(ChartViewDiv)`
+    background-color: #ffffff;
+`
+
 
 export const ChartView = (props) => {
     const identifier = uuidv4();
@@ -106,41 +119,57 @@ const ChartCardLister = (props) => {
     )
 }
 
+const ChartOptions = (props) => {
+
+    return(
+        <ChartOptionsDiv>
+            <IconButton onClick={props.onBackClick} color="primary" aria-label="back" component="span">
+                <ArrowBackIcon />
+            </IconButton>
+        </ChartOptionsDiv>
+    )
+}
+
 export const DashboardComponentModified = (props) => {
-    const [selectedChart, setSelectedChart] = useState({chartView: true, selectedChart: 'lineChartGroup'})
+    const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
     
-    const xAction = () => setSelectedChart({chartView: false, selectedChart: ''});
-    const chooseChart = (chartId) => () => setSelectedChart({chartView: true, selectedChart: chartId})
+    const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
+    const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
 
     let viewDisplay;
-    if( selectedChart.chartView){
-        viewDisplay = (
-            <ChartView xAction={xAction}
-                lineChartData={props.dataPopPhen}
-                geneArchData={props.data}
-                template={props.template}
-                params={params}
-                useLocalParams={false}
-                paramOpts={paramOpts}
-                displayDims={props.gridArea.displayDims}
-                chosenChart={selectedChart.selectedChart}
-            >
-            </ChartView>
-        )
-    } else {
-        viewDisplay = (
-            <ChartViewDiv>
-                <ChartCardLister
-                    onClickLineChartGroup={chooseChart('lineChartGroup')}
-                    onClickGeneArchGroup={chooseChart('geneArchGroup')}>
-
-                </ChartCardLister>
-                {/* <button onClick={chooseChart('lineChartGroup')}>LineChart</button>
-                <button onClick={chooseChart('geneArchGroup')}>GenomeChart</button> */}
-            </ChartViewDiv>
-        )
+    switch (selectedChart.chartView){
+        case('chartview'):
+            viewDisplay = (
+                <ChartView xAction={xAction}
+                    lineChartData={props.dataPopPhen}
+                    geneArchData={props.data}
+                    template={props.template}
+                    params={params}
+                    useLocalParams={false}
+                    paramOpts={paramOpts}
+                    displayDims={props.gridArea.displayDims}
+                    chosenChart={selectedChart.selectedChart}
+                >
+                </ChartView>
+            )
+        break;
+        case('chartlister'):
+            viewDisplay = (
+                    <ChartCardLister
+                        onClickLineChartGroup={chooseChart('lineChartGroup')}
+                        onClickGeneArchGroup={chooseChart('geneArchGroup')}>
+                    </ChartCardLister>
+            )
+        break;
+        case('chartoptions'):
+                viewDisplay = (
+                    <ChartOptions onBackClick={xAction}>
+                    </ChartOptions>
+                )
+        break;
+        default: viewDisplay = <div></div>
     }
     
 
