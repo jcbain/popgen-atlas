@@ -119,13 +119,76 @@ const ChartCardLister = (props) => {
     )
 }
 
+const ParamOptionContainerDiv = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: .25fr 1fr;
+    align-items: start;
+`
+
+const ParamOptionTitle = styled.h2`
+    font-family: 'Assistant', sans-serif;
+    font-size: .5rem;
+`
+
+const ParamOptionBox = (props) => {
+    return (
+        <ParamOptionContainerDiv>
+            <ParamOptionTitle>{props.description.toUpperCase()}</ParamOptionTitle>
+            {props.children}
+        </ParamOptionContainerDiv>
+    )
+}
+
+const AllParamOptionsDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const LineChartGroupOptions = (props) => {
+
+    return(
+        <AllParamOptionsDiv>
+            <ParamOptionBox key="params" description={'choose your model parameters'}>
+            </ParamOptionBox>
+            <ParamOptionBox key="pop" description={'choose your populations'}>
+            </ParamOptionBox>
+        </AllParamOptionsDiv>
+
+    )
+}
+
+const GenomeChartOptions = (props) => {
+
+    return(
+        <AllParamOptionsDiv>
+            <ParamOptionBox key="params" description={'choose your model parameters'}>
+            </ParamOptionBox>
+        </AllParamOptionsDiv>
+
+    )
+}
+
 const ChartOptions = (props) => {
+    const chartSpecificOptions = {
+        lineChartGroup: (
+            <LineChartGroupOptions>
+
+            </LineChartGroupOptions>
+        ),
+        geneArchGroup: (
+            <GenomeChartOptions>
+
+            </GenomeChartOptions>
+        )
+    }
 
     return(
         <ChartOptionsDiv>
             <IconButton onClick={props.onBackClick} color="primary" aria-label="back" component="span">
                 <ArrowBackIcon />
             </IconButton>
+            {chartSpecificOptions[props.chosenChart]}
         </ChartOptionsDiv>
     )
 }
@@ -165,7 +228,7 @@ export const DashboardComponentModified = (props) => {
         break;
         case('chartoptions'):
                 viewDisplay = (
-                    <ChartOptions onBackClick={xAction}>
+                    <ChartOptions onBackClick={xAction} chosenChart={selectedChart.selectedChart}>
                     </ChartOptions>
                 )
         break;
