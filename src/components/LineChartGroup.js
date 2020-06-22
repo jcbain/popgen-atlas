@@ -61,7 +61,6 @@ class LineChartGroup extends Component{
             return d;
         })
         const specialParamOpts = (this.props.specialOpts !== undefined) ? this.props.specialOpts : undefined;
-        console.log(specialParamOpts)
         const staticFilterData = (specialParamOpts !== undefined) ? filterDataByMultipleOptsWithinSingleParam(this.props.data, specialParamOpts) : this.props.data
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
         const data = nest().key(d => d.pop).entries(filterDataByParams(staticFilterData.map(d =>{

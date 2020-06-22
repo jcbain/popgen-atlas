@@ -162,6 +162,17 @@ const AllParamOptionsDiv = styled.div`
     flex-direction: column;
 `;
 
+const StyledFormGroup = styled(FormGroup)`
+    && {
+        display: flex;
+        flex-direction: row;
+        & .MuiSvgIcon-root {
+            color: black;
+        }
+    }
+
+`
+
 const PopulationSelectionCollection = (props) => {
     const checkOpts = props.specialParamOpts;
 
@@ -169,8 +180,7 @@ const PopulationSelectionCollection = (props) => {
         props.getSpecialParamOpts(props.name, v, checkOpts[v])    
     }
 
-    const checkboxes = <FormGroup>
-    {props.specialParamInit.map( d => {
+    const checkboxes = props.specialParamInit.map( d => {
         return (
             <FormControlLabel key={d}
                 control={<Checkbox checked={checkOpts[d]} onChange={handleChange(d)} name={`${props.labelAddition}-${d}`} />}
@@ -179,13 +189,13 @@ const PopulationSelectionCollection = (props) => {
 
             </FormControlLabel>
         )
-    })}
-    </FormGroup>
+    })
+    
 
     return (
-        <div>
+        <StyledFormGroup>
             {checkboxes}
-        </div>
+        </StyledFormGroup>
     )
 }
 
@@ -283,14 +293,6 @@ export const DashboardComponentModified = (props) => {
     const [specialParamOpts, setSpecialParamOpts] = useState({pop: {0: true, 1: true}})
     const popkeysObj = {pop: keys(pickBy(specialParamOpts['pop'])).map(d => toInteger(d))}
 
-    const getSpecialParamOpts = (name, option, value) => {
-        setSpecialParamOpts(prevState => ({
-            [name] : {
-                ...prevState[[name]], [option]: !value
-            }
-        }))
-    }
-
     const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
     const renderChart = () => setSelectedChart(prevState => {
@@ -300,6 +302,13 @@ export const DashboardComponentModified = (props) => {
         setParams(prevState => {
             return {...prevState, [name]: val}
         })
+    }
+    const getSpecialParamOpts = (name, option, value) => {
+        setSpecialParamOpts(prevState => ({
+            [name] : {
+                ...prevState[[name]], [option]: !value
+            }
+        }))
     }
 
     let viewDisplay;

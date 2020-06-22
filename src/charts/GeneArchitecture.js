@@ -10,6 +10,7 @@ import {closestFromArray, createLabel} from '../helpers/Helpers';
 
 import BrushHorizontal from '../components/BrushHorizontal';
 
+
 class GeneArchitecture extends Component {
     constructor(props){
         super(props);
