@@ -68,7 +68,7 @@ const Dashboard = (props) => {
             </DashboardComponent>
 
             <DashboardComponentModified
-                gridArea={{name: "fourth", displayDims: {width:45, height: 44.5}}}
+                gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
                 dataPopPhen={props.dataPopPhen}
                 data={props.data}
                 template={props.template}

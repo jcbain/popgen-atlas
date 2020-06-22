@@ -1,27 +1,34 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup';
 import ParameterCollection from './ParameterCollection';
 import { Button } from '@material-ui/core';
-
+import {omitBy, pickBy, keys, toInteger, get} from 'lodash';
 
 
 const StyledDashboardComponentDiv = styled.div`
     background-color: #ffffff;
     box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
     grid-area: ${props => props.gridArea.name};
+    padding-top: 2vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vh;
 `;
 
 const ChartViewDiv = styled.div`
     position: relative;
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
 `;
 
 const StyledClearIcon = styled(ClearIcon)`
@@ -73,6 +80,7 @@ const ChartOptionsDiv = styled(ChartViewDiv)`
 const StyledParameterCollection = styled(ParameterCollection)`
     display: flex;
     justify-content: space-between;
+    width: 100%;
 `
 
 export const ChartView = (props) => {
@@ -84,7 +92,7 @@ export const ChartView = (props) => {
                 className={'component-line-chart-group'}
                 params={props.params}
                 useLocalParams={props.useLocalParams}
-                specialOpts={props.paramOpts.lineChartGroup}
+                specialOpts={props.paramOpts}
                 displayDims={props.displayDims}
             >
             </LineChartGroup>
@@ -154,6 +162,33 @@ const AllParamOptionsDiv = styled.div`
     flex-direction: column;
 `;
 
+const PopulationSelectionCollection = (props) => {
+    const checkOpts = props.specialParamOpts;
+
+    const handleChange = (v) => () => {
+        props.getSpecialParamOpts(props.name, v, checkOpts[v])    
+    }
+
+    const checkboxes = <FormGroup>
+    {props.specialParamInit.map( d => {
+        return (
+            <FormControlLabel key={d}
+                control={<Checkbox checked={checkOpts[d]} onChange={handleChange(d)} name={`${props.labelAddition}-${d}`} />}
+                label={`${props.labelAddition} ${d}`}
+            >
+
+            </FormControlLabel>
+        )
+    })}
+    </FormGroup>
+
+    return (
+        <div>
+            {checkboxes}
+        </div>
+    )
+}
+
 const LineChartGroupOptions = (props) => {
     return(
         <AllParamOptionsDiv>
@@ -168,6 +203,16 @@ const LineChartGroupOptions = (props) => {
                 </StyledParameterCollection>
             </ParamOptionBox>
             <ParamOptionBox key="pop" description={'choose your populations'}>
+                <PopulationSelectionCollection
+                    valueArray={[0, 1]}
+                    name={'pop'}
+                    labelAddition={'pop'}
+                    specialParamInit={props.specialParamInit}
+                    specialParamOpts={props.specialParamOpts.pop}
+                    getSpecialParamOpts={props.getSpecialParamOpts}
+                >
+
+                </PopulationSelectionCollection>
             </ParamOptionBox>
             <Button onClick={props.renderChart}>RENDER</Button>
 
@@ -203,6 +248,9 @@ const ChartOptions = (props) => {
                 gridArea={props.gridArea}
                 paramFunc={props.paramFunc}
                 renderChart={props.renderChart}
+                specialParamInit={props.specialParamInit}
+                specialParamOpts={props.specialParamOpts}
+                getSpecialParamOpts={props.getSpecialParamOpts}
             >
 
             </LineChartGroupOptions>
@@ -232,7 +280,16 @@ const ChartOptions = (props) => {
 export const DashboardComponentModified = (props) => {
     const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
-    const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
+    const [specialParamOpts, setSpecialParamOpts] = useState({pop: {0: true, 1: true}})
+    const popkeysObj = {pop: keys(pickBy(specialParamOpts['pop'])).map(d => toInteger(d))}
+
+    const getSpecialParamOpts = (name, option, value) => {
+        setSpecialParamOpts(prevState => ({
+            [name] : {
+                ...prevState[[name]], [option]: !value
+            }
+        }))
+    }
 
     const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
@@ -255,7 +312,7 @@ export const DashboardComponentModified = (props) => {
                     template={props.template}
                     params={params}
                     useLocalParams={false}
-                    paramOpts={paramOpts}
+                    paramOpts={popkeysObj}
                     displayDims={props.gridArea.displayDims}
                     chosenChart={selectedChart.selectedChart}
                 >
@@ -279,6 +336,9 @@ export const DashboardComponentModified = (props) => {
                         gridArea={props.gridArea}
                         paramFunc={changeParamOption}
                         renderChart={renderChart}
+                        specialParamInit={[0,1]}
+                        specialParamOpts={specialParamOpts}
+                        getSpecialParamOpts={getSpecialParamOpts}
                     >
                     </ChartOptions>
                 )

@@ -10,7 +10,6 @@ import {createLabel} from '../helpers/Helpers';
 const StyledFormControl = styled(FormControl)`
 && {
   min-width: ${props => props.optionsize}vw;
-  margin-right: 1px;
 }
 `;
 
@@ -22,7 +21,6 @@ export default function ParameterSet(props) {
     const handleSelection = props.changeSelection;
     const handleChange = (event) => {
       setVal(event.target.value);
-      console.log(event.target.name)
       handleSelection(event.target.name, event.target.value);
     };
   

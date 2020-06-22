@@ -15,8 +15,8 @@ import ParameterCollection from './ParameterCollection';
 import LineChart from '../charts/LineChart';
 
 const ChartDiv = styled.div`
-    width: 100%;
-    height: 100%;
+    width: ${props => props.displaywidth}vw;
+    height: ${props => props.displayheight}vh;
 `
 
 class LineChartGroup extends Component{
@@ -24,6 +24,7 @@ class LineChartGroup extends Component{
         super(props);
         this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
         this.onBrush = this.onBrush.bind(this);
+        this.changeParamOption = this.changeParamOption.bind(this);
         this.viewScaleHeight = scaleLinear().domain([0, 100]).range([0, 1350])
         this.viewScaleWidth = scaleLinear().domain([0, 100]).range([0, 3000])
         this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
@@ -41,6 +42,14 @@ class LineChartGroup extends Component{
         this.setState({start: d[0], end: d[1]});  
     }
 
+    changeParamOption(name, val){
+        this.setState(prevState => ({
+            params: {
+                ...prevState.params, [name]: val
+            }
+        }))
+    }
+
 
     render(){
         const yDomain = [max(this.props.data, d => d.pop_phen),min(this.props.data, d => d.pop_phen)]
@@ -52,6 +61,7 @@ class LineChartGroup extends Component{
             return d;
         })
         const specialParamOpts = (this.props.specialOpts !== undefined) ? this.props.specialOpts : undefined;
+        console.log(specialParamOpts)
         const staticFilterData = (specialParamOpts !== undefined) ? filterDataByMultipleOptsWithinSingleParam(this.props.data, specialParamOpts) : this.props.data
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
         const data = nest().key(d => d.pop).entries(filterDataByParams(staticFilterData.map(d =>{
@@ -83,29 +93,21 @@ class LineChartGroup extends Component{
             return gradients;
         }
 
-        let paramFunctions = {}
-        Object.keys(paramObj).map(k => {
-            paramFunctions[k] = (d) => this.setState(prevState => ({
-                params: {
-                    ...prevState.params,
-                    [paramObj[k]] : d
-                }
-
-            }))
-            return paramFunctions;
-        })
 
         let paramBar;
         if(this.props.useLocalParams){
             paramBar =  <ParameterCollection data={paramMatrix}
                             labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
                             initParams={this.params}
-                            paramFunc={paramFunctions}>
+                            gridArea={this.gridArea}
+                            paramFunc={this.changeParamOption}>
                         </ParameterCollection>
         }
         
         return(
-            <ChartDiv className="line-group">
+            <ChartDiv className="line-group"
+                displaywidth={this.props.displayDims.width}
+                displayheight={this.props.displayDims.height}>
                 {paramBar}
                 <LineChart key='line-chart-1'
                     className={createLabel(this.props.className, 'focus-chart')}

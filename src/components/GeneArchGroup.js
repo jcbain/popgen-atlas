@@ -3,6 +3,8 @@ import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { interpolateHcl } from 'd3-interpolate';
 import { toNumber } from 'lodash'
+import styled from 'styled-components';
+
 
 import { unique, removeParams, filterDataByParams, leftJoinByAttr, findUniqParamOptions} from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
@@ -12,11 +14,17 @@ import './styles/gene_arch_group_styles.css'
 
 import GeneArchitecture from '../charts/GeneArchitecture';
 
+const ChartDiv = styled.div`
+    width: ${props => props.displaywidth}vw;
+    height: ${props => props.displayheight}vh;
+`
+
 class GeneArchGroup extends Component {
     constructor(props){
         super(props);
         this.props.template.forEach((v,i) => v.ind = i);
         this.onBrush = this.onBrush.bind(this);
+        this.changeParamOption = this.changeParamOption.bind(this);
         this.archLabels = ['arch-1', 'arch-2'];
         this.viewScaleHeight = scaleLinear().domain([0, 100]).range([0, 1350])
         this.viewScaleWidth = scaleLinear().domain([0, 100]).range([0, 3000])
@@ -36,9 +44,15 @@ class GeneArchGroup extends Component {
         this.setState({start: d[0], end: d[1]});  
     }
 
-    componentDidUpdate(){
-
+    changeParamOption(name, val){
+        this.setState(prevState => ({
+            params: {
+                ...prevState.params, [name]: val
+            }
+        }))
     }
+
+
 
     render(){
         const start = this.state.start;
@@ -92,29 +106,19 @@ class GeneArchGroup extends Component {
             return gradients
         }
 
-        let paramFunctions = {}
-        Object.keys(paramObj).map(k => {
-            paramFunctions[k] = (d) => this.setState(prevState => ({
-                params: {
-                    ...prevState.params,
-                    [paramObj[k]] : d
-                }
-
-            }))
-            return paramFunctions;
-        })
-
         let paramBar;
         if(this.props.useLocalParams){
             paramBar =  <ParameterCollection data={paramMatrix}
                             labels={{population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
                             initParams={params}
-                            paramFunc={paramFunctions}>
+                            paramFunc={this.changeParamOption}>
                         </ParameterCollection>
         }
 
         return(
-            <div className="gene-arch-group">
+            <ChartDiv className="gene-arch-group" 
+                displaywidth={this.props.displayDims.width}
+                displayheight={this.props.displayDims.height}>
                 {paramBar}
                 <GeneArchitecture key="gene-arch-1" 
                           data={filterData}
@@ -142,7 +146,7 @@ class GeneArchGroup extends Component {
                           name={createLabel(this.archLabels[1], this.props.identifier)}
                           gradients={gradsArch2}>
                 </GeneArchitecture>
-            </div>
+            </ChartDiv>
         )
     }
 }
