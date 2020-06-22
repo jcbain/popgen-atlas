@@ -233,21 +233,17 @@ export const DashboardComponentModified = (props) => {
     const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [paramOpts, setParamOpts] = useState({lineChartGroup: {pop: [0, 1]}})
-    console.log(props.gridArea)
-    const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
-    let paramFunctions = {};
-    Object.keys(paramObj).map(k => {
-        paramFunctions[k] = (d) => setParams(prevState => {
-            return {...prevState, [paramObj[k]]: d}
-        })
-        return paramFunctions;
-    })
-    
+
     const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
     const renderChart = () => setSelectedChart(prevState => {
         return {...prevState, chartView: 'chartview'}
     })
+    const changeParamOption = (name, val) => {
+        setParams(prevState => {
+            return {...prevState, [name]: val}
+        })
+    }
 
     let viewDisplay;
     switch (selectedChart.chartView){
@@ -281,7 +277,7 @@ export const DashboardComponentModified = (props) => {
                         initParams={params}
                         paramMatrix={props.paramMatrix}
                         gridArea={props.gridArea}
-                        paramFunc={paramFunctions}
+                        paramFunc={changeParamOption}
                         renderChart={renderChart}
                     >
                     </ChartOptions>

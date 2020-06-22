@@ -22,7 +22,8 @@ export default function ParameterSet(props) {
     const handleSelection = props.changeSelection;
     const handleChange = (event) => {
       setVal(event.target.value);
-      handleSelection(event.target.value);
+      console.log(event.target.name)
+      handleSelection(event.target.name, event.target.value);
     };
   
     const handleClose = () => {
@@ -47,6 +48,7 @@ export default function ParameterSet(props) {
           <Select
             labelId={createLabel('selection', props.label)}
             id={createLabel('selection', props.label)}
+            name={props.paramShort}
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}

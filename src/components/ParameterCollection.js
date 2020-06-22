@@ -15,11 +15,12 @@ class ParameterCollection extends Component{
 
         const paramSelections = Object.keys(this.props.labels).map(k => (
             <ParameterSet key={k} 
-                label={k} 
+                label={k}
+                paramShort={this.props.labels[k]} 
                 optionSize={optionSize}
                 initVal={this.initParams[this.props.labels[k]]}
                 options={this.props.data.map(d => d[this.props.labels[k]]).filter(unique)}
-                changeSelection={this.props.paramFunc[k]}></ParameterSet>
+                changeSelection={this.props.paramFunc}></ParameterSet>
             )
         )
 

@@ -69,6 +69,7 @@ class DashboardComponent extends Component{
         this.handleClick = this.handleClick.bind(this)
         this.handleMultiSelect = this.handleMultiSelect.bind(this)
         this.handleSwitchDiff = this.handleDiffSwitch.bind(this);
+        this.changeParamOption = this.changeParamOption.bind(this);
         this.identifier = uuidv4();
         this.state = {componentView: false,
                       selectedComponent: '',
@@ -85,6 +86,14 @@ class DashboardComponent extends Component{
                     };
     }
 
+    
+    changeParamOption(name, val){
+        this.setState(prevState => ({
+            params: {
+                ...prevState.params, [name]: val
+            }
+        }))
+    }
 
     handleDiffSwitch(e, d, s){
         const componentKey = d;
@@ -163,19 +172,6 @@ class DashboardComponent extends Component{
             {lineChartGroup : 'Line Chart', id: 'lineChartGroup', labelReadable: 'Line Chart', staticOpts: {pop: [0, 1]}, switchDiff: this.state.switchOpts.lineChartGroup.switchOpt}
         ]
 
-        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen', population: 'pop'};
-        let paramFunctions = {}
-        Object.keys(paramObj).map(k => {
-            paramFunctions[k] = (d) => this.setState(prevState => ({
-                params: {
-                    ...prevState.params,
-                    [paramObj[k]] : d
-                }
-
-            }))
-            return paramFunctions;
-        })
-
         let display;
         if(this.state.componentView){
             display = <ChartDisplayComponent>
@@ -188,7 +184,7 @@ class DashboardComponent extends Component{
             <StyledParameterCollection className={`parameter-collection-${uuidv4()}`} data={this.props.paramMatrix}
                         labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
                         initParams={this.state.params}
-                        paramFunc={paramFunctions}
+                        paramFunc={this.changeParamOption}
                         gridArea={this.props.gridArea}>
             </StyledParameterCollection>
             <StyledChartLister className={'chart-cards'}
