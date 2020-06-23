@@ -12,7 +12,7 @@ import LineChartGroup from './LineChartGroup';
 import GeneArchGroup from './GeneArchGroup';
 import ParameterCollection from './ParameterCollection';
 import { Button } from '@material-ui/core';
-import {omitBy, pickBy, keys, toInteger, get} from 'lodash';
+import {pickBy, keys, toInteger} from 'lodash';
 
 
 const StyledDashboardComponentDiv = styled.div`
@@ -136,38 +136,47 @@ const ChartCardLister = (props) => {
     )
 }
 
-const ParamOptionContainerDiv = styled.div`
+const ParameterOptionCardDiv = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: .25fr 1fr;
     align-items: start;
+    margin-bottom: 2vh;
+    border: 1px solid #f2f2f2;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 3px;
 `
 
-const ParamOptionTitle = styled.h2`
+const ParameterOptionTitle = styled.h2`
     font-family: 'Assistant', sans-serif;
-    font-size: .8rem;
+    font-size: .9rem;
 `
 
-const ParamOptionBox = (props) => {
+const ParameterOptionCard = (props) => {
     return (
-        <ParamOptionContainerDiv>
-            <ParamOptionTitle>{props.description.toUpperCase()}</ParamOptionTitle>
+        <ParameterOptionCardDiv>
+            <ParameterOptionTitle>{props.description.toUpperCase()}</ParameterOptionTitle>
             {props.children}
-        </ParamOptionContainerDiv>
+        </ParameterOptionCardDiv>
     )
 }
 
 const AllParamOptionsDiv = styled.div`
-    display: flex;
-    flex-direction: column;
+    display: grid;
 `;
 
 const StyledFormGroup = styled(FormGroup)`
     && {
         display: flex;
         flex-direction: row;
+
         & .MuiSvgIcon-root {
-            color: black;
+            color: #ffdbbf;
+            &:hover{
+                background-color: blue !important;
+            }
         }
     }
 
@@ -202,7 +211,9 @@ const PopulationSelectionCollection = (props) => {
 const LineChartGroupOptions = (props) => {
     return(
         <AllParamOptionsDiv>
-            <ParamOptionBox key="params" description={'choose your model parameters'}>
+            <ParameterOptionCard key="params" 
+                description={'choose your model parameters'}
+                >
                 <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
                     data={props.paramMatrix}
                     labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
@@ -211,8 +222,8 @@ const LineChartGroupOptions = (props) => {
                     paramFunc={props.paramFunc}
                 >
                 </StyledParameterCollection>
-            </ParamOptionBox>
-            <ParamOptionBox key="pop" description={'choose your populations'}>
+            </ParameterOptionCard>
+            <ParameterOptionCard key="pop" description={'choose your populations'}>
                 <PopulationSelectionCollection
                     valueArray={[0, 1]}
                     name={'pop'}
@@ -223,7 +234,7 @@ const LineChartGroupOptions = (props) => {
                 >
 
                 </PopulationSelectionCollection>
-            </ParamOptionBox>
+            </ParameterOptionCard>
             <Button onClick={props.renderChart}>RENDER</Button>
 
         </AllParamOptionsDiv>
@@ -234,7 +245,7 @@ const GenomeChartOptions = (props) => {
 
     return(
         <AllParamOptionsDiv>
-            <ParamOptionBox key="params" description={'choose your model parameters'}>
+            <ParameterOptionCard key="params" description={'choose your model parameters'}>
                 <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
                         data={props.paramMatrix}
                         labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', population: 'pop'}}
@@ -243,7 +254,7 @@ const GenomeChartOptions = (props) => {
                         paramFunc={props.paramFunc}
                     >
                     </StyledParameterCollection>
-            </ParamOptionBox>
+            </ParameterOptionCard>
             <Button onClick={props.renderChart}>RENDER</Button>
         </AllParamOptionsDiv>
 

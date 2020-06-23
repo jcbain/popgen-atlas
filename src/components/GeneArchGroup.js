@@ -58,7 +58,6 @@ class GeneArchGroup extends Component {
         const start = this.state.start;
         const end = this.state.end;
         const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen']);
-        const paramObj = {population: 'pop', migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
         const data = leftJoinByAttr(filterDataByParams(this.props.data, params), this.props.template, ['position'], {positional_map: 'ind'});
         const filterData = this.props.data.filter(d => d.output_gen >= start && d.output_gen < end)
         const gradsArch1 = createGradients(this.generations, data, this.props.template, this.colorScale, this.yScale, this.chartHeights[0], createLabel(this.archLabels[0], this.props.identifier))
