@@ -64,7 +64,7 @@ export default function SimpleTabs(props) {
     const initComponent = {
         selectedChart: {chartView: 'chartview', selectedChart: 'lineChartGroup'},
         params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
-        specialParams: {pop: {0: true, 1: true}}
+        specialParamOpts: {pop: {0: true, 1: true}}
     }
     const [dashboardState, setDashboardState] = useState({
         dashboard1: {
@@ -113,6 +113,61 @@ export default function SimpleTabs(props) {
         }
       }))
     }
+
+    const renderChart = (dashboardKey) => componentKey => () => {
+      setDashboardState(prevState => ({
+        ...prevState, 
+        [dashboardKey] : {
+          ...prevState[dashboardKey],
+          [componentKey] : {
+            ...prevState[dashboardKey][componentKey],
+            selectedChart : {
+              ...prevState[dashboardKey][componentKey]['selectedChart'],
+              chartView: 'chartview'
+            }
+          }
+        }
+      }))
+    }
+
+    const changeParamOption = (dashboardKey) => componentKey => (name, val) => {
+      setDashboardState(prevState => ({
+        ...prevState, 
+        [dashboardKey] : {
+          ...prevState[dashboardKey],
+          [componentKey] : {
+            ...prevState[dashboardKey][componentKey],
+            params : {
+              ...prevState[dashboardKey][componentKey]['params'],
+              [name] : val
+            }
+
+          }}
+
+      }))
+    }
+
+    const getSpecialParamOpts = (dashboardKey) => componentKey => (name, option, val) => {
+      setDashboardState(prevState => ({
+        ...prevState, 
+        [dashboardKey] : {
+          ...prevState[dashboardKey],
+          [componentKey] : {
+            ...prevState[dashboardKey][componentKey],
+            specialParamOpts : {
+              ...prevState[dashboardKey][componentKey]['specialParamOpts'],
+              [name] : {
+                ...prevState[dashboardKey][componentKey]['specialParamOpts'][name],
+                [option]: !val
+              }
+            }
+
+          }}
+
+      }))
+    }
+
+
    
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -138,7 +193,10 @@ export default function SimpleTabs(props) {
                    params={props.params}
                    dashboardState={dashboardState.dashboard1}
                    xAction={xAction('dashboard1')}
-                   chooseChart={chooseChart('dashboard1')}>
+                   chooseChart={chooseChart('dashboard1')}
+                   renderChart={renderChart('dashboard1')}
+                   changeParamOption={changeParamOption('dashboard1')}
+                   getSpecialParamOpts={getSpecialParamOpts('dashboard1')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -151,7 +209,10 @@ export default function SimpleTabs(props) {
                  params={props.params}
                  dashboardState={dashboardState.dashboard2}
                  xAction={xAction('dashboard2')}
-                 chooseChart={chooseChart('dashboard2')}>
+                 chooseChart={chooseChart('dashboard2')}
+                 renderChart={renderChart('dashboard2')}
+                 changeParamOption={changeParamOption('dashboard2')}
+                 getSpecialParamOpts={getSpecialParamOpts('dashboard2')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={2}>

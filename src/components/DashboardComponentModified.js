@@ -300,33 +300,35 @@ const ChartOptions = (props) => {
 
 export const DashboardComponentModified = (props) => {
 
-    const {selectedChart} = props.componentState;
+    const {selectedChart, params, specialParamOpts} = props.componentState;
     const xAction = props.xAction;
     const chooseChart = props.chooseChart;
+    const renderChart = props.renderChart;
+    const changeParamOption = props.changeParamOption;
+    const getSpecialParamOpts = props.getSpecialParamOpts;
 
-    const [selectedChart2, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
-    const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
-    const [specialParamOpts, setSpecialParamOpts] = useState({pop: {0: true, 1: true}})
+    // const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
+    // const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
+    // const [specialParamOpts, setSpecialParamOpts2] = useState({pop: {0: true, 1: true}})
     const popkeysObj = {pop: keys(pickBy(specialParamOpts['pop'])).map(d => toInteger(d))}
-
  
     // const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     // const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
-    const renderChart = () => setSelectedChart(prevState => {
-        return {...prevState, chartView: 'chartview'}
-    })
-    const changeParamOption = (name, val) => {
-        setParams(prevState => {
-            return {...prevState, [name]: val}
-        })
-    }
-    const getSpecialParamOpts = (name, option, value) => {
-        setSpecialParamOpts(prevState => ({
-            [name] : {
-                ...prevState[[name]], [option]: !value
-            }
-        }))
-    }
+    // const renderChart = () => setSelectedChart(prevState => {
+    //     return {...prevState, chartView: 'chartview'}
+    // })
+    // const changeParamOption = (name, val) => {
+    //     setParams(prevState => {
+    //         return {...prevState, [name]: val}
+    //     })
+    // }
+    // const getSpecialParamOpts = (name, option, value) => {
+    //     setSpecialParamOpts(prevState => ({
+    //         [name] : {
+    //             ...prevState[[name]], [option]: !value
+    //         }
+    //     }))
+    // }
 
     let viewDisplay;
     switch (selectedChart.chartView){

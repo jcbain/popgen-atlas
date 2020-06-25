@@ -82,6 +82,9 @@ const Dashboard = (props) => {
                 componentState={props.dashboardState.component1}
                 xAction={props.xAction('component1')}
                 chooseChart={props.chooseChart('component1')}
+                renderChart={props.renderChart('component1')}
+                changeParamOption={props.changeParamOption('component1')}
+                getSpecialParamOpts={props.getSpecialParamOpts('component1')}
             >
             </DashboardComponentModified>
             <DashboardComponentModified
@@ -95,6 +98,9 @@ const Dashboard = (props) => {
                 componentState={props.dashboardState.component2}
                 xAction={props.xAction('component2')}
                 chooseChart={props.chooseChart('component2')}
+                renderChart={props.renderChart('component2')}
+                changeParamOption={props.changeParamOption('component2')}
+                getSpecialParamOpts={props.getSpecialParamOpts('component2')}
             >
             </DashboardComponentModified>
 
@@ -109,6 +115,9 @@ const Dashboard = (props) => {
                 componentState={props.dashboardState.component3}
                 xAction={props.xAction('component3')}
                 chooseChart={props.chooseChart('component3')}
+                renderChart={props.renderChart('component3')}
+                changeParamOption={props.changeParamOption('component3')}
+                getSpecialParamOpts={props.getSpecialParamOpts('component3')}
             >
             </DashboardComponentModified>
 
@@ -123,6 +132,9 @@ const Dashboard = (props) => {
                 componentState={props.dashboardState.component4}
                 xAction={props.xAction('component4')}
                 chooseChart={props.chooseChart('component4')}
+                renderChart={props.renderChart('component4')}
+                changeParamOption={props.changeParamOption('component4')}
+                getSpecialParamOpts={props.getSpecialParamOpts('component4')}
             >
             </DashboardComponentModified>
 
