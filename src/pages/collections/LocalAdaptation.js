@@ -94,12 +94,12 @@ class LocalAdaptation extends Component {
   render() {
     return (
       <div className="local-adaptation">
-        <section className="testChart">
+        {/* <section className="testChart">
           <Histogram data={individualData} width={200} height={200}>
 
           </Histogram>
 
-        </section>
+        </section> */}
         <SimpleTabs data={data} 
           dataDiff={dataDiff}
           dataPopPhen={dataPopPhen} 
@@ -129,7 +129,7 @@ class LocalAdaptation extends Component {
           </div>
         </section> */}
         
-      <section id="dashboard">
+      {/* <section id="dashboard">
         <Dashboard className={'dashboard-local-adaptation'}
           data={data} 
           dataDiff={dataDiff}
@@ -138,7 +138,7 @@ class LocalAdaptation extends Component {
           template={template}
           params={this.state.params}>
         </Dashboard>
-      </section>
+      </section> */}
       
       </div>
 

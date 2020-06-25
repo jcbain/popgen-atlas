@@ -299,10 +299,14 @@ const ChartOptions = (props) => {
 }
 
 export const DashboardComponentModified = (props) => {
+
     const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [specialParamOpts, setSpecialParamOpts] = useState({pop: {0: true, 1: true}})
     const popkeysObj = {pop: keys(pickBy(specialParamOpts['pop'])).map(d => toInteger(d))}
+
+    console.log(props.componentState);
+
 
     const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
     const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
@@ -323,10 +327,10 @@ export const DashboardComponentModified = (props) => {
     }
 
     let viewDisplay;
-    switch (selectedChart.chartView){
+    switch (props.componentState.chartView){
         case('chartview'):
             viewDisplay = (
-                <ChartView xAction={xAction}
+                <ChartView xAction={props.xAction}
                     lineChartData={props.dataPopPhen}
                     geneArchData={props.data}
                     template={props.template}
@@ -334,7 +338,8 @@ export const DashboardComponentModified = (props) => {
                     useLocalParams={false}
                     paramOpts={popkeysObj}
                     displayDims={props.gridArea.displayDims}
-                    chosenChart={selectedChart.selectedChart}
+                    // chosenChart={selectedChart.selectedChart}
+                    chosenChart={props.componentState.selectedChart}
                 >
                 </ChartView>
             )

@@ -32,9 +32,10 @@ const Dashboard = (props) => {
         return d;
     });
 
+
     return(
         <DashboardDiv className={props.className}>
-            <DashboardComponent key="1" className={'dashboard-component-main'}
+            {/* <DashboardComponent key="1" className={'dashboard-component-main'}
                 gridArea={{name: "main", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
@@ -42,7 +43,9 @@ const Dashboard = (props) => {
                 dataPopPhenDiff={props.dataPopPhenDiff}
                 template={props.template}
                 params={params}
-                paramMatrix={paramMatrix}>
+                paramMatrix={paramMatrix}
+                // componentState={props.dashboardState.component1}
+                >
             </DashboardComponent>
 
             <DashboardComponent key="2" className={'dashboard-component-secondary'}
@@ -53,10 +56,12 @@ const Dashboard = (props) => {
                 dataPopPhenDiff={props.dataPopPhenDiff}
                 template={props.template}
                 params={params}
-                paramMatrix={paramMatrix}>
-            </DashboardComponent>
+                paramMatrix={paramMatrix}
+                // componentState={props.dashboardState.component2}
+                >
+            </DashboardComponent> */}
 
-            <DashboardComponent key="3" className={'dashboard-component-tertiary'}
+            {/* <DashboardComponent key="3" className={'dashboard-component-tertiary'}
                 gridArea={{name: "tertiary", displayDims: {width:45, height: 44.5}}}
                 data={props.data}
                 dataDiff={props.dataDiff}
@@ -65,15 +70,55 @@ const Dashboard = (props) => {
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}>
-            </DashboardComponent>
+            </DashboardComponent> */}
+            <DashboardComponentModified
+                key={"1"}
+                gridArea={{name: "main", displayDims: {width:46.5, height: 44.5}}}
+                dataPopPhen={props.dataPopPhen}
+                data={props.data}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}
+                componentState={props.dashboardState.component1}
+                xAction={props.xAction('component1')}
+            >
+            </DashboardComponentModified>
+            <DashboardComponentModified
+                key={"2"}
+                gridArea={{name: "secondary", displayDims: {width:46.5, height: 44.5}}}
+                dataPopPhen={props.dataPopPhen}
+                data={props.data}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}
+                componentState={props.dashboardState.component2}
+                xAction={props.xAction('component2')}
+            >
+            </DashboardComponentModified>
 
             <DashboardComponentModified
+                key={"3"}
+                gridArea={{name: "tertiary", displayDims: {width:46.5, height: 44.5}}}
+                dataPopPhen={props.dataPopPhen}
+                data={props.data}
+                template={props.template}
+                params={params}
+                paramMatrix={paramMatrix}
+                componentState={props.dashboardState.component3}
+                xAction={props.xAction('component3')}
+            >
+            </DashboardComponentModified>
+
+            <DashboardComponentModified
+                key={"4"}
                 gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
                 dataPopPhen={props.dataPopPhen}
                 data={props.data}
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}
+                componentState={props.dashboardState.component4}
+                xAction={props.xAction('component4')}
             >
             </DashboardComponentModified>
 

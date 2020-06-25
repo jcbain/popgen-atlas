@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button'
 
 import Dashboard from './Dashboard';
 
@@ -20,6 +21,15 @@ const StyledBox = styled(Box)`
         padding: 0;
     }
 `;
+
+const SampleButton = (props) => {
+    const { children, ...other } = props;
+    
+
+    return (
+        <Button onClick={props.sampleClick}>{props.count}</Button>
+    )
+}
 
 function TabPanel(props) {
     const { children, value, index, bcolor, ...other } = props;
@@ -57,7 +67,59 @@ return {
 
 export default function SimpleTabs(props) {
     const [value, setValue] = React.useState(0);
-  
+    const [count, setCount] = useState(0)
+    const initComponent = {
+        chartView: 'chartview', selectedChart: 'lineChartGroup',
+        params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
+        specialParams: {pop: {0: true, 1: true}}
+    }
+    const [dashboardState, setDashboardState] = useState({
+        dashboard1: {
+            component1: initComponent,
+            component2: initComponent,
+            component3: initComponent,
+            component4: initComponent
+        },
+        dashboard2: {
+          component1: initComponent,
+          component2: initComponent,
+          component3: initComponent,
+          component4: initComponent
+      }
+    })
+
+    const xAction = (dashboardKey) => (componentKey) => () => {
+      setDashboardState(prevState => ({
+        ...prevState, 
+        [dashboardKey] : {
+          ...prevState[dashboardKey], 
+          [componentKey] : {
+            ...prevState[dashboardKey][componentKey],
+            chartView: 'chartlister', selectedChart: ''
+          }
+        }
+        // [dashboardKey] : {
+        //   ...prevState[[dashboardState]], 
+        //     [componentKey]: {
+        //       ...prevState[[dashboardKey]][[componentKey]], 
+        //       chartView: 'chartlister', selectedChart: 'p'
+        //     }
+        // }
+      })
+      )
+    }
+   
+         
+        // [dashboardKey] : {
+        //   ...prevState[[componentKey]], chartView: 'chartlister', selectedChart: ''
+        // }
+   
+   
+
+    const updateCount = () => {
+        setCount(count + 1)
+    }
+
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -71,14 +133,18 @@ export default function SimpleTabs(props) {
             <Tab label="Item Three" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
-        <TabPanel bcolor={'#000'} value={value} index={0}>
+        <TabPanel bcolor={'#fff'} value={value} index={0}>
+          <Button onClick={() => console.log(dashboardState)}>Check State</Button>
+            {/* <SampleButton sampleClick={updateCount} count={count}></SampleButton> */}
             <Dashboard className={'dashboard-local-adaptation'}
                    data={props.data} 
                    dataDiff={props.dataDiff}
                    dataPopPhen={props.dataPopPhen} 
                    dataPopPhenDiff={props.dataPopPhenDiff}
                    template={props.template}
-                   params={props.params}>
+                   params={props.params}
+                   dashboardState={dashboardState.dashboard1}
+                   xAction={xAction('dashboard1')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -88,7 +154,9 @@ export default function SimpleTabs(props) {
                  dataPopPhen={props.dataPopPhen} 
                  dataPopPhenDiff={props.dataPopPhenDiff}
                  template={props.template}
-                 params={props.params}>
+                 params={props.params}
+                 dashboardState={dashboardState.dashboard2}
+                 xAction={xAction('dashboard2')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -98,7 +166,8 @@ export default function SimpleTabs(props) {
                 dataPopPhen={props.dataPopPhen} 
                 dataPopPhenDiff={props.dataPopPhenDiff}
                 template={props.template}
-                params={props.params}>
+                params={props.params}
+                xAction={xAction('dashboard3')}>
             </Dashboard>
         </TabPanel>
       </div>
