@@ -81,6 +81,7 @@ const Dashboard = (props) => {
                 paramMatrix={paramMatrix}
                 componentState={props.dashboardState.component1}
                 xAction={props.xAction('component1')}
+                chooseChart={props.chooseChart('component1')}
             >
             </DashboardComponentModified>
             <DashboardComponentModified
@@ -93,6 +94,7 @@ const Dashboard = (props) => {
                 paramMatrix={paramMatrix}
                 componentState={props.dashboardState.component2}
                 xAction={props.xAction('component2')}
+                chooseChart={props.chooseChart('component2')}
             >
             </DashboardComponentModified>
 
@@ -106,6 +108,7 @@ const Dashboard = (props) => {
                 paramMatrix={paramMatrix}
                 componentState={props.dashboardState.component3}
                 xAction={props.xAction('component3')}
+                chooseChart={props.chooseChart('component3')}
             >
             </DashboardComponentModified>
 
@@ -119,6 +122,7 @@ const Dashboard = (props) => {
                 paramMatrix={paramMatrix}
                 componentState={props.dashboardState.component4}
                 xAction={props.xAction('component4')}
+                chooseChart={props.chooseChart('component4')}
             >
             </DashboardComponentModified>
 

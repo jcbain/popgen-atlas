@@ -22,14 +22,7 @@ const StyledBox = styled(Box)`
     }
 `;
 
-const SampleButton = (props) => {
-    const { children, ...other } = props;
-    
 
-    return (
-        <Button onClick={props.sampleClick}>{props.count}</Button>
-    )
-}
 
 function TabPanel(props) {
     const { children, value, index, bcolor, ...other } = props;
@@ -69,22 +62,22 @@ export default function SimpleTabs(props) {
     const [value, setValue] = React.useState(0);
     const [count, setCount] = useState(0)
     const initComponent = {
-        chartView: 'chartview', selectedChart: 'lineChartGroup',
+        selectedChart: {chartView: 'chartview', selectedChart: 'lineChartGroup'},
         params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
         specialParams: {pop: {0: true, 1: true}}
     }
     const [dashboardState, setDashboardState] = useState({
         dashboard1: {
-            component1: initComponent,
-            component2: initComponent,
-            component3: initComponent,
-            component4: initComponent
+            component1: {...initComponent},
+            component2: {...initComponent},
+            component3: {...initComponent},
+            component4: {...initComponent}
         },
         dashboard2: {
-          component1: initComponent,
-          component2: initComponent,
-          component3: initComponent,
-          component4: initComponent
+          component1: {...initComponent},
+          component2: {...initComponent},
+          component3: {...initComponent},
+          component4: {...initComponent}
       }
     })
 
@@ -95,31 +88,32 @@ export default function SimpleTabs(props) {
           ...prevState[dashboardKey], 
           [componentKey] : {
             ...prevState[dashboardKey][componentKey],
-            chartView: 'chartlister', selectedChart: ''
+            selectedChart : {
+              ...prevState[dashboardKey][componentKey]['selectedChart'],
+              chartView: 'chartlister', selectedChart: ''
+          }
           }
         }
-        // [dashboardKey] : {
-        //   ...prevState[[dashboardState]], 
-        //     [componentKey]: {
-        //       ...prevState[[dashboardKey]][[componentKey]], 
-        //       chartView: 'chartlister', selectedChart: 'p'
-        //     }
-        // }
       })
       )
     }
-   
-         
-        // [dashboardKey] : {
-        //   ...prevState[[componentKey]], chartView: 'chartlister', selectedChart: ''
-        // }
-   
-   
 
-    const updateCount = () => {
-        setCount(count + 1)
+    const chooseChart = (dashboardKey) => componentKey => (chartId) => () => {
+      setDashboardState(prevState => ({
+        ...prevState, 
+        [dashboardKey] : {
+          ...prevState[dashboardKey],
+          [componentKey] : {
+            ...prevState[dashboardKey][componentKey],
+            selectedChart : {
+              ...prevState[dashboardKey][componentKey]['selectedChart'],
+              chartView: 'chartoptions', selectedChart: chartId
+            }
+          }
+        }
+      }))
     }
-
+   
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -135,7 +129,6 @@ export default function SimpleTabs(props) {
         </AppBar>
         <TabPanel bcolor={'#fff'} value={value} index={0}>
           <Button onClick={() => console.log(dashboardState)}>Check State</Button>
-            {/* <SampleButton sampleClick={updateCount} count={count}></SampleButton> */}
             <Dashboard className={'dashboard-local-adaptation'}
                    data={props.data} 
                    dataDiff={props.dataDiff}
@@ -144,7 +137,8 @@ export default function SimpleTabs(props) {
                    template={props.template}
                    params={props.params}
                    dashboardState={dashboardState.dashboard1}
-                   xAction={xAction('dashboard1')}>
+                   xAction={xAction('dashboard1')}
+                   chooseChart={chooseChart('dashboard1')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -156,7 +150,8 @@ export default function SimpleTabs(props) {
                  template={props.template}
                  params={props.params}
                  dashboardState={dashboardState.dashboard2}
-                 xAction={xAction('dashboard2')}>
+                 xAction={xAction('dashboard2')}
+                 chooseChart={chooseChart('dashboard2')}>
             </Dashboard>
         </TabPanel>
         <TabPanel value={value} index={2}>

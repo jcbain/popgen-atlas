@@ -300,16 +300,18 @@ const ChartOptions = (props) => {
 
 export const DashboardComponentModified = (props) => {
 
-    const [selectedChart, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
+    const {selectedChart} = props.componentState;
+    const xAction = props.xAction;
+    const chooseChart = props.chooseChart;
+
+    const [selectedChart2, setSelectedChart] = useState({chartView: 'chartview', selectedChart: 'lineChartGroup'})
     const [params, setParams] = useState({mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0})
     const [specialParamOpts, setSpecialParamOpts] = useState({pop: {0: true, 1: true}})
     const popkeysObj = {pop: keys(pickBy(specialParamOpts['pop'])).map(d => toInteger(d))}
 
-    console.log(props.componentState);
-
-
-    const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
-    const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
+ 
+    // const xAction = () => setSelectedChart({chartView: 'chartlister', selectedChart: ''});
+    // const chooseChart = (chartId) => () => setSelectedChart({chartView: 'chartoptions', selectedChart: chartId})
     const renderChart = () => setSelectedChart(prevState => {
         return {...prevState, chartView: 'chartview'}
     })
@@ -327,10 +329,10 @@ export const DashboardComponentModified = (props) => {
     }
 
     let viewDisplay;
-    switch (props.componentState.chartView){
+    switch (selectedChart.chartView){
         case('chartview'):
             viewDisplay = (
-                <ChartView xAction={props.xAction}
+                <ChartView xAction={xAction}
                     lineChartData={props.dataPopPhen}
                     geneArchData={props.data}
                     template={props.template}
@@ -339,7 +341,7 @@ export const DashboardComponentModified = (props) => {
                     paramOpts={popkeysObj}
                     displayDims={props.gridArea.displayDims}
                     // chosenChart={selectedChart.selectedChart}
-                    chosenChart={props.componentState.selectedChart}
+                    chosenChart={selectedChart.selectedChart}
                 >
                 </ChartView>
             )
