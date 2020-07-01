@@ -58,8 +58,29 @@ return {
 };
 }
 
+export const AddTabs = (props) => {
+  const [numTabs, setNumTabs] = useState(1);
+
+  const tabs = [...Array(numTabs)].map((t, i) => {
+    return (
+      <Tab label={`Just a Tab ${i}`}></Tab>
+    )
+  })
+
+  return (
+    <div className='tabbar-container'>
+      <AppBar position="static">
+        <Tabs value={0}>
+          {tabs}
+          <Tab label={`+`} onClick={() => setNumTabs(numTabs+1)}></Tab>
+        </Tabs>
+      </AppBar>
+    </div>
+  )
+}
+
 export default function SimpleTabs(props) {
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
     const [count, setCount] = useState(0)
     const initComponent = {
         selectedChart: {chartView: 'chartview', selectedChart: 'lineChartGroup'},
@@ -170,6 +191,7 @@ export default function SimpleTabs(props) {
 
    
     const handleChange = (event, newValue) => {
+      console.log(newValue)
       setValue(newValue);
     };
   

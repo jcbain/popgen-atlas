@@ -12,7 +12,7 @@ import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
 import Dashboard from '../../components/Dashboard';
 import Histogram from '../../charts/Histogram2';
-import SimpleTabs from '../../components/Tabs';
+import SimpleTabs, {AddTabs} from '../../components/Tabs';
 
 import './styles/local_adaptation_styles.css';
 
@@ -100,6 +100,8 @@ class LocalAdaptation extends Component {
           </Histogram>
 
         </section> */}
+        <AddTabs></AddTabs>
+
         <SimpleTabs data={data} 
           dataDiff={dataDiff}
           dataPopPhen={dataPopPhen} 
