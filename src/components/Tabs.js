@@ -86,18 +86,26 @@ export const AddTabs = (props) => {
     }))
   }
 
+  const pressButtonMinus = () => {
+    setButtonVal(prevState => ({
+      ...prevState,
+      [value]: buttonVal[value] - 1
+    }))
+  }
+
   const tabs = [...Array(numTabs)].map((t, i) => {
     return (
-      <Tab label={`Just a Tab ${i}`} {...a11yProps(i)}></Tab>
+      <Tab key={i} label={`Just a Tab ${i}`} {...a11yProps(i)} ></Tab>
     )
   })
 
   const tabpanels = [...Array(numTabs)].map((t, i) => {
     return (
-      <TabPanel value={value} index={i} >
+      <TabPanel key={i} value={value} index={i} >
         <TabPanelContainer>
-          <Button onClick={pressButton}>Click Me To Add 1</Button><p>{buttonVal[i]}</p>
-          <p>Hello My name is James</p>
+          <Button onClick={pressButton}>Click Me To Add 1</Button>
+          <Button onClick={pressButtonMinus}>Click Me To Subtract 1</Button>
+          <p>{buttonVal[i]}</p>
         </TabPanelContainer>
       </TabPanel>
     )
@@ -108,7 +116,7 @@ export const AddTabs = (props) => {
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange}>
           {tabs}
-          <Tab icon={<AddIcon></AddIcon>} onClick={addNewTab}></Tab>
+          <Tab icon={<AddIcon></AddIcon>} onClick={addNewTab} disabled={numTabs === props.maxNumTabs ? true : false}></Tab>
         </Tabs>
       </AppBar>
       {tabpanels}
