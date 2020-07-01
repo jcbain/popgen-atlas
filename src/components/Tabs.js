@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
@@ -58,23 +59,59 @@ return {
 };
 }
 
+const TabPanelContainer = styled.div`
+  background-color: #fff;
+  width: 100%;
+  height: 95vh;
+`
+
 export const AddTabs = (props) => {
+  const [value, setValue] = useState(0);
+  const [buttonVal, setButtonVal] = useState({0: 0})
   const [numTabs, setNumTabs] = useState(1);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const addNewTab = () => {
+    setNumTabs(numTabs + 1)
+    setButtonVal(prevState => ({
+      ...prevState,
+      [numTabs]: buttonVal[value]
+    }))
+  }
+  const pressButton = () => {
+    setButtonVal(prevState => ({
+      ...prevState,
+      [value]: buttonVal[value] + 1
+    }))
+  }
 
   const tabs = [...Array(numTabs)].map((t, i) => {
     return (
-      <Tab label={`Just a Tab ${i}`}></Tab>
+      <Tab label={`Just a Tab ${i}`} {...a11yProps(i)}></Tab>
+    )
+  })
+
+  const tabpanels = [...Array(numTabs)].map((t, i) => {
+    return (
+      <TabPanel value={value} index={i} >
+        <TabPanelContainer>
+          <Button onClick={pressButton}>Click Me To Add 1</Button><p>{buttonVal[i]}</p>
+          <p>Hello My name is James</p>
+        </TabPanelContainer>
+      </TabPanel>
     )
   })
 
   return (
     <div className='tabbar-container'>
       <AppBar position="static">
-        <Tabs value={0}>
+        <Tabs value={value} onChange={handleChange}>
           {tabs}
-          <Tab label={`+`} onClick={() => setNumTabs(numTabs+1)}></Tab>
+          <Tab icon={<AddIcon></AddIcon>} onClick={addNewTab}></Tab>
         </Tabs>
       </AppBar>
+      {tabpanels}
     </div>
   )
 }
