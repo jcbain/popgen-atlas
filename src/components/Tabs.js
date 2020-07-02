@@ -69,7 +69,7 @@ const TabPanelContainer = styled.div`
 
 export const AddTabs = (props) => {
   const [value, setValue] = useState(0);
-  const [isStatic, setIsStatic] = useState(false);
+  const [isStatic, setIsStatic] = useState(true);
   const [buttonVal, setButtonVal] = useState({0: 0})
   const [numTabs, setNumTabs] = useState(1);
   const initComponent = {
@@ -82,7 +82,8 @@ export const AddTabs = (props) => {
       component1: {...initComponent},
       component2: {...initComponent},
       component3: {...initComponent},
-      component4: {...initComponent}
+      component4: {...initComponent},
+      globalstate: {...initComponent}
     }
   })
 

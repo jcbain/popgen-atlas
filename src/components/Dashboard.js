@@ -5,7 +5,28 @@ import styled from 'styled-components'
 import DashboardComponent from './DashboardComponent';
 import {DashboardComponentModified} from './DashboardComponentModified';
 import { findUniqParamOptions } from '../helpers/DataHelpers';
+import ParameterCollection from './ParameterCollection';
+import { v4 as uuidv4 } from 'uuid';
 
+
+
+const ParameterOptionCardDiv = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: .25fr 1fr;
+    align-items: start;
+    margin-bottom: 2vh;
+    border: 1px solid #f2f2f2;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 3px;
+`
+
+const ParameterOptionTitle = styled.h2`
+    font-family: 'Assistant', sans-serif;
+    font-size: .9rem;
+`
 
 const DashboardDiv = styled.div`
     background-color: #f2f2f2;
@@ -25,16 +46,57 @@ const DashboardDiv = styled.div`
     padding-top: 1vh;
 `
 
+const StyledParameterCollection = styled(ParameterCollection)`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`
+
+const StyledDashboardComponentDiv = styled.div`
+    background-color: #ffffff;
+    box-shadow: 0px 0px 1px 0px rgba(168,168,168,1);
+    grid-area: ${props => props.gridArea.name};
+    padding-top: 2vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vh;
+`;
+
+
+const ParameterOptionCard = (props) => {
+    return (
+        <ParameterOptionCardDiv>
+            <ParameterOptionTitle>{props.description.toUpperCase()}</ParameterOptionTitle>
+            {props.children}
+        </ParameterOptionCardDiv>
+    )
+}
+
 const Dashboard = (props) => {
     const [params, setParams] = useState({...props.params})
     const paramMatrix = findUniqParamOptions(props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
         d.pop = toNumber(d.pop)
         return d;
     });
+    const globalstate = props.dashboardState.globalstate;
 
     let fourthComponent;
     if(props.isStatic){
-
+        fourthComponent = <StyledDashboardComponentDiv gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
+        >
+            <ParameterOptionCard key="params" 
+                description={'choose your model parameters'}
+                >
+                <StyledParameterCollection className={`parameter-collection-${uuidv4()}`}
+                    data={paramMatrix}
+                    labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
+                    initParams={props.dashboardState.globalstate.params}
+                    gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
+                    paramFunc={props.changeParamOption('globalstate')}
+                >
+                </StyledParameterCollection>
+            </ParameterOptionCard>
+        </StyledDashboardComponentDiv>
     } else {
         fourthComponent = <DashboardComponentModified
         key={"4"}
@@ -67,7 +129,7 @@ const Dashboard = (props) => {
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}
-                componentState={props.dashboardState.component1}
+                componentState={props.isStatic? globalstate : props.dashboardState.component1}
                 xAction={props.xAction('component1')}
                 chooseChart={props.chooseChart('component1')}
                 renderChart={props.renderChart('component1')}
@@ -84,7 +146,7 @@ const Dashboard = (props) => {
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}
-                componentState={props.dashboardState.component2}
+                componentState={props.isStatic? globalstate : props.dashboardState.component2}
                 xAction={props.xAction('component2')}
                 chooseChart={props.chooseChart('component2')}
                 renderChart={props.renderChart('component2')}
@@ -101,7 +163,7 @@ const Dashboard = (props) => {
                 template={props.template}
                 params={params}
                 paramMatrix={paramMatrix}
-                componentState={props.dashboardState.component3}
+                componentState={props.isStatic? globalstate : props.dashboardState.component3}
                 xAction={props.xAction('component3')}
                 chooseChart={props.chooseChart('component3')}
                 renderChart={props.renderChart('component3')}
