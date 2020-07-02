@@ -100,7 +100,17 @@ class LocalAdaptation extends Component {
           </Histogram>
 
         </section> */}
-        <AddTabs maxNumTabs={4}></AddTabs>
+        <AddTabs maxNumTabs={4}
+          data={data} 
+          dataDiff={dataDiff}
+          dataPopPhen={dataPopPhen} 
+          dataPopPhenDiff={dataPopPhenDiff}
+          template={template}
+          params={this.state.params}
+
+        >
+
+        </AddTabs>
 
         <SimpleTabs data={data} 
           dataDiff={dataDiff}
