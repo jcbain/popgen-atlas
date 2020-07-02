@@ -32,45 +32,8 @@ const Dashboard = (props) => {
         return d;
     });
 
-
     return(
         <DashboardDiv className={props.className}>
-            {/* <DashboardComponent key="1" className={'dashboard-component-main'}
-                gridArea={{name: "main", displayDims: {width:45, height: 44.5}}}
-                data={props.data}
-                dataDiff={props.dataDiff}
-                dataPopPhen={props.dataPopPhen}
-                dataPopPhenDiff={props.dataPopPhenDiff}
-                template={props.template}
-                params={params}
-                paramMatrix={paramMatrix}
-                // componentState={props.dashboardState.component1}
-                >
-            </DashboardComponent>
-
-            <DashboardComponent key="2" className={'dashboard-component-secondary'}
-                gridArea={{name: "secondary", displayDims: {width:45, height: 44.5}}}
-                data={props.data}
-                dataDiff={props.dataDiff}
-                dataPopPhen={props.dataPopPhen}
-                dataPopPhenDiff={props.dataPopPhenDiff}
-                template={props.template}
-                params={params}
-                paramMatrix={paramMatrix}
-                // componentState={props.dashboardState.component2}
-                >
-            </DashboardComponent> */}
-
-            {/* <DashboardComponent key="3" className={'dashboard-component-tertiary'}
-                gridArea={{name: "tertiary", displayDims: {width:45, height: 44.5}}}
-                data={props.data}
-                dataDiff={props.dataDiff}
-                dataPopPhen={props.dataPopPhen}
-                dataPopPhenDiff={props.dataPopPhenDiff}
-                template={props.template}
-                params={params}
-                paramMatrix={paramMatrix}>
-            </DashboardComponent> */}
             <DashboardComponentModified
                 key={"1"}
                 gridArea={{name: "main", displayDims: {width:46.5, height: 44.5}}}
@@ -103,7 +66,6 @@ const Dashboard = (props) => {
                 getSpecialParamOpts={props.getSpecialParamOpts('component2')}
             >
             </DashboardComponentModified>
-
             <DashboardComponentModified
                 key={"3"}
                 gridArea={{name: "tertiary", displayDims: {width:46.5, height: 44.5}}}
@@ -120,7 +82,6 @@ const Dashboard = (props) => {
                 getSpecialParamOpts={props.getSpecialParamOpts('component3')}
             >
             </DashboardComponentModified>
-
             <DashboardComponentModified
                 key={"4"}
                 gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
@@ -137,23 +98,25 @@ const Dashboard = (props) => {
                 getSpecialParamOpts={props.getSpecialParamOpts('component4')}
             >
             </DashboardComponentModified>
+        </DashboardDiv>
+    )
+}
 
-            {/* <DashboardComponent key="4" className={'dashboard-component-fourth'}
-                gridArea={{name: "fourth", displayDims: {width:45, height: 44.5}}}
-                data={props.data}
-                dataDiff={props.dataDiff}
-                dataPopPhen={props.dataPopPhen}
-                dataPopPhenDiff={props.dataPopPhenDiff}
-                template={props.template}
-                params={params}
-                paramMatrix={paramMatrix}>
-            </DashboardComponent> */}
+
+export const StaticDashboard = (props) => {
+    const [params, setParams] = useState({...props.params});
+    const paramMatrix = findUniqParamOptions(props.data, ['m', 'mu', 'r', 'sigsqr', 'pop']).map(d => {
+        d.pop = toNumber(d.pop);
+        return d;
+    })
+
+    return(
+        <DashboardDiv className={props.className}>
 
         </DashboardDiv>
     )
-
-
-
 }
+
+
 
 export default Dashboard
