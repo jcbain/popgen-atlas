@@ -69,7 +69,7 @@ const TabPanelContainer = styled.div`
 
 export const AddTabs = (props) => {
   const [value, setValue] = useState(0);
-  const [isStatic, setIsStatic] = useState(true);
+  const [isStatic, setIsStatic] = useState(false);
   const [buttonVal, setButtonVal] = useState({0: 0})
   const [numTabs, setNumTabs] = useState(1);
   const initComponent = {
@@ -169,6 +169,8 @@ export const AddTabs = (props) => {
     )
   })
 
+  const staticLabel = isStatic ? 'Flexible' : 'Static'
+
   const tabpanels = [...Array(numTabs)].map((t, i) => {
     return (
       <TabPanel key={i} value={value} index={i} >
@@ -176,6 +178,7 @@ export const AddTabs = (props) => {
           {/* <Button onClick={pressButton}>Click Me To Add 1</Button>
           <Button onClick={pressButtonMinus}>Click Me To Subtract 1</Button>
           <p>{buttonVal[i]}</p> */}
+          <Button onClick={() => setIsStatic(!isStatic)}>Change to {staticLabel}</Button>
           <Dashboard className={'dashboard-local-adaptation'}
                    isStatic={isStatic}
                    data={props.data} 

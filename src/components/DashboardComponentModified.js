@@ -37,7 +37,7 @@ const StyledClearIcon = styled(ClearIcon)`
         top: 0;
         right: 0;
         fill: #e8e8e8;
-        display: ${props => props.removeX ? 'none' : 'block'};
+        display: ${props => props.displayx || 'block'};
         &:hover {
             fill: palevioletred;
         }
@@ -88,6 +88,7 @@ const StyledParameterCollection = styled(ParameterCollection)`
 
 export const ChartView = (props) => {
     const identifier = uuidv4();
+    const displayX = props.removeX ? 'none' : 'block'
     
     const displayCharts = {
         lineChartGroup: (
@@ -116,7 +117,7 @@ export const ChartView = (props) => {
     
     return (
         <ChartViewDiv>
-            <StyledClearIcon onClick={props.xAction} removeX={props.removeX}></StyledClearIcon>
+            <StyledClearIcon onClick={props.xAction} displayx={displayX}></StyledClearIcon>
             {displayCharts[props.chosenChart]}
         </ChartViewDiv>
     )
