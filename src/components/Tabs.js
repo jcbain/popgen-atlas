@@ -85,33 +85,38 @@ export const AddTabs = (props) => {
     }
   })
 
-  const xAction = (componentKey) => () => {
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const addNewTab = () => {
+    setNumTabs(numTabs + 1)
     setDashboardState(prevState => ({
-      ...prevState, 
-      [value] : {
-        ...prevState[value], 
-        [componentKey] : {
-          ...prevState[value][componentKey],
-          selectedChart : {
-            ...prevState[value][componentKey]['selectedChart'],
-            chartView: 'chartlister', selectedChart: ''
-        }
+      ...prevState,
+      [numTabs]: dashboardState[value]
+    }))
+  }
+
+
+  const xAction = componentKey => () => {
+    setDashboardState(prevState => ({
+      ...prevState, [value] : {
+        ...prevState[value], [componentKey] : {
+          ...prevState[value][componentKey], selectedChart : {
+            ...prevState[value][componentKey]['selectedChart'], chartView: 'chartlister', selectedChart: ''
+          }
         }
       }
     })
     )
   }
 
-  const chooseChart = componentKey => (chartId) => () => {
+  const chooseChart = componentKey => chartId => () => {
     setDashboardState(prevState => ({
-      ...prevState, 
-      [value] : {
-        ...prevState[value],
-        [componentKey] : {
-          ...prevState[value][componentKey],
-          selectedChart : {
-            ...prevState[value][componentKey]['selectedChart'],
-            chartView: 'chartoptions', selectedChart: chartId
+      ...prevState, [value] : {
+        ...prevState[value], [componentKey] : {
+          ...prevState[value][componentKey], selectedChart : {
+            ...prevState[value][componentKey]['selectedChart'], chartView: 'chartoptions', selectedChart: chartId
           }
         }
       }
@@ -120,14 +125,10 @@ export const AddTabs = (props) => {
 
   const renderChart = componentKey => () => {
     setDashboardState(prevState => ({
-      ...prevState, 
-      [value] : {
-        ...prevState[value],
-        [componentKey] : {
-          ...prevState[value][componentKey],
-          selectedChart : {
-            ...prevState[value][componentKey]['selectedChart'],
-            chartView: 'chartview'
+      ...prevState, [value] : {
+        ...prevState[value], [componentKey] : {
+          ...prevState[value][componentKey], selectedChart : {
+            ...prevState[value][componentKey]['selectedChart'], chartView: 'chartview'
           }
         }
       }
@@ -136,67 +137,29 @@ export const AddTabs = (props) => {
 
   const changeParamOption = componentKey => (name, val) => {
     setDashboardState(prevState => ({
-      ...prevState, 
-      [value] : {
-        ...prevState[value],
-        [componentKey] : {
-          ...prevState[value][componentKey],
-          params : {
-            ...prevState[value][componentKey]['params'],
-            [name] : val
+      ...prevState, [value] : {
+        ...prevState[value], [componentKey] : {
+          ...prevState[value][componentKey], params : {
+            ...prevState[value][componentKey]['params'],[name] : val
           }
-
         }}
-
     }))
   }
 
   const getSpecialParamOpts = componentKey => (name, option, val) => {
     setDashboardState(prevState => ({
-      ...prevState, 
-      [value] : {
-        ...prevState[value],
-        [componentKey] : {
-          ...prevState[value][componentKey],
-          specialParamOpts : {
-            ...prevState[value][componentKey]['specialParamOpts'],
-            [name] : {
-              ...prevState[value][componentKey]['specialParamOpts'][name],
-              [option]: !val
+      ...prevState, [value] : {
+        ...prevState[value], [componentKey] : {
+          ...prevState[value][componentKey], specialParamOpts : {
+            ...prevState[value][componentKey]['specialParamOpts'], [name] : {
+              ...prevState[value][componentKey]['specialParamOpts'][name], [option]: !val
             }
           }
-
         }}
-
-    }))
-  }
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const addNewTab = () => {
-    setNumTabs(numTabs + 1)
-    setButtonVal(prevState => ({
-      ...prevState,
-      [numTabs]: buttonVal[value]
-    }))
-    setDashboardState(prevState => ({
-      ...prevState,
-      [numTabs]: dashboardState[value]
-    }))
-  }
-  const pressButton = () => {
-    setButtonVal(prevState => ({
-      ...prevState,
-      [value]: buttonVal[value] + 1
     }))
   }
 
-  const pressButtonMinus = () => {
-    setButtonVal(prevState => ({
-      ...prevState,
-      [value]: buttonVal[value] - 1
-    }))
-  }
+  
 
   const tabs = [...Array(numTabs)].map((t, i) => {
     return (
@@ -208,9 +171,9 @@ export const AddTabs = (props) => {
     return (
       <TabPanel key={i} value={value} index={i} >
         <TabPanelContainer>
-          <Button onClick={pressButton}>Click Me To Add 1</Button>
+          {/* <Button onClick={pressButton}>Click Me To Add 1</Button>
           <Button onClick={pressButtonMinus}>Click Me To Subtract 1</Button>
-          <p>{buttonVal[i]}</p>
+          <p>{buttonVal[i]}</p> */}
           <Dashboard className={'dashboard-local-adaptation'}
                    data={props.data} 
                    dataDiff={props.dataDiff}
@@ -243,176 +206,4 @@ export const AddTabs = (props) => {
   )
 }
 
-export default function SimpleTabs(props) {
-    const [value, setValue] = useState(0);
-    const [count, setCount] = useState(0)
-    const initComponent = {
-        selectedChart: {chartView: 'chartview', selectedChart: 'lineChartGroup'},
-        params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 0},
-        specialParamOpts: {pop: {0: true, 1: true}}
-    }
-    const [dashboardState, setDashboardState] = useState({
-        dashboard1: {
-            component1: {...initComponent},
-            component2: {...initComponent},
-            component3: {...initComponent},
-            component4: {...initComponent}
-        },
-        dashboard2: {
-          component1: {...initComponent},
-          component2: {...initComponent},
-          component3: {...initComponent},
-          component4: {...initComponent}
-      }
-    })
-
-    const xAction = (dashboardKey) => (componentKey) => () => {
-      setDashboardState(prevState => ({
-        ...prevState, 
-        [dashboardKey] : {
-          ...prevState[dashboardKey], 
-          [componentKey] : {
-            ...prevState[dashboardKey][componentKey],
-            selectedChart : {
-              ...prevState[dashboardKey][componentKey]['selectedChart'],
-              chartView: 'chartlister', selectedChart: ''
-          }
-          }
-        }
-      })
-      )
-    }
-
-    const chooseChart = (dashboardKey) => componentKey => (chartId) => () => {
-      setDashboardState(prevState => ({
-        ...prevState, 
-        [dashboardKey] : {
-          ...prevState[dashboardKey],
-          [componentKey] : {
-            ...prevState[dashboardKey][componentKey],
-            selectedChart : {
-              ...prevState[dashboardKey][componentKey]['selectedChart'],
-              chartView: 'chartoptions', selectedChart: chartId
-            }
-          }
-        }
-      }))
-    }
-
-    const renderChart = (dashboardKey) => componentKey => () => {
-      setDashboardState(prevState => ({
-        ...prevState, 
-        [dashboardKey] : {
-          ...prevState[dashboardKey],
-          [componentKey] : {
-            ...prevState[dashboardKey][componentKey],
-            selectedChart : {
-              ...prevState[dashboardKey][componentKey]['selectedChart'],
-              chartView: 'chartview'
-            }
-          }
-        }
-      }))
-    }
-
-    const changeParamOption = (dashboardKey) => componentKey => (name, val) => {
-      setDashboardState(prevState => ({
-        ...prevState, 
-        [dashboardKey] : {
-          ...prevState[dashboardKey],
-          [componentKey] : {
-            ...prevState[dashboardKey][componentKey],
-            params : {
-              ...prevState[dashboardKey][componentKey]['params'],
-              [name] : val
-            }
-
-          }}
-
-      }))
-    }
-
-    const getSpecialParamOpts = (dashboardKey) => componentKey => (name, option, val) => {
-      setDashboardState(prevState => ({
-        ...prevState, 
-        [dashboardKey] : {
-          ...prevState[dashboardKey],
-          [componentKey] : {
-            ...prevState[dashboardKey][componentKey],
-            specialParamOpts : {
-              ...prevState[dashboardKey][componentKey]['specialParamOpts'],
-              [name] : {
-                ...prevState[dashboardKey][componentKey]['specialParamOpts'][name],
-                [option]: !val
-              }
-            }
-
-          }}
-
-      }))
-    }
-
-
-   
-    const handleChange = (event, newValue) => {
-      console.log(newValue)
-      setValue(newValue);
-    };
-  
-    return (
-      <div className={'something'}>
-        <AppBar position="static">
-          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel bcolor={'#fff'} value={value} index={0}>
-          <Button onClick={() => console.log(dashboardState)}>Check State</Button>
-            <Dashboard className={'dashboard-local-adaptation'}
-                   data={props.data} 
-                   dataDiff={props.dataDiff}
-                   dataPopPhen={props.dataPopPhen} 
-                   dataPopPhenDiff={props.dataPopPhenDiff}
-                   template={props.template}
-                   params={props.params}
-                   dashboardState={dashboardState.dashboard1}
-                   xAction={xAction('dashboard1')}
-                   chooseChart={chooseChart('dashboard1')}
-                   renderChart={renderChart('dashboard1')}
-                   changeParamOption={changeParamOption('dashboard1')}
-                   getSpecialParamOpts={getSpecialParamOpts('dashboard1')}>
-            </Dashboard>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-            <Dashboard className={'dashboard-local-adaptation'}
-                 data={props.data} 
-                 dataDiff={props.dataDiff}
-                 dataPopPhen={props.dataPopPhen} 
-                 dataPopPhenDiff={props.dataPopPhenDiff}
-                 template={props.template}
-                 params={props.params}
-                 dashboardState={dashboardState.dashboard2}
-                 xAction={xAction('dashboard2')}
-                 chooseChart={chooseChart('dashboard2')}
-                 renderChart={renderChart('dashboard2')}
-                 changeParamOption={changeParamOption('dashboard2')}
-                 getSpecialParamOpts={getSpecialParamOpts('dashboard2')}>
-            </Dashboard>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-            <Dashboard className={'dashboard-local-adaptation'}
-                data={props.data} 
-                dataDiff={props.dataDiff}
-                dataPopPhen={props.dataPopPhen} 
-                dataPopPhenDiff={props.dataPopPhenDiff}
-                template={props.template}
-                params={props.params}
-                xAction={xAction('dashboard3')}>
-            </Dashboard>
-        </TabPanel>
-      </div>
-    );
-  }
 

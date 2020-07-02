@@ -12,7 +12,7 @@ import LineChartGroup from '../../components/LineChartGroup';
 import GeneArchGroup from '../../components/GeneArchGroup';
 import Dashboard from '../../components/Dashboard';
 import Histogram from '../../charts/Histogram2';
-import SimpleTabs, {AddTabs} from '../../components/Tabs';
+import {AddTabs} from '../../components/Tabs';
 
 import './styles/local_adaptation_styles.css';
 
@@ -107,19 +107,8 @@ class LocalAdaptation extends Component {
           dataPopPhenDiff={dataPopPhenDiff}
           template={template}
           params={this.state.params}
-
         >
-
         </AddTabs>
-
-        <SimpleTabs data={data} 
-          dataDiff={dataDiff}
-          dataPopPhen={dataPopPhen} 
-          dataPopPhenDiff={dataPopPhenDiff}
-          template={template}
-          params={this.state.params}
-        
-        ></SimpleTabs>
 
         {/* <section className="descriptive-chart">
           <div id="line-chart-group-1">
