@@ -32,10 +32,35 @@ const Dashboard = (props) => {
         return d;
     });
 
+    let fourthComponent;
+    if(props.isStatic){
+
+    } else {
+        fourthComponent = <DashboardComponentModified
+        key={"4"}
+        removeX={props.isStatic}
+        gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
+        dataPopPhen={props.dataPopPhen}
+        data={props.data}
+        template={props.template}
+        params={params}
+        paramMatrix={paramMatrix}
+        componentState={props.dashboardState.component4}
+        xAction={props.xAction('component4')}
+        chooseChart={props.chooseChart('component4')}
+        renderChart={props.renderChart('component4')}
+        changeParamOption={props.changeParamOption('component4')}
+        getSpecialParamOpts={props.getSpecialParamOpts('component4')}
+    >
+    </DashboardComponentModified>
+
+    }
+
     return(
         <DashboardDiv className={props.className}>
             <DashboardComponentModified
                 key={"1"}
+                removeX={props.isStatic}
                 gridArea={{name: "main", displayDims: {width:46.5, height: 44.5}}}
                 dataPopPhen={props.dataPopPhen}
                 data={props.data}
@@ -52,6 +77,7 @@ const Dashboard = (props) => {
             </DashboardComponentModified>
             <DashboardComponentModified
                 key={"2"}
+                removeX={props.isStatic}
                 gridArea={{name: "secondary", displayDims: {width:46.5, height: 44.5}}}
                 dataPopPhen={props.dataPopPhen}
                 data={props.data}
@@ -68,6 +94,7 @@ const Dashboard = (props) => {
             </DashboardComponentModified>
             <DashboardComponentModified
                 key={"3"}
+                removeX={props.isStatic}
                 gridArea={{name: "tertiary", displayDims: {width:46.5, height: 44.5}}}
                 dataPopPhen={props.dataPopPhen}
                 data={props.data}
@@ -82,22 +109,8 @@ const Dashboard = (props) => {
                 getSpecialParamOpts={props.getSpecialParamOpts('component3')}
             >
             </DashboardComponentModified>
-            <DashboardComponentModified
-                key={"4"}
-                gridArea={{name: "fourth", displayDims: {width:46.5, height: 44.5}}}
-                dataPopPhen={props.dataPopPhen}
-                data={props.data}
-                template={props.template}
-                params={params}
-                paramMatrix={paramMatrix}
-                componentState={props.dashboardState.component4}
-                xAction={props.xAction('component4')}
-                chooseChart={props.chooseChart('component4')}
-                renderChart={props.renderChart('component4')}
-                changeParamOption={props.changeParamOption('component4')}
-                getSpecialParamOpts={props.getSpecialParamOpts('component4')}
-            >
-            </DashboardComponentModified>
+            {fourthComponent}
+
         </DashboardDiv>
     )
 }

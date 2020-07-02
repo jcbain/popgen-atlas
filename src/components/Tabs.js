@@ -69,6 +69,7 @@ const TabPanelContainer = styled.div`
 
 export const AddTabs = (props) => {
   const [value, setValue] = useState(0);
+  const [isStatic, setIsStatic] = useState(false);
   const [buttonVal, setButtonVal] = useState({0: 0})
   const [numTabs, setNumTabs] = useState(1);
   const initComponent = {
@@ -175,6 +176,7 @@ export const AddTabs = (props) => {
           <Button onClick={pressButtonMinus}>Click Me To Subtract 1</Button>
           <p>{buttonVal[i]}</p> */}
           <Dashboard className={'dashboard-local-adaptation'}
+                   isStatic={isStatic}
                    data={props.data} 
                    dataDiff={props.dataDiff}
                    dataPopPhen={props.dataPopPhen} 
