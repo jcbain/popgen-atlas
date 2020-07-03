@@ -11,7 +11,7 @@ export const ParamTitle = styled.span`
     left: 1vw;
     padding-bottom: 0;
     font-size: .5em;
-    background-color: #fff;
+    background-color: ${props => props.theme.color.main};
     position: absolute;
     height: ${props => props.viewheight}vh;
     line-height: ${props => props.viewheight}vh;
@@ -19,18 +19,38 @@ export const ParamTitle = styled.span`
     padding-left: 4px;
     padding-right: 4px;
     font-size: ${props => props.viewheight*0.6}vh;
-    color: #6e6e6e;
+    color: ${props => props.theme.color.grayMain};
 `;
+
+ParamTitle.defaultProps = {
+    viewheight: 5,
+    theme: {
+        color: {
+            main: '#fff',
+            grayMain: '#6e6e6e'
+        }
+    }   
+
+}
 
 export const SelectHeaderWrapper = styled.div`
     height: ${props => props.viewheight}vh;
-    border: 2px solid palevioletred;
+    border: 2px solid ${props => props.theme.color.secondary};
     line-height: ${props => props.viewheight}vh;
     font-size: 1.2em;
     border-radius: 2px;
     z-index: 100;
     width: 100%;
 `
+SelectHeaderWrapper.defaultProps ={
+    viewheight: 10,
+    theme: {
+        color: {
+            secondary: "palevioletred"
+        }
+    }
+}
+
 export const SelectTitle = styled.div`
     margin-right: 1vw;
     margin-left: 1vw;
@@ -48,9 +68,19 @@ export const OptionWrapper = styled.div`
     flex-direction: column;
     position: absolute;
     top: ${props => props.offsetheight}vh;
-    border: 1px solid #efefef;
+    border: 1px solid ${props => props.theme.color.graySecondary};
     z-index: 1000;
 `
+
+OptionWrapper.defaultProps = {
+    displayopt: 'flex',
+    offsetheight: 10,
+    theme: {
+        color: {
+            graySecondary: '#efefef',
+        }
+    }
+}
 
 export const OptionButton = styled.button`
     background-color: white;
@@ -61,6 +91,15 @@ export const OptionButton = styled.button`
     text-align: left;
     border: none;
     &:hover{
-        background-color: #efefef;
+        background-color: ${props => props.theme.color.graySecondary};
     }
 `;
+
+OptionButton.defaultProps ={
+    viewheight: 10,
+    theme: {
+        color: {
+            graySecondary: '#efefef',
+        }
+    }
+}

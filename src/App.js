@@ -6,6 +6,7 @@ import {Helmet} from "react-helmet";
 
 const routeComponents = routes.map(({path, component, refresh}, key) => <Route exact path={path} refresh={refresh} component={component} key={key} />);
 
+
 function App() {
   return (
     <div className="content">
@@ -27,7 +28,7 @@ function App() {
           </div>
       </header>
       <Switch>
-        {routeComponents}
+          {routeComponents}
       </Switch>
     </div>
   );

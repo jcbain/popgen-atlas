@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {SelectWrapper, ParamTitle, SelectHeaderWrapper, SelectTitle, OptionWrapper, OptionButton} from './ParamSelectorStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import { responsiveFontSizes } from '@material-ui/core';
 
 
 
 
-const Option = (props) => {
+export const Option = (props) => {
     const {value, label, getValues, viewheight} = props;
     const sendValues = () => getValues(value, label);
 
@@ -18,6 +19,12 @@ const Option = (props) => {
             {label}
         </OptionButton>
     )
+}
+
+Option.defaultProps = {
+    value: 'value here',
+    label: 'label here',
+    viewheight: 10
 }
 
 export const ParamSelector = (props) => {
@@ -61,5 +68,13 @@ export const ParamSelector = (props) => {
 
         
     )
-
 }
+
+ParamSelector.defaultProps = {
+    className: 'param-selector',
+    paramName: 'Param Name',
+    viewwidth: 15,
+    viewheight: 7
+}
+
+export default ParamSelector;

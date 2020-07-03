@@ -80,6 +80,8 @@ const dataPopPhenDiff = nest()
     d['pop_phen'] = d['0']- d['1'];
     return d;
   })
+
+
   
 class LocalAdaptation extends Component {
   constructor(props){
@@ -102,7 +104,9 @@ class LocalAdaptation extends Component {
 
         </section> */}
         <section className={'playground'}>
-          <PlayGround></PlayGround>
+          
+            <PlayGround></PlayGround>
+
 
         </section>
 
