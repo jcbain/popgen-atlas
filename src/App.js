@@ -15,6 +15,7 @@ function App() {
           <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@600&family=Lato:wght@700&display=swap" rel="stylesheet" /> 
           <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@500;600&display=swap" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet" />      
+          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet" /> 
         </Helmet>
       <header className="App-header">
           <h1>Atlas of Population Genetics</h1>

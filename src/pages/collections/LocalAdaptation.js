@@ -13,6 +13,7 @@ import GeneArchGroup from '../../components/GeneArchGroup';
 import Dashboard from '../../components/Dashboard';
 import Histogram from '../../charts/Histogram2';
 import {AddTabs} from '../../components/Tabs';
+import {PlayGround} from '../../Playground'
 
 import './styles/local_adaptation_styles.css';
 
@@ -100,6 +101,11 @@ class LocalAdaptation extends Component {
           </Histogram>
 
         </section> */}
+        <section className={'playground'}>
+          <PlayGround></PlayGround>
+
+        </section>
+
         <AddTabs maxNumTabs={4}
           data={data} 
           dataDiff={dataDiff}
