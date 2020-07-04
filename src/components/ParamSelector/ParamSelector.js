@@ -28,14 +28,17 @@ Option.defaultProps = {
 }
 
 export const ParamSelector = (props) => {
-    const { className, paramName ,options, viewwidth, viewheight} = props;
+    const { className, paramName ,options, viewwidth, viewheight, handleSwitch } = props;
     const [ selectedVal, handleSelectedVal ] = useState(options[0]);
     const [open, setOpen] = useState(false);
     const handleMenuOpen = () => setOpen(!open)
     const handleOptionSelect = (value, label) => {
         handleSelectedVal({value: value, label: label})
+        handleSwitch(paramName, value);
         setOpen(!open);
     }
+
+    
 
     const opts = options.map((d, i) => {
         return (
@@ -53,7 +56,7 @@ export const ParamSelector = (props) => {
         <SelectWrapper className={className} 
             viewwidth={viewwidth}>
             <SelectHeaderWrapper onClick={handleMenuOpen} viewheight={viewheight}>
-                <ParamTitle viewheight={viewheight/2}>{paramName.toLowerCase()}</ParamTitle>
+                <ParamTitle viewwidth={viewwidth} viewheight={viewheight/2}>{paramName.toLowerCase()}</ParamTitle>
                 <SelectTitle>
                     {selectedVal.label} 
                     <FontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
@@ -73,6 +76,7 @@ export const ParamSelector = (props) => {
 ParamSelector.defaultProps = {
     className: 'param-selector',
     paramName: 'Param Name',
+    handleSwitch: () => console.log('handle passing up state here'),
     viewwidth: 15,
     viewheight: 7
 }

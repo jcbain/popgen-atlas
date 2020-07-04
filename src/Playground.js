@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { ParamSelector } from './components/ParamSelector/ParamSelector';
+import { ParamCard } from './components/DashboardComponent/DashboardComponentCards'
+import { ParamLister } from './components/DashboardComponent/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
 
 const theme = {
@@ -12,23 +14,76 @@ const theme = {
     }
   }
 
-export const PlayGround = (props) => {
-    const options = [
-        {label: 'Jennifer', value: 1},
-        {label: 'James', value: 2},
-        {label: 'Chewey', value: 3}
+const options = [
+    {label: 'Jennifer', value: 1},
+    {label: 'James', value: 2},
+    {label: 'Chewey', value: 3}
+]
 
-    ]
+const options2 = [
+    {label: 'hi', value: 'hi1'},
+    {label: 'hello', value: 'hi2'},
+    {label: 'yes', value: 'hi3'}
+]
+const options3 = [
+    {label: 1, value: 1},
+    {label: 2, value: 2},
+    {label: 3, value: 3}
+]
+const options4 = [
+    {label: 'cat', value: 'cat'},
+    {label: 'dog', value: 'dog'},
+    {label: 'cow', value: 'cow'}
+]
+const paramOptions = [
+    {paramName: 'names', options: options},
+    {paramName: 'greetings', options: options2},
+    {paramName: 'values', options: options3},
+    {paramName: 'animals', options: options4},
+
+]
+
+export const PlayGround = (props) => {
+    let initParams = {}
+    paramOptions.map(d => {
+        return initParams[d.paramName] = d.options[0].value;
+    })
+    const [params, setParams] = useState({...initParams})
+
+    const handleSwitch = (k, v) => {
+        setParams(prevState => ({
+            ...prevState, [k]: v
+        }))
+    }
+
+
+    const selectors = paramOptions.map((d, i) => {
+        return (
+            <ParamSelector key={i}
+                className={'sample-class'}
+                paramName={d.paramName} 
+                options={d.options}
+                viewwidth={10}
+                viewheight={7}
+                handleSwitch={handleSwitch}
+            >
+            </ParamSelector>        
+        )
+
+    })
+
+    const numParams = selectors.length;
+
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamSelector 
-                    className={'sample-class'}
-                    paramName={'Sample Name'} 
-                    options={options}
-                    viewwidth={16}
-                    viewheight={7}>
-                </ParamSelector>
+                <ParamCard description={"Some Description"}>
+                    <ParamLister numparams={numParams}
+                        viewwidth={40}>
+                        {selectors}
+                    </ParamLister>
+                </ParamCard>
+ 
             </ThemeProvider>
         </div>
     )

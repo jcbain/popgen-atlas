@@ -9,6 +9,8 @@ export const SelectWrapper = styled.div`
 export const ParamTitle = styled.span`
     top: -${props => props.viewheight/2}vh;
     left: 1vw;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     padding-bottom: 0;
     font-size: .5em;
     background-color: ${props => props.theme.color.main};
@@ -18,12 +20,14 @@ export const ParamTitle = styled.span`
     z-index: 150;
     padding-left: 4px;
     padding-right: 4px;
-    font-size: ${props => props.viewheight*0.6}vh;
+    overflow: hidden;
+    font-size: ${props => (props.viewwidth - 4)/props.viewwidth}em;
     color: ${props => props.theme.color.grayMain};
 `;
 
 ParamTitle.defaultProps = {
     viewheight: 5,
+    viewwidth: 10,
     theme: {
         color: {
             main: '#fff',
@@ -37,7 +41,7 @@ export const SelectHeaderWrapper = styled.div`
     height: ${props => props.viewheight}vh;
     border: 2px solid ${props => props.theme.color.secondary};
     line-height: ${props => props.viewheight}vh;
-    font-size: 1.2em;
+    font-size: 1em;
     border-radius: 2px;
     z-index: 100;
     width: 100%;
