@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { ParamSelector } from './components/ParamSelector/ParamSelector';
-import { ParamCard } from './components/DashboardComponent/DashboardComponentCards'
-import { ParamLister } from './components/DashboardComponent/DashboardComponentCardsStyles';
+import { ParamCard } from './components/DashboardComponentCard/DashboardComponentCards'
+import { ParamLister } from './components/DashboardComponentCard/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
 
 const theme = {
@@ -55,6 +55,10 @@ export const PlayGround = (props) => {
             ...prevState, [k]: v
         }))
     }
+
+    useEffect(() => {
+        // props.handleParamSwitch(params);
+    }, [params])
 
 
     const selectors = paramOptions.map((d, i) => {

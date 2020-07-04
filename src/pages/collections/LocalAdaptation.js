@@ -86,11 +86,11 @@ const dataPopPhenDiff = nest()
 class LocalAdaptation extends Component {
   constructor(props){
     super(props);
-
     this.state = { 
-      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 1}
+      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 1},
     }
   }
+
 
 
 
