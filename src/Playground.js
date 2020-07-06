@@ -5,6 +5,7 @@ import { ParamCard } from './components/DashboardComponentCard/DashboardComponen
 import { ParamLister } from './components/DashboardComponentCard/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
 import {ParamViewLineChart} from './components/DashboardComponent/ParamView/ParamViewComponent'
+import {DashboardComponentLineChart}  from './components/DashboardComponent/DashboardComponent'
 
 const theme = {
     color: {
@@ -15,32 +16,28 @@ const theme = {
     }
   }
 
-const options = [
-    {label: 'Jennifer', value: 1},
-    {label: 'James', value: 2},
-    {label: 'Chewey', value: 3}
+const migration = [
+    {label: '1e-4', value: '1e-4'},
+    {label: '1e-5', value: '1e-5'},
+
 ]
 
-const options2 = [
-    {label: 'hi', value: 'hi1'},
-    {label: 'hello', value: 'hi2'},
-    {label: 'yes', value: 'hi3'}
+const mutation = [
+    {label: '1e-6', value: '1e-6'},
 ]
-const options3 = [
-    {label: 1, value: 1},
-    {label: 2, value: 2},
-    {label: 3, value: 3}
+const recombination = [
+    {label: '1e-6', value: '1e-6'},
 ]
-const options4 = [
-    {label: 'cat', value: 'cat'},
-    {label: 'dog', value: 'dog'},
-    {label: 'cow', value: 'cow'}
+const selection = [
+    {label: 2, value: '2'},
+    {label: 5, value: '5'},
+    {label: 25, value: '25'}
 ]
 const paramOptions = [
-    {paramName: 'names', options: options},
-    {paramName: 'greetings', options: options2},
-    {paramName: 'values', options: options3},
-    {paramName: 'animals', options: options4},
+    {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
+    {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
+    {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
+    {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
 
 ]
 
@@ -50,6 +47,7 @@ export const PlayGround = (props) => {
         return initParams[d.paramName] = d.options[0].value;
     })
     const [params, setParams] = useState({...initParams})
+    const [view, setView] = useState('chartview')
 
     const handleSwitch = (k, v) => {
         setParams(prevState => ({
@@ -57,42 +55,36 @@ export const PlayGround = (props) => {
         }))
     }
 
-    // useEffect(() => {
-    //     // props.handleParamSwitch(params);
-    // }, [params])
+    const xAction = () => {
+        setView('paramview')
+    }
 
+    const renderAction = () => {
+        setView('chartview')
+    }
+    console.log(params)
 
-    // const selectors = paramOptions.map((d, i) => {
-    //     return (
-    //         <ParamSelector key={i}
-    //             className={'sample-class'}
-    //             paramName={d.paramName} 
-    //             options={d.options}
-    //             viewwidth={10}
-    //             viewheight={7}
-    //             handleSwitch={handleSwitch}
-    //         >
-    //         </ParamSelector>        
-    //     )
-
-    // })
-
-    // const numParams = selectors.length;
 
     return (
         <div>
             <ThemeProvider theme={theme}>
-                {/* <ParamCard description={"Some Description"}>
-                    <ParamLister numparams={numParams}
-                        viewwidth={40}>
-                        {selectors}
-                    </ParamLister>
-                </ParamCard> */}
-                <ParamViewLineChart viewwidth={50}
+                {/* <ParamViewLineChart viewwidth={50}
                     viewheight={40}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}>
-                </ParamViewLineChart>
+                </ParamViewLineChart> */}
+                <DashboardComponentLineChart selectedView={view}
+                    lineChartData={props.lineChartData}
+                    viewwidth={40}
+                    viewheight={40}
+                    params={params}
+                    useLocalParams={false}
+                    paramOptions={paramOptions}
+                    handleSwitch={handleSwitch}
+                    xAction={xAction}
+                    renderAction={renderAction}>
+
+                </DashboardComponentLineChart>
  
             </ThemeProvider>
         </div>
