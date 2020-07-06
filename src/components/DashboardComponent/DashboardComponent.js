@@ -29,7 +29,8 @@ export const DashboardComponentLineChart = (props) => {
                     viewheight={viewheight}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
-                    renderAction={renderAction}>
+                    renderAction={renderAction}
+                    params={params}>
                 </ParamViewLineChart>
             )
         break;

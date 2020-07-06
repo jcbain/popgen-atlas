@@ -25,12 +25,10 @@ Option.defaultProps = {
 }
 
 export const ParamSelector = (props) => {
-    const { className, paramName, paramNameReadable ,options, viewwidth, viewheight, handleSwitch } = props;
-    const [ selectedVal, handleSelectedVal ] = useState(options[0]);
+    const { className, paramName, paramNameReadable ,options, viewwidth, viewheight, handleSwitch, selectedValue } = props;
     const [open, setOpen] = useState(false);
     const handleMenuOpen = () => setOpen(!open)
     const handleOptionSelect = (value, label) => {
-        handleSelectedVal({value: value, label: label})
         handleSwitch(paramName, value);
         setOpen(!open);
     }
@@ -55,7 +53,7 @@ export const ParamSelector = (props) => {
             <SelectHeaderWrapper onClick={handleMenuOpen} viewheight={viewheight}>
                 <ParamTitle viewwidth={viewwidth} viewheight={viewheight/2}>{paramNameReadable.toLowerCase()}</ParamTitle>
                 <SelectTitle>
-                    {selectedVal.label} 
+                    {selectedValue} 
                     <FontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
                 </SelectTitle>
             </SelectHeaderWrapper>

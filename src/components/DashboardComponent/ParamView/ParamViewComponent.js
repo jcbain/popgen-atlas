@@ -7,9 +7,10 @@ import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 
 export const ParamViewLineChart = (props) => {
-    const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction} = props;
+    const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
     const numParams = paramOptions.length;
     const selectors = paramOptions.map((d, i) => {
+        console.log(params[d.paramName])
         return (
             <ParamSelector key={i}
                 className={'param-selector'}
@@ -18,11 +19,14 @@ export const ParamViewLineChart = (props) => {
                 options={d.options}
                 viewwidth={(viewwidth - (numParams + .5) )/numParams}
                 viewheight={7}
+                selectedValue={params[d.paramName]}
                 handleSwitch={handleSwitch}>
             </ParamSelector>
 
         )
     })
+
+    console.log('params from component', params)
 
     return (
         <DashboardComponentContainer

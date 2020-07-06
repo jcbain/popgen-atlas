@@ -40,12 +40,14 @@ const paramOptions = [
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
 
 ]
+let initParams = {}
+paramOptions.map(d => {
+    return initParams[d.paramName] = d.options[0].value;
+})
 
 export const PlayGround = (props) => {
-    let initParams = {}
-    paramOptions.map(d => {
-        return initParams[d.paramName] = d.options[0].value;
-    })
+
+
     const [params, setParams] = useState({...initParams})
     const [view, setView] = useState('chartview')
 
@@ -62,7 +64,8 @@ export const PlayGround = (props) => {
     const renderAction = () => {
         setView('chartview')
     }
-    console.log(params)
+    console.log(paramOptions)
+    console.log(`params:`, params)
 
 
     return (
