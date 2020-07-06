@@ -11,7 +11,8 @@ import styled from 'styled-components';
 import { removeParams, filterDataByParams, unique, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam } from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
 import ParameterCollection from './ParameterCollection';
-
+import {ParamLister} from './DashboardComponentCard/DashboardComponentCardsStyles'
+import {ParamSelector} from './ParamSelector/ParamSelector';
 
 import LineChart from '../charts/LineChart';
 
@@ -23,18 +24,17 @@ const ChartDiv = styled.div`
 class LineChartGroup extends Component{
     constructor(props){
         super(props);
-        this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
+        // this.params = removeParams(this.props.params, ['output_gen', 'pop']) 
         this.onBrush = this.onBrush.bind(this);
-        this.changeParamOption = this.changeParamOption.bind(this);
         this.viewScaleHeight = scaleLinear().domain([0, 100]).range([0, 1350])
         this.viewScaleWidth = scaleLinear().domain([0, 100]).range([0, 3000])
-        this.generations = filterDataByParams(this.props.data, this.params).map(d => d.output_gen).filter(unique);
+        this.generations = filterDataByParams(this.props.data, this.props.params).map(d => d.output_gen).filter(unique);
         this.lineLabels = [`line-${uuidv4()}`, `line-${uuidv4()}`]
         this.startExtent = [1000, 10000];
         this.chartWidths = [this.viewScaleWidth(this.props.displayDims.width), this.viewScaleWidth(this.props.displayDims.width)];
         this.chartHeights = [this.viewScaleHeight(this.props.displayDims.height * (7/9)), this.viewScaleHeight(this.props.displayDims.height * (2/9))];
         this.popStrokeWidths = [12, 5.5]
-        this.state = {start: this.startExtent[0], end: this.startExtent[1], params: {...this.params}}
+        this.state = {start: this.startExtent[0], end: this.startExtent[1]}
 
     }
 
@@ -43,31 +43,17 @@ class LineChartGroup extends Component{
         this.setState({start: d[0], end: d[1]});  
     }
 
-    changeParamOption(name, val){
-        this.setState(prevState => ({
-            params: {
-                ...prevState.params, [name]: val
-            }
-        }))
-    }
-
 
     render(){
         const yDomain = [max(this.props.data, d => d.pop_phen),min(this.props.data, d => d.pop_phen)]
         let xScale = scaleLinear();
         let yScale = scaleLinear().domain(yDomain);
-        const paramObj = {migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr', generation: 'output_gen'};
-        const paramMatrix = findUniqParamOptions(this.props.data, ['m', 'mu', 'r', 'sigsqr']).map(d => {
-            d.pop = toNumber(d.pop)
-            return d;
-        })
         const specialParamOpts = (this.props.specialOpts !== undefined) ? this.props.specialOpts : undefined;
         const staticFilterData = (specialParamOpts !== undefined) ? filterDataByMultipleOptsWithinSingleParam(this.props.data, specialParamOpts) : this.props.data
-        const params = this.props.useLocalParams ? this.state.params : removeParams(this.props.params, ['output_gen', 'pop']);
         const data = nest().key(d => d.pop).entries(filterDataByParams(staticFilterData.map(d =>{
             d.pop = toNumber(d.pop);
             return d;
-        }), params));
+        }), this.props.params));
         const popKeys = data.map( d => d.key );
         const brushScale = scaleLinear().domain([min(this.generations), max(this.generations)]).range([0,100])
         const focusColor = scaleOrdinal().domain(popKeys).range(['#E27D60', '#C38D9E', '#E8A87C']);
@@ -96,12 +82,27 @@ class LineChartGroup extends Component{
 
         let paramBar;
         if(this.props.useLocalParams){
-            paramBar =  <ParameterCollection data={paramMatrix}
-                            labels={{migration: 'm', mutation: 'mu', recombination: 'r', selection: 'sigsqr'}}
-                            initParams={this.params}
-                            gridArea={this.gridArea}
-                            paramFunc={this.changeParamOption}>
-                        </ParameterCollection>
+            const numParams = this.props.paramOptions.length;
+            const selectors = this.props.paramOptions.map((d, i) => {
+                return (
+                    <ParamSelector key={i}
+                        className={'line-chart-param-selector'}
+                        paramName={d.paramName}
+                        paramNameReadable={d.paramNameReadable}
+                        options={d.options}
+                        viewwidth={(this.props.displayDims.width - (numParams + .5) )/numParams}
+                        viewheight={3}
+                        addHover={true}
+                        selectedValue={this.props.params[d.paramName]}
+                        handleSwitch={this.props.handleSwitch}>
+                       
+                    </ParamSelector>
+                )
+            })
+            paramBar = <ParamLister numparams={numParams}
+                viewwidth={this.props.displayDims.width-2}>
+                    {selectors}
+                </ParamLister>
         }
         
         return(
@@ -115,7 +116,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[0]}
                     height={this.chartHeights[0]}
                     uniqId={this.lineLabels[0]}
-                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (4/5)) }}
+                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (7/10)) }}
                     generations={this.generations}
                     xDomain={[this.state.start, this.state.end]}
                     yDomain={yDomain}
@@ -135,7 +136,7 @@ class LineChartGroup extends Component{
                     width={this.chartWidths[1]}
                     height={this.chartHeights[1]}
                     uniqId={this.lineLabels[1]}
-                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (1/5))}}
+                    displayDims={{width: this.props.displayDims.width, height: (this.props.displayDims.height * (2/10))}}
                     generations={this.generations}
                     xDomain={[min(this.generations), max(this.generations)]}
                     yDomain={yDomain}

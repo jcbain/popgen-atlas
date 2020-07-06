@@ -81,7 +81,7 @@ export const PlayGround = (props) => {
                     viewwidth={40}
                     viewheight={40}
                     params={params}
-                    useLocalParams={false}
+                    useLocalParams={true}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     xAction={xAction}

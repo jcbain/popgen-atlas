@@ -19,6 +19,8 @@ export const DashboardComponentLineChart = (props) => {
                     useLocalParams={useLocalParams}
                     params={params}
                     specialOpts={specialOpts}
+                    paramOptions={paramOptions}
+                    handleSwitch={handleSwitch}
                     xAction={xAction}>
                 </ChartViewLineChart>
             )

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
-import LineChartGroup from '../../LineChartGroup';
+import LineChartGroup from '../../LineChartGroup2';
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 
@@ -16,7 +16,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 export const ChartViewLineChart = (props) => {
-    const {lineChartData, viewwidth, viewheight, params, useLocalParams, paramOpts, xAction} = props;
+    const {lineChartData, viewwidth, viewheight, params, useLocalParams, specialOpts, paramOptions, xAction, handleSwitch} = props;
 
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
@@ -26,8 +26,10 @@ export const ChartViewLineChart = (props) => {
                     className={'component-line-chart-group'}
                     params={params}
                     useLocalParams={useLocalParams}
-                    specialOpts={paramOpts}
-                    displayDims={{width: viewwidth-2, height: viewheight-2}}
+                    specialOpts={specialOpts}
+                    displayDims={{width: viewwidth, height: viewheight}}
+                    paramOptions={paramOptions}
+                    handleSwitch={handleSwitch}
                     >
                 </LineChartGroup>
 

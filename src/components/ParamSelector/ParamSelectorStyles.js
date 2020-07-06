@@ -39,17 +39,25 @@ ParamTitle.defaultProps = {
 
 export const SelectHeaderWrapper = styled.div`
     height: ${props => props.viewheight}vh;
-    border: 2px solid ${props => props.theme.color.secondary};
+    border: 2px solid ${props => props.addhover ? props.theme.color.main : props.theme.color.secondary};
     line-height: ${props => props.viewheight}vh;
     font-size: 1em;
     border-radius: 2px;
     z-index: 100;
     width: 100%;
+    transition-duration: 1s;
+    &:hover {
+        border: 2px solid ${props => props.addhover ? props.theme.color.secondary : props.theme.color.secondary};
+        svg > path {
+            color: ${props => props.addhover ? 'black' : 'black'};
+        }
+    }
 `
 SelectHeaderWrapper.defaultProps ={
     viewheight: 10,
     theme: {
         color: {
+            main: '#fff',
             secondary: "palevioletred"
         }
     }

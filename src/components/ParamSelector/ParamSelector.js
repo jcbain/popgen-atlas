@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import {SelectWrapper, ParamTitle, SelectHeaderWrapper, SelectTitle, OptionWrapper, OptionButton} from './ParamSelectorStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+    & > path {
+        color: ${props => props.addhover ? 'white' : 'black'};
+        
+    }
+`
 
 export const Option = (props) => {
     const {value, label, getValues, viewheight} = props;
@@ -25,7 +32,7 @@ Option.defaultProps = {
 }
 
 export const ParamSelector = (props) => {
-    const { className, paramName, paramNameReadable ,options, viewwidth, viewheight, handleSwitch, selectedValue } = props;
+    const { className, paramName, paramNameReadable ,options, viewwidth, viewheight, handleSwitch, selectedValue, addHover} = props;
     const [open, setOpen] = useState(false);
     const handleMenuOpen = () => setOpen(!open)
     const handleOptionSelect = (value, label) => {
@@ -50,11 +57,12 @@ export const ParamSelector = (props) => {
     return (
         <SelectWrapper className={className} 
             viewwidth={viewwidth}>
-            <SelectHeaderWrapper onClick={handleMenuOpen} viewheight={viewheight}>
+            <SelectHeaderWrapper addhover={addHover}
+                onClick={handleMenuOpen} viewheight={viewheight}>
                 <ParamTitle viewwidth={viewwidth} viewheight={viewheight/2}>{paramNameReadable.toLowerCase()}</ParamTitle>
                 <SelectTitle>
                     {selectedValue} 
-                    <FontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
+                    <StyledFontAwesomeIcon addhover={addHover} size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
                 </SelectTitle>
             </SelectHeaderWrapper>
             <OptionWrapper displayopt={open ? 'flex' : 'none'}
