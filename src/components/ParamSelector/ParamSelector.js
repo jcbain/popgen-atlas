@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import {SelectWrapper, ParamTitle, SelectHeaderWrapper, SelectTitle, OptionWrapper, OptionButton} from './ParamSelectorStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
-import { responsiveFontSizes } from '@material-ui/core';
-
-
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 
 export const Option = (props) => {

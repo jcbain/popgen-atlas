@@ -4,6 +4,7 @@ import { ParamSelector } from './components/ParamSelector/ParamSelector';
 import { ParamCard } from './components/DashboardComponentCard/DashboardComponentCards'
 import { ParamLister } from './components/DashboardComponentCard/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
+import {ParamViewLineChart} from './components/DashboardComponent/ParamView/ParamViewComponent'
 
 const theme = {
     color: {
@@ -56,37 +57,42 @@ export const PlayGround = (props) => {
         }))
     }
 
-    useEffect(() => {
-        // props.handleParamSwitch(params);
-    }, [params])
+    // useEffect(() => {
+    //     // props.handleParamSwitch(params);
+    // }, [params])
 
 
-    const selectors = paramOptions.map((d, i) => {
-        return (
-            <ParamSelector key={i}
-                className={'sample-class'}
-                paramName={d.paramName} 
-                options={d.options}
-                viewwidth={10}
-                viewheight={7}
-                handleSwitch={handleSwitch}
-            >
-            </ParamSelector>        
-        )
+    // const selectors = paramOptions.map((d, i) => {
+    //     return (
+    //         <ParamSelector key={i}
+    //             className={'sample-class'}
+    //             paramName={d.paramName} 
+    //             options={d.options}
+    //             viewwidth={10}
+    //             viewheight={7}
+    //             handleSwitch={handleSwitch}
+    //         >
+    //         </ParamSelector>        
+    //     )
 
-    })
+    // })
 
-    const numParams = selectors.length;
+    // const numParams = selectors.length;
 
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamCard description={"Some Description"}>
+                {/* <ParamCard description={"Some Description"}>
                     <ParamLister numparams={numParams}
                         viewwidth={40}>
                         {selectors}
                     </ParamLister>
-                </ParamCard>
+                </ParamCard> */}
+                <ParamViewLineChart viewwidth={50}
+                    viewheight={40}
+                    paramOptions={paramOptions}
+                    handleSwitch={handleSwitch}>
+                </ParamViewLineChart>
  
             </ThemeProvider>
         </div>
