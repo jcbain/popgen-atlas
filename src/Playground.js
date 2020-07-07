@@ -33,11 +33,17 @@ const selection = [
     {label: 5, value: '5'},
     {label: 25, value: '25'}
 ]
+
+const population = [
+    {label: 0, value: 0},
+    {label: 1, value: 1}
+]
 const paramOptions = [
     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
+    {paramName: 'pop', paramNameReadable: 'population', options: population}
 
 ]
 let initParams = {}
@@ -64,8 +70,7 @@ export const PlayGround = (props) => {
     const renderAction = () => {
         setView('chartview')
     }
-    console.log(paramOptions)
-    console.log(`params:`, params)
+
 
 
     return (
@@ -78,10 +83,12 @@ export const PlayGround = (props) => {
                 </ParamViewLineChart> */}
                 <DashboardComponentLineChart selectedView={view}
                     lineChartData={props.lineChartData}
+                    geneArchData={props.geneArchData}
+                    template={props.template}
                     viewwidth={40}
                     viewheight={40}
                     params={params}
-                    useLocalParams={true}
+                    useLocalParams={false}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     xAction={xAction}

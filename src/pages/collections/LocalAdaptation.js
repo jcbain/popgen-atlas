@@ -105,7 +105,10 @@ class LocalAdaptation extends Component {
         </section> */}
         <section className={'playground'}>
           
-            <PlayGround lineChartData={dataPopPhen}></PlayGround>
+            <PlayGround lineChartData={dataPopPhen}
+              geneArchData={data}
+              template={template}
+            ></PlayGround>
 
 
         </section>

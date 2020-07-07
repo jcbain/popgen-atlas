@@ -1,19 +1,21 @@
 import React from 'react';
 
-import {ChartViewLineChart} from './ChartView/ChartViewComponent';
+import ChartViewMain from './ChartView/ChartViewComponent';
 import {ParamViewLineChart} from './ParamView/ParamViewComponent';
 
 export const DashboardComponentLineChart = (props) => {
     const { selectedView, lineChartData, viewwidth, viewheight, 
             params, useLocalParams, specialOpts, paramOptions,
-            handleSwitch, xAction, renderAction} = props;
+            handleSwitch, xAction, renderAction,
+            geneArchData, template} = props;
 
 
     let viewDisplay;
     switch(selectedView){
         case('chartview'):
             viewDisplay = (
-                <ChartViewLineChart lineChartData={lineChartData}
+                <ChartViewMain selectedChart={'linechartgroup'}
+                    lineChartData={lineChartData}
                     viewwidth={viewwidth}
                     viewheight={viewheight}
                     useLocalParams={useLocalParams}
@@ -21,8 +23,11 @@ export const DashboardComponentLineChart = (props) => {
                     specialOpts={specialOpts}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
-                    xAction={xAction}>
-                </ChartViewLineChart>
+                    xAction={xAction}
+                    geneArchData={geneArchData}
+                    template={template}
+                    >
+                </ChartViewMain>
             )
         break;
         case('paramview'):
