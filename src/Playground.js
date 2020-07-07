@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 import {ThemeProvider} from 'styled-components';
-import {DashboardComponent}  from './components/DashboardComponent/DashboardComponent';
+import AddTabs from './components/Tabs/Tabs'
 import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
@@ -92,7 +92,7 @@ export const PlayGround = (props) => {
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}>
                 </ParamViewLineChart> */}
-                <DashboardComponent selectedView={view}
+                {/* <DashboardComponent selectedView={view}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
@@ -108,7 +108,8 @@ export const PlayGround = (props) => {
                     selectedChart={selectedChart}
                     cardAction={cardAction}>
 
-                </DashboardComponent>
+                </DashboardComponent> */}
+                <AddTabs></AddTabs>
                 <Dashboard paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     viewwidth={96}
