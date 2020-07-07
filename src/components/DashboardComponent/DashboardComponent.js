@@ -1,20 +1,23 @@
 import React from 'react';
 
 import ChartViewMain from './ChartView/ChartViewComponent';
-import {ParamViewLineChart} from './ParamView/ParamViewComponent';
+import ParamViewMain from './ParamView/ParamViewComponent';
+import ChartCardView from './ChartCardView/ChartCardViewComponent';
 
 
-export const DashboardComponentLineChart = (props) => {
+
+export const DashboardComponent = (props) => {
     const { selectedView, lineChartData, viewwidth, viewheight, 
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction,
-            geneArchData, template, identifier} = props;
+            geneArchData, template, identifier, selectedChart,
+            cardAction} = props;
 
     let viewDisplay;
     switch(selectedView){
         case('chartview'):
             viewDisplay = (
-                <ChartViewMain selectedChart={'genearchgroup'}
+                <ChartViewMain selectedChart={selectedChart}
                     lineChartData={lineChartData}
                     viewwidth={viewwidth}
                     viewheight={viewheight}
@@ -33,15 +36,25 @@ export const DashboardComponentLineChart = (props) => {
         break;
         case('paramview'):
             viewDisplay = (
-                <ParamViewLineChart viewwidth={viewwidth}
+                <ParamViewMain 
+                    selectedChart={selectedChart}
+                    viewwidth={viewwidth}
                     viewheight={viewheight}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     renderAction={renderAction}
                     params={params}>
-                </ParamViewLineChart>
+                </ParamViewMain>
             )
         break;
+        case('cardview'):
+            viewDisplay = <ChartCardView 
+                viewwidth={viewwidth}
+                viewheight={viewheight}
+                cardAction={cardAction}>
+
+            </ChartCardView>
+            break;
         default: viewDisplay = <div></div>;
     }
 

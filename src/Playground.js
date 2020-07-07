@@ -5,7 +5,7 @@ import { ParamCard } from './components/DashboardComponentCard/DashboardComponen
 import { ParamLister } from './components/DashboardComponentCard/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
 import {ParamViewLineChart} from './components/DashboardComponent/ParamView/ParamViewComponent'
-import {DashboardComponentLineChart}  from './components/DashboardComponent/DashboardComponent'
+import {DashboardComponent}  from './components/DashboardComponent/DashboardComponent'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -59,7 +59,8 @@ export const PlayGround = (props) => {
 
 
     const [params, setParams] = useState({...initParams})
-    const [view, setView] = useState('chartview')
+    const [view, setView] = useState('cardview')
+    const [selectedChart, setSelectedChart] = useState('linegroupchart');
     const identifier = uuidv4()
 
 
@@ -70,11 +71,16 @@ export const PlayGround = (props) => {
     }
 
     const xAction = () => {
-        setView('paramview')
+        setView('cardview')
     }
 
     const renderAction = () => {
         setView('chartview')
+    }
+
+    const cardAction = (id) => {
+        setSelectedChart(id)
+        setView('paramview')
     }
 
 
@@ -87,7 +93,7 @@ export const PlayGround = (props) => {
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}>
                 </ParamViewLineChart> */}
-                <DashboardComponentLineChart selectedView={view}
+                <DashboardComponent selectedView={view}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
@@ -99,9 +105,11 @@ export const PlayGround = (props) => {
                     handleSwitch={handleSwitch}
                     xAction={xAction}
                     renderAction={renderAction}
-                    identifier={identifier}>
+                    identifier={identifier}
+                    selectedChart={selectedChart}
+                    cardAction={cardAction}>
 
-                </DashboardComponentLineChart>
+                </DashboardComponent>
  
             </ThemeProvider>
         </div>

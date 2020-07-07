@@ -7,7 +7,6 @@ import LineChartGroup from '../../LineChartGroup2';
 import GeneArchGroup from '../../GeneArchGroup2';
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
-
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     position: absolute;
     top: 1vh;
