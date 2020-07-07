@@ -1,17 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import ChartViewMain from './ChartView/ChartViewComponent';
 import ParamViewMain from './ParamView/ParamViewComponent';
 import ChartCardView from './ChartCardView/ChartCardViewComponent';
 
-
+const DashboardComponentMainContainer = styled.div`
+    grid-area: ${props => props.gridarea || 'none'};
+    background-color: ${props => props.theme.color.main};
+`
 
 export const DashboardComponent = (props) => {
     const { selectedView, lineChartData, viewwidth, viewheight, 
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction,
             geneArchData, template, identifier, selectedChart,
-            cardAction} = props;
+            cardAction, gridarea} = props;
 
     let viewDisplay;
     switch(selectedView){
@@ -43,7 +47,8 @@ export const DashboardComponent = (props) => {
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     renderAction={renderAction}
-                    params={params}>
+                    params={params}
+                    xAction={xAction}>
                 </ParamViewMain>
             )
         break;
@@ -51,7 +56,8 @@ export const DashboardComponent = (props) => {
             viewDisplay = <ChartCardView 
                 viewwidth={viewwidth}
                 viewheight={viewheight}
-                cardAction={cardAction}>
+                cardAction={cardAction}
+                >
 
             </ChartCardView>
             break;
@@ -59,8 +65,8 @@ export const DashboardComponent = (props) => {
     }
 
     return (
-        <div>
+        <DashboardComponentMainContainer gridarea={gridarea}>
             {viewDisplay}
-        </div>
+        </DashboardComponentMainContainer>
     )
 }

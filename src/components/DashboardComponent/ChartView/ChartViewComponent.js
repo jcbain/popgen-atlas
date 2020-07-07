@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from '../../LineChartGroup2';
 import GeneArchGroup from '../../GeneArchGroup2';
@@ -44,8 +45,8 @@ ChartViewLineChart.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams, identifier} = props;
-
+    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams} = props;
+    const identifier = uuidv4()
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>

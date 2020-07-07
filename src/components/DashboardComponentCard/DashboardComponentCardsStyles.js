@@ -6,6 +6,7 @@ export const ParamContainer = styled.div`
     grid-template-rows: .25fr 1fr;
     align-items: start;
     margin-bottom: 2vh;
+    background-color: ${props => props.theme.color.main};
     border: 1px solid ${props => props.theme.color.graySecondary};
     padding-left: 0.5vw;
     padding-right: 0.5vw;
@@ -28,6 +29,7 @@ export const ParamDescription = styled.h2`
 
 export const ParamLister = styled.div`
     display: grid;
+    background-color: ${props => props.theme.color.main};
     grid-template-columns: repeat(${props => props.numparams}, 1fr);
     column-gap: 1vw;
     width: ${props => props.viewwidth - props.numparams}vw;

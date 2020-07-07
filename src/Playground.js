@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-import { ParamSelector } from './components/ParamSelector/ParamSelector';
-import { ParamCard } from './components/DashboardComponentCard/DashboardComponentCards'
-import { ParamLister } from './components/DashboardComponentCard/DashboardComponentCardsStyles';
 import {ThemeProvider} from 'styled-components';
-import {ParamViewLineChart} from './components/DashboardComponent/ParamView/ParamViewComponent'
-import {DashboardComponent}  from './components/DashboardComponent/DashboardComponent'
+import {DashboardComponent}  from './components/DashboardComponent/DashboardComponent';
+import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
+import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
 
 
 
@@ -15,7 +13,8 @@ const theme = {
       main: '#fff',
       secondary: '#6fa1c7',
       grayMain: '#6e6e6e',
-      graySecondary: '#efefef'
+      graySecondary: '#efefef',
+      background: '#f2f2f2'
     }
   }
 
@@ -110,6 +109,18 @@ export const PlayGround = (props) => {
                     cardAction={cardAction}>
 
                 </DashboardComponent>
+                <Dashboard paramOptions={paramOptions}
+                    handleSwitch={handleSwitch}
+                    viewwidth={96}
+                    params={params}
+                    lineChartData={props.lineChartData}
+                    geneArchData={props.geneArchData}
+                    template={props.template}
+                    identifier={identifier}
+
+                    >
+
+                </Dashboard>
  
             </ThemeProvider>
         </div>
