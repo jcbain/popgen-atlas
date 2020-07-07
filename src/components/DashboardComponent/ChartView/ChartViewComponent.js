@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { v4 as uuidv4 } from 'uuid';
 
 import LineChartGroup from '../../LineChartGroup2';
-import GeneArchGroup from '../../GeneArchGroup';
+import GeneArchGroup from '../../GeneArchGroup2';
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 
@@ -46,8 +45,7 @@ ChartViewLineChart.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const {geneArchData, template, params, viewwidth, viewheight, xAction, useLocalParams, identifier} = props;
-    
+    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams, identifier} = props;
 
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
@@ -57,7 +55,9 @@ export const ChartViewGenomeChart = (props) => {
                 template={template}
                 params={params}
                 useLocalParams={useLocalParams}
+                paramOptions={paramOptions}
                 identifier={identifier}
+                handleSwitch={handleSwitch}
                 displayDims={{width: viewwidth, height: viewheight}}
                 >
 
@@ -69,7 +69,6 @@ export const ChartViewGenomeChart = (props) => {
 
 const ChartViewMain = (props) => {
     const {selectedChart} = props;
-    const identifier = uuidv4();
 
 
     let displayChart;
@@ -78,13 +77,17 @@ const ChartViewMain = (props) => {
             displayChart = <ChartViewLineChart {...props} />
             break;
         case('genearchgroup'):
-            displayChart = <ChartViewGenomeChart {...props} identifier={identifier} />
+            displayChart = <ChartViewGenomeChart {...props} />
             break;
         default: 
             displayChart = <DashboardComponentContainer {...props} />
     }
 
     return displayChart;
+}
+
+ChartViewGenomeChart.defaultProps = {
+    xAction: () => console.log("I don't do anything")
 }
 
 export default ChartViewMain;

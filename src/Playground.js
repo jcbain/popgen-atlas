@@ -6,6 +6,9 @@ import { ParamLister } from './components/DashboardComponentCard/DashboardCompon
 import {ThemeProvider} from 'styled-components';
 import {ParamViewLineChart} from './components/DashboardComponent/ParamView/ParamViewComponent'
 import {DashboardComponentLineChart}  from './components/DashboardComponent/DashboardComponent'
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 const theme = {
     color: {
@@ -51,11 +54,14 @@ paramOptions.map(d => {
     return initParams[d.paramName] = d.options[0].value;
 })
 
+
 export const PlayGround = (props) => {
 
 
     const [params, setParams] = useState({...initParams})
     const [view, setView] = useState('chartview')
+    const identifier = uuidv4()
+
 
     const handleSwitch = (k, v) => {
         setParams(prevState => ({
@@ -88,11 +94,12 @@ export const PlayGround = (props) => {
                     viewwidth={40}
                     viewheight={40}
                     params={params}
-                    useLocalParams={false}
+                    useLocalParams={true}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     xAction={xAction}
-                    renderAction={renderAction}>
+                    renderAction={renderAction}
+                    identifier={identifier}>
 
                 </DashboardComponentLineChart>
  

@@ -10,7 +10,6 @@ import styled from 'styled-components';
 
 import { removeParams, filterDataByParams, unique, findUniqParamOptions, filterDataByMultipleOptsWithinSingleParam } from '../helpers/DataHelpers';
 import {createLabel} from '../helpers/Helpers';
-import ParameterCollection from './ParameterCollection';
 import {ParamLister} from './DashboardComponentCard/DashboardComponentCardsStyles'
 import {ParamSelector} from './ParamSelector/ParamSelector';
 
@@ -60,7 +59,6 @@ class LineChartGroup extends Component{
         const outsideColor = scaleOrdinal().domain(popKeys).range(['#dbd9d9', '#dbd9d9', '#dbd9d9']);
         const lineGrads1 = createGradients(popKeys, this.chartWidths[0], this.lineLabels[0], [min(this.generations), max(this.generations)])
         const lineGrads2 = createGradients(popKeys, this.chartWidths[1], this.lineLabels[1], this.startExtent)
-
         function createGradients(popKeys, width, name, startExtent){
             const gradients = popKeys
                 .map(d => <linearGradient key={`line-grad-${d}`}
@@ -104,7 +102,6 @@ class LineChartGroup extends Component{
                     {selectors}
                 </ParamLister>
         }
-        
         return(
             <ChartDiv className="line-group"
                 displaywidth={this.props.displayDims.width}
