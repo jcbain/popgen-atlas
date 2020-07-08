@@ -33,8 +33,11 @@ DashboardContainer.defaultProps = {
 }
 
 const Dashboard = (props) => {
-    const {paramOptions, handleSwitch, viewwidth, params,
-            lineChartData, geneArchData, identifier, template} = props;
+    const {paramOptions, handleSwitch, viewwidth, dashboardState,
+            lineChartData, geneArchData, identifier, template, 
+            isStatic, xAction, renderAction, cardAction} = props;
+
+    const {componentMain, componentSecondary, componentTertiary, componentFourth, componentGlobal} = dashboardState;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop');
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
@@ -47,10 +50,10 @@ const Dashboard = (props) => {
                 viewwidth={(viewwidth - (numParams + .5) )/numParams}
                 viewheight={7}
                 addHover={false}
-                selectedValue={params[d.paramName]}
-                handleSwitch={handleSwitch}>
+                selectedValue={componentGlobal['params'][d.paramName]}
+                handleSwitch={handleSwitch('componentGlobal')}
+                >
             </ParamSelector>
-
         )
     })
 
@@ -70,63 +73,79 @@ const Dashboard = (props) => {
             </DashboardComponentContainer>
 
             <DashboardComponent gridarea="main"
-                selectedView={'chartview'}
+                selectedView={componentMain['view']}
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
-                params={params}
+                params={isStatic ? componentGlobal['params'] : componentMain['params']}
                 useLocalParams={false}
                 paramOptions={paramOptions}
-                handleSwitch={handleSwitch}
-                selectedChart={'linechartgroup'}
-                identifier={identifier}>
+                selectedChart={componentMain['selectedChart']}
+                identifier={identifier}
+                handleSwitch={handleSwitch('componentMain')}
+                xAction={xAction('componentMain')}
+                renderAction={renderAction('componentMain')}
+                cardAction={cardAction('componentMain')}
+            >
             </DashboardComponent>
 
             <DashboardComponent gridarea="secondary"
-                selectedView={'chartview'}
+                selectedView={componentSecondary['view']}
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
-                params={params}
+                params={isStatic ? componentGlobal['params'] : componentSecondary['params']}
                 useLocalParams={false}
                 paramOptions={paramOptions}
-                handleSwitch={handleSwitch}
-                selectedChart={'linechartgroup'}
-                identifier={identifier}>
+                selectedChart={componentSecondary['selectedChart']}
+                identifier={identifier}
+                handleSwitch={handleSwitch('componentSecondary')}
+                xAction={xAction('componentSecondary')}
+                renderAction={renderAction('componentSecondary')}
+                cardAction={cardAction('componentSecondary')}
+            >
             </DashboardComponent>
 
             <DashboardComponent gridarea="tertiary"
-                selectedView={'chartview'}
+                selectedView={componentTertiary['view']}
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
-                params={params}
+                params={isStatic ? componentGlobal['params'] : componentTertiary['params']}
                 useLocalParams={false}
                 paramOptions={paramOptions}
-                handleSwitch={handleSwitch}
-                selectedChart={'genearchgroup'}
-                identifier={identifier}>
+                selectedChart={componentTertiary['selectedChart']}
+                identifier={identifier}
+                handleSwitch={handleSwitch('componentTertiary')}
+                xAction={xAction('componentTertiary')}
+                renderAction={renderAction('componentTertiary')}
+                cardAction={cardAction('componentTertiary')}
+            >
             </DashboardComponent>
 
             <DashboardComponent gridarea="fourth"
-                selectedView={'chartview'}
+                selectedView={componentFourth['view']}
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
-                params={params}
+                params={isStatic ? componentGlobal['params'] : componentFourth['params']}
                 useLocalParams={false}
                 paramOptions={paramOptions}
-                handleSwitch={handleSwitch}
-                selectedChart={'genearchgroup'}
-                identifier={identifier}>
+                selectedChart={componentFourth['selectedChart']}
+                identifier={identifier}
+                handleSwitch={handleSwitch('componentFourth')}
+                xAction={xAction('componentFourth')}
+                renderAction={renderAction('componentFourth')}
+                cardAction={cardAction('componentFourth')}
+            >
             </DashboardComponent>
 
         </DashboardContainer>

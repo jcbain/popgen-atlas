@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
+import { render } from '@testing-library/react';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -112,8 +113,9 @@ const AddTabs = (props) => {
         0: {
             componentMain: initComponentState('linechartgroup'),
             componentSecondary : initComponentState('linechartgroup'),
-            componentTertiary: initComponentState('genearchgroup'),
-            componentFourth: initComponentState('genearchgroup')
+            componentTertiary: initComponentState('linechartgroup'),
+            componentFourth: initComponentState('linechartgroup'),
+            componentGlobal: initComponentState('linechartgroup')
         }
 
     })
@@ -140,18 +142,59 @@ const AddTabs = (props) => {
         }))
     }
 
+    const xAction  = componentKey => () => {
+        setDashboardState(prevState => ({
+            ...prevState, [value]: {
+                ...prevState[value], [componentKey] : {
+                    ...prevState[value][componentKey], view: 'cardview'
+                }
+            }
+        }))
+    }
+
+    const renderAction = componentKey => () => {
+        setDashboardState(prevState => ({
+            ...prevState, [value]: {
+                ...prevState[value], [componentKey] : {
+                    ...prevState[value][componentKey], view: 'chartview'
+                }
+            }
+        }))
+    }
+
+    const cardAction = componentKey => id => {
+        setDashboardState(prevState => ({
+            ...prevState, [value]: {
+                ...prevState[value], [componentKey]: {
+                    ...prevState[value][componentKey], view: 'paramview', selectedChart: id
+                }
+            }
+        }))
+    }
+
+
+
+
+    console.log(dashboardState)
+    
+
     const tabs = [...Array(currentNumTabs)];
     const tabpanels = [...Array(currentNumTabs)].map((t, i) => {
         return ( 
             <TabPanel key={i} value={value} index={i}>
                 <Dashboard paramOptions={paramOptions}
+                    isStatic={false}
                     viewwidth={viewwidth}
                     handleSwitch={handleSwitch}
-                    params={{...initParams}}
+                    xAction={xAction}
+                    renderAction={renderAction}
+                    cardAction={cardAction}
+                    dashboardState={dashboardState[i]}
                     lineChartData={lineChartData}
                     geneArchData={geneArchData}
                     template={template}
-                    identifier={identifier}>
+                    identifier={identifier}
+                    >
 
                 </Dashboard>
                 
