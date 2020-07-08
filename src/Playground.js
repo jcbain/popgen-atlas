@@ -109,8 +109,13 @@ export const PlayGround = (props) => {
                     cardAction={cardAction}>
 
                 </DashboardComponent> */}
-                <AddTabs></AddTabs>
-                <Dashboard paramOptions={paramOptions}
+                <AddTabs viewwidth={96}
+                    lineChartData={props.lineChartData}
+                    geneArchData={props.geneArchData}
+                    template={props.template}
+                    identifier={identifier}>
+                </AddTabs>
+                {/* <Dashboard paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     viewwidth={96}
                     params={params}
@@ -121,7 +126,7 @@ export const PlayGround = (props) => {
 
                     >
 
-                </Dashboard>
+                </Dashboard> */}
  
             </ThemeProvider>
         </div>
