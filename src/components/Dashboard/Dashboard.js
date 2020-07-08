@@ -35,11 +35,12 @@ DashboardContainer.defaultProps = {
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, dashboardState,
             lineChartData, geneArchData, identifier, template, 
-            isStatic, xAction, renderAction, cardAction} = props;
+            isStatic, xAction, renderAction, cardAction, setStaticOpt} = props;
 
     const {componentMain, componentSecondary, componentTertiary, componentFourth, componentGlobal} = dashboardState;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop');
     const numParams = paramOptionsCopy.length;
+    const halfviewwidth = viewwidth/2
     const selectors = paramOptionsCopy.map((d, i) => {
         return (
             <ParamSelector key={i}
@@ -47,7 +48,7 @@ const Dashboard = (props) => {
                 paramName={d.paramName}
                 paramNameReadable={d.paramNameReadable}
                 options={d.options}
-                viewwidth={(viewwidth - (numParams + .5) )/numParams}
+                viewwidth={(halfviewwidth - (numParams + .5) )/numParams}
                 viewheight={7}
                 addHover={false}
                 selectedValue={componentGlobal['params'][d.paramName]}
@@ -60,16 +61,27 @@ const Dashboard = (props) => {
 
 
     return (
-        <DashboardContainer>
-            <DashboardComponentContainer gridarea={'param'}
+        <DashboardContainer >
+            <DashboardComponentContainer  gridarea={'param'}
+                display={'flex'}
                 viewwidth={viewwidth}>
-                <ParamCard description={'choose your parameters'}>
+                <ParamCard description={'static?'}
+                    viewwidth={halfviewwidth - 2}
+                >
+                    <button onClick={() => setStaticOpt(!isStatic)}>Change to {isStatic ? 'flexible' : 'static'}</button>
+                </ParamCard>
+                <ParamCard description={'choose your global parameters'}
+                    viewwidth={halfviewwidth -1 }
+                    display={isStatic ? 'grid' : 'none'}
+                >
                     <ParamLister numparams={numParams}
-                        viewwidth={viewwidth-2}
+                        viewwidth={halfviewwidth-2}
                     >
                         {selectors}
                     </ParamLister>
                 </ParamCard>
+
+
             </DashboardComponentContainer>
 
             <DashboardComponent gridarea="main"
@@ -80,7 +92,7 @@ const Dashboard = (props) => {
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
                 params={isStatic ? componentGlobal['params'] : componentMain['params']}
-                useLocalParams={false}
+                useLocalParams={!isStatic}
                 paramOptions={paramOptions}
                 selectedChart={componentMain['selectedChart']}
                 identifier={identifier}
@@ -99,7 +111,7 @@ const Dashboard = (props) => {
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
                 params={isStatic ? componentGlobal['params'] : componentSecondary['params']}
-                useLocalParams={false}
+                useLocalParams={!isStatic}
                 paramOptions={paramOptions}
                 selectedChart={componentSecondary['selectedChart']}
                 identifier={identifier}
@@ -118,7 +130,7 @@ const Dashboard = (props) => {
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
                 params={isStatic ? componentGlobal['params'] : componentTertiary['params']}
-                useLocalParams={false}
+                useLocalParams={!isStatic}
                 paramOptions={paramOptions}
                 selectedChart={componentTertiary['selectedChart']}
                 identifier={identifier}
@@ -137,7 +149,7 @@ const Dashboard = (props) => {
                 viewwidth={(viewwidth/2) - 1.5}
                 viewheight={40}
                 params={isStatic ? componentGlobal['params'] : componentFourth['params']}
-                useLocalParams={false}
+                useLocalParams={!isStatic}
                 paramOptions={paramOptions}
                 selectedChart={componentFourth['selectedChart']}
                 identifier={identifier}

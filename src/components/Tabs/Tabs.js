@@ -100,6 +100,7 @@ paramOptions.map(d => {
 const AddTabs = (props) => {
     const {lineChartData, geneArchData, template, identifier, viewwidth} = props;
     const [value, setValue] = useState(0);
+    const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
     const initComponentState = (selectedChart) => {
         return {
@@ -171,11 +172,6 @@ const AddTabs = (props) => {
             }
         }))
     }
-
-
-
-
-    console.log(dashboardState)
     
 
     const tabs = [...Array(currentNumTabs)];
@@ -183,7 +179,7 @@ const AddTabs = (props) => {
         return ( 
             <TabPanel key={i} value={value} index={i}>
                 <Dashboard paramOptions={paramOptions}
-                    isStatic={false}
+                    isStatic={staticOpt}
                     viewwidth={viewwidth}
                     handleSwitch={handleSwitch}
                     xAction={xAction}
@@ -194,6 +190,7 @@ const AddTabs = (props) => {
                     geneArchData={geneArchData}
                     template={template}
                     identifier={identifier}
+                    setStaticOpt={setStaticOpt}
                     >
 
                 </Dashboard>

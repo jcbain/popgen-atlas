@@ -113,7 +113,7 @@ class LocalAdaptation extends Component {
 
         </section>
 
-        <AddTabs maxNumTabs={4}
+        {/* <AddTabs maxNumTabs={4}
           data={data} 
           dataDiff={dataDiff}
           dataPopPhen={dataPopPhen} 
@@ -121,7 +121,7 @@ class LocalAdaptation extends Component {
           template={template}
           params={this.state.params}
         >
-        </AddTabs>
+        </AddTabs> */}
 
         {/* <section className="descriptive-chart">
           <div id="line-chart-group-1">

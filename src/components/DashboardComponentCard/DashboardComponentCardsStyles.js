@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ParamContainer = styled.div`
-    display: grid;
+    display: ${props => props.display || 'grid'};
     grid-template-columns: 1fr;
     grid-template-rows: .25fr 1fr;
     align-items: start;
@@ -12,6 +12,7 @@ export const ParamContainer = styled.div`
     padding-right: 0.5vw;
     padding-bottom: 1vh;
     border-radius: 3px;
+    width: ${props => props.viewwidth}vw;
 `;
 
 ParamContainer.defaultProps = {
