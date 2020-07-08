@@ -100,6 +100,7 @@ const Dashboard = (props) => {
                 xAction={xAction('componentMain')}
                 renderAction={renderAction('componentMain')}
                 cardAction={cardAction('componentMain')}
+                displayX={!isStatic}
             >
             </DashboardComponent>
 
@@ -119,6 +120,7 @@ const Dashboard = (props) => {
                 xAction={xAction('componentSecondary')}
                 renderAction={renderAction('componentSecondary')}
                 cardAction={cardAction('componentSecondary')}
+                displayX={!isStatic}
             >
             </DashboardComponent>
 
@@ -138,6 +140,7 @@ const Dashboard = (props) => {
                 xAction={xAction('componentTertiary')}
                 renderAction={renderAction('componentTertiary')}
                 cardAction={cardAction('componentTertiary')}
+                displayX={!isStatic}
             >
             </DashboardComponent>
 
@@ -157,6 +160,7 @@ const Dashboard = (props) => {
                 xAction={xAction('componentFourth')}
                 renderAction={renderAction('componentFourth')}
                 cardAction={cardAction('componentFourth')}
+                displayX={!isStatic}
             >
             </DashboardComponent>
 

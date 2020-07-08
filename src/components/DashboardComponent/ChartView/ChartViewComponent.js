@@ -13,10 +13,12 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     top: 1vh;
     right: 1vw;
     z-index: 1000;
+    display: ${props => props.display || 'block'}
 `;
 
 export const ChartViewLineChart = (props) => {
-    const {lineChartData, viewwidth, viewheight, params, useLocalParams, specialOpts, paramOptions, xAction, handleSwitch} = props;
+    const {lineChartData, viewwidth, viewheight, params, useLocalParams, 
+           specialOpts, paramOptions, xAction, handleSwitch, displayX} = props;
     
     const paramsCopy = {...params}
     delete paramsCopy.pop;
@@ -24,7 +26,7 @@ export const ChartViewLineChart = (props) => {
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>
-            <StyledFontAwesomeIcon onClick={xAction} size="xs" pull="right" icon={faTimes} />
+            <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <LineChartGroup data={lineChartData}
                 className={'component-line-chart-group'}
                 params={paramsCopy}
@@ -45,12 +47,12 @@ ChartViewLineChart.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams} = props;
+    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
     const identifier = uuidv4()
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>
-            <StyledFontAwesomeIcon onClick={xAction} size="xs" pull="right" icon={faTimes} />
+            <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <GeneArchGroup data={geneArchData}
                 template={template}
                 params={params}
@@ -87,6 +89,7 @@ const ChartViewMain = (props) => {
 }
 
 ChartViewGenomeChart.defaultProps = {
+    displayX: true,
     xAction: () => console.log("I don't do anything")
 }
 

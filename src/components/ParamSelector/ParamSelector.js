@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {SelectWrapper, ParamTitle, SelectHeaderWrapper, SelectTitle, OptionWrapper, OptionButton} from './ParamSelectorStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
+
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     & > path {
@@ -10,6 +12,10 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
         
     }
 `
+
+StyledFontAwesomeIcon.propTypes = {
+    addhover : PropTypes.bool,
+}
 
 export const Option = (props) => {
     const {value, label, getValues, viewheight} = props;
@@ -74,6 +80,10 @@ export const ParamSelector = (props) => {
 
         
     )
+}
+
+ParamSelector.propTypes = {
+    addhover : PropTypes.bool,
 }
 
 ParamSelector.defaultProps = {

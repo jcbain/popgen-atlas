@@ -15,7 +15,7 @@ export const DashboardComponent = (props) => {
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction,
             geneArchData, template, identifier, selectedChart,
-            cardAction, gridarea} = props;
+            cardAction, gridarea, displayX} = props;
 
     let viewDisplay;
     switch(selectedView){
@@ -34,6 +34,7 @@ export const DashboardComponent = (props) => {
                     geneArchData={geneArchData}
                     template={template}
                     identifier={identifier}
+                    displayX={displayX}
                     >
                 </ChartViewMain>
             )

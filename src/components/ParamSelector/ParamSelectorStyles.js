@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 export const SelectWrapper = styled.div`
     width: ${props => props.viewwidth}vw;
@@ -53,6 +54,11 @@ export const SelectHeaderWrapper = styled.div`
         }
     }
 `
+
+SelectHeaderWrapper.propTypes = {
+    onhover: PropTypes.bool,
+}
+
 SelectHeaderWrapper.defaultProps ={
     viewheight: 10,
     theme: {
