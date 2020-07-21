@@ -7,6 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
 import LineChart from './components/Charts/LineChart';
 
+import { nest } from 'd3-collection';
+import { min, max } from 'd3-array';
+
+
+
+import { filterDataByParams } from './helpers/DataHelpers'
+import { line } from 'd3';
+
 
 const theme = {
     color: {
@@ -45,7 +53,7 @@ const paramOptions = [
     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
-    {paramName: 'pop', paramNameReadable: 'population', options: population}
+    // {paramName: 'pop', paramNameReadable: 'population', options: population}
 
 ]
 let initParams = {}
@@ -57,7 +65,11 @@ paramOptions.map(d => {
 export const PlayGround = (props) => {
 
 
-    // const [params, setParams] = useState({...initParams})
+    const [params, setParams] = useState({...initParams})
+    const filteredLineChartData = filterDataByParams(props.lineChartData, params)
+
+    const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
+    console.log(max(tmpData.map(d => max(d.values, v => v.output_gen))))
     // const [view, setView] = useState('cardview')
     // const [selectedChart, setSelectedChart] = useState('linegroupchart');
     // const identifier = uuidv4()
@@ -87,8 +99,9 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <LineChart data={props.lineChartData}
+                <LineChart data={tmpData}
                     xDomain={[1000, 50000]}
+                    nestedVar={'values'}
                     xVar={'output_gen'}
                     yVar={'pop_phen'}></LineChart>
 
