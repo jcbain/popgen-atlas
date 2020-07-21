@@ -69,7 +69,6 @@ export const PlayGround = (props) => {
     const filteredLineChartData = filterDataByParams(props.lineChartData, params)
 
     const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
-    console.log(max(tmpData.map(d => max(d.values, v => v.output_gen))))
     // const [view, setView] = useState('cardview')
     // const [selectedChart, setSelectedChart] = useState('linegroupchart');
     // const identifier = uuidv4()
