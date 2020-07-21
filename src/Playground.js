@@ -5,7 +5,7 @@ import AddTabs from './components/Tabs/Tabs'
 import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
-
+import LineChart from './components/Charts/LineChart';
 
 
 const theme = {
@@ -57,76 +57,48 @@ paramOptions.map(d => {
 export const PlayGround = (props) => {
 
 
-    const [params, setParams] = useState({...initParams})
-    const [view, setView] = useState('cardview')
-    const [selectedChart, setSelectedChart] = useState('linegroupchart');
-    const identifier = uuidv4()
+    // const [params, setParams] = useState({...initParams})
+    // const [view, setView] = useState('cardview')
+    // const [selectedChart, setSelectedChart] = useState('linegroupchart');
+    // const identifier = uuidv4()
 
 
-    const handleSwitch = (k, v) => {
-        setParams(prevState => ({
-            ...prevState, [k]: v
-        }))
-    }
+    // const handleSwitch = (k, v) => {
+    //     setParams(prevState => ({
+    //         ...prevState, [k]: v
+    //     }))
+    // }
 
-    const xAction = () => {
-        setView('cardview')
-    }
+    // const xAction = () => {
+    //     setView('cardview')
+    // }
 
-    const renderAction = () => {
-        setView('chartview')
-    }
+    // const renderAction = () => {
+    //     setView('chartview')
+    // }
 
-    const cardAction = (id) => {
-        setSelectedChart(id)
-        setView('paramview')
-    }
+    // const cardAction = (id) => {
+    //     setSelectedChart(id)
+    //     setView('paramview')
+    // }
 
 
 
     return (
         <div>
             <ThemeProvider theme={theme}>
-                {/* <ParamViewLineChart viewwidth={50}
-                    viewheight={40}
-                    paramOptions={paramOptions}
-                    handleSwitch={handleSwitch}>
-                </ParamViewLineChart> */}
-                {/* <DashboardComponent selectedView={view}
-                    lineChartData={props.lineChartData}
-                    geneArchData={props.geneArchData}
-                    template={props.template}
-                    viewwidth={40}
-                    viewheight={40}
-                    params={params}
-                    useLocalParams={true}
-                    paramOptions={paramOptions}
-                    handleSwitch={handleSwitch}
-                    xAction={xAction}
-                    renderAction={renderAction}
-                    identifier={identifier}
-                    selectedChart={selectedChart}
-                    cardAction={cardAction}>
+                <LineChart data={props.lineChartData}
+                    xDomain={[1000, 50000]}
+                    xVar={'output_gen'}
+                    yVar={'pop_phen'}></LineChart>
 
-                </DashboardComponent> */}
-                <AddTabs viewwidth={96}
+                {/* <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}>
-                </AddTabs>
-                {/* <Dashboard paramOptions={paramOptions}
-                    handleSwitch={handleSwitch}
-                    viewwidth={96}
-                    params={params}
-                    lineChartData={props.lineChartData}
-                    geneArchData={props.geneArchData}
-                    template={props.template}
-                    identifier={identifier}
+                </AddTabs> */}
 
-                    >
-
-                </Dashboard> */}
  
             </ThemeProvider>
         </div>
