@@ -1,5 +1,7 @@
 import React, {useMemo} from 'react';
 
+import { TickText, TickLine } from './AxesStyles';
+
 const abbreviateValue = (val) =>{
    return   `${val/1000}K`;
 }
@@ -9,7 +11,7 @@ const XAxis = ({scale, height, axisMargin=20, includeAxisLine=true, fontSize=10}
     const rangeMax = scale.range()[1];
     const ticks = useMemo(() => {
         const width = rangeMax - rangeMin
-        const pixelsPerTick = 150
+        const pixelsPerTick = 100
         const numberOfTicksTarget = Math.max(
           1,
           Math.floor(
@@ -42,20 +44,19 @@ const XAxis = ({scale, height, axisMargin=20, includeAxisLine=true, fontSize=10}
               key={value}
               transform={`translate(${xOffset}, ${height})`}
             >
-              <line
-                y1="0"
+              <TickLine
+                y1="2"
                 y2="6"
-                stroke="currentColor"
               />
-              <text
+              <TickText
                 key={value}
                 style={{
                   fontSize: `${fontSize}px`,
                   textAnchor: "middle",
-                  transform: "translateY(25px) translateX(0px)"
+                  transform: "translateY(15px) translateX(0px)"
                 }}>
                 { abbreviateValue(value) }
-              </text>
+              </TickText>
             </g>
           ))}
         </svg>

@@ -22,8 +22,10 @@ const theme = {
       secondary: '#6fa1c7',
       grayMain: '#6e6e6e',
       graySecondary: '#efefef',
-      background: '#f2f2f2'
-    }
+      background: '#f2f2f2',
+    },
+    tickfont: 'Roboto Slab',
+    tickfill: '#6e6e6e'
   }
 
 const migration = [

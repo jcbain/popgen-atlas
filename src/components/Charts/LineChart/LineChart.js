@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {ThemeProvider} from 'styled-components';
 
 import { FocusedStop, OutsideStop } from './LineChartStyles';
+import XAxis from '../Axes/XAxis';
 import { closestFromArray } from '../../../helpers/Helpers';
 import { NativeSelect } from '@material-ui/core';
 
@@ -28,7 +29,9 @@ const themes = {
 const LineChart = (props) => {
     const { className, data, xDomain, 
             nestedVar, xVar, yVar, popStrokeWidth,
-            width, height, displayDims, chartPadding } = props;
+            displayDims, chartPadding } = props;
+    const width = displayDims.width * 5,
+          height = displayDims.height * 5;
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
     const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]),
@@ -69,6 +72,9 @@ const LineChart = (props) => {
             height={`${displayDims.height}vh`}>
             {gradients}
             {lines}
+            <XAxis scale={xScale} 
+                height={height - chartPadding.bottom}
+                includeAxisLine={false}/>
         </svg>
     )
 
@@ -76,11 +82,9 @@ const LineChart = (props) => {
 
 LineChart.defaultProps = {
     className: 'linechart',
-    width: 500,
-    height: 250,
-    displayDims: {width: 100, height: 50},
-    chartPadding: {left: 20, right: 20, top: 10, bottom: 40},
-    popStrokeWidth: 5,
+    displayDims: {width: 100, height: 20},
+    chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
+    popStrokeWidth: 3,
 }
 
 export default LineChart;
