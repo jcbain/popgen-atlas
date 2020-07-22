@@ -5,7 +5,7 @@ import AddTabs from './components/Tabs/Tabs'
 import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
-import LineChart from './components/Charts/LineChart';
+import LineChart from './components/Charts/LineChart/LineChart';
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
@@ -66,6 +66,8 @@ export const PlayGround = (props) => {
 
 
     const [params, setParams] = useState({...initParams})
+    const [leftPerc, setLeftPerc] = useState(0)
+    const [rightPerc, setRightPerc] = useState(100)
     const filteredLineChartData = filterDataByParams(props.lineChartData, params)
 
     const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
@@ -98,11 +100,13 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
+
                 <LineChart data={tmpData}
                     xDomain={[1000, 50000]}
                     nestedVar={'values'}
                     xVar={'output_gen'}
-                    yVar={'pop_phen'}></LineChart>
+                    yVar={'pop_phen'}>
+                </LineChart>
 
                 {/* <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
