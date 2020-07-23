@@ -2,7 +2,6 @@ import React, { Children } from 'react';
 import { line, curveMonotoneX }  from 'd3-shape';
 import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
-import { select, selectAll, event, mouse } from 'd3-selection';
 import styled from 'styled-components';
 import { flatten, uniq } from 'lodash'
 import {ThemeProvider} from 'styled-components';
@@ -12,8 +11,6 @@ import BrushHorizontal from './BrushHorizontal';
 import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
 import { closestFromArray } from '../../../helpers/Helpers';
-import { NativeSelect } from '@material-ui/core';
-import { filter } from 'lodash';
 
 const themePop0 = {
     popColorFocus: '#ac9e47',
@@ -52,10 +49,10 @@ const LineChart = (props) => {
             gradientUnits={'userSpaceOnUse'}
         >
             <ThemeProvider theme={themes[d.key]}>
-                <OutsideStop offset={`20%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
-                <FocusedStop offset={`20%`}></FocusedStop>
-                <FocusedStop offset={`80%`}></FocusedStop>
-                <OutsideStop offset={`80%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <OutsideStop className={`left-${uniqId}`} offset={`20%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <FocusedStop className={`left-${uniqId}`} offset={`20%`}></FocusedStop>
+                <FocusedStop className={`right-${uniqId}`} offset={`80%`}></FocusedStop>
+                <OutsideStop className={`right-${uniqId}`}offset={`80%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
             </ThemeProvider>
 
         </linearGradient>
@@ -73,19 +70,17 @@ const LineChart = (props) => {
 
     let brush;
     if ( addBrush ) {
-        const interval = closestFromArray(uniqXVals)
-
+        const interval = closestFromArray(uniqXVals);
 
         brush = <BrushHorizontal x1={chartPadding.left}
             x2={width - chartPadding.right}
             y1={chartPadding.top}
             y2={height - chartPadding.bottom}
             interval={interval} 
-            xScale={xScale} />
-
+            xScale={xScale}
+            uniqId={uniqId} />
     }
 
- 
     return (
         <svg className={className}
             viewBox={[0, 0, width, height]}
