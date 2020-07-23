@@ -13,10 +13,12 @@ FocusedStop.defaultProps = {
 
 export const OutsideStop = styled.stop`
     stop-color: ${props => props.theme.popColorOutside};
+    stop-opacity: ${props => props.stopopacity};
 `
 
 OutsideStop.defaultProps = {
     theme: {
         popColorOutside: '#d6d6d6',
-    }
+    },
+    stopopacity: 1,
 }

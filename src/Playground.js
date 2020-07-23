@@ -6,6 +6,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
 import LineChart from './components/Charts/LineChart/LineChart';
+import BrushLineChart from './components/Charts/LineChart/BrushLineChart';
+import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
@@ -25,7 +27,8 @@ const theme = {
       background: '#f2f2f2',
     },
     tickfont: 'Itim',
-    tickfill: '#6e6e6e'
+    tickfill: '#6e6e6e',
+    handlecolor: '#2b2b2b'
   }
 
 const migration = [
@@ -103,21 +106,11 @@ export const PlayGround = (props) => {
         <div>
             <ThemeProvider theme={theme}>
 
-                <LineChart data={tmpData}
-                    xDomain={[1000, 50000]}
+                <LineChartGroup data={tmpData}
                     nestedVar={'values'}
                     xVar={'output_gen'}
-                    yVar={'pop_phen'}>
-                </LineChart>
+                    yVar={'pop_phen'} />
 
-                {/* <AddTabs viewwidth={96}
-                    lineChartData={props.lineChartData}
-                    geneArchData={props.geneArchData}
-                    template={props.template}
-                    identifier={identifier}>
-                </AddTabs> */}
-
- 
             </ThemeProvider>
         </div>
     )
