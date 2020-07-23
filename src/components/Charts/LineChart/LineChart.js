@@ -8,16 +8,17 @@ import {ThemeProvider} from 'styled-components';
 
 import { FocusedStop, OutsideStop } from './LineChartStyles';
 import XAxis from '../Axes/XAxis';
+import YAxis from '../Axes/YAxis';
 import { closestFromArray } from '../../../helpers/Helpers';
 import { NativeSelect } from '@material-ui/core';
 
 const themePop0 = {
-    popColorFocus: '#eb348f',
+    popColorFocus: '#ac9e47',
     popColorOutside: '#d6d6d6'
 }
 
 const themePop1 = {
-    popColorFocus: '#36b7f7',
+    popColorFocus: '#7ca1a1',
     popColorOutside: '#d6d6d6'
 }
 
@@ -70,6 +71,11 @@ const LineChart = (props) => {
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
+            <YAxis scale={yScale}
+                x0={chartPadding.left}
+                width={width - chartPadding.right}
+                pixelsPerTick={height/5}
+                includeAxisLine={false}/>
             {gradients}
             {lines}
             <XAxis scale={xScale} 
@@ -82,7 +88,7 @@ const LineChart = (props) => {
 
 LineChart.defaultProps = {
     className: 'linechart',
-    displayDims: {width: 100, height: 20},
+    displayDims: {width: 100, height: 40},
     chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
     popStrokeWidth: 3,
 }

@@ -24,7 +24,7 @@ const theme = {
       graySecondary: '#efefef',
       background: '#f2f2f2',
     },
-    tickfont: 'Roboto Slab',
+    tickfont: 'Itim',
     tickfill: '#6e6e6e'
   }
 
