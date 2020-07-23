@@ -75,6 +75,8 @@ export const PlayGround = (props) => {
     const [rightPerc, setRightPerc] = useState(100)
     const filteredLineChartData = filterDataByParams(props.lineChartData, params)
 
+    const [tmpList, setTmpList] = useState([0, 2])
+
     const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
     // const [view, setView] = useState('cardview')
     // const [selectedChart, setSelectedChart] = useState('linegroupchart');
@@ -104,6 +106,8 @@ export const PlayGround = (props) => {
 
     return (
         <div>
+            <button onClick={() => setTmpList([3, 4])}>Click</button>
+            <button onClick={() => console.log(tmpList)}>Click Here</button>
             <ThemeProvider theme={theme}>
 
                 <LineChartGroup data={tmpData}

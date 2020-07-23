@@ -31,13 +31,16 @@ const LineChart = (props) => {
     const { className, data, xDomain, 
             xScale, nestedVar, xVar, yVar, uniqId,
             popStrokeWidth, displayDims, chartPadding,
-            visibleOpacity, addBrush } = props;
+            visibleOpacity, addBrush, getDomain } = props;
     const width = displayDims.width * 5,
           height = displayDims.height * 5;
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
+    const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
+          maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
     xScale.domain(xDomain).range([chartPadding.left, width - chartPadding.right]);
     const yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
+    const brushScale = scaleLinear().domain([minX, maxX]).range([0, 100])
     const drawLine = line().x(d => xScale(d[xVar])).y(d => yScale(d[yVar])).curve(curveMonotoneX);
     const uniqXVals = uniq(flatten(data.map( d => d[nestedVar].map(v => v[xVar] ))), true)
 
@@ -49,10 +52,10 @@ const LineChart = (props) => {
             gradientUnits={'userSpaceOnUse'}
         >
             <ThemeProvider theme={themes[d.key]}>
-                <OutsideStop className={`left-${uniqId}`} offset={`20%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
-                <FocusedStop className={`left-${uniqId}`} offset={`20%`}></FocusedStop>
-                <FocusedStop className={`right-${uniqId}`} offset={`80%`}></FocusedStop>
-                <OutsideStop className={`right-${uniqId}`}offset={`80%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <OutsideStop className={`left-${uniqId}`} offset={`${brushScale(props.contextDomain[0])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <FocusedStop className={`left-${uniqId}`} offset={`${brushScale(props.contextDomain[0])}%`}></FocusedStop>
+                <FocusedStop className={`right-${uniqId}`} offset={`${brushScale(props.contextDomain[1])}%`}></FocusedStop>
+                <OutsideStop className={`right-${uniqId}`}offset={`${brushScale(props.contextDomain[1])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
             </ThemeProvider>
 
         </linearGradient>
@@ -78,7 +81,7 @@ const LineChart = (props) => {
             y2={height - chartPadding.bottom}
             interval={interval} 
             xScale={xScale}
-            uniqId={uniqId} />
+            getDomain={getDomain} />
     }
 
     return (

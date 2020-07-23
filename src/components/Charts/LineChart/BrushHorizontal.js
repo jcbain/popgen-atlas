@@ -24,11 +24,8 @@ StyledG.defaultProps = {
 
 function BrushHorizontal(props) {
 
-    const { x1, x2, y1, y2, interval, xScale, uniqId} = props;
-    const minX = xScale.domain()[0],
-          maxX = xScale.domain()[1];
-
-    const brushScale = scaleLinear().domain([minX, maxX]).range([0, 100])
+    const { x1, x2, y1, y2, interval, xScale, getDomain} = props;
+    const [ minX, maxX ]= xScale.domain();
     const brushRef = useRef(null);
 
     let horizontalBrush = brushX()
@@ -41,16 +38,29 @@ function BrushHorizontal(props) {
         if ( selection !== null ) {
             const [x0, x1] = selection.map(d => interval(xScale.invert(d)));
             select(brushRef.current).transition().duration(1).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
-            selectAll(`.left-${uniqId}`).transition().duration(1).attr('offset', `${brushScale(x0)}%`)
-            selectAll(`.right-${uniqId}`).transition().duration(1).attr('offset', `${brushScale(x1)}%`)
+            getDomain([x0, x1])
         }
     }
-         
+
+    function centerBrushOnTouch(){
+        const dx = xScale(5000);
+        const [cx] = mouse(this);
+        const [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
+        select(brushRef.current)
+            .call(horizontalBrush.move, x1 > maxX ? [maxX - dx, maxX].map(xScale) 
+                : x0 < minX ? [minX, minX + dx].map(xScale) 
+                : [x0, x1].map(xScale));
+    }
+
     useEffect(() => {
         select(brushRef.current)
             .call(horizontalBrush)
-        
-    }, [horizontalBrush])
+            .call(horizontalBrush.move, [minX, maxX].map(xScale))
+            .call(g => g.select('.overlay')
+            .datum({type: 'selection'})
+            .on('mousedown touchstart', centerBrushOnTouch));
+
+    }, [])
 
     return (
         <StyledG ref={brushRef}>
