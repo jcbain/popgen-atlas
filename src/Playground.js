@@ -106,8 +106,6 @@ export const PlayGround = (props) => {
 
     return (
         <div>
-            <button onClick={() => setTmpList([3, 4])}>Click</button>
-            <button onClick={() => console.log(tmpList)}>Click Here</button>
             <ThemeProvider theme={theme}>
 
                 <LineChartGroup data={tmpData}

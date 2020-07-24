@@ -30,7 +30,8 @@ const LineChartGroup = (props) => {
                 displayDims={{width: 100, height: 40}}
                 xVar={xVar}
                 yVar={yVar}
-                visibleOpacity={false}>
+                visibleOpacity={false}
+                addReferenceLine={true}>
             </LineChart>
             <LineChart data={data}
                 uniqId={uuidv4()}

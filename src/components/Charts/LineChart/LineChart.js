@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { line, curveMonotoneX }  from 'd3-shape';
 import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
@@ -10,6 +10,7 @@ import { FocusedStop, OutsideStop } from './LineChartStyles';
 import BrushHorizontal from './BrushHorizontal';
 import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
+import ReferenceLine from './ReferenceLine';
 import { closestFromArray } from '../../../helpers/Helpers';
 
 const themePop0 = {
@@ -31,7 +32,11 @@ const LineChart = (props) => {
     const { className, data, xDomain, 
             xScale, nestedVar, xVar, yVar, uniqId,
             popStrokeWidth, displayDims, chartPadding,
-            visibleOpacity, addBrush, getDomain } = props;
+            visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
+    const lineChartRef = useRef(null);
+    const [xPos, setXPos] = useState(undefined);
+
+
     const width = displayDims.width * 5,
           height = displayDims.height * 5;
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
@@ -84,8 +89,29 @@ const LineChart = (props) => {
             getDomain={getDomain} />
     }
 
+    let referenceLine;
+    if ( addReferenceLine ) {
+        referenceLine = <ReferenceLine xPos={xPos}/>
+    }
+
+    useEffect(() => {
+        if (addReferenceLine){
+            let point, position;
+            lineChartRef.current.addEventListener('mousemove', (e) => {
+                point = lineChartRef.current.createSVGPoint()
+                point.x = e.clientX
+                point.y = e.clientY
+                position = point.matrixTransform(lineChartRef.current.getScreenCTM().inverse())
+                if(position.x >= xScale.range()[0] && position.x <= xScale.range()[1]){
+                    setXPos(position.x)
+                }
+            })
+        }
+    }, [])
+
     return (
         <svg className={className}
+            ref={lineChartRef}
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
@@ -97,6 +123,7 @@ const LineChart = (props) => {
             {gradients}
             {lines}
             {brush}
+            {referenceLine}
             <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}
                 includeAxisLine={false}/>
@@ -111,7 +138,8 @@ LineChart.defaultProps = {
     chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
     popStrokeWidth: 3,
     visibleOpacity: true,
-    addBrush: false
+    addBrush: false,
+    addReferenceLine: false,
 }
 
 export default LineChart;
