@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledLine = styled.line`
@@ -8,7 +8,7 @@ const StyledLine = styled.line`
 `
 
 const ReferenceLine = (props) => {
-    const {xScale, yScale, xPos, yTextPos, showStroke, y1, y2} = props;
+    const {yScale, xPos, yTextPos, showStroke, y1, y2} = props;
     const texts = yTextPos.map(( d, i ) => {
         return (
             <text key={i} 
