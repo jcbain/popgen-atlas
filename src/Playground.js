@@ -102,7 +102,7 @@ export const PlayGround = (props) => {
     //     setView('paramview')
     // }
 
-
+    console.log(tmpData)
 
     return (
         <div>

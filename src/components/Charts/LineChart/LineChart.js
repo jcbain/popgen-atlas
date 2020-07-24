@@ -39,11 +39,8 @@ const LineChart = (props) => {
             popStrokeWidth, displayDims, chartPadding,
             visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
     const lineChartRef = useRef(null);
-    const tmpRef = useRef(null);
-    const tmpRef2 = useRef(null)
-    const pathRefs = data.map(() => createRef())
-    const newRefs = [tmpRef, tmpRef2]
     const [xPos, setXPos] = useState(undefined);
+    const [yTextPos, setYTextPos] = useState([...Array(data.length)])
     const [showStroke, setShowStroke] = useState(false)
 
 
@@ -54,10 +51,12 @@ const LineChart = (props) => {
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
     xScale.domain(xDomain).range([chartPadding.left, width - chartPadding.right]);
+
     const yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
     const brushScale = scaleLinear().domain([minX, maxX]).range([0, 100])
     const drawLine = line().x(d => xScale(d[xVar])).y(d => yScale(d[yVar])).curve(curveMonotoneX);
     const uniqXVals = uniq(flatten(data.map( d => d[nestedVar].map(v => v[xVar] ))), true)
+    const interval = closestFromArray(uniqXVals);
 
     const gradients = data.map((d, i) => (
         <linearGradient key={i}
@@ -78,7 +77,7 @@ const LineChart = (props) => {
     ))
 
     const lines = data.map(( d, i ) => (
-        <StatefulPath ref={pathRefs[i]}
+        <StatefulPath
             key={i}
             className='someclass'
             fill='none'
@@ -87,11 +86,8 @@ const LineChart = (props) => {
             d={drawLine(d[nestedVar])}/>
     ))
 
-    
-    console.log(data)
     let brush;
     if ( addBrush ) {
-        const interval = closestFromArray(uniqXVals);
         brush = <BrushHorizontal x1={chartPadding.left}
             x2={width - chartPadding.right}
             y1={chartPadding.top}
@@ -104,41 +100,37 @@ const LineChart = (props) => {
     let referenceLine;
     if ( addReferenceLine ) {
         referenceLine = <ReferenceLine showStroke={showStroke}
-            xPos={xPos} 
+            xPos={xPos}
+            yScale={yScale} 
+            yTextPos={yTextPos}
             y1={chartPadding.top} 
             y2={height - chartPadding.bottom}/>
     }
-    // console.log(tmpRef)
-    // console.log(newRefs)
-    // console.log(pathRefs)
-    // console.log(lineChartRef)
-    const something = (ref, x, yScale) => {
-        const yPoint = ref.getPointAtLength(x)
-        console.log(yScale.invert(yPoint.y))
+
+
+    const filterByIntervalPlace = (dat, x) => {
+        const filtered = dat.filter(d => d[xVar] === x)
+        return filtered.map(v => v[yVar])   
+        
     }
-    useEffect(() => {
-        if (addReferenceLine){
-            let point, position;
-            let aref = pathRefs[0].current
-            lineChartRef.current.addEventListener('mousemove', (e) => {
-                
-                point = lineChartRef.current.createSVGPoint()
-                point.x = e.clientX
-                point.y = e.clientY
-                
-                position = point.matrixTransform(lineChartRef.current.getScreenCTM().inverse())
-                if(position.x >= xScale.range()[0] && position.x <= xScale.range()[1]){
-                    setXPos(position.x)
-                    // console.log(position.x)
-                    // console.log(xScale.range()[0])
-                    // console.log(xScale(1000))
-                    // console.log(xScale(10000))
-                    // console.log(position.x)
-                    something(aref, position.x, yScale)
-                }
-            })
+
+
+    const movement = (e) => {
+        let point = lineChartRef.current.createSVGPoint()
+        point.x = e.clientX
+        point.y = e.clientY
+        
+        let position = point.matrixTransform(lineChartRef.current.getScreenCTM().inverse())
+        if(position.x >= xScale(xDomain[0]) && position.x <= xScale(xDomain[1])){
+            setXPos(position.x)
         }
-    }, [])
+        if(position.x >= 0 && position.x <= width){
+            setYTextPos(data.map(d => filterByIntervalPlace(d.values, interval(xScale.invert(position.x)))))
+        }
+
+    }
+
+   
 
 
     return (
@@ -146,6 +138,7 @@ const LineChart = (props) => {
             ref={lineChartRef}
             onMouseEnter={() => addReferenceLine && setShowStroke(true)}
             onMouseLeave={() => addReferenceLine && setShowStroke(false)}
+            onMouseMove={addReferenceLine && movement}
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
