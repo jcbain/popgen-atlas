@@ -50,7 +50,7 @@ const ReferenceLine = (props) => {
         )
     })
     return (
-        <g x={showContent ? xPos : 0} y={0}>
+        <g>
             <StyledLine display={showContent ? 'inline' : 'none'}
                 x1={showContent ? xPos : 0} x2={showContent ? xPos : 0} y1={showContent ? y1 : 0} y2={showContent ? y2 : 0} />
             {texts}

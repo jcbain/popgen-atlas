@@ -78,29 +78,29 @@ export const PlayGround = (props) => {
     const [tmpList, setTmpList] = useState([0, 2])
 
     const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
-    // const [view, setView] = useState('cardview')
-    // const [selectedChart, setSelectedChart] = useState('linegroupchart');
-    // const identifier = uuidv4()
+    const [view, setView] = useState('cardview')
+    const [selectedChart, setSelectedChart] = useState('linegroupchart');
+    const identifier = uuidv4()
 
 
-    // const handleSwitch = (k, v) => {
-    //     setParams(prevState => ({
-    //         ...prevState, [k]: v
-    //     }))
-    // }
+    const handleSwitch = (k, v) => {
+        setParams(prevState => ({
+            ...prevState, [k]: v
+        }))
+    }
 
-    // const xAction = () => {
-    //     setView('cardview')
-    // }
+    const xAction = () => {
+        setView('cardview')
+    }
 
-    // const renderAction = () => {
-    //     setView('chartview')
-    // }
+    const renderAction = () => {
+        setView('chartview')
+    }
 
-    // const cardAction = (id) => {
-    //     setSelectedChart(id)
-    //     setView('paramview')
-    // }
+    const cardAction = (id) => {
+        setSelectedChart(id)
+        setView('paramview')
+    }
 
     console.log(tmpData)
 

@@ -31,7 +31,7 @@ const themes = {
 
 const LineChart = (props) => {
     const { className, data, xDomain, 
-            xScale, nestedVar, xVar, yVar, uniqId,
+            nestedVar, xVar, yVar, uniqId,
             popStrokeWidth, displayDims, chartPadding,
             visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
     const lineChartRef = useRef(null);
@@ -46,10 +46,9 @@ const LineChart = (props) => {
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
-    xScale.domain(xDomain).range([chartPadding.left, width - chartPadding.right]);
-
-    const yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
-    const brushScale = scaleLinear().domain([minX, maxX]).range([0, 100])
+    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]), 
+          yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]),
+          brushScale = scaleLinear().domain([minX, maxX]).range([0, 100])
     const drawLine = line().x(d => xScale(d[xVar])).y(d => yScale(d[yVar])).curve(curveMonotoneX);
     const uniqXVals = uniq(flatten(data.map( d => d[nestedVar].map(v => v[xVar] ))), true)
     const interval = closestFromArray(uniqXVals);
