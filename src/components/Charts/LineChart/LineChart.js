@@ -99,7 +99,7 @@ const LineChart = (props) => {
 
     let referenceLine;
     if ( addReferenceLine ) {
-        referenceLine = <ReferenceLine showStroke={showStroke}
+        referenceLine = <ReferenceLine showContent={showStroke}
             xPos={xPos}
             yScale={yScale} 
             yTextPos={yTextPos}
