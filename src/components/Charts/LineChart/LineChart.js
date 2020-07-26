@@ -25,13 +25,9 @@ const themePop1 = {
 }
 
 const themes = {
-    0: themePop0,
-    1: themePop1,
+    "0": themePop0,
+    "1": themePop1,
 }
-
-const StatefulPath = forwardRef((props, ref) =>{ 
-    return <path {...props} ref={ref}></path>
-})
 
 const LineChart = (props) => {
     const { className, data, xDomain, 
@@ -40,7 +36,7 @@ const LineChart = (props) => {
             visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
     const lineChartRef = useRef(null);
     const [xPos, setXPos] = useState(undefined);
-    const [yTextPos, setYTextPos] = useState([...Array(data.length)])
+    const [yTextPos, setYTextPos] = useState([...Array(data.length)].map(() => Object()))
     const [showStroke, setShowStroke] = useState(false)
 
 
@@ -77,7 +73,7 @@ const LineChart = (props) => {
     ))
 
     const lines = data.map(( d, i ) => (
-        <StatefulPath
+        <path
             key={i}
             className='someclass'
             fill='none'
@@ -104,13 +100,20 @@ const LineChart = (props) => {
             yScale={yScale} 
             yTextPos={yTextPos}
             y1={chartPadding.top} 
-            y2={height - chartPadding.bottom}/>
+            y2={height - chartPadding.bottom}
+            x1={chartPadding.left}
+            x2={width - chartPadding.right}
+            yVar={yVar}
+            themes={themes}/>
     }
 
 
     const filterByIntervalPlace = (dat, x) => {
-        const filtered = dat.filter(d => d[xVar] === x)
-        return filtered.map(v => v[yVar])   
+        let newObj = {}
+        const filtered = dat[nestedVar].filter(d => d[xVar] === x)
+        newObj['key'] = dat.key;
+        newObj[yVar] = filtered.map(v => v[yVar]).pop()
+        return newObj  
         
     }
 
@@ -123,11 +126,8 @@ const LineChart = (props) => {
         let position = point.matrixTransform(lineChartRef.current.getScreenCTM().inverse())
         if(position.x >= xScale(xDomain[0]) && position.x <= xScale(xDomain[1])){
             setXPos(position.x)
+            setYTextPos(data.map(d => filterByIntervalPlace(d, interval(xScale.invert(position.x)))))
         }
-        if(position.x >= 0 && position.x <= width){
-            setYTextPos(data.map(d => filterByIntervalPlace(d.values, interval(xScale.invert(position.x)))))
-        }
-
     }
 
    
@@ -138,7 +138,7 @@ const LineChart = (props) => {
             ref={lineChartRef}
             onMouseEnter={() => addReferenceLine && setShowStroke(true)}
             onMouseLeave={() => addReferenceLine && setShowStroke(false)}
-            onMouseMove={addReferenceLine && movement}
+            onMouseMove={addReferenceLine ? movement : undefined}
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>

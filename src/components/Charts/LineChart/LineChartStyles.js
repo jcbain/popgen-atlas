@@ -22,3 +22,27 @@ OutsideStop.defaultProps = {
     },
     stopopacity: 1,
 }
+
+export const ReferenceText = styled.text`
+    fill: ${props => props.theme.popColorFocus};
+    font-family: ${props => props.referencefont};
+`
+
+ReferenceText.defaultProps = {
+    theme: {
+        popColorFocus: '#eb348f',
+    },
+    referencefont: 'Itim'
+}
+
+export const ReferenceRect =  styled.rect`
+    fill: #ffffff;
+    stroke: ${props => props.theme.popColorFocus};
+    stroke-width: 2px;
+`
+
+ReferenceRect.defaultProps = {
+    theme: {
+        popColorFocus: '#eb348f',
+    }
+}
