@@ -24,7 +24,7 @@ StyledG.defaultProps = {
 
 function BrushHorizontal(props) {
 
-    const { x1, x2, y1, y2, interval, xScale, getDomain} = props;
+    const { x1, x2, y1, y2, interval, xScale, getDomain, contextDomain} = props;
     const [ minX, maxX ]= xScale.domain();
     const brushRef = useRef(null);
 
@@ -55,7 +55,7 @@ function BrushHorizontal(props) {
     useEffect(() => {
         select(brushRef.current)
             .call(horizontalBrush.extent([[x1, y1], [x2, y2]]))
-            .call(horizontalBrush.move, [minX, maxX].map(xScale))
+            .call(horizontalBrush.move, contextDomain.map(xScale))
             .call(g => g.select('.overlay')
             .datum({type: 'selection'})
             .on('mousedown touchstart', centerBrushOnTouch));

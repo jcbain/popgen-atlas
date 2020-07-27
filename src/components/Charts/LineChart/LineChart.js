@@ -2,8 +2,7 @@ import React, { useRef, createRef, useEffect, useState, forwardRef } from 'react
 import { line, curveMonotoneX }  from 'd3-shape';
 import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
-import styled from 'styled-components';
-import { flatten, uniq, toInteger } from 'lodash'
+import { flatten, uniq } from 'lodash'
 import {ThemeProvider} from 'styled-components';
 
 import { FocusedStop, OutsideStop } from './LineChartStyles';
@@ -12,7 +11,6 @@ import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
 import ReferenceLine from './ReferenceLine';
 import { closestFromArray } from '../../../helpers/Helpers';
-import { path } from 'd3';
 
 const themePop0 = {
     popColorFocus: '#ac9e47',
@@ -87,6 +85,7 @@ const LineChart = (props) => {
             y2={height - chartPadding.bottom}
             interval={interval} 
             xScale={xScale}
+            contextDomain={contextDomain}
             getDomain={getDomain} />
     }
 
