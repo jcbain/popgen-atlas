@@ -38,8 +38,8 @@ const LineChart = (props) => {
     const [showStroke, setShowStroke] = useState(false)
 
 
-    const width = displayDims.width * 6,
-          height = displayDims.height * 5;
+    const width = displayDims.width * 8,
+          height = displayDims.height * 5.5;
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),

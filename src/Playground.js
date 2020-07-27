@@ -2,11 +2,8 @@ import React, {useState, useEffect} from 'react';
 
 import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
-import Dashboard from './components/Dashboard/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
-import { DashboardComponentContainer } from './components/DashboardComponent/DashboardComponentStyles';
-import LineChart from './components/Charts/LineChart/LineChart';
-import BrushLineChart from './components/Charts/LineChart/BrushLineChart';
+import Histogram from './components/Charts/Histogram/Histogram'
 import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
 
 import { nest } from 'd3-collection';
@@ -53,11 +50,16 @@ const population = [
     {label: 0, value: 0},
     {label: 1, value: 1}
 ]
+
+const generation = [...Array(49 - 40)].map((d, i) => {
+    return {label: (i + 1 + 41) * 1000, value: (i + 1 + 41) * 1000}
+})
 const paramOptions = [
     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
+    {paramName: 'output_gen', paramNameReadable: 'generation', options: generation}
     // {paramName: 'pop', paramNameReadable: 'population', options: population}
 
 ]
@@ -70,14 +72,16 @@ paramOptions.map(d => {
 export const PlayGround = (props) => {
 
 
+
     const [params, setParams] = useState({...initParams})
     const [leftPerc, setLeftPerc] = useState(0)
     const [rightPerc, setRightPerc] = useState(100)
-    const filteredLineChartData = filterDataByParams(props.lineChartData, params)
 
     const [tmpList, setTmpList] = useState([0, 2])
-
-    const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
+    const filteredGenomeData = filterDataByParams(props.geneArchData, params)
+    const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
+    // const filteredLineChartData = filterDataByParams(props.lineChartData, params)
+    // const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
     const [view, setView] = useState('cardview')
     const [selectedChart, setSelectedChart] = useState('linegroupchart');
     const identifier = uuidv4()
@@ -102,27 +106,19 @@ export const PlayGround = (props) => {
         setView('paramview')
     }
 
-    console.log(tmpData)
-
     return (
         <div>
             <ThemeProvider theme={theme}>
-
-                {/* <LineChartGroup data={tmpData}
+                <Histogram data={tmpData}
                     nestedVar={'values'}
-                    xVar={'output_gen'}
-                    yVar={'pop_phen'}
-                    useLocalParams={true}
-                    paramOptions={paramOptions}
-                    handleSwitch={handleSwitch}
-                    params={params} /> */}
+                    xVar={'positional_phen'}></Histogram>
 
-                <AddTabs viewwidth={96}
+                {/* <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}>
-                </AddTabs>
+                </AddTabs> */}
 
             </ThemeProvider>
         </div>
