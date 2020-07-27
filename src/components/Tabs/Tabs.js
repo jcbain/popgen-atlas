@@ -114,8 +114,8 @@ const AddTabs = (props) => {
         0: {
             componentMain: initComponentState('linechartgroup'),
             componentSecondary : initComponentState('linechartgroup'),
-            componentTertiary: initComponentState('genearchgroup'),
-            componentFourth: initComponentState('genearchgroup'),
+            componentTertiary: initComponentState('linechartgroup'),
+            componentFourth: initComponentState('linechartgroup'),
             componentGlobal: initComponentState('linechartgroup')
         }
 

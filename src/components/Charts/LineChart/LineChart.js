@@ -30,7 +30,7 @@ const themes = {
 }
 
 const LineChart = (props) => {
-    const { className, data, xDomain, 
+    const { className, data, xDomain, contextDomain,
             nestedVar, xVar, yVar, uniqId,
             popStrokeWidth, displayDims, chartPadding,
             visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
@@ -40,7 +40,7 @@ const LineChart = (props) => {
     const [showStroke, setShowStroke] = useState(false)
 
 
-    const width = displayDims.width * 5,
+    const width = displayDims.width * 6,
           height = displayDims.height * 5;
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
@@ -61,14 +61,12 @@ const LineChart = (props) => {
             gradientUnits={'userSpaceOnUse'}
         >
             <ThemeProvider theme={themes[d.key]}>
-                <OutsideStop className={`left-${uniqId}`} offset={`${brushScale(props.contextDomain[0])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
-                <FocusedStop className={`left-${uniqId}`} offset={`${brushScale(props.contextDomain[0])}%`}></FocusedStop>
-                <FocusedStop className={`right-${uniqId}`} offset={`${brushScale(props.contextDomain[1])}%`}></FocusedStop>
-                <OutsideStop className={`right-${uniqId}`}offset={`${brushScale(props.contextDomain[1])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <OutsideStop className={`left-${uniqId}`} offset={`${brushScale(contextDomain[0])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
+                <FocusedStop className={`left-${uniqId}`} offset={`${brushScale(contextDomain[0])}%`}></FocusedStop>
+                <FocusedStop className={`right-${uniqId}`} offset={`${brushScale(contextDomain[1])}%`}></FocusedStop>
+                <OutsideStop className={`right-${uniqId}`}offset={`${brushScale(contextDomain[1])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
             </ThemeProvider>
-
         </linearGradient>
-
     ))
 
     const lines = data.map(( d, i ) => (
@@ -116,7 +114,6 @@ const LineChart = (props) => {
         
     }
 
-
     const movement = (e) => {
         let point = lineChartRef.current.createSVGPoint()
         point.x = e.clientX
@@ -128,9 +125,6 @@ const LineChart = (props) => {
             setYTextPos(data.map(d => filterByIntervalPlace(d, interval(xScale.invert(position.x)))))
         }
     }
-
-   
-
 
     return (
         <svg className={className}

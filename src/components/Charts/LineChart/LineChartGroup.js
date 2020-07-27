@@ -5,14 +5,21 @@ import { v4 as uuidv4 } from 'uuid';
 import LineChart from './LineChart';
 import {ParamLister} from '../../DashboardComponentCard/DashboardComponentCardsStyles'
 import {ParamSelector} from '../../ParamSelector/ParamSelector';
+import {ChartDiv} from '../ChartStyles';
 
 
 const LineChartGroup = (props) => {
-    const { data, nestedVar, xVar, yVar, useLocalParams,
+    const { data, nestedVar, xVar, yVar, useLocalParams, 
+            displayDims, className,
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
     const [contextDomain, setContextDomain] = useState([minX, maxX])
+    const focusChartHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
+          contextChartHeight = displayDims.height * (useLocalParams ? 6/20 : 7/20),
+          paramOptionsHeight = displayDims.height * 2/20;
+    const dimsFocusChart = Object.assign({}, displayDims, {height: focusChartHeight}),
+          dimsContextChart = Object.assign({}, displayDims, {height: contextChartHeight})
     
     const getDomain = (domain) => {
         setContextDomain(domain)
@@ -28,28 +35,30 @@ const LineChartGroup = (props) => {
                     paramName={d.paramName}
                     paramNameReadable={d.paramNameReadable}
                     options={d.options}
-                    viewwidth={(100 - (numParams + .5) )/numParams}
-                    viewheight={3}
+                    viewwidth={(displayDims.width - (numParams + .5) )/numParams}
+                    viewheight={paramOptionsHeight}
                     addHover={true}
                     selectedValue={params[d.paramName]}
                     handleSwitch={handleSwitch} />
             )
         })
-        paramBar = <ParamLister viewwidth={100-2}>
+        paramBar = <ParamLister numparams={numParams} viewwidth={displayDims.width}>
             { selectors }
         </ParamLister>
 
     }
 
     return (
-        <div>
+        <ChartDiv className={className}
+            displaywidth={displayDims.width}
+            displayheight={displayDims.height}>
             {paramBar}
             <LineChart data={data}
                 uniqId={uuidv4()}
                 xDomain={contextDomain}
                 contextDomain={[minX, maxX]}
                 nestedVar={nestedVar}
-                displayDims={{width: 100, height: 40}}
+                displayDims={dimsFocusChart}
                 xVar={xVar}
                 yVar={yVar}
                 visibleOpacity={false}
@@ -60,20 +69,22 @@ const LineChartGroup = (props) => {
                 xDomain={[minX, maxX]}
                 contextDomain={contextDomain}
                 nestedVar={nestedVar}
-                displayDims={{width: 100, height: 20}}
+                displayDims={dimsContextChart}
                 xVar={xVar}
                 yVar={yVar}
                 addBrush={true}
                 getDomain={getDomain}>
             </LineChart>
-        </div>
+        </ChartDiv>
     )
     
 }
 
 LineChartGroup.defaultProps = {
     getDomain: () => console.log('you need a function here'),
-    useLocalParams: true,
+    useLocalParams: false,
+    displayDims: {width: 50, height: 50},
+    className: "line-chart-group-brush"
 }
 
 export default LineChartGroup;

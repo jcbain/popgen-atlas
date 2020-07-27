@@ -108,21 +108,21 @@ export const PlayGround = (props) => {
         <div>
             <ThemeProvider theme={theme}>
 
-                <LineChartGroup data={tmpData}
+                {/* <LineChartGroup data={tmpData}
                     nestedVar={'values'}
                     xVar={'output_gen'}
                     yVar={'pop_phen'}
                     useLocalParams={true}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
-                    params={params} />
+                    params={params} /> */}
 
-                {/* <AddTabs viewwidth={96}
+                <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}>
-                </AddTabs> */}
+                </AddTabs>
 
             </ThemeProvider>
         </div>

@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
+import { nest } from 'd3-collection';
 
-import LineChartGroup from '../../LineChartGroup2';
+
+// import LineChartGroup from '../../LineChartGroup2';
+import LineChartGroup from '../../Charts/LineChart/LineChartGroup';
 import GeneArchGroup from '../../GeneArchGroup2';
+import {filterDataByParams} from '../../../helpers/DataHelpers'
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -22,16 +26,20 @@ export const ChartViewLineChart = (props) => {
     
     const paramsCopy = {...params}
     delete paramsCopy.pop;
+    const filteredLineChartData = filterDataByParams(lineChartData, paramsCopy)
+    const nestedData = nest().key(d => d.pop).entries(filteredLineChartData);
 
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
-            <LineChartGroup data={lineChartData}
+            <LineChartGroup data={nestedData}
                 className={'component-line-chart-group'}
+                nestedVar={'values'}
+                xVar={'output_gen'}
+                yVar={'pop_phen'}
                 params={paramsCopy}
                 useLocalParams={useLocalParams}
-                specialOpts={specialOpts}
                 displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 handleSwitch={handleSwitch}

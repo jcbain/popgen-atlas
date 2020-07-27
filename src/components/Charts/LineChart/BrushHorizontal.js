@@ -29,7 +29,6 @@ function BrushHorizontal(props) {
     const brushRef = useRef(null);
 
     let horizontalBrush = brushX()
-        .extent([[x1, y1], [x2, y2]])
         .on('start brush end', brushed)
 
     function brushed() {
@@ -37,8 +36,9 @@ function BrushHorizontal(props) {
         if (!event.sourceEvent || !selection) return;
         if ( selection !== null ) {
             const [x0, x1] = selection.map(d => interval(xScale.invert(d)));
-            select(brushRef.current).transition().duration(1).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
             getDomain([x0, x1])
+            select(brushRef.current).transition().duration(1).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+            
         }
     }
 
@@ -54,13 +54,13 @@ function BrushHorizontal(props) {
 
     useEffect(() => {
         select(brushRef.current)
-            .call(horizontalBrush)
+            .call(horizontalBrush.extent([[x1, y1], [x2, y2]]))
             .call(horizontalBrush.move, [minX, maxX].map(xScale))
             .call(g => g.select('.overlay')
             .datum({type: 'selection'})
             .on('mousedown touchstart', centerBrushOnTouch));
 
-    }, [])
+    }, [y1, y2, x1, x2, minX, maxX])
 
     return (
         <StyledG ref={brushRef}>

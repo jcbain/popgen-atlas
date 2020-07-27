@@ -38,6 +38,7 @@ const ReferenceLine = (props) => {
                     <ReferenceText key={i} 
                         x={showContent ? '50%' : '0'}
                         y={showContent ? '50%' : '0'}
+                        fontSize={'10px'}
                         alignmentBaseline="middle"
                         dominantBaseline="middle"
                         textAnchor="middle"

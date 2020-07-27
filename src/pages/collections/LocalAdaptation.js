@@ -81,6 +81,8 @@ const dataPopPhenDiff = nest()
     return d;
   })
 
+  console.log(dataPopPhen)
+
 
   
 class LocalAdaptation extends Component {
