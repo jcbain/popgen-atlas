@@ -3,7 +3,8 @@ import React, {useMemo} from 'react';
 import { TickText, TickLine } from './AxesStyles';
 
 const abbreviateValue = (val) =>{
-   return   `${val/1000}K`;
+  const updatedVal = val >= 1000 ? `${val/1000}K` : `${val}`
+   return updatedVal;
 }
 
 const XAxis = ({scale, height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
