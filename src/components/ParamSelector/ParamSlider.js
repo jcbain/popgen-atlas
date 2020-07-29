@@ -37,7 +37,7 @@ const prettifyText = (val) => {
 }
 
 export const ParamSlider = (props) => {
-    const {options} = props;
+    const {options, undateValChange} = props;
     const optionValues = options.options.map(d => d.value)
     const minVal = min(optionValues)
     const initial = minVal - minVal
@@ -66,7 +66,9 @@ export const ParamSlider = (props) => {
         const tickInterval = closestFromArray(optionValues)
 
         newX = interval(newX)
-        setThumbText(tickInterval(sliderScale.invert(newX)))
+        const currentVal = tickInterval(sliderScale.invert(newX))
+        setThumbText(currentVal)
+        undateValChange(currentVal)
         const newPercentage = getPercentage(newX, end);
         
  

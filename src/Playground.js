@@ -89,9 +89,13 @@ paramOptions.map(d => {
 
 export const PlayGround = (props) => {
 
-    console.log(generation)
-
     const [params, setParams] = useState({...initParams})
+    const updateGeneration = (g) => {
+        // console.log(g)
+        setParams(prevState => ({
+            ...prevState, 'output_gen': g
+        }))
+    }
     const [leftPerc, setLeftPerc] = useState(0)
     const [rightPerc, setRightPerc] = useState(100)
 
@@ -127,12 +131,13 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamSlider initial={0}
-                     max={25}
+                <ParamSlider 
+                     undateValChange={updateGeneration}
                      options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
                 <Histogram data={tmpData}
                     nestedVar={'values'}
                     xVar={'positional_phen'}
+  
                     themes={themes}></Histogram>
 
                 {/* <AddTabs viewwidth={96}
