@@ -69,8 +69,8 @@ const population = [
     {label: 1, value: 1}
 ]
 
-const generation = [...Array(49 - 40)].map((d, i) => {
-    return {label: (i + 1 + 41) * 1000, value: (i + 1 + 41) * 1000}
+const generation = [...Array(49)].map((d, i) => {
+    return {label: (i + 2) * 1000, value: (i + 2) * 1000}
 })
 const paramOptions = [
     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
@@ -89,7 +89,7 @@ paramOptions.map(d => {
 
 export const PlayGround = (props) => {
 
-
+    console.log(generation)
 
     const [params, setParams] = useState({...initParams})
     const [leftPerc, setLeftPerc] = useState(0)
@@ -127,7 +127,9 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamSlider initial={0} max={25}></ParamSlider>
+                <ParamSlider initial={0}
+                     max={25}
+                     options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
                 <Histogram data={tmpData}
                     nestedVar={'values'}
                     xVar={'positional_phen'}

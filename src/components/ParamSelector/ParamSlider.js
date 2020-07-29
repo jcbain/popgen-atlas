@@ -1,5 +1,7 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components';
+import { min, max } from 'd3-array';
+
 import { closestFromArray } from '../../helpers/Helpers';
 
 
@@ -30,11 +32,20 @@ const getPercentage = (current, max) => (100 * current) / max;
 const getLeft = (percentage, thumbWidth) => `${percentage}%`;
 
 export const ParamSlider = (props) => {
-    const {initial, max} = props;
-    const initialPercentage = getPercentage(initial, max);
+    const {options} = props;
+    const optionValues = options.options.map(d => d.value)
+    const minVal = min(optionValues)
+    const initial = minVal - minVal
+    const maxVal = max(optionValues) 
+    const terminus = maxVal - minVal
+
+
+    const initialPercentage = getPercentage(initial, terminus);
     const sliderRef = useRef()
     const thumbRef = useRef()
     const diffRef = useRef()
+
+    console.log(options)
 
     const sliderheight = 2,
           thumbheight = 3;
@@ -44,12 +55,12 @@ export const ParamSlider = (props) => {
         const thumbWidth = thumbRef.current.offsetWidth;
         const end = sliderRef.current.offsetWidth - thumbRef.current.offsetWidth;
         const start = 0
-        const individualInterval = (end - start - thumbWidth)/11;
-        const cumInterval = [...Array(12)].map((d, i) => i * individualInterval)
+        console.log(end - thumbWidth)
+        const individualInterval = (end - start - thumbWidth)/optionValues.length;
+        const cumInterval = [...Array(optionValues.length)].map((d, i) => i * individualInterval)
         const interval = closestFromArray(cumInterval)
-        console.log(cumInterval)
-
         newX = interval(newX)
+        console.log(cumInterval)
      
         // if (newX < start) {
         //   newX = 0;
