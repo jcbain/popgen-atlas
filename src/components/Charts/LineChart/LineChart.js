@@ -12,26 +12,13 @@ import YAxis from '../Axes/YAxis';
 import ReferenceLine from './ReferenceLine';
 import { closestFromArray } from '../../../helpers/Helpers';
 
-const themePop0 = {
-    popColorFocus: '#ac9e47',
-    popColorOutside: '#d6d6d6'
-}
 
-const themePop1 = {
-    popColorFocus: '#7ca1a1',
-    popColorOutside: '#d6d6d6'
-}
-
-const themes = {
-    "0": themePop0,
-    "1": themePop1,
-}
 
 const LineChart = (props) => {
     const { className, data, xDomain, contextDomain,
             nestedVar, xVar, yVar, uniqId,
             popStrokeWidth, displayDims, chartPadding,
-            visibleOpacity, addBrush, getDomain, addReferenceLine } = props;
+            visibleOpacity, addBrush, getDomain, addReferenceLine, themes } = props;
     const lineChartRef = useRef(null);
     const [xPos, setXPos] = useState(undefined);
     const [yTextPos, setYTextPos] = useState([...Array(data.length)].map(() => Object()))

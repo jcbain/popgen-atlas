@@ -35,7 +35,7 @@ DashboardContainer.defaultProps = {
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, dashboardState,
             lineChartData, geneArchData, identifier, template, 
-            isStatic, xAction, renderAction, cardAction, setStaticOpt} = props;
+            isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
 
     const {componentMain, componentSecondary, componentTertiary, componentFourth, componentGlobal} = dashboardState;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop');
@@ -101,6 +101,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction('componentMain')}
                 cardAction={cardAction('componentMain')}
                 displayX={!isStatic}
+                themes={themes}
             >
             </DashboardComponent>
 
@@ -121,6 +122,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction('componentSecondary')}
                 cardAction={cardAction('componentSecondary')}
                 displayX={!isStatic}
+                themes={themes}
             >
             </DashboardComponent>
 
@@ -141,6 +143,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction('componentTertiary')}
                 cardAction={cardAction('componentTertiary')}
                 displayX={!isStatic}
+                themes={themes}
             >
             </DashboardComponent>
 
@@ -161,6 +164,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction('componentFourth')}
                 cardAction={cardAction('componentFourth')}
                 displayX={!isStatic}
+                themes={themes}
             >
             </DashboardComponent>
 

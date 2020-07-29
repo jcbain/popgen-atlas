@@ -22,7 +22,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 export const ChartViewLineChart = (props) => {
     const {lineChartData, viewwidth, viewheight, params, useLocalParams, 
-           specialOpts, paramOptions, xAction, handleSwitch, displayX} = props;
+           specialOpts, paramOptions, xAction, handleSwitch, displayX, themes} = props;
     
     const paramsCopy = {...params}
     delete paramsCopy.pop;
@@ -43,6 +43,7 @@ export const ChartViewLineChart = (props) => {
                 displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 handleSwitch={handleSwitch}
+                themes={themes}
                 >
             </LineChartGroup>
 

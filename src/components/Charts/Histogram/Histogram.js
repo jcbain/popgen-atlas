@@ -1,12 +1,26 @@
 import React from 'react';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { min, max, histogram, sum, mean, variance } from 'd3-array';
+import { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
 
+const BinRect = styled.rect`
+    fill: ${props => props.theme.popColorAlpha};
+    stroke: ${props => props.theme.popColorFocus};
+`;
+
+BinRect.defaultProps = {
+    theme: {
+        popColorAlpha: '#ac9e47',
+        popColorFocus: '#ac9e47',
+    }
+}
+
 const Histogram = (props) => {
     const { data, xVar, nestedVar, className, displayDims,
-            chartPadding, } = props;
+            chartPadding, themes} = props;
     const width = displayDims.width * 8,
           height = displayDims.height * 5.5;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
@@ -28,16 +42,15 @@ const Histogram = (props) => {
     const histograms = histogramGroups.map((d, i) => {
         return d.map( (g, j) => {
             return (
-                <rect key={`${i}-${j}`}
-                    x={0}
-                    transform={`translate(${xScale(g.x0)}, ${yScale(g.length)})`}
-                    width={binWidth}
-                    height={yScale(0) - yScale(g.length)}
-                    fill={d.key == 0 ? 'blue' : 'red'}
-                    stroke={d.key == 0 ? 'blue' : 'red'}
-                    strokeWidth={binStroke}
-                    fillOpacity={0.2}
-                    strokeOpacity={.5}></rect>
+                <ThemeProvider key={`${i}-${j}`} theme={themes[d.key]}>
+                    <BinRect x={0}
+                        transform={`translate(${xScale(g.x0)}, ${yScale(g.length)})`}
+                        width={binWidth}
+                        height={yScale(0) - yScale(g.length)}
+                        strokeWidth={binStroke}
+                        fillOpacity={0.2}
+                        strokeOpacity={.5} />
+                </ThemeProvider>
             )
         })
     })

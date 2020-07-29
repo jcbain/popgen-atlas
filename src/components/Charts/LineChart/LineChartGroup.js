@@ -10,7 +10,7 @@ import {ChartDiv} from '../ChartStyles';
 
 const LineChartGroup = (props) => {
     const { data, nestedVar, xVar, yVar, useLocalParams, 
-            displayDims, className,
+            displayDims, className, themes,
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
@@ -62,7 +62,8 @@ const LineChartGroup = (props) => {
                 xVar={xVar}
                 yVar={yVar}
                 visibleOpacity={false}
-                addReferenceLine={true}>
+                addReferenceLine={true}
+                themes={themes}>
             </LineChart>
             <LineChart data={data}
                 uniqId={uuidv4()}
@@ -73,7 +74,8 @@ const LineChartGroup = (props) => {
                 xVar={xVar}
                 yVar={yVar}
                 addBrush={true}
-                getDomain={getDomain}>
+                getDomain={getDomain}
+                themes={themes}>
             </LineChart>
         </ChartDiv>
     )

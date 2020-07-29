@@ -4,6 +4,7 @@ import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
 import { v4 as uuidv4 } from 'uuid';
 import Histogram from './components/Charts/Histogram/Histogram'
+import {ParamSlider} from './components/ParamSelector/ParamSlider'
 import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
 
 import { nest } from 'd3-collection';
@@ -27,6 +28,23 @@ const theme = {
     tickfill: '#6e6e6e',
     handlecolor: '#2b2b2b'
   }
+
+  const themePop0 = {
+    popColorFocus: '#ac9e47', // rbg(172, 159, 71)
+    popColorOutside: '#d6d6d6',
+    popColorAlpha: 'rgba(172, 159, 71, .5)',
+}
+
+const themePop1 = {
+    popColorFocus: '#7ca1a1', // rgb(124, 161, 161)
+    popColorOutside: '#d6d6d6',
+    popColorAlpha: 'rgba(124, 161, 161, .5)',
+}
+
+const themes = {
+    "0": themePop0,
+    "1": themePop1,
+}
 
 const migration = [
     {label: '1e-4', value: '1e-4'},
@@ -109,15 +127,18 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
+                <ParamSlider initial={0} max={25}></ParamSlider>
                 <Histogram data={tmpData}
                     nestedVar={'values'}
-                    xVar={'positional_phen'}></Histogram>
+                    xVar={'positional_phen'}
+                    themes={themes}></Histogram>
 
                 {/* <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
-                    identifier={identifier}>
+                    identifier={identifier}
+                    themes={themes}>
                 </AddTabs> */}
 
             </ThemeProvider>

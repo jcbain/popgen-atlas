@@ -98,7 +98,7 @@ paramOptions.map(d => {
 })
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth} = props;
+    const {lineChartData, geneArchData, template, identifier, viewwidth, themes} = props;
     const [value, setValue] = useState(0);
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
@@ -191,6 +191,7 @@ const AddTabs = (props) => {
                     template={template}
                     identifier={identifier}
                     setStaticOpt={setStaticOpt}
+                    themes={themes}
                     >
 
                 </Dashboard>
