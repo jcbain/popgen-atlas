@@ -1,6 +1,7 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import styled from 'styled-components';
 import { min, max } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
 
 import { closestFromArray } from '../../helpers/Helpers';
 
@@ -30,6 +31,10 @@ const SliderThumb = styled.div`
 const getPercentage = (current, max) => (100 * current) / max;
  
 const getLeft = (percentage, thumbWidth) => `${percentage}%`;
+const prettifyText = (val) => {
+    const prettifiedVal = val >= 1000 ? `${val/1000}K` : `${val}`;
+    return prettifiedVal
+}
 
 export const ParamSlider = (props) => {
     const {options} = props;
@@ -38,6 +43,7 @@ export const ParamSlider = (props) => {
     const initial = minVal - minVal
     const maxVal = max(optionValues) 
     const terminus = maxVal - minVal
+    const [thumbText, setThumbText] = useState(minVal)
 
 
     const initialPercentage = getPercentage(initial, terminus);
@@ -45,7 +51,6 @@ export const ParamSlider = (props) => {
     const thumbRef = useRef()
     const diffRef = useRef()
 
-    console.log(options)
 
     const sliderheight = 2,
           thumbheight = 3;
@@ -55,21 +60,15 @@ export const ParamSlider = (props) => {
         const thumbWidth = thumbRef.current.offsetWidth;
         const end = sliderRef.current.offsetWidth - thumbRef.current.offsetWidth;
         const start = 0
-        console.log(end - thumbWidth)
-        const individualInterval = (end - start - thumbWidth)/optionValues.length;
-        const cumInterval = [...Array(optionValues.length)].map((d, i) => i * individualInterval)
-        const interval = closestFromArray(cumInterval)
+        const sliderScale = scaleLinear().domain([minVal, maxVal]).range([start, end - thumbWidth])
+        const cumInterval = optionValues.map((d, i) => sliderScale(d))
+        const interval = closestFromArray(cumInterval);
+        const tickInterval = closestFromArray(optionValues)
+
         newX = interval(newX)
-        console.log(cumInterval)
-     
-        // if (newX < start) {
-        //   newX = 0;
-        // }
-     
-        // if (newX > end -thumbWidth) {
-        //   newX = end -thumbWidth;
-        // }
+        setThumbText(tickInterval(sliderScale.invert(newX)))
         const newPercentage = getPercentage(newX, end);
+        
  
         thumbRef.current.style.left = getLeft(newPercentage, thumbWidth);
     }
@@ -93,7 +92,7 @@ export const ParamSlider = (props) => {
                 onMouseDown={handleMouseDown}
                 leftperc={getLeft(initialPercentage)}
             >
-                10K
+                {prettifyText(thumbText)}
             </SliderThumb>
         </SliderRangeBar>
     )

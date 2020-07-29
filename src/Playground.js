@@ -69,8 +69,8 @@ const population = [
     {label: 1, value: 1}
 ]
 
-const generation = [...Array(49)].map((d, i) => {
-    return {label: (i + 2) * 1000, value: (i + 2) * 1000}
+const generation = [...Array(50)].map((d, i) => {
+    return {label: (i + 1) * 1000, value: (i + 1) * 1000}
 })
 const paramOptions = [
     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
