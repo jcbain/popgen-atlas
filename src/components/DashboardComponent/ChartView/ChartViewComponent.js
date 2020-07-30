@@ -42,7 +42,7 @@ export const ChartViewLineChart = (props) => {
                 params={paramsCopy}
                 useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
-                paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
+                paramOptions={paramOptions.filter(d=> d.paramName !== 'pop' && d.paramName !== 'output_gen')}
                 handleSwitch={handleSwitch}
                 themes={themes}
                 >
@@ -62,7 +62,7 @@ export const ChartViewHistogram = (props) => {
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
 
 
-    const filteredGenomeData = filterDataByParams(geneArchData, params)
+    const filteredGenomeData = filterDataByParams(geneArchData, paramsCopy)
     const nestedData = nest().key(d => d.pop).entries(filteredGenomeData)
 
     return (

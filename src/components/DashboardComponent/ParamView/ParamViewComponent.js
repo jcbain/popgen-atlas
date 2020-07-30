@@ -8,7 +8,7 @@ import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 export const ParamViewLineChart = (props) => {
     const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
-    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' || d.paramName !== 'output_gen')
+    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
         return (
@@ -51,7 +51,7 @@ ParamViewLineChart.defaultProps = {
 
 export const ParamViewGenomeChart = (props) => {
     const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
-    let paramOptionsCopy = [...paramOptions]
+    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
         return (
@@ -94,7 +94,7 @@ ParamViewGenomeChart.defaultProps = {
 
 export const ParamViewHistogram = (props) => {
     const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
-    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' || d.paramName !== 'output_gen')
+    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
         return (

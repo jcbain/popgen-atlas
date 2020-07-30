@@ -84,13 +84,18 @@ const population = [
     {label: 0, value: 0},
     {label: 1, value: 1}
 ]
+
+const generation = [...Array(50)].map((d, i) => {
+    return {label: (i + 1) * 1000, value: (i + 1) * 1000}
+})
+
 const paramOptions = [
     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
-    {paramName: 'pop', paramNameReadable: 'population', options: population}
-
+    {paramName: 'pop', paramNameReadable: 'population', options: population},
+    {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
 ]
 let initParams = {}
 paramOptions.map(d => {
@@ -109,6 +114,7 @@ const AddTabs = (props) => {
             view: 'chartview'
         }
     }
+
 
     const [dashboardState, setDashboardState] = useState({
         0: {
