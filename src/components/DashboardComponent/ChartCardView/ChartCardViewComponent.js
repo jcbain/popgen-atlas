@@ -5,7 +5,7 @@ import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 const ChartCardsContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 1vw;
     padding: 1vh;
 `
@@ -23,7 +23,8 @@ const ChartCardContainer = styled.div`
 
 const chartData = [
     {chartTitle: 'Line Chart', chartId: 'linechartgroup'},
-    {chartTitle: 'Genome Chart', chartId: 'genearchgroup'}
+    {chartTitle: 'Genome Chart', chartId: 'genearchgroup'},
+    {chartTitle: 'Histogram', chartId: 'histogram'}
 ]
 
 const ChartCardView = (props) => {

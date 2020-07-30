@@ -8,10 +8,17 @@ import { closestFromArray } from '../../helpers/Helpers';
 
 const SliderRangeBar = styled.div`
     position: relative;
-    border-radius: 4px;
-    background: #5a02d6;
+    border-radius: 10px;
+    background: ${props => props.theme.slidercolor};
     height: ${props => props.sliderheight}vh;
 `
+
+SliderRangeBar.defaultProps = {
+    sliderheight : 1,
+    theme : {
+        slidercolor: '#5a02d6'
+    }
+}
 
 const SliderThumb = styled.div`
     width: ${props => props.thumbheight}vh;
@@ -24,10 +31,13 @@ const SliderThumb = styled.div`
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
+    user-select: none;
     font-size: ${props => props.thumbheight/2.2}vh;
     line-height: ${props => props.thumbheight}vh;  
-    border: ${props => props.thumbheight/4}vh solid #5a02d6;
+    border: ${props => props.thumbheight/4}vh solid ${props => props.theme.thumbcolor};
 `
+
+
 const getPercentage = (current, max) => (100 * current) / max;
  
 const getLeft = (percentage, thumbWidth) => `${percentage}%`;
@@ -52,7 +62,7 @@ export const ParamSlider = (props) => {
     const diffRef = useRef()
 
 
-    const sliderheight = 2,
+    const sliderheight = 1.5,
           thumbheight = 3;
 
     const handleMouseMove = e => {

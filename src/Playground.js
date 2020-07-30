@@ -26,7 +26,9 @@ const theme = {
     },
     tickfont: 'Itim',
     tickfill: '#6e6e6e',
-    handlecolor: '#2b2b2b'
+    handlecolor: '#2b2b2b',
+    slidercolor: '#e0e0e0',
+    thumbcolor: '#8a5a86',
   }
 
   const themePop0 = {
@@ -128,25 +130,27 @@ export const PlayGround = (props) => {
         setView('paramview')
     }
 
+    console.log(tmpData)
+
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamSlider 
+                {/* <ParamSlider 
                      undateValChange={updateGeneration}
                      options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
                 <Histogram data={tmpData}
                     nestedVar={'values'}
                     xVar={'positional_phen'}
   
-                    themes={themes}></Histogram>
+                    themes={themes}></Histogram> */}
 
-                {/* <AddTabs viewwidth={96}
+                <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}
                     themes={themes}>
-                </AddTabs> */}
+                </AddTabs>
 
             </ThemeProvider>
         </div>

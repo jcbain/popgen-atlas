@@ -25,8 +25,9 @@ const Histogram = (props) => {
           height = displayDims.height * 5.5;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
-    const histScale = scaleLinear().domain([minX, maxX]).range([chartPadding.left, width - chartPadding.right]);
-    const hist = histogram().value(function(d) {return d[xVar]}).domain(histScale.domain()).thresholds(histScale.ticks(40));
+    const numBins = 10;
+    const histScale = scaleLinear().domain([minX, maxX]).range([chartPadding.left, width - chartPadding.right]).nice(numBins);
+    const hist = histogram().value(d => d[xVar]).domain(histScale.domain()).thresholds(histScale.ticks(numBins));
     const histogramGroups = data.map(d => {
         let row = hist(d[nestedVar]);
         row['key'] = d.key
@@ -34,11 +35,12 @@ const Histogram = (props) => {
     })
 
     const maxBinCount = max(histogramGroups.flatMap(d => d.map(v => v.length)))
-    const upperXBound = maxX + max(histogramGroups.flatMap(d => d.map(v => v.x1 - v.x0)))
+    const upperXBound = max(histogramGroups.flatMap(d => d.map(v => v.x1))),
+          lowerXBound = min(histogramGroups.flatMap(d => d.map(v => v.x0)))
     const yScale = scaleLinear().domain([maxBinCount, 0]).range([chartPadding.top, height - chartPadding.bottom]),
-          xScale = scaleLinear().domain([minX, upperXBound]).range(histScale.range())
-    const binStroke = 3,
-          binWidth = (width - chartPadding.left - chartPadding.right )/(max(histogramGroups.flatMap(d => d.length))) - binStroke;
+          xScale = scaleLinear().domain([lowerXBound, upperXBound]).range(histScale.range())
+    const binStroke = 2,
+          binWidth = (width - chartPadding.left - chartPadding.right )/(max(histogramGroups.flatMap(d => d.length))) - (binStroke/2);
     const histograms = histogramGroups.map((d, i) => {
         return d.map( (g, j) => {
             return (
@@ -47,9 +49,7 @@ const Histogram = (props) => {
                         transform={`translate(${xScale(g.x0)}, ${yScale(g.length)})`}
                         width={binWidth}
                         height={yScale(0) - yScale(g.length)}
-                        strokeWidth={binStroke}
-                        fillOpacity={0.2}
-                        strokeOpacity={.5} />
+                        strokeWidth={binStroke} />
                 </ThemeProvider>
             )
         })
@@ -68,7 +68,7 @@ const Histogram = (props) => {
                 pixelsPerTick={height/5}
                 includeAxisLine={false}/>
             {histograms}
-            <XAxis scale={histScale} 
+            <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}
                 includeAxisLine={false}/>
 
