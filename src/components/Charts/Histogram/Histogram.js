@@ -1,6 +1,6 @@
 import React from 'react';
-import { scaleLinear, scaleOrdinal } from 'd3-scale';
-import { min, max, histogram, sum, mean, variance } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
+import { min, max, histogram } from 'd3-array';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import XAxis from '../Axes/XAxis';

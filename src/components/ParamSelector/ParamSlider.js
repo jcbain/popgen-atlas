@@ -4,6 +4,7 @@ import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 
 import { closestFromArray } from '../../helpers/Helpers';
+import { SelectWrapper } from './ParamSelectorStyles'
 
 
 const SliderRangeBar = styled.div`
@@ -47,7 +48,7 @@ const prettifyText = (val) => {
 }
 
 export const ParamSlider = (props) => {
-    const {options, undateValChange} = props;
+    const {options, undateValChange, className, viewwidth} = props;
     const optionValues = options.options.map(d => d.value)
     const minVal = min(optionValues)
     const initial = minVal - minVal
@@ -79,9 +80,7 @@ export const ParamSlider = (props) => {
         const currentVal = tickInterval(sliderScale.invert(newX))
         setThumbText(currentVal)
         undateValChange(currentVal)
-        const newPercentage = getPercentage(newX, end);
-        
- 
+        const newPercentage = getPercentage(newX, end)
         thumbRef.current.style.left = getLeft(newPercentage, thumbWidth);
     }
 
@@ -98,14 +97,22 @@ export const ParamSlider = (props) => {
     }
 
     return (
-        <SliderRangeBar ref={sliderRef} sliderheight={sliderheight}>
-            <SliderThumb ref={thumbRef} sliderheight={sliderheight} 
-                thumbheight={thumbheight}
-                onMouseDown={handleMouseDown}
-                leftperc={getLeft(initialPercentage)}
-            >
-                {prettifyText(thumbText)}
-            </SliderThumb>
-        </SliderRangeBar>
+        <SelectWrapper className={className}
+            viewwidth={viewwidth}>
+            <SliderRangeBar ref={sliderRef} sliderheight={sliderheight}>
+                <SliderThumb ref={thumbRef} sliderheight={sliderheight} 
+                    thumbheight={thumbheight}
+                    onMouseDown={handleMouseDown}
+                    leftperc={getLeft(initialPercentage)}
+                >
+                    {prettifyText(thumbText)}
+                </SliderThumb>
+            </SliderRangeBar>
+        </SelectWrapper>
     )
+}
+
+ParamSlider.defaultProps = {
+    className: 'param-slider',
+    viewwidth: 20,
 }
