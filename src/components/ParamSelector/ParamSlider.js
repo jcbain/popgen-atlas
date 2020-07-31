@@ -4,7 +4,7 @@ import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 
 import { closestFromArray } from '../../helpers/Helpers';
-import { SelectWrapper } from './ParamSelectorStyles'
+import { SelectWrapperSlider, ParamTitleSlider } from './ParamSelectorStyles'
 
 
 const SliderRangeBar = styled.div`
@@ -48,7 +48,7 @@ const prettifyText = (val) => {
 }
 
 export const ParamSlider = (props) => {
-    const {options, undateValChange, className, viewwidth} = props;
+    const {options, updateValChange, className, viewwidth, viewheight} = props;
     const optionValues = options.options.map(d => d.value)
     const minVal = min(optionValues)
     const initial = minVal - minVal
@@ -79,7 +79,7 @@ export const ParamSlider = (props) => {
         newX = interval(newX)
         const currentVal = tickInterval(sliderScale.invert(newX))
         setThumbText(currentVal)
-        undateValChange(currentVal)
+        updateValChange(currentVal)
         const newPercentage = getPercentage(newX, end)
         thumbRef.current.style.left = getLeft(newPercentage, thumbWidth);
     }
@@ -97,8 +97,11 @@ export const ParamSlider = (props) => {
     }
 
     return (
-        <SelectWrapper className={className}
-            viewwidth={viewwidth}>
+        <SelectWrapperSlider className={className}
+            viewwidth={viewwidth}
+            viewheight={viewheight}
+            paddings={{left: 2, right: 2}}>
+            <ParamTitleSlider viewwidth={viewwidth} viewheight={viewheight/6}>{options.paramNameReadable.toLowerCase()}</ParamTitleSlider>
             <SliderRangeBar ref={sliderRef} sliderheight={sliderheight}>
                 <SliderThumb ref={thumbRef} sliderheight={sliderheight} 
                     thumbheight={thumbheight}
@@ -108,11 +111,12 @@ export const ParamSlider = (props) => {
                     {prettifyText(thumbText)}
                 </SliderThumb>
             </SliderRangeBar>
-        </SelectWrapper>
+        </SelectWrapperSlider>
     )
 }
 
 ParamSlider.defaultProps = {
     className: 'param-slider',
     viewwidth: 20,
+    viewheight: 10
 }

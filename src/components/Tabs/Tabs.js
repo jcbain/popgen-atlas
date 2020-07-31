@@ -119,9 +119,9 @@ const AddTabs = (props) => {
     const [dashboardState, setDashboardState] = useState({
         0: {
             componentMain: initComponentState('linechartgroup'),
-            componentSecondary : initComponentState('linechartgroup'),
-            componentTertiary: initComponentState('linechartgroup'),
-            componentFourth: initComponentState('linechartgroup'),
+            componentSecondary : initComponentState('genearchgroup'),
+            componentTertiary: initComponentState('histogram'),
+            componentFourth: initComponentState('histogram'),
             componentGlobal: initComponentState('linechartgroup')
         }
 
@@ -143,6 +143,18 @@ const AddTabs = (props) => {
                 ...prevState[value], [componentKey] : {
                     ...prevState[value][componentKey], params: {
                         ...prevState[value][componentKey].params, [k]: v
+                    }
+                }
+            }
+        }))
+    }
+
+    const handleSlider = componentKey => (v) => {
+        setDashboardState(prevState => ({
+            ...prevState, [value] : {
+                ...prevState[value], [componentKey] : {
+                    ...prevState[value][componentKey], params: {
+                        ...prevState[value][componentKey].params, 'output_gen': v
                     }
                 }
             }
@@ -188,6 +200,7 @@ const AddTabs = (props) => {
                     isStatic={staticOpt}
                     viewwidth={viewwidth}
                     handleSwitch={handleSwitch}
+                    handleSlider={handleSlider}
                     xAction={xAction}
                     renderAction={renderAction}
                     cardAction={cardAction}

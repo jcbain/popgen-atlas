@@ -2,10 +2,35 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const SelectWrapper = styled.div`
-    width: ${props => props.viewwidth}vw;
+    width: ${props => props.viewwidth - props.paddings.left - props.paddings.right}vw;
+    padding-left: ${props => props.paddings.left}vw;
+    padding-right: ${props => props.paddings.right}vw;
     position: relative;
     font-family: 'Ubuntu', sans-serif;
 `;
+
+SelectWrapper.defaultProps = {
+    paddings: {
+        left : 0,
+        right: 0
+    }
+}
+
+export const SelectWrapperSlider = styled.div`
+    width: ${props => props.viewwidth - props.paddings.left - props.paddings.right}vw;
+    height: ${props => props.viewheight}vh;
+    padding-left: ${props => props.paddings.left}vw;
+    padding-right: ${props => props.paddings.right}vw;
+    position: relative;
+    font-family: 'Ubuntu', sans-serif;
+`;
+
+SelectWrapperSlider.defaultProps = {
+    paddings: {
+        left : 0,
+        right: 0
+    }
+}
 
 export const ParamTitle = styled.span`
     top: -${props => props.viewheight/2}vh;
@@ -37,6 +62,14 @@ ParamTitle.defaultProps = {
     }   
 
 }
+
+export const ParamTitleSlider = styled.p`
+    height: ${props => props.viewheight}vh;
+    line-height: ${props => props.viewheight}vh;
+    font-size: 0.3em;
+    color: ${props => props.theme.color.grayMain};
+
+`
 
 export const SelectHeaderWrapper = styled.div`
     height: ${props => props.viewheight}vh;

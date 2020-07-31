@@ -4,6 +4,7 @@ import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
 import { v4 as uuidv4 } from 'uuid';
 import Histogram from './components/Charts/Histogram/Histogram'
+import HistogramChart from './components/Charts/Histogram/HistogramChart'
 import {ParamSlider} from './components/ParamSelector/ParamSlider'
 import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
 
@@ -134,22 +135,29 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <ParamSlider 
+                {/* <ParamSlider 
                      undateValChange={updateGeneration}
                      options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
                 <Histogram data={tmpData}
                     nestedVar={'values'}
                     xVar={'positional_phen'}
   
-                    themes={themes}></Histogram>
+                    themes={themes}></Histogram> */}
+                {/* <HistogramChart displayDims={{width: 80, height: 50}}
+                    data={tmpData}
+                    themes={themes}
+                    updateValChange={updateGeneration}
+                    options={paramOptions.find(d => d.paramName === 'output_gen')}>
 
-                {/* <AddTabs viewwidth={96}
+                </HistogramChart> */}
+
+                <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}
                     themes={themes}>
-                </AddTabs> */}
+                </AddTabs>
 
             </ThemeProvider>
         </div>

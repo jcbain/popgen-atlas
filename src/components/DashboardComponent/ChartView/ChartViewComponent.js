@@ -58,8 +58,8 @@ ChartViewLineChart.defaultProps = {
 
 export const ChartViewHistogram = (props) => {
     const { geneArchData, viewwidth, viewheight, params, useLocalParams,
-            paramOptions, themes, xAction,  handleSwitch, displayX } = props;
-    const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
+            paramOptions, themes, xAction,  handleSwitch, displayX, handleSlider } = props;
+    const paramsCopy = removeParams({...params}, ['pop'])
 
 
     const filteredGenomeData = filterDataByParams(geneArchData, paramsCopy)
@@ -71,7 +71,9 @@ export const ChartViewHistogram = (props) => {
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <HistogramChart data={nestedData}
                 themes={themes}
-                displayDims={{width: viewwidth, height: viewheight}}>
+                updateValChange={handleSlider}
+                displayDims={{width: viewwidth, height: viewheight}}
+                options={paramOptions.find(d => d.paramName === 'output_gen')}>
             </HistogramChart>
         </DashboardComponentContainer>
     )

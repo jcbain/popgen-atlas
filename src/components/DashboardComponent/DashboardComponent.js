@@ -13,7 +13,7 @@ const DashboardComponentMainContainer = styled.div`
 export const DashboardComponent = (props) => {
     const { selectedView, lineChartData, viewwidth, viewheight, 
             params, useLocalParams, specialOpts, paramOptions,
-            handleSwitch, xAction, renderAction,
+            handleSwitch, xAction, renderAction, handleSlider,
             geneArchData, template, identifier, selectedChart,
             cardAction, gridarea, displayX, themes} = props;
 
@@ -30,6 +30,7 @@ export const DashboardComponent = (props) => {
                     specialOpts={specialOpts}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
+                    handleSlider={handleSlider}
                     xAction={xAction}
                     geneArchData={geneArchData}
                     template={template}

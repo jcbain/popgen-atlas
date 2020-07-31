@@ -34,7 +34,7 @@ DashboardContainer.defaultProps = {
 
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, dashboardState,
-            lineChartData, geneArchData, identifier, template, 
+            lineChartData, geneArchData, identifier, template, handleSlider,
             isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
 
     const {componentMain, componentSecondary, componentTertiary, componentFourth, componentGlobal} = dashboardState;
@@ -97,6 +97,7 @@ const Dashboard = (props) => {
                 selectedChart={componentMain['selectedChart']}
                 identifier={identifier}
                 handleSwitch={handleSwitch('componentMain')}
+                handleSlider={handleSlider('componentMain')}
                 xAction={xAction('componentMain')}
                 renderAction={renderAction('componentMain')}
                 cardAction={cardAction('componentMain')}
@@ -118,6 +119,7 @@ const Dashboard = (props) => {
                 selectedChart={componentSecondary['selectedChart']}
                 identifier={identifier}
                 handleSwitch={handleSwitch('componentSecondary')}
+                handleSlider={handleSlider('componentSecondary')}
                 xAction={xAction('componentSecondary')}
                 renderAction={renderAction('componentSecondary')}
                 cardAction={cardAction('componentSecondary')}
@@ -139,6 +141,7 @@ const Dashboard = (props) => {
                 selectedChart={componentTertiary['selectedChart']}
                 identifier={identifier}
                 handleSwitch={handleSwitch('componentTertiary')}
+                handleSlider={handleSlider('componentTertiary')}
                 xAction={xAction('componentTertiary')}
                 renderAction={renderAction('componentTertiary')}
                 cardAction={cardAction('componentTertiary')}
@@ -160,6 +163,7 @@ const Dashboard = (props) => {
                 selectedChart={componentFourth['selectedChart']}
                 identifier={identifier}
                 handleSwitch={handleSwitch('componentFourth')}
+                handleSlider={handleSlider('componentFourth')}
                 xAction={xAction('componentFourth')}
                 renderAction={renderAction('componentFourth')}
                 cardAction={cardAction('componentFourth')}
