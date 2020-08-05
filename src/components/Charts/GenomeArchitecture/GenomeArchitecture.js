@@ -17,26 +17,109 @@ ScaledStop.defaultProps = {
     highcolordown: '#ffd000',
     colormid: '#fff',
     lowcolorup: '#0082e6',
-    lowcolordown: '#5d0096'
+    lowcolordown: '#5d0096',
+    greaterthanzero: true,
 }
 
 const GenomeArchitecutre = (props) => {
-    const { className, displayDims, chartPadding, data, xVar, yVar } = props;
+    const { className, displayDims, chartPadding, 
+            data, xVar, yVar, colorVar } = props;
     const width = displayDims.width * 12,
           height = displayDims.height * 5.5;
-    const xVals = uniq(data.map(d => d[xVar]));
-    const colorScale = scaleLinear().domain([0,10]).interpolate(interpolateHcl)
-    console.log(xVals)
+    const xVals = uniq(data.map(d => d[xVar])),
+          xMin = min(xVals),
+          xMax = max(xVals),
+          yMin = min(data, d => d[yVar]),
+          yMax = max(data, d => d[yVar]),
+          colorMin = min(data, d => d[colorVar]),
+          colorMax = max(data, d => d[colorVar]);
     const barheight = height - chartPadding.top - chartPadding.bottom;
+    const barwidth = (width - chartPadding.left - chartPadding.right) / xVals.length;
+    const colorScaleHigh = scaleLinear().domain([0, colorMax]).interpolate(interpolateHcl),
+          colorScaleLow = scaleLinear().domain([0, colorMin]).interpolate(interpolateHcl),
+          yScale = scaleLinear().domain([yMin, yMax]).range([0, 100]),
+          xScale = scaleLinear().domain([xMin, xMax]).range([chartPadding.left, width - chartPadding.right - barwidth]);
+    
+    const gradients = xVals.map((x, i) => {
+        return (
+            <linearGradient key={i}
+                gradientUnits='userSpaceOnUse'
+                id={`gradient-${x}`}
+                x1={0}
+                x2={0}
+                y1={chartPadding.top}
+                y2={barheight} 
+            >
+                {
+                    data.filter(d => d[xVar] === x).map((v, j) => {
+                        const val = v[colorVar];
+                        const greaterthanzero = val > 0;
+                        const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
+
+                        return (
+                            <ScaledStop key={`${i}-${j}`}
+                                offset={`${yScale(v[yVar])}%`}
+                                greaterthanzero={greaterthanzero}
+                                colorscale={colorScale}
+                                val={val}
+                            ></ScaledStop>
+                        )                
+                    })
+                }
+            </linearGradient>
+        )
+    })
+
+    const bars = xVals.map((x, i) => {
+        return (
+            <rect key={i}
+                x={xScale(x)}
+                y={chartPadding.top}
+                width={barwidth}
+                height={barheight}
+                fill={`url(#gradient-${x})`} />
+        )
+    })
+
+    const gradient = (
+        <linearGradient gradientUnits='userSpaceOnUse'
+            id={'gradient'}
+            x1={0}
+            x2={0}
+            y1={chartPadding.top}
+            y2={barheight} 
+        >
+            {data.filter((d) => d.output_gen === 50000).map((v, i) => {
+                const val = v[colorVar]
+                const greaterthanzero = val > 0;
+                const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
+                
+                return (
+                    <ScaledStop key={i}
+                        offset={`${yScale(v[yVar])}%`}
+                        greaterthanzero={greaterthanzero}
+                        colorscale={colorScale}
+                        val={val}
+                    ></ScaledStop>
+                )
+            })}
+        </linearGradient>
+    )
 
     return (
         <svg className={className}
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
-                <linearGradient>
-                <ScaledStop greaterthanzero={true} offset={"10%"} colorscale={colorScale} val={0}></ScaledStop>
-                </linearGradient>
+                {gradients}
+                {bars}
+               {/* {gradient}
+               <rect x={chartPadding.left} 
+                y={chartPadding.top}
+                width={barwidth}
+                height={barheight}
+                fill={'url(#gradient)'}
+               ></rect> */}
 
         </svg>
 
@@ -45,7 +128,7 @@ const GenomeArchitecutre = (props) => {
 
 GenomeArchitecutre.defaultProps = {
     className: 'genome-architecture',
-    displayDims: {width: 100, height: 40},
+    displayDims: {width: 100, height: 70},
     chartPadding: {left: 20, right: 5, top: 10, bottom: 40}
 }
 

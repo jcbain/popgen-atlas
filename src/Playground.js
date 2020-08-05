@@ -34,7 +34,7 @@ const theme = {
     thumbcolor: '#8a5a86',
     highcolorup: '#eb4034',
     highcolordown: '#ffd000',
-    colormid: '#fff',
+    colormid: '#fffff7',
     lowcolorup: '#0082e6',
     lowcolordown: '#5d0096'
   }
@@ -118,10 +118,11 @@ export const PlayGround = (props) => {
     map(generations, g => {
         const filtered = filteredGenomeData.filter(d => d.output_gen === g);
         const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0}
-        props.template.map(t => {
+        props.template.map((t,i) => {
             const position = t.position;
             let match = filtered.find(v => v.position === position)
-            match = match === undefined ? {...emptyRow, position: position} : match
+            match = match !== undefined ?  match : {...emptyRow, position: position} 
+            match.ind = i;
             tmpData.push(match)
         })
     })
@@ -162,8 +163,9 @@ export const PlayGround = (props) => {
             <ThemeProvider theme={theme}>
 
                 <GenomeArchitecutre data={tmpData}
-                    yVar={'position'} 
-                    xVar={'output_gen'} />
+                    yVar={'ind'} 
+                    xVar={'output_gen'}
+                    colorVar={'positional_phen'} />
                 {/* <ParamSlider 
                      undateValChange={updateGeneration}
                      options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
