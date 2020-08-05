@@ -7,9 +7,11 @@ import Histogram from './components/Charts/Histogram/Histogram'
 import HistogramChart from './components/Charts/Histogram/HistogramChart'
 import {ParamSlider} from './components/ParamSelector/ParamSlider'
 import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
+import GenomeArchitecutre from './components/Charts/GenomeArchitecture/GenomeArchitecture';
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
+import { map, uniq } from 'lodash'
 
 
 
@@ -30,6 +32,11 @@ const theme = {
     handlecolor: '#2b2b2b',
     slidercolor: '#e0e0e0',
     thumbcolor: '#8a5a86',
+    highcolorup: '#eb4034',
+    highcolordown: '#ffd000',
+    colormid: '#fff',
+    lowcolorup: '#0082e6',
+    lowcolordown: '#5d0096'
   }
 
   const themePop0 = {
@@ -80,8 +87,8 @@ const paramOptions = [
     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
-    {paramName: 'output_gen', paramNameReadable: 'generation', options: generation}
-    // {paramName: 'pop', paramNameReadable: 'population', options: population}
+    // {paramName: 'output_gen', paramNameReadable: 'generation', options: generation}
+    {paramName: 'pop', paramNameReadable: 'population', options: population}
 
 ]
 let initParams = {}
@@ -104,12 +111,30 @@ export const PlayGround = (props) => {
 
     const [tmpList, setTmpList] = useState([0, 2])
     const filteredGenomeData = filterDataByParams(props.geneArchData, params)
-    const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
+
+    // THIS PART IS VERY IMPORTANT
+    const generations = uniq(filteredGenomeData.map(d => d.output_gen))
+    let tmpData = []
+    map(generations, g => {
+        const filtered = filteredGenomeData.filter(d => d.output_gen === g);
+        const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0}
+        props.template.map(t => {
+            const position = t.position;
+            let match = filtered.find(v => v.position === position)
+            match = match === undefined ? {...emptyRow, position: position} : match
+            tmpData.push(match)
+        })
+    })
+    console.log(tmpData)
+
+    // const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
     // const filteredLineChartData = filterDataByParams(props.lineChartData, params)
     // const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
     const [view, setView] = useState('cardview')
     const [selectedChart, setSelectedChart] = useState('linegroupchart');
     const identifier = uuidv4()
+
+    console.log(props.template)
 
 
     const handleSwitch = (k, v) => {
@@ -135,6 +160,10 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
+
+                <GenomeArchitecutre data={tmpData}
+                    yVar={'position'} 
+                    xVar={'output_gen'} />
                 {/* <ParamSlider 
                      undateValChange={updateGeneration}
                      options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
@@ -150,14 +179,14 @@ export const PlayGround = (props) => {
                     options={paramOptions.find(d => d.paramName === 'output_gen')}>
 
                 </HistogramChart> */}
-
+{/* 
                 <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={identifier}
                     themes={themes}>
-                </AddTabs>
+                </AddTabs> */}
 
             </ThemeProvider>
         </div>
