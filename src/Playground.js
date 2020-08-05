@@ -3,20 +3,18 @@ import React, {useState, useEffect} from 'react';
 import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
 import { v4 as uuidv4 } from 'uuid';
-import Histogram from './components/Charts/Histogram/Histogram'
-import HistogramChart from './components/Charts/Histogram/HistogramChart'
-import {ParamSlider} from './components/ParamSelector/ParamSlider'
-import LineChartGroup from './components/Charts/LineChart/LineChartGroup';
 import GenomeArchitecutre from './components/Charts/GenomeArchitecture/GenomeArchitecture';
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
-import { map, uniq, template } from 'lodash'
-
+import { scaleLinear } from 'd3-scale';
+import { map, uniq } from 'lodash'
+import styled from 'styled-components';
+import { interpolateHcl } from 'd3';
 
 
 import { filterDataByParams } from './helpers/DataHelpers'
-import { line } from 'd3';
+
 
 
 const theme = {
@@ -96,20 +94,26 @@ paramOptions.map(d => {
     return initParams[d.paramName] = d.options[0].value;
 })
 
+const ScaledStop = styled.stop`
+    stop-color: ${props => props.val !== 0 ? props.colorscale.range([props.greaterthanzero ? props.theme.highcolordown : props.theme.lowcolorup, props.greaterthanzero ? props.theme.highcolorup : props.theme.lowcolordown])(props.val) : props.theme.colormid};
+`
+
+ScaledStop.defaultProps = {
+    colorScale : scaleLinear().domain([0, 10]).interpolate(interpolateHcl),
+    val: 5,
+    highcolorup: '#eb4034',
+    highcolordown: '#ffd000',
+    colormid: '#fff',
+    lowcolorup: '#0082e6',
+    lowcolordown: '#5d0096',
+    greaterthanzero: true,
+}
+
 
 export const PlayGround = (props) => {
 
     const [params, setParams] = useState({...initParams})
-    const updateGeneration = (g) => {
-        // console.log(g)
-        setParams(prevState => ({
-            ...prevState, 'output_gen': g
-        }))
-    }
-    const [leftPerc, setLeftPerc] = useState(0)
-    const [rightPerc, setRightPerc] = useState(100)
 
-    const [tmpList, setTmpList] = useState([0, 2])
     const filteredGenomeData = filterDataByParams(props.geneArchData, params)
 
     // THIS PART IS VERY IMPORTANT
@@ -127,65 +131,65 @@ export const PlayGround = (props) => {
         })
     })
 
+    const yScale = scaleLinear().domain([min(tmpData, d => d.ind), max(tmpData, d => d.ind)]).range([0, 100]),
+          colorScaleHigh = scaleLinear().domain([0, max(tmpData, d => d.positional_phen)]).interpolate(interpolateHcl),
+          colorScaleLow = scaleLinear().domain([0, min(tmpData, d => d.positional_phen)]).interpolate(interpolateHcl)
+
+    const gradients = generations.map((x, i) => {
+            return (
+                <linearGradient key={i}
+                    gradientUnits='userSpaceOnUse'
+                    id={`gradient-${x}`}
+                    x1={0}
+                    x2={0}
+                    y1={10}
+                    y2={(70 * 5.5) - 50} 
+                >
+                    {
+                        tmpData.filter(d => d['output_gen'] === x).map((v, j) => {
+                            const val = v['positional_phen'];
+                            const greaterthanzero = val > 0;
+                            const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
+    
+                            return (
+                                <ScaledStop key={`${i}-${j}`}
+                                    offset={`${yScale(v['ind'])}%`}
+                                    greaterthanzero={greaterthanzero}
+                                    colorscale={colorScale}
+                                    val={val}
+                                ></ScaledStop>
+                            )                
+                        })
+                    }
+                </linearGradient>
+            )
+        })
+
+
     // const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
     // const filteredLineChartData = filterDataByParams(props.lineChartData, params)
     // const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
-    const [view, setView] = useState('cardview')
-    const [selectedChart, setSelectedChart] = useState('linegroupchart');
-    const identifier = uuidv4()
 
 
     const [lgen, setLgen] = useState(1000);
     const [ugen, setUgen] = useState(50000);
     const newData = tmpData.filter(d => d.output_gen >= lgen && d.output_gen <= ugen)
 
-    const handleSwitch = (k, v) => {
-        setParams(prevState => ({
-            ...prevState, [k]: v
-        }))
-    }
-
-    const xAction = () => {
-        setView('cardview')
-    }
-
-    const renderAction = () => {
-        setView('chartview')
-    }
-
-    const cardAction = (id) => {
-        setSelectedChart(id)
-        setView('paramview')
-    }
-
 
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
+                {/* <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
                 <p>{lgen}</p>
                 <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
-                <p>{ugen}</p>
+                <p>{ugen}</p> */}
 
                 <GenomeArchitecutre data={newData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
-                    colorVar={'positional_phen'} />
-                {/* <ParamSlider 
-                     undateValChange={updateGeneration}
-                     options={paramOptions.find(d => d.paramName === 'output_gen')}></ParamSlider>
-                <Histogram data={tmpData}
-                    nestedVar={'values'}
-                    xVar={'positional_phen'}
-  
-                    themes={themes}></Histogram> */}
-                {/* <HistogramChart displayDims={{width: 80, height: 50}}
-                    data={tmpData}
-                    themes={themes}
-                    updateValChange={updateGeneration}
-                    options={paramOptions.find(d => d.paramName === 'output_gen')}>
-
-                </HistogramChart> */}
+                    colorVar={'positional_phen'}
+                    gradients={gradients} />
+ 
 {/* 
                 <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}

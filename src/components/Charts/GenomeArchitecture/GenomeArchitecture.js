@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
 import { uniq } from 'lodash';
@@ -23,10 +23,12 @@ ScaledStop.defaultProps = {
 
 const GenomeArchitecutre = (props) => {
     const { className, displayDims, chartPadding, 
-            data, xVar, yVar, colorVar } = props;
+            data, xVar, yVar, colorVar, gradients } = props;
+    const [lgen, setLgen] = useState(1000);
+    const [ugen, setUgen] = useState(50000);
     const width = displayDims.width * 12,
           height = displayDims.height * 5.5;
-    const xVals = uniq(data.map(d => d[xVar])),
+    const xVals = uniq(data.map(d => d[xVar]).filter(d => d >= lgen && d <= ugen)),
           xMin = min(xVals),
           xMax = max(xVals),
           yMin = min(data, d => d[yVar]),
@@ -40,35 +42,37 @@ const GenomeArchitecutre = (props) => {
           yScale = scaleLinear().domain([yMin, yMax]).range([0, 100]),
           xScale = scaleLinear().domain([xMin, xMax]).range([chartPadding.left, width - chartPadding.right - barwidth]);
     
-    const gradients = xVals.map((x, i) => {
-        return (
-            <linearGradient key={i}
-                gradientUnits='userSpaceOnUse'
-                id={`gradient-${x}`}
-                x1={0}
-                x2={0}
-                y1={chartPadding.top}
-                y2={barheight} 
-            >
-                {
-                    data.filter(d => d[xVar] === x).map((v, j) => {
-                        const val = v[colorVar];
-                        const greaterthanzero = val > 0;
-                        const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
+   
 
-                        return (
-                            <ScaledStop key={`${i}-${j}`}
-                                offset={`${yScale(v[yVar])}%`}
-                                greaterthanzero={greaterthanzero}
-                                colorscale={colorScale}
-                                val={val}
-                            ></ScaledStop>
-                        )                
-                    })
-                }
-            </linearGradient>
-        )
-    })
+    // const gradients = xVals.map((x, i) => {
+    //     return (
+    //         <linearGradient key={i}
+    //             gradientUnits='userSpaceOnUse'
+    //             id={`gradient-${x}`}
+    //             x1={0}
+    //             x2={0}
+    //             y1={chartPadding.top}
+    //             y2={barheight} 
+    //         >
+    //             {
+    //                 data.filter(d => d[xVar] === x).map((v, j) => {
+    //                     const val = v[colorVar];
+    //                     const greaterthanzero = val > 0;
+    //                     const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
+
+    //                     return (
+    //                         <ScaledStop key={`${i}-${j}`}
+    //                             offset={`${yScale(v[yVar])}%`}
+    //                             greaterthanzero={greaterthanzero}
+    //                             colorscale={colorScale}
+    //                             val={val}
+    //                         ></ScaledStop>
+    //                     )                
+    //                 })
+    //             }
+    //         </linearGradient>
+    //     )
+    // })
 
     const bars = xVals.map((x, i) => {
         return (
@@ -81,36 +85,19 @@ const GenomeArchitecutre = (props) => {
         )
     })
 
-    const gradient = (
-        <linearGradient gradientUnits='userSpaceOnUse'
-            id={'gradient'}
-            x1={0}
-            x2={0}
-            y1={chartPadding.top}
-            y2={barheight} 
-        >
-            {data.filter((d) => d.output_gen === 50000).map((v, i) => {
-                const val = v[colorVar]
-                const greaterthanzero = val > 0;
-                const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
-                
-                return (
-                    <ScaledStop key={i}
-                        offset={`${yScale(v[yVar])}%`}
-                        greaterthanzero={greaterthanzero}
-                        colorscale={colorScale}
-                        val={val}
-                    ></ScaledStop>
-                )
-            })}
-        </linearGradient>
-    )
 
     return (
+        <div>                         
+        <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
+        <p>{lgen}</p>
+        <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
+        <p>{ugen}</p>
         <svg className={className}
+        
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
+ 
                 {gradients}
                 {bars}
                {/* {gradient}
@@ -122,6 +109,7 @@ const GenomeArchitecutre = (props) => {
                ></rect> */}
 
         </svg>
+        </div>
 
     )
 }
