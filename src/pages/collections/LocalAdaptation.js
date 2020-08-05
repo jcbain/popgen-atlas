@@ -81,7 +81,6 @@ const dataPopPhenDiff = nest()
     return d;
   })
 
-  console.log(data)
 
 
   

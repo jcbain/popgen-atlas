@@ -11,7 +11,7 @@ import GenomeArchitecutre from './components/Charts/GenomeArchitecture/GenomeArc
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
-import { map, uniq } from 'lodash'
+import { map, uniq, template } from 'lodash'
 
 
 
@@ -126,7 +126,6 @@ export const PlayGround = (props) => {
             tmpData.push(match)
         })
     })
-    console.log(tmpData)
 
     // const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
     // const filteredLineChartData = filterDataByParams(props.lineChartData, params)
@@ -135,8 +134,10 @@ export const PlayGround = (props) => {
     const [selectedChart, setSelectedChart] = useState('linegroupchart');
     const identifier = uuidv4()
 
-    console.log(props.template)
 
+    const [lgen, setLgen] = useState(1000);
+    const [ugen, setUgen] = useState(50000);
+    const newData = tmpData.filter(d => d.output_gen >= lgen && d.output_gen <= ugen)
 
     const handleSwitch = (k, v) => {
         setParams(prevState => ({
@@ -161,8 +162,12 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
+                <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
+                <p>{lgen}</p>
+                <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
+                <p>{ugen}</p>
 
-                <GenomeArchitecutre data={tmpData}
+                <GenomeArchitecutre data={newData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
                     colorVar={'positional_phen'} />
