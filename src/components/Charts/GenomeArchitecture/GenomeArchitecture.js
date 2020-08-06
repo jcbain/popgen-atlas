@@ -21,14 +21,14 @@ ScaledStop.defaultProps = {
     greaterthanzero: true,
 }
 
-const GenomeArchitecutre = (props) => {
-    const { className, displayDims, chartPadding, 
-            data, xVar, yVar, colorVar, gradients } = props;
+const GenomeArchitecture = (props) => {
+    const { className, displayDims, chartPadding, genKey,
+            data, xVar, yVar, colorVar, gradients, heightScaler } = props;
     const [lgen, setLgen] = useState(1000);
     const [ugen, setUgen] = useState(50000);
     const width = displayDims.width * 12,
-          height = displayDims.height * 5.5;
-    const xVals = uniq(data.map(d => d[xVar]).filter(d => d >= lgen && d <= ugen)),
+          height = displayDims.height * heightScaler;
+    const xVals = uniq(data.map(d => d[xVar])),
           xMin = min(xVals),
           xMax = max(xVals),
           yMin = min(data, d => d[yVar]),
@@ -81,19 +81,12 @@ const GenomeArchitecutre = (props) => {
                 y={chartPadding.top}
                 width={barwidth}
                 height={barheight}
-                fill={`url(#gradient-${x})`} />
+                fill={`url(#gradient-${x}-${genKey})`} />
         )
     })
 
 
     return (
-        <div>                         
-        <button onClick={() => setLgen(lgen + 1000)}>lower bound increase</button>
-        <button onClick={() => setLgen(lgen - 1000)}>lower bound decrease</button>
-        <p>lower bound is {lgen}</p>
-        <button onClick={() => setUgen(ugen - 1000)}>upper bound decrease</button>
-        <button onClick={() => setUgen(ugen + 1000)}>upper bound increase</button>
-        <p>upper bound is {ugen}</p>
         <svg className={className}
         
             viewBox={[0, 0, width, height]}
@@ -102,24 +95,19 @@ const GenomeArchitecutre = (props) => {
  
                 {gradients}
                 {bars}
-               {/* {gradient}
-               <rect x={chartPadding.left} 
-                y={chartPadding.top}
-                width={barwidth}
-                height={barheight}
-                fill={'url(#gradient)'}
-               ></rect> */}
+
 
         </svg>
-        </div>
+
 
     )
 }
 
-GenomeArchitecutre.defaultProps = {
+GenomeArchitecture.defaultProps = {
     className: 'genome-architecture',
     displayDims: {width: 100, height: 70},
-    chartPadding: {left: 20, right: 5, top: 10, bottom: 40}
+    chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
+    heightScaler: 5.5,
 }
 
-export default GenomeArchitecutre;
+export default GenomeArchitecture;

@@ -3,7 +3,9 @@ import React, {useState, useEffect} from 'react';
 import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
 import { v4 as uuidv4 } from 'uuid';
-import GenomeArchitecutre from './components/Charts/GenomeArchitecture/GenomeArchitecture';
+import GenomeArchitecture from './components/Charts/GenomeArchitecture/GenomeArchitecture';
+import GenomeArchGroup from './components/Charts/GenomeArchitecture/GenomeArchGroup';
+import GenomeGradients from './components/Charts/GenomeArchitecture/GenomeGradients';
 
 import { nest } from 'd3-collection';
 import { min, max } from 'd3-array';
@@ -109,10 +111,16 @@ ScaledStop.defaultProps = {
     greaterthanzero: true,
 }
 
+const displayDims = {width: 90, height: 80}
+// const displayDimsFocus = {width: 90, height: 70}
+const chartPaddingFocus = {left: 20, right: 5, top: 10, bottom: 40}
+const heightScalerFocus = 5.5;
+
 
 export const PlayGround = (props) => {
 
     const [params, setParams] = useState({...initParams})
+    const [useLocalParams, setUseLocalParams] = useState(false)
 
     const filteredGenomeData = filterDataByParams(props.geneArchData, params)
 
@@ -130,51 +138,38 @@ export const PlayGround = (props) => {
             tmpData.push(match)
         })
     })
+    const focusChartHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
+          contextChartHeight = displayDims.height * (useLocalParams ? 6/20 : 7/20);
 
-    const yScale = scaleLinear().domain([min(tmpData, d => d.ind), max(tmpData, d => d.ind)]).range([0, 100]),
-          colorScaleHigh = scaleLinear().domain([0, max(tmpData, d => d.positional_phen)]).interpolate(interpolateHcl),
-          colorScaleLow = scaleLinear().domain([0, min(tmpData, d => d.positional_phen)]).interpolate(interpolateHcl)
+    const displayDimsFocus = Object.assign({}, displayDims, {height: focusChartHeight}),
+          displayDimsContext = Object.assign({}, displayDims, {height: contextChartHeight})
+    const genKeyFocus = uuidv4(),
+          genKeyContext = uuidv4();
 
-    const gradients = generations.map((x, i) => {
-            return (
-                <linearGradient key={i}
-                    gradientUnits='userSpaceOnUse'
-                    id={`gradient-${x}`}
-                    x1={0}
-                    x2={0}
-                    y1={10}
-                    y2={(70 * 5.5) - 50} 
-                >
-                    {
-                        tmpData.filter(d => d['output_gen'] === x).map((v, j) => {
-                            const val = v['positional_phen'];
-                            const greaterthanzero = val > 0;
-                            const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
-    
-                            return (
-                                <ScaledStop key={`${i}-${j}`}
-                                    offset={`${yScale(v['ind'])}%`}
-                                    greaterthanzero={greaterthanzero}
-                                    colorscale={colorScale}
-                                    val={val}
-                                ></ScaledStop>
-                            )                
-                        })
-                    }
-                </linearGradient>
-            )
-        })
+    const gradientsFocus = <GenomeGradients data={tmpData}
+        xVar={'output_gen'}
+        yVar={'ind'}
+        colorVar={'positional_phen'}
+        chartPadding={chartPaddingFocus}
+        heightScaler={heightScalerFocus}
+        displayDims={displayDimsFocus}
+        genKey={genKeyFocus}
+     />
+
+     const gradientsContext = <GenomeGradients data={tmpData}
+        xVar={'output_gen'}
+        yVar={'ind'}
+        colorVar={'positional_phen'}
+        chartPadding={chartPaddingFocus}
+        heightScaler={heightScalerFocus}
+        displayDims={displayDimsContext}
+        genKey={genKeyContext}
+    />
 
 
     // const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
     // const filteredLineChartData = filterDataByParams(props.lineChartData, params)
     // const tmpData = nest().key(d => d.pop).entries(filteredLineChartData);
-
-
-    const [lgen, setLgen] = useState(1000);
-    const [ugen, setUgen] = useState(50000);
-    const newData = tmpData.filter(d => d.output_gen >= lgen && d.output_gen <= ugen)
-
 
     return (
         <div>
@@ -184,11 +179,15 @@ export const PlayGround = (props) => {
                 <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
                 <p>{ugen}</p> */}
 
-                <GenomeArchitecutre data={newData}
+                <GenomeArchGroup data={tmpData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
                     colorVar={'positional_phen'}
-                    gradients={gradients} />
+                    gradients={{gradientsFocus, gradientsContext}}
+                    displayDims={{dimsMain: displayDims, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
+                    chartPadding={chartPaddingFocus} 
+                    heightScaler={heightScalerFocus}
+                    genKeys={{genKeyFocus, genKeyContext}}/>
  
 {/* 
                 <AddTabs viewwidth={96}
