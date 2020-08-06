@@ -15,7 +15,7 @@ const GenomeArchitecture = (props) => {
     const width = displayDims.width * 12,
           height = displayDims.height * heightScaler;
     const uniqXVals = uniq(data.map(d => d[xVar]));
-    const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d < xDomain[1]);
+    const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d <= xDomain[1]);
     const interval = closestFromArray(uniqXVals);
     const barheight = height - chartPadding.top - chartPadding.bottom;
     const barwidth = (width - chartPadding.left - chartPadding.right) / xVals.length;

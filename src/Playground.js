@@ -57,7 +57,7 @@ const themes = {
 }
 
 const migration = [
-    {label: '1e-4', value: '1e-4'},
+    // {label: '1e-4', value: '1e-4'},
     {label: '1e-5', value: '1e-5'},
 
 ]
