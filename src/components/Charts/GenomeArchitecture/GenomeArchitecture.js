@@ -88,10 +88,12 @@ const GenomeArchitecutre = (props) => {
 
     return (
         <div>                         
-        <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
-        <p>{lgen}</p>
-        <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
-        <p>{ugen}</p>
+        <button onClick={() => setLgen(lgen + 1000)}>lower bound increase</button>
+        <button onClick={() => setLgen(lgen - 1000)}>lower bound decrease</button>
+        <p>lower bound is {lgen}</p>
+        <button onClick={() => setUgen(ugen - 1000)}>upper bound decrease</button>
+        <button onClick={() => setUgen(ugen + 1000)}>upper bound increase</button>
+        <p>upper bound is {ugen}</p>
         <svg className={className}
         
             viewBox={[0, 0, width, height]}
