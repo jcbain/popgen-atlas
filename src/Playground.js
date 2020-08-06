@@ -111,7 +111,7 @@ ScaledStop.defaultProps = {
     greaterthanzero: true,
 }
 
-const displayDims = {width: 90, height: 80}
+const displayDims = {width: 90, height: 90}
 // const displayDimsFocus = {width: 90, height: 70}
 const chartPaddingFocus = {left: 20, right: 5, top: 10, bottom: 40}
 const heightScalerFocus = 5.5;

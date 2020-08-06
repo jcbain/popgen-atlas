@@ -1,78 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { scaleLinear } from 'd3-scale';
-import { min, max } from 'd3-array';
 import { uniq } from 'lodash';
-import styled from 'styled-components';
-import { interpolateHcl } from 'd3';
 
+import XAxis from '../Axes/XAxis';
+import BrushHorizontal from './BrushHorizontal';
+import { closestFromArray } from '../../../helpers/Helpers';
 
-const ScaledStop = styled.stop`
-    stop-color: ${props => props.val !== 0 ? props.colorscale.range([props.greaterthanzero ? props.theme.highcolordown : props.theme.lowcolorup, props.greaterthanzero ? props.theme.highcolorup : props.theme.lowcolordown])(props.val) : props.theme.colormid};
-`
-
-ScaledStop.defaultProps = {
-    colorScale : scaleLinear().domain([0, 10]).interpolate(interpolateHcl),
-    val: 5,
-    highcolorup: '#eb4034',
-    highcolordown: '#ffd000',
-    colormid: '#fff',
-    lowcolorup: '#0082e6',
-    lowcolordown: '#5d0096',
-    greaterthanzero: true,
-}
 
 const GenomeArchitecture = (props) => {
     const { className, displayDims, chartPadding, genKey,
-            data, xVar, yVar, colorVar, gradients, heightScaler } = props;
-    const [lgen, setLgen] = useState(1000);
-    const [ugen, setUgen] = useState(50000);
+            data, xVar, gradients, heightScaler, 
+            addBrush, contextDomain, xDomain, getDomain } = props;
+
     const width = displayDims.width * 12,
           height = displayDims.height * heightScaler;
-    const xVals = uniq(data.map(d => d[xVar])),
-          xMin = min(xVals),
-          xMax = max(xVals),
-          yMin = min(data, d => d[yVar]),
-          yMax = max(data, d => d[yVar]),
-          colorMin = min(data, d => d[colorVar]),
-          colorMax = max(data, d => d[colorVar]);
+    const uniqXVals = uniq(data.map(d => d[xVar]));
+    const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d < xDomain[1]);
+    const interval = closestFromArray(uniqXVals);
     const barheight = height - chartPadding.top - chartPadding.bottom;
     const barwidth = (width - chartPadding.left - chartPadding.right) / xVals.length;
-    const colorScaleHigh = scaleLinear().domain([0, colorMax]).interpolate(interpolateHcl),
-          colorScaleLow = scaleLinear().domain([0, colorMin]).interpolate(interpolateHcl),
-          yScale = scaleLinear().domain([yMin, yMax]).range([0, 100]),
-          xScale = scaleLinear().domain([xMin, xMax]).range([chartPadding.left, width - chartPadding.right - barwidth]);
-    
-   
-
-    // const gradients = xVals.map((x, i) => {
-    //     return (
-    //         <linearGradient key={i}
-    //             gradientUnits='userSpaceOnUse'
-    //             id={`gradient-${x}`}
-    //             x1={0}
-    //             x2={0}
-    //             y1={chartPadding.top}
-    //             y2={barheight} 
-    //         >
-    //             {
-    //                 data.filter(d => d[xVar] === x).map((v, j) => {
-    //                     const val = v[colorVar];
-    //                     const greaterthanzero = val > 0;
-    //                     const colorScale = greaterthanzero ? colorScaleHigh : colorScaleLow;
-
-    //                     return (
-    //                         <ScaledStop key={`${i}-${j}`}
-    //                             offset={`${yScale(v[yVar])}%`}
-    //                             greaterthanzero={greaterthanzero}
-    //                             colorscale={colorScale}
-    //                             val={val}
-    //                         ></ScaledStop>
-    //                     )                
-    //                 })
-    //             }
-    //         </linearGradient>
-    //     )
-    // })
+    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right - barwidth]);
 
     const bars = xVals.map((x, i) => {
         return (
@@ -85,6 +32,19 @@ const GenomeArchitecture = (props) => {
         )
     })
 
+    let brush;
+    if ( addBrush ) {
+        brush = <BrushHorizontal x1={chartPadding.left}
+            x2={width - chartPadding.right}
+            y1={chartPadding.top}
+            y2={height - chartPadding.bottom}
+            interval={interval} 
+            xScale={xScale}
+            contextDomain={contextDomain}
+            getDomain={getDomain}
+             />
+    }
+
 
     return (
         <svg className={className}
@@ -95,6 +55,10 @@ const GenomeArchitecture = (props) => {
  
                 {gradients}
                 {bars}
+                {brush}
+                <XAxis scale={xScale} 
+                    height={height - chartPadding.bottom}
+                    includeAxisLine={false}/>
 
 
         </svg>

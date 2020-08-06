@@ -3,9 +3,9 @@ import { min, max } from 'd3-array';
 import { v4 as uuidv4 } from 'uuid';
 
 import LineChart from './LineChart';
-import {ParamLister} from '../../DashboardComponentCard/DashboardComponentCardsStyles'
-import {ParamSelector} from '../../ParamSelector/ParamSelector';
-import {ChartDiv} from '../ChartStyles';
+import { ParamLister } from '../../DashboardComponentCard/DashboardComponentCardsStyles'
+import { ParamSelector } from '../../ParamSelector/ParamSelector';
+import { ChartDiv } from '../ChartStyles';
 
 
 const LineChartGroup = (props) => {
@@ -14,7 +14,9 @@ const LineChartGroup = (props) => {
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
-    const [contextDomain, setContextDomain] = useState([minX, maxX])
+
+    const [contextDomain, setContextDomain] = useState([minX, maxX]);
+    
     const focusChartHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
           contextChartHeight = displayDims.height * (useLocalParams ? 6/20 : 7/20),
           paramOptionsHeight = displayDims.height * 2/20;
