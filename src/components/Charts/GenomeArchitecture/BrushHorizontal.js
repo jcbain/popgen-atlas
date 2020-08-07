@@ -35,7 +35,7 @@ const BrushHorizontal = (props) => {
         if ( selection !== null ) {
             const [x0, x1] = selection.map(d => interval(xScale.invert(d)));
             getDomain([x0, x1])
-            select(brushRef.current).transition().duration(1).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
+            select(brushRef.current).transition().duration(0).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
         }
     }
 

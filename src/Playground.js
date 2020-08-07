@@ -37,8 +37,8 @@ const theme = {
     colormid: '#fffff7',
     lowcolorup: '#0082e6',
     lowcolordown: '#5d0096',
-    highcolorgray: '#fff',
-    lowcolorgray: '#cccccc',
+    highcolorgray: '#a1a1a1',
+    lowcolorgray: '#fff',
   }
 
   const themePop0 = {
@@ -197,7 +197,7 @@ export const PlayGround = (props) => {
                 <p>{ugen}</p> */}
                 {/* {gradientsGray} */}
 
-                <GenomeArchGroup data={tmpData}
+                {/* <GenomeArchGroup data={tmpData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
                     colorVar={'positional_phen'}
@@ -205,16 +205,16 @@ export const PlayGround = (props) => {
                     displayDims={{dimsMain: displayDims, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
                     chartPadding={chartPaddingFocus} 
                     heightScaler={heightScalerFocus}
-                    genKeys={{genKeyFocus, genKeyContext}}/>
+                    genKeys={{genKeyFocus, genKeyContext}}/> */}
  
-{/* 
+
                 <AddTabs viewwidth={96}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}
-                    identifier={identifier}
+                    identifier={'identifier'}
                     themes={themes}>
-                </AddTabs> */}
+                </AddTabs>
 
             </ThemeProvider>
         </div>

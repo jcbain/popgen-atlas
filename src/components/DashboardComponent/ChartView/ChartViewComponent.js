@@ -2,13 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { v4 as uuidv4 } from 'uuid';
 import { nest } from 'd3-collection';
+import { map, uniq } from 'lodash'
+import { v4 as uuidv4 } from 'uuid';
 
-// import LineChartGroup from '../../LineChartGroup2';
+
 import LineChartGroup from '../../Charts/LineChart/LineChartGroup';
 import HistogramChart from '../../Charts/Histogram/HistogramChart';
-import GeneArchGroup from '../../GeneArchGroup2';
+import GenomeArchGroup from '../../Charts/GenomeArchitecture/GenomeArchGroup';
+import GenomeGradients from '../../Charts/GenomeArchitecture/GenomeGradients';
+// import GeneArchGroup from '../../GeneArchGroup2';
 import {filterDataByParams} from '../../../helpers/DataHelpers'
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 import { removeParams } from '../../../helpers/DataHelpers'
@@ -59,7 +62,7 @@ ChartViewLineChart.defaultProps = {
 export const ChartViewHistogram = (props) => {
     const { geneArchData, viewwidth, viewheight, params, useLocalParams,
             paramOptions, themes, xAction,  handleSwitch, displayX, handleSlider } = props;
-    const paramsCopy = removeParams({...params}, ['pop'])
+    const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
 
 
     const filteredGenomeData = filterDataByParams(geneArchData, paramsCopy)
@@ -71,7 +74,7 @@ export const ChartViewHistogram = (props) => {
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <HistogramChart data={nestedData}
                 themes={themes}
-                updateValChange={handleSlider}
+                // updateValChange={handleSlider}
                 displayDims={{width: viewwidth, height: viewheight}}
                 options={paramOptions.find(d => d.paramName === 'output_gen')}>
             </HistogramChart>
@@ -86,24 +89,82 @@ ChartViewHistogram.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const {geneArchData, template, params, paramOptions, handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
-    const identifier = uuidv4()
+    const { geneArchData, template, params, paramOptions, 
+            handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
+    // const identifier = uuidv4()
     const paramsCopy = removeParams({...params}, ['output_gen'])
+    const filteredData = filterDataByParams(geneArchData, paramsCopy)
+    const generations = uniq(filteredData.map(d => d.output_gen));
+    let genomeData = [];
+    map(generations, g => {
+        const filtered = filteredData.filter(d => d.output_gen  === g);
+        const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0};
+        template.map((t,i) => {
+            const position = t.position;
+            let match = filtered.find(v => v.position === position)
+            match = match !== undefined ?  match : {...emptyRow, position: position} 
+            match.ind = i;
+            genomeData.push(match)
+        })
+    })
+    const focusChartHeight = viewheight * (useLocalParams ? 12/20 : 13/20),
+          contextChartHeight = viewheight * (useLocalParams ? 6/20 : 7/20);
+
+    const displayDimsFocus = {width: viewwidth, height: focusChartHeight},
+          displayDimsContext = {width: viewwidth, height: contextChartHeight};
+    const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
+    const heightScaler = 10.5;
+    const genKeyFocus = uuidv4(),
+          genKeyContext = uuidv4();
+
+    const gradientsFocus = <GenomeGradients key={`color-${genKeyFocus}`}
+          data={genomeData}
+          xVar={'output_gen'}
+          yVar={'ind'}
+          colorVar={'positional_phen'}
+          chartPadding={chartPadding}
+          heightScaler={heightScaler}
+          displayDims={displayDimsFocus}
+          genKey={genKeyFocus}
+       />
+  
+    const gradientsContext = <GenomeGradients key={`color-${genKeyContext}`}
+          data={genomeData}
+          xVar={'output_gen'}
+          yVar={'ind'}
+          colorVar={'positional_phen'}
+          chartPadding={chartPadding}
+          heightScaler={heightScaler}
+          displayDims={displayDimsContext}
+          genKey={genKeyContext}
+      />
+  
+    const gradientsGray = <GenomeGradients key={`gray-${genKeyContext}`}
+          data={genomeData}
+          xVar={'output_gen'}
+          yVar={'ind'}
+          colorVar={'positional_phen'}
+          chartPadding={chartPadding}
+          heightScaler={heightScaler}
+          displayDims={displayDimsContext}
+          genKey={genKeyContext}
+          useGrayScale={true}
+      />
+
+
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
-            <GeneArchGroup data={geneArchData}
-                template={template}
-                params={paramsCopy}
-                useLocalParams={useLocalParams}
-                paramOptions={paramOptions}
-                identifier={identifier}
-                handleSwitch={handleSwitch}
-                displayDims={{width: viewwidth, height: viewheight}}
-                >
-
-            </GeneArchGroup>
+            <GenomeArchGroup data={genomeData}
+                    yVar={'ind'} 
+                    xVar={'output_gen'}
+                    colorVar={'positional_phen'}
+                    gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
+                    displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
+                    chartPadding={chartPadding} 
+                    heightScaler={heightScaler}
+                    genKeys={{genKeyFocus, genKeyContext}}/>
             
         </DashboardComponentContainer>
     )
