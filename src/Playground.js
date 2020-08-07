@@ -36,7 +36,9 @@ const theme = {
     highcolordown: '#ffd000',
     colormid: '#fffff7',
     lowcolorup: '#0082e6',
-    lowcolordown: '#5d0096'
+    lowcolordown: '#5d0096',
+    highcolorgray: '#fff',
+    lowcolorgray: '#cccccc',
   }
 
   const themePop0 = {
@@ -146,7 +148,8 @@ export const PlayGround = (props) => {
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
 
-    const gradientsFocus = <GenomeGradients data={tmpData}
+    const gradientsFocus = <GenomeGradients key={`color-${genKeyFocus}`}
+        data={tmpData}
         xVar={'output_gen'}
         yVar={'ind'}
         colorVar={'positional_phen'}
@@ -156,7 +159,8 @@ export const PlayGround = (props) => {
         genKey={genKeyFocus}
      />
 
-     const gradientsContext = <GenomeGradients data={tmpData}
+     const gradientsContext = <GenomeGradients key={`color-${genKeyContext}`}
+        data={tmpData}
         xVar={'output_gen'}
         yVar={'ind'}
         colorVar={'positional_phen'}
@@ -165,6 +169,19 @@ export const PlayGround = (props) => {
         displayDims={displayDimsContext}
         genKey={genKeyContext}
     />
+
+    const gradientsGray = <GenomeGradients key={`gray-${genKeyContext}`}
+        data={tmpData}
+        xVar={'output_gen'}
+        yVar={'ind'}
+        colorVar={'positional_phen'}
+        chartPadding={chartPaddingFocus}
+        heightScaler={heightScalerFocus}
+        displayDims={displayDimsContext}
+        genKey={genKeyContext}
+        useGrayScale={true}
+    />
+
 
 
     // const tmpData = nest().key(d => d.pop).entries(filteredGenomeData)
@@ -178,12 +195,13 @@ export const PlayGround = (props) => {
                 <p>{lgen}</p>
                 <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
                 <p>{ugen}</p> */}
+                {/* {gradientsGray} */}
 
                 <GenomeArchGroup data={tmpData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
                     colorVar={'positional_phen'}
-                    gradients={{gradientsFocus, gradientsContext}}
+                    gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
                     displayDims={{dimsMain: displayDims, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
                     chartPadding={chartPaddingFocus} 
                     heightScaler={heightScalerFocus}

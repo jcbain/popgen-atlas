@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { scaleLinear } from 'd3-scale';
 import { uniq } from 'lodash';
 
@@ -15,20 +15,22 @@ const GenomeArchitecture = (props) => {
     const width = displayDims.width * 12,
           height = displayDims.height * heightScaler;
     const uniqXVals = uniq(data.map(d => d[xVar]));
-    const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d <= xDomain[1]);
+    const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d < xDomain[1]);
     const interval = closestFromArray(uniqXVals);
     const barheight = height - chartPadding.top - chartPadding.bottom;
-    const barwidth = (width - chartPadding.left - chartPadding.right) / xVals.length;
-    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right - barwidth]);
+    const barwidth = (width - chartPadding.left - chartPadding.right) / (xVals.length);
+    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]);
 
     const bars = xVals.map((x, i) => {
+        const isFocus = (x >= contextDomain[0] && x < contextDomain[1]);
+        const colorIdentifier = isFocus ? 'color' : 'gray';
         return (
             <rect key={i}
                 x={xScale(x)}
                 y={chartPadding.top}
                 width={barwidth}
                 height={barheight}
-                fill={`url(#gradient-${x}-${genKey})`} />
+                fill={`url(#gradient-${colorIdentifier}-${x}-${genKey})`} />
         )
     })
 
@@ -45,15 +47,14 @@ const GenomeArchitecture = (props) => {
              />
     }
 
-
     return (
         <svg className={className}
         
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
- 
                 {gradients}
+                
                 {bars}
                 {brush}
                 <XAxis scale={xScale} 
