@@ -17,7 +17,6 @@ const HistogramChart = (props) => {
         const newValues = values.filter(d => d.output_gen === sliderVal)
         newData.push({key, values: newValues})
     })
-    console.log(newData)
 
     return (
         <ChartDiv className={className}

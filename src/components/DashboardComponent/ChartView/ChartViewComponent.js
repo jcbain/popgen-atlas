@@ -113,7 +113,7 @@ export const ChartViewGenomeChart = (props) => {
     const displayDimsFocus = {width: viewwidth, height: focusChartHeight},
           displayDimsContext = {width: viewwidth, height: contextChartHeight};
     const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
-    const heightScaler = 10.5;
+    const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
 
