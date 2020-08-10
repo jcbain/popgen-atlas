@@ -73,11 +73,14 @@ export const ChartViewHistogram = (props) => {
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <HistogramChart data={nestedData}
                 themes={themes}
+                params={paramsCopy}
                 nestedVar={'values'}
                 xVar={'positional_phen'}
                 filteredVar={'output_gen'}
+                useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
-                options={paramOptions.find(d => d.paramName === 'output_gen')}>
+                paramOptions={paramOptions}
+                handleSwitch={handleSwitch}>
             </HistogramChart>
         </DashboardComponentContainer>
     )
