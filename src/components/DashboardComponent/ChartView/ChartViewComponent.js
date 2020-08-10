@@ -29,7 +29,6 @@ export const ChartViewLineChart = (props) => {
            specialOpts, paramOptions, xAction, handleSwitch, displayX, themes} = props;
     
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
-    // delete paramsCopy.pop;
     const filteredLineChartData = filterDataByParams(lineChartData, paramsCopy)
     const nestedData = nest().key(d => d.pop).entries(filteredLineChartData);
 
@@ -74,7 +73,9 @@ export const ChartViewHistogram = (props) => {
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <HistogramChart data={nestedData}
                 themes={themes}
-                // updateValChange={handleSlider}
+                nestedVar={'values'}
+                xVar={'positional_phen'}
+                filteredVar={'output_gen'}
                 displayDims={{width: viewwidth, height: viewheight}}
                 options={paramOptions.find(d => d.paramName === 'output_gen')}>
             </HistogramChart>
@@ -91,7 +92,6 @@ ChartViewHistogram.defaultProps = {
 export const ChartViewGenomeChart = (props) => {
     const { geneArchData, template, params, paramOptions, 
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
-    // const identifier = uuidv4()
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const generations = uniq(filteredData.map(d => d.output_gen));
@@ -168,6 +168,10 @@ export const ChartViewGenomeChart = (props) => {
             
         </DashboardComponentContainer>
     )
+}
+
+ChartViewGenomeChart.defaultProps = {
+    xAction: () => console.log("I don't do anything")
 }
 
 const ChartViewMain = (props) => {

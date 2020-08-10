@@ -5,26 +5,27 @@ import {ChartDiv} from '../ChartStyles';
 import { ParamSlider } from '../../ParamSelector/ParamSlider';
 
 const HistogramChart = (props) => {
-    const { className, displayDims, data, themes, options } = props;
+    const { className, displayDims, data, themes, options, 
+            nestedVar, xVar, filteredVar} = props;
     const [sliderVal, updateSliderVal] = useState(1000);
     const updateValChange = (d) => {
         updateSliderVal(d)
     }
 
-    let newData = [];
+    let updatedData = [];
     data.map(d => {
-        const {values, key} = d;
-        const newValues = values.filter(d => d.output_gen === sliderVal)
-        newData.push({key, values: newValues})
+        const {key} = d;
+        const updatedValues = d[nestedVar].filter(d => d[filteredVar] === sliderVal)
+        updatedData.push({key, values: updatedValues})
     })
 
     return (
         <ChartDiv className={className}
             displaywidth={displayDims.width}
             displayheight={displayDims.height * (8/10)}>
-            <Histogram data={newData}
-                nestedVar={'values'}
-                xVar={'positional_phen'}
+            <Histogram data={updatedData}
+                nestedVar={nestedVar}
+                xVar={xVar}
                 themes={themes}
                 displayDims={{...displayDims, height: displayDims.height * (8/10)}}>
             </Histogram>
