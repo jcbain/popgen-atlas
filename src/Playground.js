@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState } from 'react';
 
 import {ThemeProvider} from 'styled-components';
 import AddTabs from './components/Tabs/Tabs'
@@ -7,8 +7,6 @@ import GenomeArchitecture from './components/Charts/GenomeArchitecture/GenomeArc
 import GenomeArchGroup from './components/Charts/GenomeArchitecture/GenomeArchGroup';
 import GenomeGradients from './components/Charts/GenomeArchitecture/GenomeGradients';
 
-import { nest } from 'd3-collection';
-import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 import { map, uniq } from 'lodash'
 import styled from 'styled-components';

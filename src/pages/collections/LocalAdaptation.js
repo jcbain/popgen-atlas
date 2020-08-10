@@ -8,11 +8,6 @@ import data from '../../data/mutations_bg.json';
 import individualData from '../../data/individuals_small';
 import template from '../../data/genome_template.json';
 
-import LineChartGroup from '../../components/LineChartGroup';
-import GeneArchGroup from '../../components/GeneArchGroup';
-import Dashboard from '../../components/Dashboard';
-import Histogram from '../../charts/Histogram2';
-import {AddTabs} from '../../components/Tabs';
 import {PlayGround} from '../../Playground'
 
 import './styles/local_adaptation_styles.css';
@@ -98,12 +93,7 @@ class LocalAdaptation extends Component {
   render() {
     return (
       <div className="local-adaptation">
-        {/* <section className="testChart">
-          <Histogram data={individualData} width={200} height={200}>
-
-          </Histogram>
-
-        </section> */}
+ 
         <section className={'playground'}>
           
             <PlayGround lineChartData={dataPopPhen}
@@ -114,46 +104,7 @@ class LocalAdaptation extends Component {
 
         </section>
 
-        {/* <AddTabs maxNumTabs={4}
-          data={data} 
-          dataDiff={dataDiff}
-          dataPopPhen={dataPopPhen} 
-          dataPopPhenDiff={dataPopPhenDiff}
-          template={template}
-          params={this.state.params}
-        >
-        </AddTabs> */}
-
-        {/* <section className="descriptive-chart">
-          <div id="line-chart-group-1">
-            <LineChartGroup data={dataPopPhen}
-                params={this.state.params}
-                useLocalParams={true}>
-            </LineChartGroup>
-          </div>
-        </section>
-
-        <section className="descriptive-chart">
-        <div id="arch-chart-group-1">
-            <GeneArchGroup data={data} 
-                template={template}
-                params={this.state.params}
-                useLocalParams={true}
-                identifier={uuidv4()}>
-            </GeneArchGroup>
-          </div>
-        </section> */}
-        
-      {/* <section id="dashboard">
-        <Dashboard className={'dashboard-local-adaptation'}
-          data={data} 
-          dataDiff={dataDiff}
-          dataPopPhen={dataPopPhen} 
-          dataPopPhenDiff={dataPopPhenDiff}
-          template={template}
-          params={this.state.params}>
-        </Dashboard>
-      </section> */}
+    
       
       </div>
 
