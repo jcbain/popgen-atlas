@@ -11,7 +11,6 @@ import LineChartGroup from '../../Charts/LineChart/LineChartGroup';
 import HistogramChart from '../../Charts/Histogram/HistogramChart';
 import GenomeArchGroup from '../../Charts/GenomeArchitecture/GenomeArchGroup';
 import GenomeGradients from '../../Charts/GenomeArchitecture/GenomeGradients';
-// import GeneArchGroup from '../../GeneArchGroup2';
 import {filterDataByParams} from '../../../helpers/DataHelpers'
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
 import { removeParams } from '../../../helpers/DataHelpers'
@@ -167,7 +166,11 @@ export const ChartViewGenomeChart = (props) => {
                     displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
                     chartPadding={chartPadding} 
                     heightScaler={heightScaler}
-                    genKeys={{genKeyFocus, genKeyContext}}/>
+                    genKeys={{genKeyFocus, genKeyContext}}
+                    useLocalParams={useLocalParams}
+                    paramOptions={paramOptions}
+                    params={paramsCopy}
+                    handleSwitch={handleSwitch}/>
             
         </DashboardComponentContainer>
     )
