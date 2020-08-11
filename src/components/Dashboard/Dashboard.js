@@ -38,7 +38,7 @@ const Dashboard = (props) => {
             isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
 
     const {componentMain, componentSecondary, componentTertiary, componentFourth, componentGlobal} = dashboardState;
-    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop');
+    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen');
     const numParams = paramOptionsCopy.length;
     const halfviewwidth = viewwidth/2
     const selectors = paramOptionsCopy.map((d, i) => {
