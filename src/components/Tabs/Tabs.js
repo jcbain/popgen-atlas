@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
-import { render } from '@testing-library/react';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -126,6 +125,7 @@ const AddTabs = (props) => {
         }
 
     })
+
     const addTab = () => {
         setCurrentNumTabs(currentNumTabs + 1)
         setValue(currentNumTabs)
