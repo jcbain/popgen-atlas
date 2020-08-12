@@ -23,7 +23,9 @@ const theme = {
       secondary: '#6fa1c7',
       grayMain: '#6e6e6e',
       graySecondary: '#efefef',
+      grayLight: '#d1d1d1',
       background: '#F6F8FF',
+      backgroundLight: '#fafbff',
     },
     tickfont: 'Itim',
     tickfill: '#6e6e6e',
@@ -37,6 +39,8 @@ const theme = {
     lowcolordown: '#5d0096',
     highcolorgray: '#a1a1a1',
     lowcolorgray: '#fff',
+    buttoncolor: '#682CFE',
+    buttoncoloralpha: 'rgba(103, 44, 254, .5)',
   }
 
   const themePop0 = {
@@ -211,6 +215,7 @@ export const PlayGround = (props) => {
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={'identifier'}
+                    maxTabs={5}
                     themes={themes}>
                 </AddTabs>
 

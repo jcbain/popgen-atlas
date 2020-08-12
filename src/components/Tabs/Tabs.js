@@ -26,32 +26,74 @@ const passTabPanelProps = (index) => {
     }
 }
 
+const DashboardTopBar = styled.div`
+    display: grid;
+    grid-template-areas:
+        "empty tablineleft tabs tabs tablineright tabmenu";
+    grid-template-columns: 0.25fr 0.1fr 1fr 1fr 0.1fr 0.25fr;
+    grid-template-rows: 1fr;
+    box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.034);
+    width: 100vw;
+    border-radius: 5px;
+`;
+
 const TabsContainer = styled.div`
+    grid-area: tabs;
     display: flex;
     flex-direction: row;
 `
-
+const TabContainerLine = styled.div`
+    grid-area: tabline${({linepos}) => linepos};
+    width: 1px;
+    height: 6vh;
+    // margin-top: 1vh;
+    // margin-bottom: 1vh;
+    margin: auto auto;
+    background-color: ${props => props.theme.color.grayLight};
+`
 const TabContainer = styled.div`
-    background-color: ${props => props.activetab ? props.theme.color.background : props.theme.color.main};
+    background-color: ${props => props.theme.color.main};
     padding-left: 1vw;
     padding-right: 1vw;
     height: 7vh;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-weight: ${props => props.activetab ? '600' : '400'};
+    color: ${props => props.theme.color.grayMain};
     line-height: 7vh;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid ${props => props.theme.color.background}; 
+    cursor: pointer;
+    min-width: 12vw;
+    text-align: center;
+    border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.main};
+    &:hover {
+        background-color:  ${props => props.activetab ? props.theme.color.main : props.theme.color.backgroundLight};
+        font-weight: ${props => props.activetab ? '600' : '500'};
+        border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.backgroundLight};
+    }
+`
+
+const TabAddButton = styled.button`
+    background-color: ${({ theme }) => theme.buttoncolor};
+    height: 25px;
+    width: 25px;
+    border-radius: 5px;
+    margin: auto 1vw;
+    cursor: pointer;
+    border: 1px solid ${({ theme })=> theme.buttoncolor};
+    color: ${({ theme })=> theme.color.main};
 `
 
 const Tabs = (props) => {
     const {children, tabs, addTab, value, setValue} = props;
+ 
     const alltabs = tabs.map((d, i) => {
-        return <TabContainer key={i} onClick={() => setValue(i)} activetab={i === value}>Just a tab {i}</TabContainer>
+        return <TabContainer key={i} onClick={() => setValue(i)} activetab={i === value}>D{i+1}</TabContainer>
     })
 
     return (
         <TabsContainer>
             {alltabs}
-            <TabContainer onClick={addTab} activetab={false}>+</TabContainer>
+            <TabAddButton onClick={addTab}>+</TabAddButton>
         </TabsContainer>
     )
 
@@ -102,7 +144,7 @@ paramOptions.map(d => {
 })
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth, themes} = props;
+    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs} = props;
     const [value, setValue] = useState(0);
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
@@ -127,12 +169,15 @@ const AddTabs = (props) => {
     })
 
     const addTab = () => {
-        setCurrentNumTabs(currentNumTabs + 1)
-        setValue(currentNumTabs)
-        setDashboardState(prevState => ({
-            ...prevState, [currentNumTabs]: dashboardState[value]
+        if ( currentNumTabs < maxTabs ) {
+            setCurrentNumTabs(currentNumTabs + 1)
+            setValue(currentNumTabs)
+            setDashboardState(prevState => ({
+                ...prevState, [currentNumTabs]: dashboardState[value]
+    
+            }))
+        }
 
-        }))
     }
 
 
@@ -221,7 +266,11 @@ const AddTabs = (props) => {
 
     return (
         <div>
-            <Tabs value={value} addTab={addTab} tabs={tabs} setValue={setValue}></Tabs>
+            <DashboardTopBar>
+                <TabContainerLine linepos={'left'} />
+                <Tabs value={value} addTab={addTab} tabs={tabs} setValue={setValue}></Tabs>
+                <TabContainerLine linepos={'right'} />
+            </DashboardTopBar>
             {tabpanels}
 
         </div>
