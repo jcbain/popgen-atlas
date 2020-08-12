@@ -65,7 +65,7 @@ const GenomeGradients = (props) => {
                 x1={0}
                 x2={0}
                 y1={chartPadding.top}
-                y2={(displayDims.height * heightScaler) - chartPadding.top - chartPadding.bottom}
+                y2={(displayDims.height * heightScaler) - chartPadding.bottom}
             >
                 {
                     data.filter(d => d[xVar] === x).map((v, j) => {

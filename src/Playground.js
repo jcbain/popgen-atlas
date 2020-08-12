@@ -32,7 +32,7 @@ const theme = {
     thumbcolor: '#8a5a86',
     highcolorup: '#eb4034',
     highcolordown: '#ffd000',
-    colormid: '#fffff7',
+    colormid: '#fc03a9',
     lowcolorup: '#0082e6',
     lowcolordown: '#5d0096',
     highcolorgray: '#a1a1a1',
