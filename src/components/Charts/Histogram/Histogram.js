@@ -21,8 +21,8 @@ BinRect.defaultProps = {
 const Histogram = (props) => {
     const { data, xVar, nestedVar, className, displayDims,
             chartPadding, themes} = props;
-    const width = displayDims.width * 8,
-          height = displayDims.height * 5.5;
+    const width = displayDims.width * 9,
+          height = displayDims.height * 4.5;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
     const numBins = 10;

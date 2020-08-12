@@ -12,6 +12,7 @@ export const DashboardComponentContainer = styled.div`
     padding-left: 1vw;
     padding-right: 1vw;
     padding-top: 2vh;
+    border-radius: 10px;
     border: 1px solid ${props => props.theme.color.graySecondary};
 `
 

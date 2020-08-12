@@ -8,6 +8,7 @@ import ChartCardView from './ChartCardView/ChartCardViewComponent';
 const DashboardComponentMainContainer = styled.div`
     grid-area: ${props => props.gridarea || 'none'};
     background-color: ${props => props.theme.color.main};
+    border-radius: 10px;
 `
 
 export const DashboardComponent = (props) => {

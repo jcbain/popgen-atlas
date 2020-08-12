@@ -23,16 +23,16 @@ const theme = {
       secondary: '#6fa1c7',
       grayMain: '#6e6e6e',
       graySecondary: '#efefef',
-      background: '#f2f2f2',
+      background: '#F6F8FF',
     },
     tickfont: 'Itim',
     tickfill: '#6e6e6e',
     handlecolor: '#2b2b2b',
     slidercolor: '#e0e0e0',
-    thumbcolor: '#8a5a86',
+    thumbcolor: '#682CFE',
     highcolorup: '#eb4034',
     highcolordown: '#ffd000',
-    colormid: '#fc03a9',
+    colormid: '#fffff7',
     lowcolorup: '#0082e6',
     lowcolordown: '#5d0096',
     highcolorgray: '#a1a1a1',
@@ -40,15 +40,15 @@ const theme = {
   }
 
   const themePop0 = {
-    popColorFocus: '#ac9e47', // rbg(172, 159, 71)
+    popColorFocus: '#682CFE', 
     popColorOutside: '#d6d6d6',
-    popColorAlpha: 'rgba(172, 159, 71, .5)',
+    popColorAlpha: 'rgba(103, 44, 254, .5)',
 }
 
 const themePop1 = {
-    popColorFocus: '#7ca1a1', // rgb(124, 161, 161)
+    popColorFocus: '#F0C23A', // rgb(124, 161, 161)
     popColorOutside: '#d6d6d6',
-    popColorAlpha: 'rgba(124, 161, 161, .5)',
+    popColorAlpha: 'rgba(240, 194, 58, .5)',
 }
 
 const themes = {
