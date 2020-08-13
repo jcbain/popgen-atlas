@@ -33,14 +33,14 @@ const theme = {
     slidercolor: '#e0e0e0',
     thumbcolor: '#682CFE',
     highcolorup: '#eb4034',
-    highcolordown: '#ffd000',
+    highcolordown: '#F0C23A',
     colormid: '#fffff7',
     lowcolorup: '#0082e6',
-    lowcolordown: '#5d0096',
+    lowcolordown: '#682CFE',
     highcolorgray: '#a1a1a1',
     lowcolorgray: '#fff',
     buttoncolor: '#682CFE',
-    buttoncoloralpha: 'rgba(103, 44, 254, .5)',
+    buttoncoloralpha: 'rgba(103, 44, 254, .3)',
   }
 
   const themePop0 = {
@@ -199,7 +199,7 @@ export const PlayGround = (props) => {
                     geneArchData={props.geneArchData}
                     template={props.template}
                     identifier={'identifier'}
-                    maxTabs={5}
+                    maxTabs={4}
                     themes={themes}>
                 </AddTabs>
 

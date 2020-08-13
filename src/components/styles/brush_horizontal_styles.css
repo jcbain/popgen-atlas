@@ -1,8 +1,0 @@
-.horizontal-brush .selection{
-    stroke: none;
-    fill: rgba(0, 0, 0, 0.15);
-}
-
-.handle{
-    fill: rgb(75, 75, 75);
-}

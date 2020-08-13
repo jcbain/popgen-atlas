@@ -21,6 +21,21 @@ const TabPanel = (props) => {
     )
 }
 
+const ParamPanelDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 1vw;
+    padding-right: 1vw;
+`
+
+const StyledH2 = styled.h2`
+    font-family: 'Baloo Tamma 2', cursive;
+    color: ${({theme}) => theme.buttoncolor};
+    font-size: 1em;
+    padding-left: 1vw;
+`;
+
 const ParamPanel = (props) => {
     const { children, value, index } = props;
 
@@ -29,9 +44,10 @@ const ParamPanel = (props) => {
             id={`tab-panel-${index}`}
         >
             {value === index && (
-                <div>
+                <ParamPanelDiv>
+                    <StyledH2>Global Parameters</StyledH2>
                 {children}
-                </div>
+                </ParamPanelDiv>
             )}
         </div>
     )
@@ -41,13 +57,15 @@ const ParamPanel = (props) => {
 const DashboardTopBar = styled.div`
     grid-area: tabbar;
     display: grid;
+    background-color: ${({theme}) => theme.color.backgroundLight};
     grid-template-areas:
-        "empty tablineleft tabs tabs tablineright tabmenu";
-    grid-template-columns: 0.25fr 0.1fr 1fr 1fr 0.1fr 0.25fr;
+        "tabs tabs tablineright tabmenu";
+    grid-template-columns: 1fr 1fr 0.1fr 0.5fr;
     grid-template-rows: 1fr;
-    box-shadow:
-        0 2.8px 2.2px rgba(0, 0, 0, 0.034);
     border-radius: 5px;
+    align-items: center;
+    padding-left: 1vw;
+    padding-right: 1vw;
 `;
 
 const TabsContainer = styled.div`
@@ -59,13 +77,11 @@ const TabContainerLine = styled.div`
     grid-area: tabline${({linepos}) => linepos};
     width: 1px;
     height: 6vh;
-    // margin-top: 1vh;
-    // margin-bottom: 1vh;
     margin: auto auto;
     background-color: ${props => props.theme.color.grayLight};
 `
 const TabContainer = styled.div`
-    background-color: ${props => props.theme.color.main};
+    background-color: ${props => props.theme.color.backgroundLight};
     padding-left: 1vw;
     padding-right: 1vw;
     height: 7vh;
@@ -76,9 +92,9 @@ const TabContainer = styled.div`
     cursor: pointer;
     min-width: 12vw;
     text-align: center;
-    border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.main};
+    border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.backgroundLight};
     &:hover {
-        background-color:  ${props => props.activetab ? props.theme.color.main : props.theme.color.backgroundLight};
+        background-color:  ${props => props.activetab ? props.theme.color.backgroundLight : props.theme.buttoncoloralpha};
         font-weight: ${props => props.activetab ? '600' : '500'};
         border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.backgroundLight};
     }
@@ -308,7 +324,7 @@ const AddTabs = (props) => {
                                 paramName={d.paramName}
                                 paramNameReadable={d.paramNameReadable}
                                 options={d.options}
-                                viewwidth={10}
+                                viewwidth={100 - dashboardviewwidth - 2}
                                 viewheight={7}
                                 addhover={false}
                                 selectedValue={dashboardState[i].componentGlobal['params'][d.paramName]}
@@ -328,7 +344,6 @@ const AddTabs = (props) => {
         <TabComponentContainer dashboardviewwidth={dashboardviewwidth}
             dashboardviewheight={dashboardviewwidth}>
             <DashboardTopBar>
-                <TabContainerLine linepos={'left'} />
                 <Tabs value={value} addTab={addTab} tabs={tabs} setValue={setValue}></Tabs>
                 <TabContainerLine linepos={'right'} />
             </DashboardTopBar>

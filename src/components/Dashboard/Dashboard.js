@@ -40,28 +40,11 @@ const Dashboard = (props) => {
             isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
-    console.log(componentGlobal)
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen');
-    const numParams = paramOptionsCopy.length;
     const componentviewwidth = viewwidth/2
     const componentviewheight = viewheight/2
     const gapwidth = 1;
-    // const selectors = paramOptionsCopy.map((d, i) => {
-    //     return (
-    //         <ParamSelector key={i}
-    //             className={'param-selector'}
-    //             paramName={d.paramName}
-    //             paramNameReadable={d.paramNameReadable}
-    //             options={d.options}
-    //             viewwidth={(halfviewwidth - (numParams + .5) )/numParams}
-    //             viewheight={7}
-    //             addHover={false}
-    //             selectedValue={componentGlobal['params'][d.paramName]}
-    //             handleSwitch={handleSwitch('componentGlobal')}
-    //             >
-    //         </ParamSelector>
-    //     )
-    // })
+
 
     const dashboardcomponents = dashboardStateKeys.filter(d => d !== 'componentGlobal').map((c, i) => {
         return (

@@ -72,7 +72,7 @@ export const ParamSelector = (props) => {
                 </SelectTitle>
             </SelectHeaderWrapper>
             <OptionWrapper displayopt={open ? 'flex' : 'none'}
-                offsetheight={viewheight}
+                offsetheight={viewheight - 2}
             >
                 {opts}
             </OptionWrapper>
