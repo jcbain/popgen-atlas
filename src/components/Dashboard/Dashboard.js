@@ -40,7 +40,6 @@ const Dashboard = (props) => {
             isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
-    let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen');
     const componentviewwidth = viewwidth/2
     const componentviewheight = viewheight/2
     const gapwidth = 1;

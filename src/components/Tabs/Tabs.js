@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
 import { ParamSelector } from '../ParamSelector/ParamSelector';
+import Switch from '../Buttons/Switch'
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -177,6 +178,7 @@ const paramOptions = [
     {paramName: 'pop', paramNameReadable: 'population', options: population},
     {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
 ]
+
 let initParams = {}
 paramOptions.map(d => {
     return initParams[d.paramName] = d.options[0].value;
@@ -348,7 +350,10 @@ const AddTabs = (props) => {
                 <TabContainerLine linepos={'right'} />
             </DashboardTopBar>
             <DashboardWrapper>{tabpanels}</DashboardWrapper>
-            <SideBar>{parampanels}</SideBar>
+            <SideBar>
+                <Switch isOn={staticOpt} handleToggle={() => setStaticOpt(!staticOpt)}/>
+                {parampanels}
+            </SideBar>
 
         </TabComponentContainer>
     )
