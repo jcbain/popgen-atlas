@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 import data from '../../data/mutations_bg.json';
-import individualData from '../../data/individuals_small';
+// import individualData from '../../data/individuals_small';
 import template from '../../data/genome_template.json';
 
 import {PlayGround} from '../../Playground'

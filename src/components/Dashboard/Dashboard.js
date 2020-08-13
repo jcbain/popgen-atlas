@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { ParamLister } from '../DashboardComponentCard/DashboardComponentCardsStyles'
@@ -16,13 +16,13 @@ const DashboardContainer = styled.div`
         "componentTertiary componentFourth";
     // grid-template-columns: 38vw 38vw;
     grid-template-columns: ${({componentviewwidth, gapwidth}) => componentviewwidth - (gapwidth * 1.5)}vw ${({componentviewwidth, gapwidth}) => componentviewwidth - (gapwidth * 1.5)}vw;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: ${({componentviewheight, gapwidth}) => componentviewheight - (gapwidth * 1.5)}vh ${({componentviewheight, gapwidth}) => componentviewheight - (gapwidth * 1.5)}vh;
     column-gap: ${({gapwidth}) => gapwidth}vw;
-    row-gap: ${({gapwidth}) => gapwidth}vw;
+    row-gap: ${({gapwidth}) => gapwidth}vh;
     padding-left: ${({gapwidth}) => gapwidth}vw;
     padding-right: ${({gapwidth}) => gapwidth}vw;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: ${({gapwidth}) => gapwidth}vh;
+    padding-bottom: ${({gapwidth}) => gapwidth}vh;
 `
 DashboardContainer.defaultProps = {
     theme: {
@@ -31,6 +31,8 @@ DashboardContainer.defaultProps = {
         }
     }
 }
+
+
 
 
 
@@ -44,7 +46,6 @@ const Dashboard = (props) => {
     const componentviewheight = viewheight/2
     const gapwidth = 1;
 
-
     const dashboardcomponents = dashboardStateKeys.filter(d => d !== 'componentGlobal').map((c, i) => {
         return (
             <DashboardComponent key={i}
@@ -53,8 +54,8 @@ const Dashboard = (props) => {
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
-                viewwidth={componentviewwidth - 1.5}
-                viewheight={componentviewheight}
+                viewwidth={componentviewwidth - (gapwidth * 1.5)}
+                viewheight={componentviewheight  - (gapwidth * 1.5)}
                 params={isStatic ? componentGlobal['params'] : dashboardState[c]['params']}
                 useLocalParams={!isStatic}
                 paramOptions={paramOptions}
@@ -76,29 +77,9 @@ const Dashboard = (props) => {
 
 
     return (
-        <DashboardContainer componentviewwidth={componentviewwidth} 
+        <DashboardContainer componentviewwidth={componentviewwidth}
+            componentviewheight={componentviewheight} 
             gapwidth={gapwidth}>
-            {/* <DashboardComponentContainer  gridarea={'param'}
-                display={'flex'}
-                viewwidth={viewwidth}>
-                <ParamCard description={'static?'}
-                    viewwidth={halfviewwidth - 2}
-                >
-                    <button onClick={() => setStaticOpt(!isStatic)}>Change to {isStatic ? 'flexible' : 'static'}</button>
-                </ParamCard>
-                <ParamCard description={'choose your global parameters'}
-                    viewwidth={halfviewwidth -1 }
-                    display={isStatic ? 'grid' : 'none'}
-                >
-                    <ParamLister numparams={numParams}
-                        viewwidth={halfviewwidth-2}
-                    >
-                        {selectors}
-                    </ParamLister>
-                </ParamCard>
-
-
-            </DashboardComponentContainer> */}
 
             { dashboardcomponents }
 

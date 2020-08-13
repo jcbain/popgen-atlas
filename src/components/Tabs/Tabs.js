@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -199,7 +199,7 @@ const AddTabs = (props) => {
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
     const dashboardviewwidth = 80;
-    const dashboardviewheight = 80;
+    const dashboardviewheight = 100;
     const initComponentState = (selectedChart) => {
         return {
             selectedChart,
@@ -287,7 +287,6 @@ const AddTabs = (props) => {
             }
         }))
     }
-    
 
     const tabs = [...Array(currentNumTabs)];
     const tabpanels = [...Array(currentNumTabs)].map((t, i) => {
@@ -344,7 +343,7 @@ const AddTabs = (props) => {
 
     return (
         <TabComponentContainer dashboardviewwidth={dashboardviewwidth}
-            dashboardviewheight={dashboardviewwidth}>
+            dashboardviewheight={dashboardviewheight}>
             <DashboardTopBar>
                 <Tabs value={value} addTab={addTab} tabs={tabs} setValue={setValue}></Tabs>
                 <TabContainerLine linepos={'right'} />

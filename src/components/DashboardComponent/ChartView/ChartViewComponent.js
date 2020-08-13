@@ -97,24 +97,28 @@ export const ChartViewGenomeChart = (props) => {
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const generations = uniq(filteredData.map(d => d.output_gen));
-    let genomeData = [];
-    map(generations, g => {
-        const filtered = filteredData.filter(d => d.output_gen  === g);
-        const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0};
-        template.map((t,i) => {
-            const position = t.position;
-            let match = filtered.find(v => v.position === position)
-            match = match !== undefined ?  match : {...emptyRow, position: position} 
-            match.ind = i;
-            genomeData.push(match)
+    const genomeData = React.useMemo(() => {
+        let genomeData = [];
+        map(generations, g => {
+            const filtered = filteredData.filter(d => d.output_gen  === g);
+            const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0};
+            template.map((t,i) => {
+                const position = t.position;
+                let match = filtered.find(v => v.position === position)
+                match = match !== undefined ?  match : {...emptyRow, position: position} 
+                match.ind = i;
+                genomeData.push(match)
+            })
         })
-    })
+        return genomeData
+    }, [filteredData])
+   
     const focusChartHeight = viewheight * (useLocalParams ? 12/20 : 13/20),
           contextChartHeight = viewheight * (useLocalParams ? 6/20 : 7/20);
 
     const displayDimsFocus = {width: viewwidth, height: focusChartHeight},
           displayDimsContext = {width: viewwidth, height: contextChartHeight};
-    const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
+    const chartPadding = {left: 5, right: 5, top: 10, bottom: 40};
     const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
@@ -181,23 +185,24 @@ ChartViewGenomeChart.defaultProps = {
 }
 
 const ChartViewMain = (props) => {
-    const {selectedChart, viewwidth, ...rest} = props;
-    const chartviewwidth = viewwidth - 2;
+    const {selectedChart, ...rest} = props;
+    // const chartviewwidth = viewwidth - 2;
+    // const chartviewheight = viewheight - 2
 
 
     let displayChart;
     switch(selectedChart){
         case('linechartgroup'):
-            displayChart = <ChartViewLineChart viewwidth={chartviewwidth} {...rest} />
+            displayChart = <ChartViewLineChart {...rest} />
             break;
         case('genearchgroup'):
-            displayChart = <ChartViewGenomeChart viewwidth={chartviewwidth} {...rest} />
+            displayChart = <ChartViewGenomeChart {...rest} />
             break;
         case('histogram'):
-            displayChart = <ChartViewHistogram viewwidth={chartviewwidth} {...rest} />
+            displayChart = <ChartViewHistogram {...rest} />
             break;
         default: 
-            displayChart = <DashboardComponentContainer viewwidth={chartviewwidth} {...rest} />
+            displayChart = <DashboardComponentContainer {...rest} />
     }
 
     return displayChart;

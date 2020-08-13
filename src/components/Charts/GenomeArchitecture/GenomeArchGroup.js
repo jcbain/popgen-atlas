@@ -5,7 +5,7 @@ import GenomeArchitecture from './GenomeArchitecture';
 import { ChartDiv } from '../ChartStyles';
 import { ParamLister } from '../../DashboardComponentCard/DashboardComponentCardsStyles'
 import { ParamSelector } from '../../ParamSelector/ParamSelector';
-
+import GradientLegend from './GradientLegend'
 
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar,
@@ -59,6 +59,7 @@ const GenomeArchGroup = (props) => {
             displaywidth={displayDims.width}
             displayheight={displayDims.height}>
             { paramBar }
+            <div><GradientLegend /></div>
             <GenomeArchitecture data={data}
                 yVar={yVar}
                 xVar={xVar}
