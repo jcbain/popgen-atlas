@@ -28,7 +28,7 @@ const TextVal = styled.text`
     text-anchor: middle;
     font-family: ${({ theme }) => theme.tickfont};
     fill: ${({ theme }) => theme.tickfill};
-    font-size: 18px;
+    font-size: 35px;
 `
 
 TextVal.defaultProps = {
@@ -39,7 +39,8 @@ TextVal.defaultProps = {
 }
 
 const GradientLegend = (props) => {
-    const { width, height, legendKey, minVal, maxVal, midVal } = props;
+    const { width, height, legendKey,
+            viewwidth, viewheight, minVal, maxVal, midVal } = props;
 
     const gradient = <linearGradient id={`legend-gradient-${legendKey}`}
         gradientUnits='userSpaceOnUse'
@@ -57,7 +58,7 @@ const GradientLegend = (props) => {
 
 
     return (
-        <svg width={'15vw'} height={'2vh'} viewBox={[0, 0, width, height]}>
+        <svg width={`${viewwidth}vw`} height={`${viewheight}vh`} viewBox={[0, 0, width, height]}>
             {gradient}
             <rect x={0} 
                 y={0} 
@@ -76,8 +77,8 @@ const GradientLegend = (props) => {
 
 GradientLegend.defaultProps = {
     legendKey: 'legend-key',
-    width: 300,
-    height: 40,
+    width: 600,
+    height: 50,
     minVal: -1,
     maxVal: 1,
     midVal: 0

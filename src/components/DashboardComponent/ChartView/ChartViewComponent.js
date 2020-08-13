@@ -113,11 +113,12 @@ export const ChartViewGenomeChart = (props) => {
         return genomeData
     }, [filteredData])
    
-    const focusChartHeight = viewheight * (useLocalParams ? 12/20 : 13/20),
-          contextChartHeight = viewheight * (useLocalParams ? 6/20 : 7/20);
-
+    const focusChartHeight = viewheight * (useLocalParams ? 10/20 : 10/20),
+          contextChartHeight = viewheight * (useLocalParams ? 5/20 : 5/20),
+          legendHeight = viewheight * (useLocalParams ? 2.5/20 : 2.5/20)
     const displayDimsFocus = {width: viewwidth, height: focusChartHeight},
-          displayDimsContext = {width: viewwidth, height: contextChartHeight};
+          displayDimsContext = {width: viewwidth, height: contextChartHeight},
+          legendDims = {width: viewwidth, height: legendHeight};
     const chartPadding = {left: 5, right: 5, top: 10, bottom: 40};
     const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
@@ -167,7 +168,7 @@ export const ChartViewGenomeChart = (props) => {
                     xVar={'output_gen'}
                     colorVar={'positional_phen'}
                     gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
-                    displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
+                    displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext, dimsLegend: legendDims}}
                     chartPadding={chartPadding} 
                     heightScaler={heightScaler}
                     genKeys={{genKeyFocus, genKeyContext}}

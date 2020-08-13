@@ -1,11 +1,31 @@
 import React, { useState } from 'react';
 import { min, max } from 'd3-array';
+import styled from 'styled-components';
 
 import GenomeArchitecture from './GenomeArchitecture';
 import { ChartDiv } from '../ChartStyles';
 import { ParamLister } from '../../DashboardComponentCard/DashboardComponentCardsStyles'
 import { ParamSelector } from '../../ParamSelector/ParamSelector';
 import GradientLegend from './GradientLegend'
+
+const LegendDiv = styled.div`
+    width: ${props => props.viewwidth}vw;
+    height: ${props => props.viewheight}vh;
+`
+
+const LegendItems = styled.div`
+    width: ${props => props.viewwidth}vw;
+    height: ${props => props.viewheight}vh;
+    display: flex;
+    flex-direction: column;
+`;
+
+const LegendTitle = styled.p`
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: .75em;
+    margin-block-start: 0;
+    margin-block-end: 0;
+`
 
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar,
@@ -15,13 +35,14 @@ const GenomeArchGroup = (props) => {
 
     const minX = min(data, d => d[xVar]),
           maxX = max(data, d => d[xVar]);
+
     
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
 
-    const { dimsMain, dimsContextChart, dimsFocusChart } = displayDims;
+    const { dimsMain, dimsContextChart, dimsFocusChart, dimsLegend } = displayDims;
     const { gradientsFocus, gradientsContext } = gradients;
     const filteredParamOptions = paramOptions.filter(d => d.paramName !== xVar);
-    const paramOptionsHeight = dimsMain.height * 2/20;
+    const paramOptionsHeight = dimsMain.height * 2.5/20;
 
     const getDomain = (domain) => {
         setContextDomain(domain)
@@ -58,8 +79,22 @@ const GenomeArchGroup = (props) => {
         <ChartDiv className={className}
             displaywidth={displayDims.width}
             displayheight={displayDims.height}>
+            <LegendDiv viewwidth={dimsLegend.width}
+                viewheight={dimsLegend.height}
+            >
+                <LegendItems viewwidth={dimsLegend.width * (2/4)}
+                    viewheight={dimsLegend.height}>
+                    <LegendTitle>Legend Title Here</LegendTitle>
+
+                    <div>
+                    <GradientLegend viewwidth={dimsLegend.width/3}
+                        viewheight={dimsLegend.height/4} 
+                        minVal={-1}/>
+                    </div>
+                </LegendItems>
+            </LegendDiv>
             { paramBar }
-            <div><GradientLegend /></div>
+
             <GenomeArchitecture data={data}
                 yVar={yVar}
                 xVar={xVar}

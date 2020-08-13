@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { ParamLister } from '../DashboardComponentCard/DashboardComponentCardsStyles'
 import {DashboardComponent} from '../DashboardComponent/DashboardComponent';
-import { ParamCard } from '../DashboardComponentCard/DashboardComponentCards'
-import { ParamSelector } from '../ParamSelector/ParamSelector';
-import { DashboardComponentContainer } from '../DashboardComponent/DashboardComponentStyles';
+
 
 const DashboardContainer = styled.div`
     background-color: ${props => props.theme.color.background};
