@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
+import { ParamSelector } from '../ParamSelector/ParamSelector';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -20,13 +21,25 @@ const TabPanel = (props) => {
     )
 }
 
-const passTabPanelProps = (index) => {
-    return {
-        id: `tab-panel-${index}`,
-    }
+const ParamPanel = (props) => {
+    const { children, value, index } = props;
+
+    return (
+        <div hidden={value !== index}
+            id={`tab-panel-${index}`}
+        >
+            {value === index && (
+                <div>
+                {children}
+                </div>
+            )}
+        </div>
+    )
 }
 
+
 const DashboardTopBar = styled.div`
+    grid-area: tabbar;
     display: grid;
     grid-template-areas:
         "empty tablineleft tabs tabs tablineright tabmenu";
@@ -34,7 +47,6 @@ const DashboardTopBar = styled.div`
     grid-template-rows: 1fr;
     box-shadow:
         0 2.8px 2.2px rgba(0, 0, 0, 0.034);
-    width: 100vw;
     border-radius: 5px;
 `;
 
@@ -81,6 +93,17 @@ const TabAddButton = styled.button`
     cursor: pointer;
     border: 1px solid ${({ theme })=> theme.buttoncolor};
     color: ${({ theme })=> theme.color.main};
+`
+
+const TabComponentContainer = styled.div`
+    display: grid;
+    grid-template-areas: 
+        "tabbar tabbar sidepanel"
+        "dashboard dashboard sidepanel"
+        "dashboard dashboard sidepanel";
+    grid-template-columns: ${({dashboardviewwidth}) => dashboardviewwidth/2}vw ${({dashboardviewwidth}) => dashboardviewwidth/2}vw ${({dashboardviewwidth}) => 100 - dashboardviewwidth}vw;
+    grid-template-rows: 10vh ${({dashboardviewheight}) => dashboardviewheight/2}vh ${({dashboardviewheight}) => dashboardviewheight/2}vh;
+    width: 100vw;
 `
 
 const Tabs = (props) => {
@@ -143,11 +166,22 @@ paramOptions.map(d => {
     return initParams[d.paramName] = d.options[0].value;
 })
 
+const DashboardWrapper = styled.div`
+    grid-area: dashboard;
+`
+
+const SideBar = styled.div`
+    grid-area: sidepanel;
+
+`
+
 const AddTabs = (props) => {
     const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs} = props;
     const [value, setValue] = useState(0);
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
+    const dashboardviewwidth = 80;
+    const dashboardviewheight = 80;
     const initComponentState = (selectedChart) => {
         return {
             selectedChart,
@@ -164,8 +198,8 @@ const AddTabs = (props) => {
             componentTertiary: initComponentState('histogram'),
             componentFourth: initComponentState('histogram'),
             componentGlobal: initComponentState('linechartgroup')
-        }
-
+        },
+        // globalParams : {...initParams}
     })
 
     const addTab = () => {
@@ -243,7 +277,8 @@ const AddTabs = (props) => {
             <TabPanel key={i} value={value} index={i}>
                 <Dashboard paramOptions={paramOptions}
                     isStatic={staticOpt}
-                    viewwidth={viewwidth}
+                    viewwidth={dashboardviewwidth}
+                    viewheight={dashboardviewheight}
                     handleSwitch={handleSwitch}
                     handleSlider={handleSlider}
                     xAction={xAction}
@@ -263,17 +298,44 @@ const AddTabs = (props) => {
             </TabPanel>
         )
     })
+    const parampanels = [...Array(currentNumTabs)].map((t, i) => {
+        return (
+            <ParamPanel key={i} value={value} index={i}>
+                {paramOptions.filter(p => p.paramName !== 'pop' && p.paramName !== 'output_gen').map((d, j) => {
+                    return (
+                        <ParamSelector key={j} 
+                                className='param-selector'
+                                paramName={d.paramName}
+                                paramNameReadable={d.paramNameReadable}
+                                options={d.options}
+                                viewwidth={10}
+                                viewheight={7}
+                                addhover={false}
+                                selectedValue={dashboardState[i].componentGlobal['params'][d.paramName]}
+                                handleSwitch={handleSwitch('componentGlobal')}
+                            />
+                    )
+                })}
+
+            </ParamPanel>
+
+        )
+
+    })
+
 
     return (
-        <div>
+        <TabComponentContainer dashboardviewwidth={dashboardviewwidth}
+            dashboardviewheight={dashboardviewwidth}>
             <DashboardTopBar>
                 <TabContainerLine linepos={'left'} />
                 <Tabs value={value} addTab={addTab} tabs={tabs} setValue={setValue}></Tabs>
                 <TabContainerLine linepos={'right'} />
             </DashboardTopBar>
-            {tabpanels}
+            <DashboardWrapper>{tabpanels}</DashboardWrapper>
+            <SideBar>{parampanels}</SideBar>
 
-        </div>
+        </TabComponentContainer>
     )
 
 

@@ -181,22 +181,23 @@ ChartViewGenomeChart.defaultProps = {
 }
 
 const ChartViewMain = (props) => {
-    const {selectedChart} = props;
+    const {selectedChart, viewwidth, ...rest} = props;
+    const chartviewwidth = viewwidth - 2;
 
 
     let displayChart;
     switch(selectedChart){
         case('linechartgroup'):
-            displayChart = <ChartViewLineChart {...props} />
+            displayChart = <ChartViewLineChart viewwidth={chartviewwidth} {...rest} />
             break;
         case('genearchgroup'):
-            displayChart = <ChartViewGenomeChart {...props} />
+            displayChart = <ChartViewGenomeChart viewwidth={chartviewwidth} {...rest} />
             break;
         case('histogram'):
-            displayChart = <ChartViewHistogram {...props} />
+            displayChart = <ChartViewHistogram viewwidth={chartviewwidth} {...rest} />
             break;
         default: 
-            displayChart = <DashboardComponentContainer {...props} />
+            displayChart = <DashboardComponentContainer viewwidth={chartviewwidth} {...rest} />
     }
 
     return displayChart;

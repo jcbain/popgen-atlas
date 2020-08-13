@@ -193,24 +193,8 @@ export const PlayGround = (props) => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                {/* <button onClick={() => setLgen(lgen + 1000)}>Increase By 1000</button>
-                <p>{lgen}</p>
-                <button onClick={() => setUgen(ugen - 1000)}>Decrease By 1000</button>
-                <p>{ugen}</p> */}
-                {/* {gradientsGray} */}
-
-                {/* <GenomeArchGroup data={tmpData}
-                    yVar={'ind'} 
-                    xVar={'output_gen'}
-                    colorVar={'positional_phen'}
-                    gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
-                    displayDims={{dimsMain: displayDims, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext}}
-                    chartPadding={chartPaddingFocus} 
-                    heightScaler={heightScalerFocus}
-                    genKeys={{genKeyFocus, genKeyContext}}/> */}
  
-
-                <AddTabs viewwidth={96}
+                <AddTabs viewwidth={100}
                     lineChartData={props.lineChartData}
                     geneArchData={props.geneArchData}
                     template={props.template}

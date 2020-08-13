@@ -17,7 +17,6 @@ export const DashboardComponent = (props) => {
             handleSwitch, xAction, renderAction, handleSlider,
             geneArchData, template, identifier, selectedChart,
             cardAction, gridarea, displayX, themes} = props;
-
     let viewDisplay;
     switch(selectedView){
         case('chartview'):
