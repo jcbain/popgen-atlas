@@ -66,7 +66,8 @@ const Histogram = (props) => {
                 x0={chartPadding.left}
                 width={width - chartPadding.right}
                 pixelsPerTick={height/5}
-                includeAxisLine={false}/>
+                includeAxisLine={false}
+                paddingLeft={chartPadding.left}/>
             {histograms}
             <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}

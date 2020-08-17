@@ -2,9 +2,13 @@ import React, {useMemo} from 'react';
 
 import { TickText } from './AxesStyles';
 
-const YAxis = ({scale, width, x0, pixelsPerTick, axisMargin=0, includeAxisLine=true, includeLabels=true, fontSize=10}) => {
+const YAxis = (props) => {
+  const { scale, width, x0, pixelsPerTick, 
+          axisMargin, includeAxisLine, includeTicks, 
+          includeAxisLabel, labelText, fontSize, paddingLeft } = props;
     const rangeMin = scale.range()[0];
     const rangeMax = scale.range()[1];
+    const tickXMove = (0.75 * paddingLeft)
     const ticks = useMemo(() => {
         const height = rangeMax - rangeMin
         // const pixelsPerTick = 39
@@ -33,9 +37,9 @@ const YAxis = ({scale, width, x0, pixelsPerTick, axisMargin=0, includeAxisLine=t
           stroke="currentColor" />
       }
 
-      let axisLabels;
-      if ( includeLabels ){
-        axisLabels = ticks.filter(({yOffset}) => yOffset > axisMargin && yOffset < rangeMax - axisMargin).map(({ value, yOffset}) => (
+      let axisTicks;
+      if ( includeTicks ){
+        axisTicks = ticks.filter(({yOffset}) => yOffset > axisMargin && yOffset < rangeMax - axisMargin).map(({ value, yOffset}) => (
           <g
               key={value}
               transform={`translate(0, ${yOffset})`}
@@ -54,7 +58,7 @@ const YAxis = ({scale, width, x0, pixelsPerTick, axisMargin=0, includeAxisLine=t
                   fontSize: `${fontSize}px`,
                   textAnchor: "middle",
                   alignmentBaseline: "middle",
-                  transform: "translateY(0px) translateX(10px)"
+                  transform: `translateY(0px) translateX(${tickXMove}px)`
                 }}>
                 { value }
               </TickText>
@@ -62,18 +66,40 @@ const YAxis = ({scale, width, x0, pixelsPerTick, axisMargin=0, includeAxisLine=t
         ))
       }
 
+      let axisLabel;
+      if ( includeAxisLabel ) {
+        axisLabel = <TickText fontSize={fontSize}
+          style={{
+            textAnchor: 'middle',
+            transform: `translate(${0}px, ${(rangeMax - rangeMin)/2}px) rotate(90deg)`
+          }
+
+          }
+          // transform={`translate(${20} ${(rangeMax - rangeMin)/2})`}
+        >
+          {labelText}
+        </TickText>
+      }
+
 
       return (
         <svg>
           {axisLine} 
-          {axisLabels}
+          {axisTicks}
+          {axisLabel}
         </svg>
       )
 
 }
 
 YAxis.defaultProps = {
-    x1: 0,
+    axisMargin: 0,
+    includeAxisLine: true,
+    includeTicks: true,
+    fontSize: 10,
+    includeAxisLabel: true,
+    labelText: 'Y Axis Label',
+    paddingLeft: 20,
 }
 
 export default YAxis;
