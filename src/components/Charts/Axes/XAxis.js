@@ -45,7 +45,8 @@ const XAxis = (props) => {
     let axisLabel;
     if ( includeAxisLabel ){
       axisLabel = <TickText fontSize={fontSize}
-        transform={`translate(${scale.range()[0]},${height + 15})`}>{labelText}</TickText>
+        textAnchor="middle"
+        transform={`translate(${(rangeMax - rangeMin)/2},${height + 25})`}>{labelText}</TickText>
     }
 
 
