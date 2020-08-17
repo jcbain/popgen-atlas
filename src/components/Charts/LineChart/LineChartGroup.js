@@ -23,14 +23,18 @@ const LineChartGroup = (props) => {
     const dimsFocusChart = Object.assign({}, displayDims, {height: focusChartHeight}),
           dimsContextChart = Object.assign({}, displayDims, {height: contextChartHeight})
     
+    const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
+    console.log(xAxisLabel)
+    
     const getDomain = (domain) => {
         setContextDomain(domain)
     }
 
     let paramBar;
     if( useLocalParams ) {
-        const numParams = paramOptions.length;
-        const selectors = paramOptions.map(( d, i ) => {
+        const useableParams = paramOptions.filter(v => v.paramName !== xVar)
+        const numParams = useableParams.length;
+        const selectors = useableParams.filter(v => v.paramName !== xVar).map(( d, i ) => {
             return (
                 <ParamSelector key={i}
                     className={'line-chart-param-selector'}
@@ -65,6 +69,7 @@ const LineChartGroup = (props) => {
                 yVar={yVar}
                 visibleOpacity={false}
                 addReferenceLine={true}
+                includeAxisLabel={false}
                 themes={themes}>
             </LineChart>
             <LineChart data={data}
@@ -77,7 +82,8 @@ const LineChartGroup = (props) => {
                 yVar={yVar}
                 addBrush={true}
                 getDomain={getDomain}
-                themes={themes}>
+                themes={themes}
+                xAxisLabel={xAxisLabel}>
             </LineChart>
         </ChartDiv>
     )

@@ -43,7 +43,7 @@ export const ChartViewLineChart = (props) => {
                 params={paramsCopy}
                 useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
-                paramOptions={paramOptions.filter(d=> d.paramName !== 'pop' && d.paramName !== 'output_gen')}
+                paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 handleSwitch={handleSwitch}
                 themes={themes}
                 >
@@ -94,6 +94,7 @@ ChartViewHistogram.defaultProps = {
 export const ChartViewGenomeChart = (props) => {
     const { geneArchData, template, params, paramOptions, 
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
+    console.log(paramOptions)
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const generations = uniq(filteredData.map(d => d.output_gen));

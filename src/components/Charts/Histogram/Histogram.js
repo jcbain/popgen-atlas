@@ -20,7 +20,7 @@ BinRect.defaultProps = {
 
 const Histogram = (props) => {
     const { data, xVar, nestedVar, className, displayDims,
-            chartPadding, themes} = props;
+            xAxisLabel, chartPadding, themes} = props;
     const width = displayDims.width * 9,
           height = displayDims.height * 4.5;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
@@ -70,7 +70,8 @@ const Histogram = (props) => {
             {histograms}
             <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}
-                includeAxisLine={false}/>
+                includeAxisLine={false}
+                labelText={xAxisLabel}/>
 
         </svg>
 

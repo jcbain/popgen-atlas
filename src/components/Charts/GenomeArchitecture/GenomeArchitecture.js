@@ -9,7 +9,7 @@ import { closestFromArray } from '../../../helpers/Helpers';
 
 const GenomeArchitecture = (props) => {
     const { className, displayDims, chartPadding, genKey,
-            data, xVar, gradients, heightScaler, 
+            data, xVar, gradients, heightScaler, includeAxisLabel, xAxisLabel,
             addBrush, contextDomain, xDomain, getDomain } = props;
 
     const width = displayDims.width * 12,
@@ -59,7 +59,9 @@ const GenomeArchitecture = (props) => {
                 {brush}
                 <XAxis scale={xScale} 
                     height={height - chartPadding.bottom}
-                    includeAxisLine={false}/>
+                    includeAxisLine={false}
+                    includeAxisLabel={includeAxisLabel} 
+                    labelText={xAxisLabel} />
 
 
         </svg>
