@@ -69,7 +69,7 @@ const LineChartGroup = (props) => {
                 yVar={yVar}
                 visibleOpacity={false}
                 addReferenceLine={true}
-                includeAxisLabel={false}
+                includeXAxisLabel={false}
                 themes={themes}>
             </LineChart>
             <LineChart data={data}
@@ -83,7 +83,8 @@ const LineChartGroup = (props) => {
                 addBrush={true}
                 getDomain={getDomain}
                 themes={themes}
-                xAxisLabel={xAxisLabel}>
+                xAxisLabel={xAxisLabel}
+                includeYAxisLabel={false}>
             </LineChart>
         </ChartDiv>
     )

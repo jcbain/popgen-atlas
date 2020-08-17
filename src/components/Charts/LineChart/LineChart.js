@@ -16,7 +16,7 @@ import { closestFromArray } from '../../../helpers/Helpers';
 
 const LineChart = (props) => {
     const { className, data, xDomain, contextDomain,
-            nestedVar, xVar, yVar, uniqId, includeAxisLabel,
+            nestedVar, xVar, yVar, uniqId, includeXAxisLabel, includeYAxisLabel,
             popStrokeWidth, displayDims, chartPadding, xAxisLabel,
             visibleOpacity, addBrush, getDomain, addReferenceLine, themes } = props;
     const lineChartRef = useRef(null);
@@ -125,7 +125,9 @@ const LineChart = (props) => {
                 x0={chartPadding.left}
                 width={width - chartPadding.right}
                 pixelsPerTick={height/5}
-                includeAxisLine={false}/>
+                includeAxisLine={false}
+                paddingLeft={chartPadding.left}
+                includeAxisLabel={includeYAxisLabel}/>
             {gradients}
             {lines}
             {brush}
@@ -133,7 +135,7 @@ const LineChart = (props) => {
             <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}
                 includeAxisLine={false}
-                includeAxisLabel={includeAxisLabel} 
+                includeAxisLabel={includeXAxisLabel} 
                 labelText={xAxisLabel}/>
         </svg>
     )
