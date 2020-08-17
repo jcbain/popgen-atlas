@@ -5,10 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 import data from '../../data/mutations_bg.json';
+import {ThemeProvider} from 'styled-components';
+
 // import individualData from '../../data/individuals_small';
 import template from '../../data/genome_template.json';
 
 import {PlayGround} from '../../Playground'
+import AddTabs from '../../components/Tabs/Tabs';
 
 import './styles/local_adaptation_styles.css';
 
@@ -78,39 +81,66 @@ const dataPopPhenDiff = nest()
 
 
 
-  
-class LocalAdaptation extends Component {
-  constructor(props){
-    super(props);
-    this.state = { 
-      params: {mu: '1e-6', m: '1e-4', r: '1e-6' , sigsqr: '25', output_gen: 1000, pop: 1},
-    }
-  }
+const theme = {
+  color: {
+    main: '#fff',
+    secondary: '#6fa1c7',
+    grayMain: '#6e6e6e',
+    graySecondary: '#efefef',
+    grayLight: '#d1d1d1',
+    background: '#F6F8FF',
+    backgroundLight: '#fafbff',
+  },
+  tickfont: 'Itim',
+  tickfill: '#6e6e6e',
+  handlecolor: '#2b2b2b',
+  slidercolor: '#e0e0e0',
+  thumbcolor: '#682CFE',
+  highcolorup: '#eb4034',
+  highcolordown: '#F0C23A',
+  colormid: '#fffff7',
+  lowcolorup: '#0082e6',
+  lowcolordown: '#682CFE',
+  highcolorgray: '#a1a1a1',
+  lowcolorgray: '#fff',
+  buttoncolor: '#682CFE',
+  buttoncoloralpha: 'rgba(103, 44, 254, .3)',
+}
+
+const themePop0 = {
+  popColorFocus: '#682CFE', 
+  popColorOutside: '#d6d6d6',
+  popColorAlpha: 'rgba(103, 44, 254, .5)',
+}
+
+const themePop1 = {
+  popColorFocus: '#F0C23A', // rgb(124, 161, 161)
+  popColorOutside: '#d6d6d6',
+  popColorAlpha: 'rgba(240, 194, 58, .5)',
+}
+
+const themes = {
+  "0": themePop0,
+  "1": themePop1,
+}
 
 
+const LocalAdaptation = (props) => {
 
+  return (
+    <ThemeProvider theme={theme}>
+      <section className={'dashboard'}>
+        <AddTabs viewwidth={100}
+          lineChartData={dataPopPhen}
+          geneArchData={data}
+          template={template}
+          identifier={'identifier'}
+          maxTabs={4}
+          themes={themes} />
+      </section>
+    </ThemeProvider>
+  )
 
-  render() {
-    return (
-      <div className="local-adaptation">
- 
-        <section className={'playground'}>
-          
-            <PlayGround lineChartData={dataPopPhen}
-              geneArchData={data}
-              template={template}
-            ></PlayGround>
-
-
-        </section>
-
-    
-      
-      </div>
-
-
-    )
-  }
 }
 
 
