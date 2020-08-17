@@ -7,62 +7,85 @@ const abbreviateValue = (val) =>{
    return updatedVal;
 }
 
-const XAxis = ({scale, height, axisMargin=20, includeAxisLine=true, fontSize=10}) => {
-    const rangeMin = scale.range()[0];
-    const rangeMax = scale.range()[1];
-    const ticks = useMemo(() => {
-        const width = rangeMax - rangeMin
-        const pixelsPerTick = 100
-        const numberOfTicksTarget = Math.max(
-          1,
-          Math.floor(
-            width / pixelsPerTick
-          )
+const XAxis = (props) => {
+  const { scale, height, axisMargin, 
+          includeAxisLine, includeAxisLabel, fontSize,
+          labelText } = props;
+
+  const rangeMin = scale.range()[0];
+  const rangeMax = scale.range()[1];
+
+  const ticks = useMemo(() => {
+      const width = rangeMax - rangeMin
+      const pixelsPerTick = 100
+      const numberOfTicksTarget = Math.max(
+        1,
+        Math.floor(
+          width / pixelsPerTick
         )
-        return scale.ticks(numberOfTicksTarget)
-          .map(value => ({
-            value,
-            xOffset: scale(value)
-          }))
-      }, [rangeMax, rangeMin, scale]
       )
-      let axisLine;
-      if( includeAxisLine ){
-        axisLine = <path d={[
-          "M", rangeMin + axisMargin, height,
-          "v", 0,
-          "H", rangeMax - axisMargin,
-          "v", 0,].join(" ")}
-          fill="none"
-          stroke="currentColor" />
-      }
+      return scale.ticks(numberOfTicksTarget)
+        .map(value => ({
+          value,
+          xOffset: scale(value)
+        }))
+    }, [rangeMax, rangeMin, scale]
+    )
+    let axisLine;
+    if( includeAxisLine ){
+      axisLine = <path d={[
+        "M", rangeMin + axisMargin, height,
+        "v", 0,
+        "H", rangeMax - axisMargin,
+        "v", 0,].join(" ")}
+        fill="none"
+        stroke="currentColor" />
+    }
 
-      return (
-        <svg>
-          {axisLine} 
-          {ticks.filter(({xOffset})=> xOffset > axisMargin && xOffset < rangeMax - axisMargin).map(({ value, xOffset }) => (
-            <g
+    let axisLabel;
+    if ( includeAxisLabel ){
+      axisLabel = <TickText fontSize={fontSize}
+        transform={`translate(${scale.range()[0]},${height + 15})`}>{labelText}</TickText>
+    }
+
+
+    return (
+      <svg>
+        {axisLine} 
+
+        {ticks.filter(({xOffset})=> xOffset > axisMargin && xOffset < rangeMax - axisMargin).map(({ value, xOffset }) => (
+          <g
+            key={value}
+            transform={`translate(${xOffset}, ${height})`}
+          >
+            <TickLine
+              y1="2"
+              y2="6"
+            />
+            <TickText
               key={value}
-              transform={`translate(${xOffset}, ${height})`}
-            >
-              <TickLine
-                y1="2"
-                y2="6"
-              />
-              <TickText
-                key={value}
-                style={{
-                  fontSize: `${fontSize}px`,
-                  textAnchor: "middle",
-                  transform: "translateY(15px) translateX(0px)"
-                }}>
-                { abbreviateValue(value) }
-              </TickText>
-            </g>
-          ))}
-        </svg>
-      )
+              style={{
+                fontSize: `${fontSize}px`,
+                textAnchor: "middle",
+                transform: "translateY(15px) translateX(0px)"
+              }}>
+              { abbreviateValue(value) }
+            </TickText>
+          </g>
+        ))}
+        {axisLabel}
 
+      </svg>
+    )
+
+}
+
+XAxis.defaultProps = {
+  axisMargin: 40,
+  includeAxisLine: true,
+  includeAxisLabel: true,
+  fontSize: 10,
+  labelText: 'X Axis Label'
 }
 
 export default XAxis;
