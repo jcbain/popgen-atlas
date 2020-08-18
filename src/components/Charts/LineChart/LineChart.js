@@ -2,7 +2,7 @@ import React, { useRef, createRef, useEffect, useState, forwardRef } from 'react
 import { line, curveMonotoneX }  from 'd3-shape';
 import { min, max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
-import { flatten, uniq } from 'lodash'
+import { flatten, uniq, toString } from 'lodash'
 import {ThemeProvider} from 'styled-components';
 
 import { FocusedStop, OutsideStop } from './LineChartStyles';
@@ -38,8 +38,8 @@ const LineChart = (props) => {
     const uniqXVals = uniq(flatten(data.map( d => d[nestedVar].map(v => v[xVar] ))), true)
     const interval = closestFromArray(uniqXVals);
 
-    const gradients = data.map((d, i) => (
-        <linearGradient key={i}
+    const gradients = data.map((d, i) => {
+        return ( <linearGradient key={i}
             id={`tmp-lineargradient-${d.key}-${uniqId}`}
             x1={chartPadding.left} x2={width - chartPadding.right}
             y1={0} y2={0}
@@ -52,7 +52,7 @@ const LineChart = (props) => {
                 <OutsideStop className={`right-${uniqId}`}offset={`${brushScale(contextDomain[1])}%`} stopopacity={visibleOpacity ? 1 : 0}></OutsideStop>
             </ThemeProvider>
         </linearGradient>
-    ))
+    )})
 
     const lines = data.map(( d, i ) => (
         <path

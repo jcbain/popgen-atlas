@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
 import { v4 as uuidv4 } from 'uuid';
+import { uniq } from 'lodash'
 
 
 import data from '../../data/mutations_bg.json';
@@ -9,6 +10,7 @@ import {ThemeProvider} from 'styled-components';
 
 // import individualData from '../../data/individuals_small';
 import template from '../../data/genome_template.json';
+import genome from '../../data/genome_data.json';
 
 import {PlayGround} from '../../Playground'
 import AddTabs from '../../components/Tabs/Tabs';
@@ -59,6 +61,24 @@ const dataPopPhen = nest()
   .entries(data)
   .map(d => d.value);
 
+const summedGenome = nest()
+  .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
+  .rollup( v => {
+    const popPhen = sum(v, d => d.effect_size_freq);
+    return v.reduce((prev, curr) => {
+      prev['output_gen'] = curr['output_gen'];
+      prev['pop'] = curr['pop'];
+      prev['m'] = curr['m'];
+      prev['mu'] = curr['mu'];
+      prev['r'] = curr['r'];
+      prev['sigsqr'] = curr['sigsqr'];
+      prev['pop_phen'] = popPhen;
+      return prev;
+    }, {})
+  })
+  .entries(genome)
+  .map(d => d.value)
+
 const dataPopPhenDiff = nest()
   .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
   .rollup( v => {
@@ -98,7 +118,7 @@ const theme = {
   thumbcolor: '#682CFE',
   highcolorup: '#eb4034',
   highcolordown: '#F0C23A',
-  colormid: '#fffff7',
+  colormid: '#fff',
   lowcolorup: '#0082e6',
   lowcolordown: '#682CFE',
   highcolorgray: '#a1a1a1',
@@ -107,22 +127,57 @@ const theme = {
   buttoncoloralpha: 'rgba(103, 44, 254, .3)',
 }
 
-const themePop0 = {
+const themePop1 = {
   popColorFocus: '#682CFE', 
   popColorOutside: '#d6d6d6',
   popColorAlpha: 'rgba(103, 44, 254, .5)',
 }
 
-const themePop1 = {
+const themePop2 = {
   popColorFocus: '#F0C23A', // rgb(124, 161, 161)
   popColorOutside: '#d6d6d6',
   popColorAlpha: 'rgba(240, 194, 58, .5)',
 }
 
 const themes = {
-  "0": themePop0,
   "1": themePop1,
+  "2": themePop2,
 }
+
+
+const generation = uniq(genome.map(d => d.output_gen), true).map(v => {
+  return {label: v, value: v}
+})
+
+const selection = uniq(genome.map(d => d.sigsqr), true).map(v => {
+  return {label: v, value: v}
+})
+
+const recombination = uniq(genome.map(d => d.r), true).map(v => {
+  return {label: v, value: v}
+})
+
+const mutation = uniq(genome.map(d => d.mu), true).map(v => {
+  return {label: v, value: v}
+})
+
+const population = uniq(genome.map(d => d.pop), true).map(v => {
+  return {label: v, value: v}
+})
+
+const migration = uniq(genome.map(d => d.m), true).map(v => {
+  return {label: v, value: v}
+})
+
+const paramOptions = [
+  {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
+  {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
+  {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
+  {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
+  {paramName: 'pop', paramNameReadable: 'population', options: population},
+  {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
+]
+
 
 
 const LocalAdaptation = (props) => {
@@ -131,8 +186,9 @@ const LocalAdaptation = (props) => {
     <ThemeProvider theme={theme}>
       <section className={'dashboard'}>
         <AddTabs viewwidth={100}
-          lineChartData={dataPopPhen}
-          geneArchData={data}
+          paramOptions={paramOptions}
+          lineChartData={summedGenome}
+          geneArchData={genome}
           template={template}
           identifier={'identifier'}
           maxTabs={4}

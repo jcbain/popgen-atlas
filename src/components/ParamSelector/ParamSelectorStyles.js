@@ -66,7 +66,7 @@ ParamTitle.defaultProps = {
 export const ParamTitleSlider = styled.p`
     height: ${props => props.viewheight}vh;
     line-height: ${props => props.viewheight}vh;
-    font-size: 0.3em;
+    font-size: 0.5em;
     color: ${props => props.theme.color.grayMain};
 
 `

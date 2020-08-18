@@ -21,7 +21,7 @@ const ReferenceLine = (props) => {
     const texts = yTextPos.map(( d, i ) => {
         const textTheme = themes[d.key]
         return (
-            <ThemeProvider key={i} theme={textTheme || themes[0]}>
+            <ThemeProvider key={i} theme={textTheme || themes[1]}>
                 <svg x={!isNaN(xPos) ? ((xPos < boxShiftLength) ? xPos + 2 : xPos - boxWidth - 2) : 0} 
                     y={!isNaN(yScale(d[yVar])) ? yScale(d[yVar]) - (boxHeight/2) : 0}
                     width={boxWidth} 

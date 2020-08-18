@@ -24,7 +24,6 @@ const LineChartGroup = (props) => {
           dimsContextChart = Object.assign({}, displayDims, {height: contextChartHeight})
     
     const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
-    console.log(xAxisLabel)
     
     const getDomain = (domain) => {
         setContextDomain(domain)

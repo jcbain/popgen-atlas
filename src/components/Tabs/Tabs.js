@@ -170,19 +170,19 @@ const generation = [...Array(50)].map((d, i) => {
     return {label: (i + 1) * 1000, value: (i + 1) * 1000}
 })
 
-const paramOptions = [
-    {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
-    {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
-    {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
-    {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
-    {paramName: 'pop', paramNameReadable: 'population', options: population},
-    {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
-]
+// const paramOptions = [
+//     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
+//     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
+//     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
+//     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
+//     {paramName: 'pop', paramNameReadable: 'population', options: population},
+//     {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
+// ]
 
-let initParams = {}
-paramOptions.map(d => {
-    return initParams[d.paramName] = d.options[0].value;
-})
+// let initParams = {}
+// paramOptions.map(d => {
+//     return initParams[d.paramName] = d.options[0].value;
+// })
 
 const DashboardWrapper = styled.div`
     grid-area: dashboard;
@@ -194,7 +194,12 @@ const SideBar = styled.div`
 `
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs} = props;
+    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions} = props;
+    let initParams = {}
+    paramOptions.map(d => {
+        return initParams[d.paramName] = d.options[0].value;
+    })
+    
     const [value, setValue] = useState(0);
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);

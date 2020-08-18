@@ -11,7 +11,7 @@ const HistogramChart = (props) => {
             paramOptions, params, handleSwitch,
             nestedVar, xVar, filteredVar, useLocalParams} = props;
     
-    const [sliderVal, updateSliderVal] = useState(1000);
+    const [sliderVal, updateSliderVal] = useState(2000);
     // const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
     const xAxisLabel = xVar;
     const options = paramOptions.find(d => d.paramName === filteredVar);

@@ -30,7 +30,6 @@ export const ChartViewLineChart = (props) => {
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
     const filteredLineChartData = filterDataByParams(lineChartData, paramsCopy)
     const nestedData = nest().key(d => d.pop).entries(filteredLineChartData);
-
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
             viewheight={viewheight}>
@@ -74,7 +73,7 @@ export const ChartViewHistogram = (props) => {
                 themes={themes}
                 params={paramsCopy}
                 nestedVar={'values'}
-                xVar={'positional_phen'}
+                xVar={'effect_size_freq'}
                 filteredVar={'output_gen'}
                 useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
@@ -94,7 +93,6 @@ ChartViewHistogram.defaultProps = {
 export const ChartViewGenomeChart = (props) => {
     const { geneArchData, template, params, paramOptions, 
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
-    console.log(paramOptions)
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const generations = uniq(filteredData.map(d => d.output_gen));
@@ -129,7 +127,7 @@ export const ChartViewGenomeChart = (props) => {
           data={genomeData}
           xVar={'output_gen'}
           yVar={'ind'}
-          colorVar={'positional_phen'}
+          colorVar={'effect_size_freq'}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsFocus}
@@ -140,7 +138,7 @@ export const ChartViewGenomeChart = (props) => {
           data={genomeData}
           xVar={'output_gen'}
           yVar={'ind'}
-          colorVar={'positional_phen'}
+          colorVar={'effect_size_freq'}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsContext}
@@ -151,7 +149,7 @@ export const ChartViewGenomeChart = (props) => {
           data={genomeData}
           xVar={'output_gen'}
           yVar={'ind'}
-          colorVar={'positional_phen'}
+          colorVar={'effect_size_freq'}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsContext}
@@ -167,7 +165,7 @@ export const ChartViewGenomeChart = (props) => {
             <GenomeArchGroup data={genomeData}
                     yVar={'ind'} 
                     xVar={'output_gen'}
-                    colorVar={'positional_phen'}
+                    colorVar={'effect_size_freq'}
                     gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
                     displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext, dimsLegend: legendDims}}
                     chartPadding={chartPadding} 
