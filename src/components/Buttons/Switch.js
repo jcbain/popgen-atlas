@@ -21,6 +21,8 @@ const StyledLabel = styled.label`
     background: ${props => props.ison ? props => props.theme.buttoncolor : props.theme.buttoncoloralpha};
     border-radius: 100px;
     position: relative;
+    display: inline-block;
+    margin: auto;
     transition: background-color .2s;
     &:hover .switch-button {
         width: 25px;

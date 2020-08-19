@@ -61,11 +61,11 @@ const dataPopPhen = nest()
   .entries(data)
   .map(d => d.value);
 
-const summedGenome = nest()
+let summedGenome = nest()
   .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
   .rollup( v => {
     const popPhen = sum(v, d => d.effect_size_freq);
-    const popPhenDiff = sum(v, d => d.effect_size_freq_diff);
+    const popPhenDiff = sum(v, d => d.effect_size_freq_diff * 2);
     return v.reduce((prev, curr) => {
       prev['output_gen'] = curr['output_gen'];
       prev['pop'] = curr['pop'];
@@ -80,6 +80,9 @@ const summedGenome = nest()
   })
   .entries(genome)
   .map(d => d.value)
+
+
+
 
 
   // const dataPopPhenDiff = nest()
@@ -203,9 +206,9 @@ const paramOptions = [
 
 const readableLabels = {
   'output_gen': 'generation',
-  'effect_size_freq_diff': 'pop genotypic difference',
+  'effect_size_freq_diff': 'locus effect size',
   'pop_phen': 'mean pop genotypic value',
-  'pop_phen_diff': 'mean pop genotypic diff',
+  'pop_phen_diff': 'mean phenotypic divergence',
   'effect_size_freq': 'genotypic value',
   'ind': 'locus'
 }
@@ -213,6 +216,7 @@ const readableLabels = {
 
 
 const LocalAdaptation = (props) => {
+  console.log(summedGenome)
 
   return (
     <ThemeProvider theme={theme}>

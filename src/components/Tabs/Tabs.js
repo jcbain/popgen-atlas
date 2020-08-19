@@ -155,6 +155,7 @@ const SideBar = styled.div`
     grid-area: sidepanel;
     padding-left: 2vw;
     padding-right: 2vw;
+    padding-top: 2vh;
 
 `
 
@@ -165,7 +166,11 @@ const ButtonDiv = styled.div`
     display: grid;
     grid-template-columns: .5fr 1fr;
     align-items: center;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-weight: 600;
+    color: ${({theme}) => theme.color.grayMain};
 `
+
 
 const AddTabs = (props) => {
     const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions, readableLabels} = props;
