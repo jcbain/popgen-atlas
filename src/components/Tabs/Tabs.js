@@ -26,15 +26,12 @@ const ParamPanelDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-left: 1vw;
-    padding-right: 1vw;
 `
 
 const StyledH2 = styled.h2`
     font-family: 'Baloo Tamma 2', cursive;
     color: ${({theme}) => theme.buttoncolor};
     font-size: 1em;
-    padding-left: 1vw;
 `;
 
 const ParamPanel = (props) => {
@@ -123,6 +120,12 @@ const TabComponentContainer = styled.div`
     width: 100vw;
 `
 
+const ParamText = styled.p`
+    font-family: 'Baloo Tamma 2', cursive;
+    color: ${({theme}) => theme.color.grayMain};
+    font-size: 0.8em;
+`
+
 const Tabs = (props) => {
     const {children, tabs, addTab, value, setValue} = props;
  
@@ -143,46 +146,6 @@ Tabs.propTypes = {
     activetab: PropTypes.bool
 }
 
-const migration = [
-    {label: '1e-4', value: '1e-4'},
-    {label: '1e-5', value: '1e-5'},
-
-]
-
-const mutation = [
-    {label: '1e-6', value: '1e-6'},
-]
-const recombination = [
-    {label: '1e-6', value: '1e-6'},
-]
-const selection = [
-    {label: 2, value: '2'},
-    {label: 5, value: '5'},
-    {label: 25, value: '25'}
-]
-
-const population = [
-    {label: 0, value: 0},
-    {label: 1, value: 1}
-]
-
-const generation = [...Array(50)].map((d, i) => {
-    return {label: (i + 1) * 1000, value: (i + 1) * 1000}
-})
-
-// const paramOptions = [
-//     {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
-//     {paramName: 'mu', paramNameReadable: 'mutation', options: mutation},
-//     {paramName: 'r', paramNameReadable: 'recombination', options: recombination},
-//     {paramName: 'sigsqr', paramNameReadable: 'selection', options: selection},
-//     {paramName: 'pop', paramNameReadable: 'population', options: population},
-//     {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
-// ]
-
-// let initParams = {}
-// paramOptions.map(d => {
-//     return initParams[d.paramName] = d.options[0].value;
-// })
 
 const DashboardWrapper = styled.div`
     grid-area: dashboard;
@@ -190,7 +153,18 @@ const DashboardWrapper = styled.div`
 
 const SideBar = styled.div`
     grid-area: sidepanel;
+    padding-left: 2vw;
+    padding-right: 2vw;
 
+`
+
+const ButtonDiv = styled.div`
+    border: 4px solid ${({theme}) => theme.buttoncolor};
+    border-radius: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: .5fr 1fr;
+    align-items: center;
 `
 
 const AddTabs = (props) => {
@@ -331,7 +305,7 @@ const AddTabs = (props) => {
                                 paramName={d.paramName}
                                 paramNameReadable={d.paramNameReadable}
                                 options={d.options}
-                                viewwidth={100 - dashboardviewwidth - 2}
+                                viewwidth={100 - dashboardviewwidth - 4 }
                                 viewheight={7}
                                 addhover={false}
                                 selectedValue={dashboardState[i].componentGlobal['params'][d.paramName]}
@@ -356,8 +330,11 @@ const AddTabs = (props) => {
             </DashboardTopBar>
             <DashboardWrapper>{tabpanels}</DashboardWrapper>
             <SideBar>
-                <Switch isOn={staticOpt} handleToggle={() => setStaticOpt(!staticOpt)}/>
+                <ButtonDiv>
+                    <Switch isOn={staticOpt} handleToggle={() => setStaticOpt(!staticOpt)}/><p>Static</p>
+                </ButtonDiv>
                 {parampanels}
+                <ParamText>Results for a two-patch model of migration-selection balance. Migration rate indicates the proportion of individuals in each population that migrated from the other patch. Selection indicates the width of the fitness function (smaller values = stronger selection). Mutation indicates the rate per locus, per generation. Recombination indicates the rate between adjacent loci on a chromosome, per generation.</ParamText>
             </SideBar>
 
         </TabComponentContainer>
