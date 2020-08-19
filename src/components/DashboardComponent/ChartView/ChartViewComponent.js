@@ -100,7 +100,7 @@ export const ChartViewGenomeChart = (props) => {
         let genomeData = [];
         map(generations, g => {
             const filtered = filteredData.filter(d => d.output_gen  === g);
-            const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, positional_phen: 0};
+            const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq: 0};
             template.map((t,i) => {
                 const position = t.position;
                 let match = filtered.find(v => v.position === position)
@@ -111,6 +111,7 @@ export const ChartViewGenomeChart = (props) => {
         })
         return genomeData
     }, [filteredData])
+
    
     const focusChartHeight = viewheight * (useLocalParams ? 10/20 : 10/20),
           contextChartHeight = viewheight * (useLocalParams ? 5/20 : 5/20),

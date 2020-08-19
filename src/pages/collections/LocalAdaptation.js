@@ -79,7 +79,8 @@ const summedGenome = nest()
   .entries(genome)
   .map(d => d.value)
 
-const dataPopPhenDiff = nest()
+
+  const dataPopPhenDiff = nest()
   .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
   .rollup( v => {
     return v.reduce((prev, curr) =>{
@@ -92,12 +93,32 @@ const dataPopPhenDiff = nest()
       return prev;
     }, {})
   })
-  .entries(dataPopPhen)
+  .entries(summedGenome)
   .map(d => d.value)
   .map(d => {
-    d['pop_phen'] = d['0']- d['1'];
+    d['pop_phen_diff'] = d['1']- d['2'];
     return d;
   })
+
+// const dataPopPhenDiff = nest()
+//   .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
+//   .rollup( v => {
+//     return v.reduce((prev, curr) =>{
+//       prev['output_gen'] = curr['output_gen'];
+//       prev['m'] = curr['m'];
+//       prev['mu'] = curr['mu'];
+//       prev['r'] = curr['r'];
+//       prev['sigsqr'] = curr['sigsqr'];
+//       prev[curr['pop']] = curr.pop_phen
+//       return prev;
+//     }, {})
+//   })
+//   .entries(dataPopPhen)
+//   .map(d => d.value)
+//   .map(d => {
+//     d['pop_phen'] = d['0']- d['1'];
+//     return d;
+//   })
 
 
 
