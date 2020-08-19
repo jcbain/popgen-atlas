@@ -206,7 +206,8 @@ const readableLabels = {
   'effect_size_freq_diff': 'pop genotypic difference',
   'pop_phen': 'mean pop genotypic value',
   'pop_phen_diff': 'mean pop genotypic diff',
-  'effect_size_freq': 'genotypic value'
+  'effect_size_freq': 'genotypic value',
+  'ind': 'locus'
 }
 
 

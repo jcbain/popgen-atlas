@@ -1,25 +1,29 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale';
-import { uniq } from 'lodash';
+import { uniq, min, max } from 'lodash';
 
 import XAxis from '../Axes/XAxis';
+import YAxis from '../Axes/YAxis';
 import BrushHorizontal from './BrushHorizontal';
 import { closestFromArray } from '../../../helpers/Helpers';
 
 
 const GenomeArchitecture = (props) => {
     const { className, displayDims, chartPadding, genKey,
-            data, xVar, gradients, heightScaler, includeAxisLabel, xAxisLabel,
-            addBrush, contextDomain, xDomain, getDomain } = props;
+            data, xVar, yVar, gradients, heightScaler, includeXAxisLabel, xAxisLabel,
+            yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel } = props;
 
     const width = displayDims.width * 12,
           height = displayDims.height * heightScaler;
+    const minY = min(data.map(d => d[yVar])),
+          maxY = max(data.map(d => d[yVar]));
     const uniqXVals = uniq(data.map(d => d[xVar]));
     const xVals = uniq(data.map(d => d[xVar])).filter(d => d >= xDomain[0] && d < xDomain[1]);
     const interval = closestFromArray(uniqXVals);
     const barheight = height - chartPadding.top - chartPadding.bottom;
     const barwidth = (width - chartPadding.left - chartPadding.right) / (xVals.length);
-    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]);
+    const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]),
+          yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
 
     const bars = xVals.map((x, i) => {
         const isFocus = (x >= contextDomain[0] && x < contextDomain[1]);
@@ -53,6 +57,14 @@ const GenomeArchitecture = (props) => {
             viewBox={[0, 0, width, height]}
             width={`${displayDims.width}vw`}
             height={`${displayDims.height}vh`}>
+                <YAxis scale={yScale}
+                    x0={chartPadding.left}
+                    width={width - chartPadding.right}
+                    pixelsPerTick={height/5}
+                    includeAxisLine={false}
+                    paddingLeft={chartPadding.left}
+                    includeAxisLabel={includeYAxisLabel}
+                    labelText={yAxisLabel}/>
                 {gradients}
                 
                 {bars}
@@ -60,7 +72,7 @@ const GenomeArchitecture = (props) => {
                 <XAxis scale={xScale} 
                     height={height - chartPadding.bottom}
                     includeAxisLine={false}
-                    includeAxisLabel={includeAxisLabel} 
+                    includeAxisLabel={includeXAxisLabel} 
                     labelText={xAxisLabel} />
 
 

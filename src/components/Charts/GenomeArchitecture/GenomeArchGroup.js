@@ -37,8 +37,9 @@ const GenomeArchGroup = (props) => {
           maxX = max(data, d => d[xVar]);
 
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
-    const xAxisLabel = readableLabels[xVar]
-    const legendLabel = readableLabels[colorVar]
+    const xAxisLabel = readableLabels[xVar],
+          yAxisLabel = readableLabels[yVar],
+          legendLabel = readableLabels[colorVar];
 
     const { dimsMain, dimsContextChart, dimsFocusChart, dimsLegend } = displayDims;
     const { gradientsFocus, gradientsContext } = gradients;
@@ -109,7 +110,8 @@ const GenomeArchGroup = (props) => {
                 addBrush={false}
                 contextDomain={[minX, maxX]}
                 xDomain={contextDomain}
-                includeAxisLabel={false}
+                yAxisLabel={yAxisLabel}
+                includeXAxisLabel={false}
                 />
             <GenomeArchitecture data={data}
                 yVar={yVar}
@@ -125,6 +127,7 @@ const GenomeArchGroup = (props) => {
                 xDomain={[minX, maxX]}
                 getDomain={getDomain}
                 xAxisLabel={xAxisLabel}
+                includeYAxisLabel={false}
                 />
 
         </ChartDiv>
