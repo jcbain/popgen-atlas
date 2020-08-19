@@ -25,7 +25,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 export const ChartViewLineChart = (props) => {
     const {lineChartData, viewwidth, viewheight, params, useLocalParams, 
-           specialOpts, paramOptions, xAction, handleSwitch, displayX, themes} = props;
+           specialOpts, paramOptions, xAction, handleSwitch, displayX, readableLabels, themes} = props;
     const xVar = 'pop_phen_diff'
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
     let filteredLineChartData = filterDataByParams(lineChartData, paramsCopy)
@@ -47,6 +47,7 @@ export const ChartViewLineChart = (props) => {
                 displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 handleSwitch={handleSwitch}
+                readableLabels={readableLabels}
                 themes={themes}
                 >
             </LineChartGroup>
@@ -60,7 +61,7 @@ ChartViewLineChart.defaultProps = {
 }
 
 export const ChartViewHistogram = (props) => {
-    const { geneArchData, viewwidth, viewheight, params, useLocalParams,
+    const { geneArchData, viewwidth, viewheight, params, useLocalParams, readableLabels,
             paramOptions, themes, xAction,  handleSwitch, displayX, handleSlider } = props;
 
     const xVar = 'effect_size_freq_diff'
@@ -87,6 +88,7 @@ export const ChartViewHistogram = (props) => {
                 useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions}
+                readableLabels={readableLabels}
                 handleSwitch={handleSwitch}>
             </HistogramChart>
         </DashboardComponentContainer>
@@ -100,7 +102,7 @@ ChartViewHistogram.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const { geneArchData, template, params, paramOptions, 
+    const { geneArchData, template, params, paramOptions, readableLabels,
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
@@ -184,6 +186,7 @@ export const ChartViewGenomeChart = (props) => {
                     useLocalParams={useLocalParams}
                     paramOptions={paramOptions}
                     params={paramsCopy}
+                    readableLabels={readableLabels}
                     handleSwitch={handleSwitch}/>
             
         </DashboardComponentContainer>

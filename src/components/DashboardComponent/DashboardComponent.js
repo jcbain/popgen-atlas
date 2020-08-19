@@ -16,7 +16,7 @@ export const DashboardComponent = (props) => {
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction, handleSlider,
             geneArchData, template, identifier, selectedChart,
-            cardAction, gridarea, displayX, themes} = props;
+            cardAction, gridarea, displayX, readableLabels, themes} = props;
     const chartviewwidth = viewwidth - 2; // because of the padding
     const chartviewheight = viewheight- 2 
     let viewDisplay;
@@ -38,6 +38,7 @@ export const DashboardComponent = (props) => {
                     template={template}
                     identifier={identifier}
                     displayX={displayX}
+                    readableLabels={readableLabels}
                     themes={themes}
                     >
                 </ChartViewMain>

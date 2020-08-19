@@ -201,10 +201,17 @@ const paramOptions = [
   {paramName: 'output_gen', paramNameReadable: 'generation', options: generation},
 ]
 
+const readableLabels = {
+  'output_gen': 'generation',
+  'effect_size_freq_diff': 'pop genotypic difference',
+  'pop_phen': 'mean pop genotypic value',
+  'pop_phen_diff': 'mean pop genotypic diff',
+  'effect_size_freq': 'genotypic value'
+}
+
 
 
 const LocalAdaptation = (props) => {
-  console.log(summedGenome)
 
   return (
     <ThemeProvider theme={theme}>
@@ -216,6 +223,7 @@ const LocalAdaptation = (props) => {
           template={template}
           identifier={'identifier'}
           maxTabs={4}
+          readableLabels={readableLabels}
           themes={themes} />
       </section>
     </ThemeProvider>

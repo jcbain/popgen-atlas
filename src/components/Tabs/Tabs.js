@@ -194,7 +194,7 @@ const SideBar = styled.div`
 `
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions} = props;
+    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions, readableLabels} = props;
     let initParams = {}
     paramOptions.map(d => {
         return initParams[d.paramName] = d.options[0].value;
@@ -312,6 +312,7 @@ const AddTabs = (props) => {
                     template={template}
                     identifier={identifier}
                     setStaticOpt={setStaticOpt}
+                    readableLabels={readableLabels}
                     themes={themes}
                     >
 

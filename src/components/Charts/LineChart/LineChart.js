@@ -17,7 +17,7 @@ import { closestFromArray } from '../../../helpers/Helpers';
 const LineChart = (props) => {
     const { className, data, xDomain, contextDomain,
             nestedVar, xVar, yVar, uniqId, includeXAxisLabel, includeYAxisLabel,
-            popStrokeWidth, displayDims, chartPadding, xAxisLabel,
+            popStrokeWidth, displayDims, chartPadding, xAxisLabel, yAxisLabel,
             visibleOpacity, addBrush, getDomain, addReferenceLine, themes } = props;
     const lineChartRef = useRef(null);
     const [xPos, setXPos] = useState(undefined);
@@ -127,7 +127,8 @@ const LineChart = (props) => {
                 pixelsPerTick={height/5}
                 includeAxisLine={false}
                 paddingLeft={chartPadding.left}
-                includeAxisLabel={includeYAxisLabel}/>
+                includeAxisLabel={includeYAxisLabel}
+                labelText={yAxisLabel}/>
             {gradients}
             {lines}
             {brush}

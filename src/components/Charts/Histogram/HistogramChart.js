@@ -8,12 +8,13 @@ import { ParamSelector } from '../../ParamSelector/ParamSelector';
 
 const HistogramChart = (props) => {
     const { className, displayDims, data, themes, 
-            paramOptions, params, handleSwitch,
+            paramOptions, params, handleSwitch, readableLabels,
             nestedVar, xVar, filteredVar, useLocalParams} = props;
     
     const [sliderVal, updateSliderVal] = useState(2000);
     // const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
-    const xAxisLabel = xVar;
+    const xAxisLabel = readableLabels[xVar];
+    // const xAxisLabel = xVar;
     const options = paramOptions.find(d => d.paramName === filteredVar);
     const filteredParamOptions = paramOptions.filter(d=> d.paramName !== 'pop' && d.paramName !== filteredVar);
     const histogramHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),

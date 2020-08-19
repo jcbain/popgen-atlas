@@ -30,7 +30,7 @@ const LegendTitle = styled.p`
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar,
             displayDims, chartPadding, heightScaler,
-            params, paramOptions, handleSwitch,
+            params, paramOptions, handleSwitch, readableLabels,
             className, useLocalParams, gradients, genKeys } = props;
 
     const minX = min(data, d => d[xVar]),
@@ -38,7 +38,7 @@ const GenomeArchGroup = (props) => {
 
     
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
-    const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
+    const xAxisLabel = readableLabels[xVar]
 
     const { dimsMain, dimsContextChart, dimsFocusChart, dimsLegend } = displayDims;
     const { gradientsFocus, gradientsContext } = gradients;

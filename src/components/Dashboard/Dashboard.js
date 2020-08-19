@@ -36,7 +36,7 @@ DashboardContainer.defaultProps = {
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, viewheight, dashboardState,
             lineChartData, geneArchData, identifier, template, handleSlider,
-            isStatic, xAction, renderAction, cardAction, setStaticOpt, themes} = props;
+            isStatic, xAction, renderAction, cardAction, setStaticOpt, readableLabels, themes} = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
     const componentviewwidth = viewwidth/2
@@ -64,6 +64,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction(c)}
                 cardAction={cardAction(c)}
                 displayX={!isStatic}
+                readableLabels={readableLabels}
                 themes={themes}
             />
 

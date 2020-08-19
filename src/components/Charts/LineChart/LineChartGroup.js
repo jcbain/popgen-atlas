@@ -10,7 +10,7 @@ import { ChartDiv } from '../ChartStyles';
 
 const LineChartGroup = (props) => {
     const { data, nestedVar, xVar, yVar, useLocalParams, 
-            displayDims, className, themes,
+            displayDims, className, themes, readableLabels,
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
@@ -23,7 +23,9 @@ const LineChartGroup = (props) => {
     const dimsFocusChart = Object.assign({}, displayDims, {height: focusChartHeight}),
           dimsContextChart = Object.assign({}, displayDims, {height: contextChartHeight})
     
-    const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
+    // const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
+    const xAxisLabel = readableLabels[xVar]
+    const yAxisLabel = readableLabels[yVar]
     
     const getDomain = (domain) => {
         setContextDomain(domain)
@@ -69,6 +71,7 @@ const LineChartGroup = (props) => {
                 visibleOpacity={false}
                 addReferenceLine={true}
                 includeXAxisLabel={false}
+                yAxisLabel={yAxisLabel}
                 themes={themes}>
             </LineChart>
             <LineChart data={data}
