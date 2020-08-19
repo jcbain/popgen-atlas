@@ -29,16 +29,16 @@ const LegendTitle = styled.p`
 
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar,
-            displayDims, chartPadding, heightScaler,
+            displayDims, chartPadding, heightScaler, colorMin, colorMax,
             params, paramOptions, handleSwitch, readableLabels,
             className, useLocalParams, gradients, genKeys } = props;
 
     const minX = min(data, d => d[xVar]),
           maxX = max(data, d => d[xVar]);
 
-    
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
     const xAxisLabel = readableLabels[xVar]
+    const legendLabel = readableLabels[colorVar]
 
     const { dimsMain, dimsContextChart, dimsFocusChart, dimsLegend } = displayDims;
     const { gradientsFocus, gradientsContext } = gradients;
@@ -85,12 +85,13 @@ const GenomeArchGroup = (props) => {
             >
                 <LegendItems viewwidth={dimsLegend.width * (2/4)}
                     viewheight={dimsLegend.height}>
-                    <LegendTitle>Legend Title Here</LegendTitle>
+                    <LegendTitle>{legendLabel}</LegendTitle>
 
                     <div>
                     <GradientLegend viewwidth={dimsLegend.width/3}
                         viewheight={dimsLegend.height/4} 
-                        minVal={-1}/>
+                        minVal={colorMin}
+                        maxVal={colorMax}/>
                     </div>
                 </LegendItems>
             </LegendDiv>

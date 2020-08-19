@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { nest } from 'd3-collection';
-import { map, uniq } from 'lodash'
+import { map, uniq, min, max } from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -104,6 +104,8 @@ ChartViewHistogram.defaultProps = {
 export const ChartViewGenomeChart = (props) => {
     const { geneArchData, template, params, paramOptions, readableLabels,
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
+    const colorMin = min(geneArchData.map(d => d.effect_size_freq_diff))
+    const colorMax = max(geneArchData.map(d => d.effect_size_freq_diff))
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const generations = uniq(filteredData.map(d => d.output_gen));
@@ -140,6 +142,8 @@ export const ChartViewGenomeChart = (props) => {
           xVar={'output_gen'}
           yVar={'ind'}
           colorVar={'effect_size_freq_diff'}
+          colorMin={colorMin}
+          colorMax={colorMax}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsFocus}
@@ -151,6 +155,8 @@ export const ChartViewGenomeChart = (props) => {
           xVar={'output_gen'}
           yVar={'ind'}
           colorVar={'effect_size_freq_diff'}
+          colorMin={colorMin}
+          colorMax={colorMax}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsContext}
@@ -162,6 +168,8 @@ export const ChartViewGenomeChart = (props) => {
           xVar={'output_gen'}
           yVar={'ind'}
           colorVar={'effect_size_freq_diff'}
+          colorMin={colorMin}
+          colorMax={colorMax}
           chartPadding={chartPadding}
           heightScaler={heightScaler}
           displayDims={displayDimsContext}
@@ -178,6 +186,8 @@ export const ChartViewGenomeChart = (props) => {
                     yVar={'ind'} 
                     xVar={'output_gen'}
                     colorVar={'effect_size_freq_diff'}
+                    colorMax={colorMax}
+                    colorMin={colorMin}
                     gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
                     displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext, dimsLegend: legendDims}}
                     chartPadding={chartPadding} 

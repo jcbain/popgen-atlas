@@ -45,12 +45,12 @@ const ScaledStop = (props) => {
 
 const GenomeGradients = (props) => {
     const { data, xVar, yVar, colorVar, genKey,
-            chartPadding, heightScaler, displayDims, useGrayScale } = props;
+            chartPadding, heightScaler, displayDims, useGrayScale, colorMin, colorMax } = props;
     const xVals = uniq(data.map(d => d[xVar]))
     const yMin = min(data, d => d[yVar]),
-          yMax = max(data, d => d[yVar]),
-          colorMin = min(data, d => d[colorVar]),
-          colorMax = max(data, d => d[colorVar]);
+          yMax = max(data, d => d[yVar]);
+        //   colorMin = min(data, d => d[colorVar]),
+        //   colorMax = max(data, d => d[colorVar]);
     const yScale = scaleLinear().domain([yMin, yMax]).range([0, 100]),
           colorScaleHigh = scaleLinear().domain([.00001, colorMax]).interpolate(interpolateHcl),
           colorScaleLow = scaleLinear().domain([-.00001, colorMin]).interpolate(interpolateHcl),

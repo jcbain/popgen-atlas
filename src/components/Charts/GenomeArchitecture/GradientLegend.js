@@ -25,7 +25,7 @@ const MinStop = styled.stop`
 
 const TextVal = styled.text`
     transform: translate(0px, 20px);
-    text-anchor: middle;
+    text-anchor: ${props => props.textpos};
     font-family: ${({ theme }) => theme.tickfont};
     fill: ${({ theme }) => theme.tickfill};
     font-size: 35px;
@@ -68,9 +68,9 @@ const GradientLegend = (props) => {
                 fill={`url(#legend-gradient-${legendKey})`}
                 >
             </rect>
-            <TextVal x={0} y={height/2}>{minVal}</TextVal>
-            <TextVal x={width/2} y={height/2}>{midVal}</TextVal>
-            <TextVal x={width} y={height/2}>{maxVal}</TextVal>
+            <TextVal textpos={'start'} x={0} y={height/2}>{minVal}</TextVal>
+            <TextVal textpos={'middle'} x={width/2} y={height/2}>{midVal}</TextVal>
+            <TextVal textpos={'end'} x={width} y={height/2}>{maxVal}</TextVal>
         </svg>
     )
 }
