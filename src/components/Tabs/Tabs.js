@@ -173,7 +173,7 @@ const ButtonDiv = styled.div`
 
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions, readableLabels} = props;
+    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions, readableLabels, paramPermutationData, grads} = props;
     let initParams = {}
     paramOptions.map(d => {
         return initParams[d.paramName] = d.options[0].value;
@@ -293,6 +293,8 @@ const AddTabs = (props) => {
                     setStaticOpt={setStaticOpt}
                     readableLabels={readableLabels}
                     themes={themes}
+                    paramPermutationData={paramPermutationData}
+                    grads={grads}
                     >
 
                 </Dashboard>

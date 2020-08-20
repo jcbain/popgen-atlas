@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
 import { v4 as uuidv4 } from 'uuid';
-import { uniq } from 'lodash'
-
+import { uniq, uniqBy, uniqWith, union, unionBy, find, min, max } from 'lodash'
+import GenomeGradients from '../../components/Charts/GenomeArchitecture/GenomeGradients';
+import {filterDataByParams} from '../../helpers/DataHelpers'
 
 import data from '../../data/mutations_bg.json';
 import {ThemeProvider} from 'styled-components';
@@ -81,7 +82,7 @@ let summedGenome = nest()
   .entries(genome)
   .map(d => d.value)
 
-
+const smallGenome = genome.filter( d => d.output_gen < 50000)
 
 
 
@@ -213,17 +214,84 @@ const readableLabels = {
   'ind': 'locus'
 }
 
+// put key here for reference of set
+let uniqParamPermutations = uniqBy(smallGenome.map(({ m, mu, sigsqr, r, pop}) => ({ m, mu, sigsqr, r, pop  })), (elem) => { return [elem['m'], elem['mu'], elem['sigsqr'], elem['pop'], elem['r']].join()})
+uniqParamPermutations.map( d => {
+  d['paramSetKey'] = `ps${uuidv4().slice(0, 8)}`;
+})
+
+const uniqGenerations = uniq(smallGenome.map( d => d.output_gen))
+const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
+      colorMax = max(genome.map(g => g.effect_size_freq_diff));
+const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
+const heightScaler = 6.5;
+const displayDimsFocus = {width: 36.5, height: 46.5}
+
 
 
 const LocalAdaptation = (props) => {
-  console.log(summedGenome)
+
+  let allGrads = [];
+uniqParamPermutations.map( (p, i) => {
+  const filteredData = filterDataByParams(smallGenome, p);
+  let fullGenomeData = [];
+  uniqGenerations.map(g => {
+    const filteredGen = filteredData.filter(d => d.output_gen === g)
+    const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
+    template.map((t,i) => {
+      const position = t.position;
+      let match = filteredGen.find(v => v.position === position);
+      match = match !== undefined ? match : {...emptyRow, position: position};
+      match.ind = i;
+      fullGenomeData.push(match)
+    })
+  })
+  const colorgrads = <GenomeGradients key={`color-${i}`}
+    data={fullGenomeData}
+    xVar={'output_gen'}
+    yVar={'ind'}
+    colorVar={'effect_size_freq_diff'}
+    colorMin={colorMin}
+    colorMax={colorMax}
+    chartPadding={chartPadding}
+    heightScaler={heightScaler}
+    displayDims={displayDimsFocus}
+    genKey={p.paramSetKey}
+    />
+
+  const graygrads = <GenomeGradients key={`gray-${i}`}
+    data={fullGenomeData}
+    xVar={'output_gen'}
+    yVar={'ind'}
+    colorVar={'effect_size_freq_diff'}
+    colorMin={colorMin}
+    colorMax={colorMax}
+    chartPadding={chartPadding}
+    heightScaler={heightScaler}
+    displayDims={displayDimsFocus}
+    genKey={p.paramSetKey}
+    useGrayScale={true}
+    />
+  allGrads.push(colorgrads)
+  allGrads.push(graygrads)
+
+})
+
+
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <svg>
+        {allGrads}
+      </svg> */}
       <section className={'dashboard'}>
         <AddTabs viewwidth={100}
           paramOptions={paramOptions}
           lineChartData={summedGenome}
+          paramPermutationData={uniqParamPermutations}
+          grads={allGrads}
+          colorMin={colorMin}
+          colorMax={colorMax}
           geneArchData={genome}
           template={template}
           identifier={'identifier'}

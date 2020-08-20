@@ -28,7 +28,7 @@ const LegendTitle = styled.p`
 `
 
 const GenomeArchGroup = (props) => {
-    const { data, xVar, yVar, colorVar,
+    const { data, xVar, yVar, colorVar, paramPermutationData,
             displayDims, chartPadding, heightScaler, colorMin, colorMax,
             params, paramOptions, handleSwitch, readableLabels,
             className, useLocalParams, gradients, genKeys } = props;
@@ -102,6 +102,7 @@ const GenomeArchGroup = (props) => {
                 yVar={yVar}
                 xVar={xVar}
                 colorVar={colorVar}
+                paramPermutationData={paramPermutationData}
                 displayDims={dimsFocusChart} 
                 gradients={gradientsFocus}
                 chartPadding={chartPadding} 
@@ -117,6 +118,7 @@ const GenomeArchGroup = (props) => {
                 yVar={yVar}
                 xVar={xVar}
                 colorVar={colorVar}
+                paramPermutationData={paramPermutationData}
                 displayDims={dimsContextChart} 
                 gradients={gradientsContext}
                 chartPadding={chartPadding} 

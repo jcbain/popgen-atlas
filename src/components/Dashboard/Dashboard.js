@@ -35,7 +35,7 @@ DashboardContainer.defaultProps = {
 
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, viewheight, dashboardState,
-            lineChartData, geneArchData, identifier, template, handleSlider,
+            lineChartData, geneArchData, identifier, template, handleSlider, paramPermutationData, grads,
             isStatic, xAction, renderAction, cardAction, setStaticOpt, readableLabels, themes} = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
@@ -47,6 +47,7 @@ const Dashboard = (props) => {
         return (
             <DashboardComponent key={i}
                 gridarea={c}
+                paramPermutationData={paramPermutationData}
                 selectedView={dashboardState[c]['view']}
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
@@ -65,6 +66,7 @@ const Dashboard = (props) => {
                 cardAction={cardAction(c)}
                 displayX={!isStatic}
                 readableLabels={readableLabels}
+                grads={grads}
                 themes={themes}
             />
 
