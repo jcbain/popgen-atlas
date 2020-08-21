@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
 import { v4 as uuidv4 } from 'uuid';
@@ -230,66 +230,74 @@ const displayDimsFocus = {width: 36.5, height: 46.5}
 
 
 const LocalAdaptation = (props) => {
-
-  let allGrads = [];
-uniqParamPermutations.map( (p, i) => {
-  const filteredData = filterDataByParams(smallGenome, p);
-  let fullGenomeData = [];
-  uniqGenerations.map(g => {
-    const filteredGen = filteredData.filter(d => d.output_gen === g)
-    const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
-    template.map((t,i) => {
-      const position = t.position;
-      let match = filteredGen.find(v => v.position === position);
-      match = match !== undefined ? match : {...emptyRow, position: position};
-      match.ind = i;
-      fullGenomeData.push(match)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [grads, setgrads] = useState([])
+const expensiveFunction = () => { 
+  let allGrads = []
+  uniqParamPermutations.map( (p, i) => {
+    const filteredData = filterDataByParams(smallGenome, p);
+    let fullGenomeData = [];
+    uniqGenerations.map(g => {
+      const filteredGen = filteredData.filter(d => d.output_gen === g)
+      const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
+      template.map((t,i) => {
+        const position = t.position;
+        let match = filteredGen.find(v => v.position === position);
+        match = match !== undefined ? match : {...emptyRow, position: position};
+        match.ind = i;
+        fullGenomeData.push(match)
+      })
     })
-  })
-  const colorgrads = <GenomeGradients key={`color-${i}`}
-    data={fullGenomeData}
-    xVar={'output_gen'}
-    yVar={'ind'}
-    colorVar={'effect_size_freq_diff'}
-    colorMin={colorMin}
-    colorMax={colorMax}
-    chartPadding={chartPadding}
-    heightScaler={heightScaler}
-    displayDims={displayDimsFocus}
-    genKey={p.paramSetKey}
-    />
+    const colorgrads = <GenomeGradients key={`color-${i}`}
+      data={fullGenomeData}
+      xVar={'output_gen'}
+      yVar={'ind'}
+      colorVar={'effect_size_freq_diff'}
+      colorMin={colorMin}
+      colorMax={colorMax}
+      chartPadding={chartPadding}
+      heightScaler={heightScaler}
+      displayDims={displayDimsFocus}
+      genKey={p.paramSetKey}
+      />
 
-  const graygrads = <GenomeGradients key={`gray-${i}`}
-    data={fullGenomeData}
-    xVar={'output_gen'}
-    yVar={'ind'}
-    colorVar={'effect_size_freq_diff'}
-    colorMin={colorMin}
-    colorMax={colorMax}
-    chartPadding={chartPadding}
-    heightScaler={heightScaler}
-    displayDims={displayDimsFocus}
-    genKey={p.paramSetKey}
-    useGrayScale={true}
-    />
-  allGrads.push(colorgrads)
-  allGrads.push(graygrads)
-
+    const graygrads = <GenomeGradients key={`gray-${i}`}
+      data={fullGenomeData}
+      xVar={'output_gen'}
+      yVar={'ind'}
+      colorVar={'effect_size_freq_diff'}
+      colorMin={colorMin}
+      colorMax={colorMax}
+      chartPadding={chartPadding}
+      heightScaler={heightScaler}
+      displayDims={displayDimsFocus}
+      genKey={p.paramSetKey}
+      useGrayScale={true}
+      />
+    allGrads.push(colorgrads)
+    allGrads.push(graygrads)
 })
+setgrads(allGrads)
 
+setIsLoaded(true)
+}
+
+useEffect(() => {
+  expensiveFunction()
+}, [])
 
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <svg>
-        {allGrads}
-      </svg> */}
+      <svg>
+        {grads}
+      </svg>
       <section className={'dashboard'}>
-        <AddTabs viewwidth={100}
+        {isLoaded ? <AddTabs viewwidth={100}
           paramOptions={paramOptions}
           lineChartData={summedGenome}
           paramPermutationData={uniqParamPermutations}
-          grads={allGrads}
+          grads={[]}
           colorMin={colorMin}
           colorMax={colorMax}
           geneArchData={genome}
@@ -297,7 +305,7 @@ uniqParamPermutations.map( (p, i) => {
           identifier={'identifier'}
           maxTabs={4}
           readableLabels={readableLabels}
-          themes={themes} />
+          themes={themes} /> : <h1>Loading</h1>}
       </section>
     </ThemeProvider>
   )
