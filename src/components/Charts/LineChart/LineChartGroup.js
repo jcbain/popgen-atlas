@@ -65,7 +65,6 @@ const LineChartGroup = (props) => {
                 xDomain={contextDomain}
                 contextDomain={[minX, maxX]}
                 nestedVar={nestedVar}
-                displayDims={dimsFocusChart}
                 xVar={xVar}
                 yVar={yVar}
                 visibleOpacity={false}
@@ -79,13 +78,13 @@ const LineChartGroup = (props) => {
                 xDomain={[minX, maxX]}
                 contextDomain={contextDomain}
                 nestedVar={nestedVar}
-                displayDims={dimsContextChart}
                 xVar={xVar}
                 yVar={yVar}
                 addBrush={true}
                 getDomain={getDomain}
                 themes={themes}
                 xAxisLabel={xAxisLabel}
+                isContext={true}
                 includeYAxisLabel={false}>
             </LineChart>
         </ChartDiv>

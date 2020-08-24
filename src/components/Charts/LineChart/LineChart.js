@@ -17,16 +17,26 @@ import { closestFromArray } from '../../../helpers/Helpers';
 const LineChart = (props) => {
     const { className, data, xDomain, contextDomain,
             nestedVar, xVar, yVar, uniqId, includeXAxisLabel, includeYAxisLabel,
-            popStrokeWidth, displayDims, chartPadding, xAxisLabel, yAxisLabel,
+            popStrokeWidth, isContext, xAxisLabel, yAxisLabel,
             visibleOpacity, addBrush, getDomain, addReferenceLine, themes } = props;
     const lineChartRef = useRef(null);
     const [xPos, setXPos] = useState(undefined);
     const [yTextPos, setYTextPos] = useState([...Array(data.length)].map(() => Object()))
     const [showStroke, setShowStroke] = useState(false)
+    
 
 
-    const width = displayDims.width * 12,
-          height = displayDims.height * 5.5;
+    
+    const width = isContext ? 1000 : 500,
+          height = isContext ? 100 : 200;
+
+    const chartPaddingPerc  = {top: 5, bottom: 15, left: 10, right: 5}
+    const chartPadding = {
+        top: height * (chartPaddingPerc.top/100),
+        bottom:  height * (chartPaddingPerc.bottom/100),
+        left: width * (chartPaddingPerc.left/100),
+        right: width * (chartPaddingPerc.right/100),
+    };
     const minY = min(data.map(d => min(d[nestedVar], v => v[yVar]))),
           maxY = max(data.map(d => max(d[nestedVar], v => v[yVar])));
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
@@ -119,8 +129,10 @@ const LineChart = (props) => {
             onMouseLeave={() => addReferenceLine && setShowStroke(false)}
             onMouseMove={addReferenceLine ? movement : undefined}
             viewBox={[0, 0, width, height]}
-            width={`${displayDims.width}vw`}
-            height={`${displayDims.height}vh`}>
+            // width={`${displayDims.width}vw`}
+            // height={`${displayDims.height}vh`}
+            width={'100%'}
+            >
             <YAxis scale={yScale}
                 x0={chartPadding.left}
                 width={width - chartPadding.right}
