@@ -130,6 +130,7 @@ const GenomeArchGroup = (props) => {
                 getDomain={getDomain}
                 xAxisLabel={xAxisLabel}
                 includeYAxisLabel={false}
+                isContext={true}
                 />
 
         </ChartDiv>

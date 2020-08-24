@@ -82,50 +82,6 @@ let summedGenome = nest()
   .entries(genome)
   .map(d => d.value)
 
-const smallGenome = genome.filter( d => d.output_gen < 50000)
-
-
-
-  // const dataPopPhenDiff = nest()
-  // .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
-  // .rollup( v => {
-  //   return v.reduce((prev, curr) =>{
-  //     prev['output_gen'] = curr['output_gen'];
-  //     prev['m'] = curr['m'];
-  //     prev['mu'] = curr['mu'];
-  //     prev['r'] = curr['r'];
-  //     prev['sigsqr'] = curr['sigsqr'];
-  //     prev[curr['pop']] = curr.pop_phen
-  //     return prev;
-  //   }, {})
-  // })
-  // .entries(summedGenome)
-  // .map(d => d.value)
-  // .map(d => {
-  //   d['pop_phen_diff'] = d['1']- d['2'];
-  //   return d;
-  // })
-
-// const dataPopPhenDiff = nest()
-//   .key( d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr])
-//   .rollup( v => {
-//     return v.reduce((prev, curr) =>{
-//       prev['output_gen'] = curr['output_gen'];
-//       prev['m'] = curr['m'];
-//       prev['mu'] = curr['mu'];
-//       prev['r'] = curr['r'];
-//       prev['sigsqr'] = curr['sigsqr'];
-//       prev[curr['pop']] = curr.pop_phen
-//       return prev;
-//     }, {})
-//   })
-//   .entries(dataPopPhen)
-//   .map(d => d.value)
-//   .map(d => {
-//     d['pop_phen'] = d['0']- d['1'];
-//     return d;
-//   })
-
 
 
 const theme = {
@@ -215,27 +171,30 @@ const readableLabels = {
 }
 
 // put key here for reference of set
-let uniqParamPermutations = uniqBy(smallGenome.map(({ m, mu, sigsqr, r, pop}) => ({ m, mu, sigsqr, r, pop  })), (elem) => { return [elem['m'], elem['mu'], elem['sigsqr'], elem['pop'], elem['r']].join()})
+let uniqParamPermutations = uniqBy(genome.map(({ m, mu, sigsqr, r, pop}) => ({ m, mu, sigsqr, r, pop  })), (elem) => { return [elem['m'], elem['mu'], elem['sigsqr'], elem['pop'], elem['r']].join()})
 uniqParamPermutations.map( d => {
   d['paramSetKey'] = `ps${uuidv4().slice(0, 8)}`;
 })
 
-const uniqGenerations = uniq(smallGenome.map( d => d.output_gen))
+const uniqGenerations = uniq(genome.map( d => d.output_gen))
 const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
       colorMax = max(genome.map(g => g.effect_size_freq_diff));
 const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
 const heightScaler = 6.5;
 const displayDimsFocus = {width: 36.5, height: 46.5}
+const displayDimsContext = {width: 36.5, height: 11.625}
 
+// 10 101.125 // 151.125
+// 10 25.5625 // 75.5625
 
 
 const LocalAdaptation = (props) => {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(true)
   const [grads, setgrads] = useState([])
 const expensiveFunction = () => { 
   let allGrads = []
   uniqParamPermutations.map( (p, i) => {
-    const filteredData = filterDataByParams(smallGenome, p);
+    const filteredData = filterDataByParams(genome, p);
     let fullGenomeData = [];
     uniqGenerations.map(g => {
       const filteredGen = filteredData.filter(d => d.output_gen === g)
@@ -261,6 +220,20 @@ const expensiveFunction = () => {
       genKey={p.paramSetKey}
       />
 
+    const colorgradscontext = <GenomeGradients key={`color-context-${i}`}
+      data={fullGenomeData}
+      xVar={'output_gen'}
+      yVar={'ind'}
+      colorVar={'effect_size_freq_diff'}
+      colorMin={colorMin}
+      colorMax={colorMax}
+      chartPadding={chartPadding}
+      heightScaler={heightScaler}
+      displayDims={displayDimsContext}
+      genKey={p.paramSetKey}
+      isContext={true}
+      />
+
     const graygrads = <GenomeGradients key={`gray-${i}`}
       data={fullGenomeData}
       xVar={'output_gen'}
@@ -276,15 +249,16 @@ const expensiveFunction = () => {
       />
     allGrads.push(colorgrads)
     allGrads.push(graygrads)
+    allGrads.push(colorgradscontext)
 })
 setgrads(allGrads)
 
 setIsLoaded(true)
 }
 
-useEffect(() => {
-  expensiveFunction()
-}, [])
+// useEffect(() => {
+//   expensiveFunction()
+// }, [])
 
 
   return (

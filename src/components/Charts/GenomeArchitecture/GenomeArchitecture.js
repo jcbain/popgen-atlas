@@ -11,7 +11,7 @@ import { closestFromArray } from '../../../helpers/Helpers';
 const GenomeArchitecture = (props) => {
     const { className, displayDims, chartPadding, genKey, paramPermutationData,
             data, xVar, yVar, gradients, heightScaler, includeXAxisLabel, xAxisLabel,
-            yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel } = props;
+            yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel, isContext } = props;
 
     const width = displayDims.width * 12,
           height = displayDims.height * heightScaler;
@@ -24,10 +24,11 @@ const GenomeArchitecture = (props) => {
     const barwidth = (width - chartPadding.left - chartPadding.right) / (xVals.length);
     const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]),
           yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
+    const colorLabel = isContext ? 'color-context' : 'color';
     console.log(paramPermutationData)
     const bars = xVals.map((x, i) => {
         const isFocus = (x >= contextDomain[0] && x < contextDomain[1]);
-        const colorIdentifier = isFocus ? 'color' : 'gray';
+        const colorIdentifier = isFocus ? colorLabel : 'gray';
         return (
             <rect key={i}
                 x={xScale(x)}

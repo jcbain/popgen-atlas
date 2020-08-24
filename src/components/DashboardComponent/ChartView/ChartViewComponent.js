@@ -138,7 +138,7 @@ export const ChartViewGenomeChart = (props) => {
     const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
-
+    console.log(displayDimsContext)
     // const gradientsFocus = <GenomeGradients key={`color-${genKeyFocus}`}
     //       data={genomeData}
     //       xVar={'output_gen'}

@@ -45,7 +45,7 @@ const ScaledStop = (props) => {
 
 const GenomeGradients = (props) => {
     const { data, xVar, yVar, colorVar, genKey,
-            chartPadding, heightScaler, displayDims, useGrayScale, colorMin, colorMax } = props;
+            chartPadding, heightScaler, displayDims, useGrayScale, colorMin, colorMax, isContext } = props;
     const xVals = uniq(data.map(d => d[xVar]))
     const yMin = min(data, d => d[yVar]),
           yMax = max(data, d => d[yVar]);
@@ -55,7 +55,8 @@ const GenomeGradients = (props) => {
           colorScaleHigh = scaleLinear().domain([.00001, colorMax]).interpolate(interpolateHcl),
           colorScaleLow = scaleLinear().domain([-.00001, colorMin]).interpolate(interpolateHcl),
           grayScale = scaleLinear().domain([colorMin, colorMax]).interpolate(interpolateHcl);
-    const colorIdentifier = useGrayScale ? 'gray' : 'color';
+    const colorLabel = isContext ? 'color-context' : 'color'
+    const colorIdentifier = useGrayScale ? 'gray' : colorLabel;
 
     const gradients = xVals.map((x, i) => {
         return (
@@ -64,6 +65,8 @@ const GenomeGradients = (props) => {
                 id={`gradient-${colorIdentifier}-${x}-${genKey}`}
                 x1={0}
                 x2={0}
+                // y1={'10%'}
+                // y2={'70%'}
                 y1={chartPadding.top}
                 y2={(displayDims.height * heightScaler) - chartPadding.bottom}
             >
