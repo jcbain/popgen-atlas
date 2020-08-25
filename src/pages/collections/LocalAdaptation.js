@@ -85,30 +85,17 @@ const themes = {
   "2": themePop2,
 }
 
-
-const generation = uniq(genome.map(d => d.output_gen), true).map(v => {
+const createObjectLabelValues = v => {
   return {label: v, value: v}
-})
+}
 
-const selection = uniq(genome.map(d => d.sigsqr), true).map(v => {
-  return {label: v, value: v}
-})
 
-const recombination = uniq(genome.map(d => d.r), true).map(v => {
-  return {label: v, value: v}
-})
-
-const mutation = uniq(genome.map(d => d.mu), true).map(v => {
-  return {label: v, value: v}
-})
-
-const population = uniq(genome.map(d => d.pop), true).map(v => {
-  return {label: v, value: v}
-})
-
-const migration = uniq(genome.map(d => d.m), true).map(v => {
-  return {label: v, value: v}
-})
+const generation = uniq(genome.map(d => d.output_gen), true).map(createObjectLabelValues),
+      selection = uniq(genome.map(d => d.sigsqr), true).map(createObjectLabelValues),
+      recombination = uniq(genome.map(d => d.r), true).map(createObjectLabelValues),
+      mutation = uniq(genome.map(d => d.mu), true).map(createObjectLabelValues),
+      population = uniq(genome.map(d => d.pop), true).map(createObjectLabelValues),
+      migration = uniq(genome.map(d => d.m), true).map(createObjectLabelValues);
 
 const paramOptions = [
   {paramName: 'm', paramNameReadable: 'migration' ,options: migration},
@@ -151,13 +138,13 @@ const LocalAdaptation = (props) => {
   const [grads, setgrads] = useState([])
 const expensiveFunction = () => { 
   let allGrads = []
-  uniqParamPermutations.map( (p, i) => {
+  uniqParamPermutations.forEach( (p, i) => {
     const filteredData = filterDataByParams(genome, p);
     let fullGenomeData = [];
-    uniqGenerations.map(g => {
+    uniqGenerations.forEach(g => {
       const filteredGen = filteredData.filter(d => d.output_gen === g)
       const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
-      template.map((t,i) => {
+      template.forEach((t,i) => {
         const position = t.position;
         let match = filteredGen.find(v => v.position === position);
         match = match !== undefined ? match : {...emptyRow, position: position};
@@ -172,9 +159,6 @@ const expensiveFunction = () => {
       colorVar={'effect_size_freq_diff'}
       colorMin={colorMin}
       colorMax={colorMax}
-      chartPadding={chartPadding}
-      heightScaler={heightScaler}
-      displayDims={displayDimsFocus}
       genKey={p.paramSetKey}
       />
     const graygrads = <GenomeGradients key={`gray-${i}`}
@@ -184,9 +168,6 @@ const expensiveFunction = () => {
       colorVar={'effect_size_freq_diff'}
       colorMin={colorMin}
       colorMax={colorMax}
-      chartPadding={chartPadding}
-      heightScaler={heightScaler}
-      displayDims={displayDimsFocus}
       genKey={p.paramSetKey}
       useGrayScale={true}
       />
@@ -205,7 +186,7 @@ useEffect(() => {
 
   return (
     <ThemeProvider theme={theme}>
-      <svg>
+      <svg className="gradient-container">
         {grads}
       </svg>
       <section className={'dashboard'}>

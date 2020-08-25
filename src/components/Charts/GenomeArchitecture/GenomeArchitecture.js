@@ -6,10 +6,11 @@ import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
 import BrushHorizontal from './BrushHorizontal';
 import { closestFromArray } from '../../../helpers/Helpers';
+import { ChartSVG } from '../ChartStyles'
 
 
 const GenomeArchitecture = (props) => {
-    const { className, paramPermutationData,
+    const { className, paramPermutationData, chartname, gridarea,
             data, xVar, yVar, includeXAxisLabel, xAxisLabel,
             yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel, isContext } = props;
 
@@ -60,7 +61,9 @@ const GenomeArchitecture = (props) => {
     }
 
     return (
-        <svg className={className}
+        <ChartSVG className={className}
+            chartname={chartname}
+            gridarea={gridarea}
             viewBox={[0, 0, width, height]}
             width="100%"
             >
@@ -68,6 +71,7 @@ const GenomeArchitecture = (props) => {
                     x0={chartPadding.left}
                     width={width - chartPadding.right}
                     pixelsPerTick={height/5}
+                    fontSize={isContext ? 15 : 10}
                     includeAxisLine={false}
                     paddingLeft={chartPadding.left}
                     includeAxisLabel={includeYAxisLabel}
@@ -78,9 +82,10 @@ const GenomeArchitecture = (props) => {
                 <XAxis scale={xScale} 
                     height={height - chartPadding.bottom}
                     includeAxisLine={false}
+                    fontSize={isContext ? 15 : 10}
                     includeAxisLabel={includeXAxisLabel} 
                     labelText={xAxisLabel} />
-        </svg>
+        </ChartSVG>
 
 
     )

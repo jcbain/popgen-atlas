@@ -5,15 +5,14 @@ export const DashboardComponentContainer = styled.div`
     display: ${props => props.display};
     flex-direction: row;
     justify-content: space-between;
-    grid-area: ${props => props.gridarea || 'none'};
-    width: ${props => props.viewwidth}vw;
-    height: ${props => props.viewheight}vh;
-    background-color: ${props => props.theme.color.main};
+    width: 100%;
+    height: 100%;
+    background-color: ${({ theme }) => theme.color.main};
     padding-left: 1vw;
     padding-right: 1vw;
     padding-top: 2vh;
     border-radius: 10px;
-    border: 1px solid ${props => props.theme.color.graySecondary};
+    border: 1px solid ${({ theme }) => theme.color.graySecondary};
 `
 
 DashboardComponentContainer.defaultProps = {

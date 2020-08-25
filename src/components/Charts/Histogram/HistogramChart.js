@@ -12,9 +12,9 @@ const HistogramChart = (props) => {
             nestedVar, xVar, filteredVar, useLocalParams} = props;
     
     const [sliderVal, updateSliderVal] = useState(2000);
-    // const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
+    
     const xAxisLabel = readableLabels[xVar];
-    // const xAxisLabel = xVar;
+    const chartname = 'histogram'
     const options = paramOptions.find(d => d.paramName === filteredVar);
     const filteredParamOptions = paramOptions.filter(d=> d.paramName !== 'pop' && d.paramName !== filteredVar);
     const histogramHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
@@ -26,7 +26,7 @@ const HistogramChart = (props) => {
     }
 
     let updatedData = [];
-    data.map(d => {
+    data.forEach(d => {
         const {key} = d;
         const updatedValues = d[nestedVar].filter(d => d[filteredVar] === sliderVal)
         updatedData.push({key, values: updatedValues})
@@ -58,11 +58,11 @@ const HistogramChart = (props) => {
     }
 
     return (
-        <ChartDiv className={className}
-            displaywidth={displayDims.width}
-            displayheight={displayDims.height}>
+        <ChartDiv className={className} chartname={chartname}>
             { paramBar }
             <Histogram data={updatedData}
+                chartname={chartname}
+                gridarea="focus"
                 nestedVar={nestedVar}
                 xVar={xVar}
                 xAxisLabel={xAxisLabel}
@@ -70,11 +70,12 @@ const HistogramChart = (props) => {
                 displayDims={{...displayDims, height: histogramHeight}}>
             </Histogram>
             <ParamSlider updateValChange={updateValChange} 
+                chartname={chartname}
+                gridarea="context"
                 options={options}
                 viewwidth={displayDims.width}
                 viewheight={sliderHeight}
             ></ParamSlider>
-
         </ChartDiv>
     )
 }

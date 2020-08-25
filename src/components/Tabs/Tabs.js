@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
 import { ParamSelector } from '../ParamSelector/ParamSelector';
-import Switch from '../Buttons/Switch'
+import Switch from '../Buttons/Switch';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -20,21 +20,21 @@ const TabPanel = (props) => {
             )}
         </div>
     )
-}
+};
 
-const ParamPanelDiv = styled.div`
+const GlobalParamPanelDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-`
+`;
 
 const StyledH2 = styled.h2`
     font-family: 'Baloo Tamma 2', cursive;
-    color: ${({theme}) => theme.buttoncolor};
+    color: ${({ theme }) => theme.buttoncolor};
     font-size: 1em;
 `;
 
-const ParamPanel = (props) => {
+const GlobalParamPanel = (props) => {
     const { children, value, index } = props;
 
     return (
@@ -42,14 +42,14 @@ const ParamPanel = (props) => {
             id={`tab-panel-${index}`}
         >
             {value === index && (
-                <ParamPanelDiv>
+                <GlobalParamPanelDiv>
                     <StyledH2>Global Parameters</StyledH2>
-                {children}
-                </ParamPanelDiv>
+                    {children}
+                </GlobalParamPanelDiv>
             )}
         </div>
     )
-}
+};
 
 
 const DashboardTopBar = styled.div`
@@ -72,29 +72,29 @@ const TabsContainer = styled.div`
     flex-direction: row;
 `
 const TabContainerLine = styled.div`
-    grid-area: tabline${({linepos}) => linepos};
+    grid-area: tabline${({ linepos }) => linepos};
     width: 1px;
     height: 6vh;
     margin: auto auto;
-    background-color: ${props => props.theme.color.grayLight};
+    background-color: ${({ theme }) => theme.color.grayLight};
 `
 const TabContainer = styled.div`
-    background-color: ${props => props.theme.color.backgroundLight};
+    background-color: ${({ theme }) => theme.color.backgroundLight};
     padding-left: 1vw;
     padding-right: 1vw;
     height: 7vh;
     font-family: 'Baloo Tamma 2', cursive;
     font-weight: ${props => props.activetab ? '600' : '400'};
-    color: ${props => props.theme.color.grayMain};
+    color: ${({ theme }) => theme.color.grayMain};
     line-height: 7vh;
     cursor: pointer;
     min-width: 12vw;
     text-align: center;
-    border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.backgroundLight};
+    border-bottom: 2px solid ${({ theme, activetab })=> activetab ? theme.buttoncolor : theme.color.backgroundLight};
     &:hover {
-        background-color:  ${props => props.activetab ? props.theme.color.backgroundLight : props.theme.buttoncoloralpha};
+        background-color:  ${({ theme, activetab }) => activetab ? theme.color.backgroundLight : theme.buttoncoloralpha};
         font-weight: ${props => props.activetab ? '600' : '500'};
-        border-bottom: 2px solid ${props => props.activetab ? props.theme.buttoncolor : props.theme.color.backgroundLight};
+        border-bottom: 2px solid ${({ theme, activetab }) => activetab ? theme.buttoncolor : theme.color.backgroundLight};
     }
 `
 
@@ -115,19 +115,19 @@ const TabComponentContainer = styled.div`
         "tabbar tabbar sidepanel"
         "dashboard dashboard sidepanel"
         "dashboard dashboard sidepanel";
-    grid-template-columns: ${({dashboardviewwidth}) => dashboardviewwidth/2}vw ${({dashboardviewwidth}) => dashboardviewwidth/2}vw ${({dashboardviewwidth}) => 100 - dashboardviewwidth}vw;
-    grid-template-rows: 10vh ${({dashboardviewheight}) => dashboardviewheight/2}vh ${({dashboardviewheight}) => dashboardviewheight/2}vh;
+    grid-template-columns: ${({ dashboardviewwidth }) => dashboardviewwidth/2}vw ${({ dashboardviewwidth }) => dashboardviewwidth/2}vw ${({ dashboardviewwidth }) => 100 - dashboardviewwidth}vw;
+    grid-template-rows: 10vh ${({ dashboardviewheight }) => dashboardviewheight/2}vh ${({ dashboardviewheight }) => dashboardviewheight/2}vh;
     width: 100vw;
 `
 
 const ParamText = styled.p`
     font-family: 'Baloo Tamma 2', cursive;
-    color: ${({theme}) => theme.color.grayMain};
+    color: ${({ theme }) => theme.color.grayMain};
     font-size: 0.8em;
 `
 
 const Tabs = (props) => {
-    const {children, tabs, addTab, value, setValue} = props;
+    const { tabs, addTab, value, setValue } = props;
  
     const alltabs = tabs.map((d, i) => {
         return <TabContainer key={i} onClick={() => setValue(i)} activetab={i === value}>D{i+1}</TabContainer>
@@ -168,7 +168,7 @@ const ButtonDiv = styled.div`
     align-items: center;
     font-family: 'Baloo Tamma 2', cursive;
     font-weight: 600;
-    color: ${({theme}) => theme.color.grayMain};
+    color: ${({ theme }) => theme.color.grayMain};
 `
 
 
@@ -183,7 +183,7 @@ const AddTabs = (props) => {
     const [staticOpt, setStaticOpt] = useState(true);
     const [currentNumTabs, setCurrentNumTabs] = useState(1);
     const dashboardviewwidth = 80;
-    const dashboardviewheight = 100;
+    const dashboardviewheight = 150;
     const initComponentState = (selectedChart) => {
         return {
             selectedChart,
@@ -201,7 +201,6 @@ const AddTabs = (props) => {
             componentFourth: initComponentState('histogram'),
             componentGlobal: initComponentState('linechartgroup')
         },
-        // globalParams : {...initParams}
     })
 
     const addTab = () => {
@@ -294,17 +293,14 @@ const AddTabs = (props) => {
                     readableLabels={readableLabels}
                     themes={themes}
                     paramPermutationData={paramPermutationData}
-                    grads={grads}
                     >
-
-                </Dashboard>
-                
+                </Dashboard> 
             </TabPanel>
         )
     })
     const parampanels = [...Array(currentNumTabs)].map((t, i) => {
         return (
-            <ParamPanel key={i} value={value} index={i}>
+            <GlobalParamPanel key={i} value={value} index={i}>
                 {paramOptions.filter(p => p.paramName !== 'pop' && p.paramName !== 'output_gen').map((d, j) => {
                     return (
                         <ParamSelector key={j} 
@@ -321,7 +317,7 @@ const AddTabs = (props) => {
                     )
                 })}
 
-            </ParamPanel>
+            </GlobalParamPanel>
 
         )
 

@@ -11,13 +11,13 @@ import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
 import ReferenceLine from './ReferenceLine';
 import { closestFromArray } from '../../../helpers/Helpers';
-
+import { ChartSVG } from '../ChartStyles'
 
 
 const LineChart = (props) => {
-    const { className, data, xDomain, contextDomain,
+    const { className, data, xDomain, contextDomain, gridarea,
             nestedVar, xVar, yVar, uniqId, includeXAxisLabel, includeYAxisLabel,
-            popStrokeWidth, isContext, xAxisLabel, yAxisLabel,
+            popStrokeWidth, isContext, xAxisLabel, yAxisLabel, chartname,
             visibleOpacity, addBrush, getDomain, addReferenceLine, themes } = props;
     const lineChartRef = useRef(null);
     const [xPos, setXPos] = useState(undefined);
@@ -123,19 +123,20 @@ const LineChart = (props) => {
     }
 
     return (
-        <svg className={className}
+        <ChartSVG className={className}
+            chartname={chartname}
+            gridarea={gridarea}
             ref={lineChartRef}
             onMouseEnter={() => addReferenceLine && setShowStroke(true)}
             onMouseLeave={() => addReferenceLine && setShowStroke(false)}
             onMouseMove={addReferenceLine ? movement : undefined}
             viewBox={[0, 0, width, height]}
-            // width={`${displayDims.width}vw`}
-            // height={`${displayDims.height}vh`}
             width={'100%'}
             >
             <YAxis scale={yScale}
                 x0={chartPadding.left}
                 width={width - chartPadding.right}
+                fontSize={isContext ? 15 : 10}
                 pixelsPerTick={height/5}
                 includeAxisLine={false}
                 paddingLeft={chartPadding.left}
@@ -147,10 +148,11 @@ const LineChart = (props) => {
             {referenceLine}
             <XAxis scale={xScale} 
                 height={height - chartPadding.bottom}
+                fontSize={isContext ? 15 : 10}
                 includeAxisLine={false}
                 includeAxisLabel={includeXAxisLabel} 
                 labelText={xAxisLabel}/>
-        </svg>
+        </ChartSVG>
     )
 
 }

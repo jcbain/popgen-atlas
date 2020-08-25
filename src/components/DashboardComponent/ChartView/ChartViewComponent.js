@@ -3,17 +3,15 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { nest } from 'd3-collection';
-import { map, uniq, min, max, filter } from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 
 
 import LineChartGroup from '../../Charts/LineChart/LineChartGroup';
 import HistogramChart from '../../Charts/Histogram/HistogramChart';
 import GenomeArchGroup from '../../Charts/GenomeArchitecture/GenomeArchGroup';
-import GenomeGradients from '../../Charts/GenomeArchitecture/GenomeGradients';
-import {filterDataByParams} from '../../../helpers/DataHelpers'
+import {filterDataByParams} from '../../../helpers/DataHelpers';
 import { DashboardComponentContainer } from '../DashboardComponentStyles';
-import { removeParams } from '../../../helpers/DataHelpers'
+import { removeParams } from '../../../helpers/DataHelpers';
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     position: absolute;
@@ -25,7 +23,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 export const ChartViewLineChart = (props) => {
     const {lineChartData, viewwidth, viewheight, params, useLocalParams, 
-           specialOpts, paramOptions, xAction, handleSwitch, displayX, readableLabels, themes} = props;
+           paramOptions, xAction, handleSwitch, displayX, readableLabels, themes} = props;
     const xVar = 'pop_phen_diff'
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
     let filteredLineChartData = filterDataByParams(lineChartData, paramsCopy)
@@ -51,7 +49,6 @@ export const ChartViewLineChart = (props) => {
                 themes={themes}
                 >
             </LineChartGroup>
-
         </DashboardComponentContainer>
     )
 }
@@ -102,32 +99,13 @@ ChartViewHistogram.defaultProps = {
 }
 
 export const ChartViewGenomeChart = (props) => {
-    const { geneArchData, template, params, paramOptions, readableLabels, colorMin, colorMax, grads, paramPermutationData,
+    const { geneArchData, params, paramOptions, readableLabels, colorMin, colorMax, paramPermutationData,
             handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
-    // const colorMin = min(geneArchData.map(d => d.effect_size_freq_diff))
-    // const colorMax = max(geneArchData.map(d => d.effect_size_freq_diff))
+
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const filteredParamPermutation = filterDataByParams(paramPermutationData, paramsCopy)
-    // const filteredData = filterDataByParams(geneArchData, paramsCopy)
-    // const generations = uniq(filteredData.map(d => d.output_gen));
-    // const genomeData = React.useMemo(() => {
-    //     let genomeData = [];
-    //     map(generations, g => {
-    //         const filtered = filteredData.filter(d => d.output_gen  === g);
-    //         const emptyRow = {...filtered[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0};
-    //         template.map((t,i) => {
-    //             const position = t.position;
-    //             let match = filtered.find(v => v.position === position)
-    //             match = match !== undefined ?  match : {...emptyRow, position: position} 
-    //             match.ind = i;
-    //             genomeData.push(match)
-    //         })
-    //     })
-    //     return genomeData
-    // }, [filteredData])
 
-   
     const focusChartHeight = viewheight * (useLocalParams ? 10/20 : 10/20),
           contextChartHeight = viewheight * (useLocalParams ? 5/20 : 5/20),
           legendHeight = viewheight * (useLocalParams ? 2.5/20 : 2.5/20)
@@ -139,45 +117,6 @@ export const ChartViewGenomeChart = (props) => {
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
     console.log(displayDimsContext)
-    // const gradientsFocus = <GenomeGradients key={`color-${genKeyFocus}`}
-    //       data={genomeData}
-    //       xVar={'output_gen'}
-    //       yVar={'ind'}
-    //       colorVar={'effect_size_freq_diff'}
-    //       colorMin={colorMin}
-    //       colorMax={colorMax}
-    //       chartPadding={chartPadding}
-    //       heightScaler={heightScaler}
-    //       displayDims={displayDimsFocus}
-    //       genKey={genKeyFocus}
-    //    />
-  
-    // const gradientsContext = <GenomeGradients key={`color-${genKeyContext}`}
-    //       data={genomeData}
-    //       xVar={'output_gen'}
-    //       yVar={'ind'}
-    //       colorVar={'effect_size_freq_diff'}
-    //       colorMin={colorMin}
-    //       colorMax={colorMax}
-    //       chartPadding={chartPadding}
-    //       heightScaler={heightScaler}
-    //       displayDims={displayDimsContext}
-    //       genKey={genKeyContext}
-    //   />
-  
-    // const gradientsGray = <GenomeGradients key={`gray-${genKeyContext}`}
-    //       data={genomeData}
-    //       xVar={'output_gen'}
-    //       yVar={'ind'}
-    //       colorVar={'effect_size_freq_diff'}
-    //       colorMin={colorMin}
-    //       colorMax={colorMax}
-    //       chartPadding={chartPadding}
-    //       heightScaler={heightScaler}
-    //       displayDims={displayDimsContext}
-    //       genKey={genKeyContext}
-    //       useGrayScale={true}
-    //   />
 
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
@@ -190,8 +129,6 @@ export const ChartViewGenomeChart = (props) => {
                     colorVar={'effect_size_freq_diff'}
                     colorMax={colorMax}
                     colorMin={colorMin}
-                    gradients={{gradientsFocus : grads, gradientsContext : grads}}
-                    // gradients={{gradientsFocus : [gradientsFocus], gradientsContext : [gradientsContext, gradientsGray]}}
                     displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext, dimsLegend: legendDims}}
                     chartPadding={chartPadding} 
                     heightScaler={heightScaler}
@@ -200,8 +137,7 @@ export const ChartViewGenomeChart = (props) => {
                     paramOptions={paramOptions}
                     params={paramsCopy}
                     readableLabels={readableLabels}
-                    handleSwitch={handleSwitch}/>
-            
+                    handleSwitch={handleSwitch}/>      
         </DashboardComponentContainer>
     )
 }

@@ -40,7 +40,8 @@ const GenomeArchGroup = (props) => {
     const xAxisLabel = readableLabels[xVar],
           yAxisLabel = readableLabels[yVar],
           legendLabel = readableLabels[colorVar];
-
+    
+    const chartname = "genarchgroup"
     const { dimsMain, dimsLegend } = displayDims;
     const filteredParamOptions = paramOptions.filter(d => d.paramName !== xVar);
     const paramOptionsHeight = dimsMain.height * 2.5/20;
@@ -77,10 +78,9 @@ const GenomeArchGroup = (props) => {
 
 
     return (
-        <ChartDiv className={className}
-            displaywidth={displayDims.width}
-            displayheight={displayDims.height}>
-            <LegendDiv viewwidth={dimsLegend.width}
+        <ChartDiv className={className} chartname={chartname}>
+            <LegendDiv gridarea="legend"
+                viewwidth={dimsLegend.width}
                 viewheight={dimsLegend.height}
             >
                 <LegendItems viewwidth={dimsLegend.width * (2/4)}
@@ -98,6 +98,8 @@ const GenomeArchGroup = (props) => {
             { paramBar }
 
             <GenomeArchitecture data={data}
+                chartname={chartname}
+                gridarea="focus"
                 yVar={yVar}
                 xVar={xVar}
                 colorVar={colorVar}
@@ -108,9 +110,12 @@ const GenomeArchGroup = (props) => {
                 contextDomain={[minX, maxX]}
                 xDomain={contextDomain}
                 yAxisLabel={yAxisLabel}
-                includeXAxisLabel={false}
+                xAxisLabel={xAxisLabel}
+                includeXAxisLabel={true}
                 />
             <GenomeArchitecture data={data}
+                chartname={chartname}
+                gridarea="context"
                 yVar={yVar}
                 xVar={xVar}
                 colorVar={colorVar}
@@ -121,7 +126,7 @@ const GenomeArchGroup = (props) => {
                 contextDomain={contextDomain}
                 xDomain={[minX, maxX]}
                 getDomain={getDomain}
-                xAxisLabel={xAxisLabel}
+                includeXAxisLabel={false}
                 includeYAxisLabel={false}
                 isContext={true}
                 />

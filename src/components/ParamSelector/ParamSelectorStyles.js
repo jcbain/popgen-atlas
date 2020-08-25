@@ -17,8 +17,9 @@ SelectWrapper.defaultProps = {
 }
 
 export const SelectWrapperSlider = styled.div`
+    grid-area: ${({ chartname }) => chartname}-${({ gridarea }) => gridarea};
     width: ${props => props.viewwidth - props.paddings.left - props.paddings.right}vw;
-    height: ${props => props.viewheight}vh;
+    height: 100%;
     padding-left: ${props => props.paddings.left}vw;
     padding-right: ${props => props.paddings.right}vw;
     position: relative;

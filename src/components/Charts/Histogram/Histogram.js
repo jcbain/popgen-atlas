@@ -3,8 +3,10 @@ import { scaleLinear } from 'd3-scale';
 import { min, max, histogram } from 'd3-array';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
+
 import XAxis from '../Axes/XAxis';
 import YAxis from '../Axes/YAxis';
+import { ChartSVG } from '../ChartStyles';
 
 const BinRect = styled.rect`
     fill: ${props => props.theme.popColorAlpha};
@@ -19,7 +21,7 @@ BinRect.defaultProps = {
 }
 
 const Histogram = (props) => {
-    const { data, xVar, nestedVar, className,
+    const { data, xVar, nestedVar, className, chartname, gridarea,
             xAxisLabel, themes} = props;
     const width = 500,
           height = 250;
@@ -66,11 +68,11 @@ const Histogram = (props) => {
 
 
     return (
-        <svg className={className}
+        <ChartSVG className={className}
+            chartname={chartname}
+            gridarea={gridarea}
             viewBox={[0, 0, width, height]}
             width="100%"
-            // width={`${displayDims.width}vw`}
-            // height={`${displayDims.height}vh`}
             >
             <YAxis scale={yScale}
                 x0={chartPadding.left}
@@ -85,7 +87,7 @@ const Histogram = (props) => {
                 includeAxisLine={false}
                 labelText={xAxisLabel}/>
 
-        </svg>
+        </ChartSVG>
 
     )
 

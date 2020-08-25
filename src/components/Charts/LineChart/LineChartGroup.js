@@ -14,16 +14,12 @@ const LineChartGroup = (props) => {
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
-
+    
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
     
-    const focusChartHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
-          contextChartHeight = displayDims.height * (useLocalParams ? 6/20 : 7/20),
-          paramOptionsHeight = displayDims.height * 2/20;
-    const dimsFocusChart = Object.assign({}, displayDims, {height: focusChartHeight}),
-          dimsContextChart = Object.assign({}, displayDims, {height: contextChartHeight})
+    const chartname = "linechartgroup";
+    const paramOptionsHeight = displayDims.height * 2/20;
     
-    // const xAxisLabel = paramOptions.find(d => d.paramName === xVar).paramNameReadable;
     const xAxisLabel = readableLabels[xVar]
     const yAxisLabel = readableLabels[yVar]
     
@@ -56,11 +52,11 @@ const LineChartGroup = (props) => {
     }
 
     return (
-        <ChartDiv className={className}
-            displaywidth={displayDims.width}
-            displayheight={displayDims.height}>
+        <ChartDiv className={className} chartname={chartname}>
             {paramBar}
             <LineChart data={data}
+                chartname={chartname}
+                gridarea="focus"
                 uniqId={uuidv4()}
                 xDomain={contextDomain}
                 contextDomain={[minX, maxX]}
@@ -69,11 +65,15 @@ const LineChartGroup = (props) => {
                 yVar={yVar}
                 visibleOpacity={false}
                 addReferenceLine={true}
-                includeXAxisLabel={false}
+                includeXAxisLabel={true}
+                xAxisLabel={xAxisLabel}
                 yAxisLabel={yAxisLabel}
                 themes={themes}>
             </LineChart>
+
             <LineChart data={data}
+                chartname={chartname}
+                gridarea="context"
                 uniqId={uuidv4()}
                 xDomain={[minX, maxX]}
                 contextDomain={contextDomain}
@@ -83,8 +83,8 @@ const LineChartGroup = (props) => {
                 addBrush={true}
                 getDomain={getDomain}
                 themes={themes}
-                xAxisLabel={xAxisLabel}
                 isContext={true}
+                includeXAxisLabel={false}
                 includeYAxisLabel={false}>
             </LineChart>
         </ChartDiv>

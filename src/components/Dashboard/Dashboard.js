@@ -8,10 +8,8 @@ const DashboardContainer = styled.div`
     background-color: ${props => props.theme.color.background};
     display: grid;
     grid-template-areas: 
-        // "param param"
         "componentMain componentSecondary"
         "componentTertiary componentFourth";
-    // grid-template-columns: 38vw 38vw;
     grid-template-columns: ${({componentviewwidth, gapwidth}) => componentviewwidth - (gapwidth * 1.5)}vw ${({componentviewwidth, gapwidth}) => componentviewwidth - (gapwidth * 1.5)}vw;
     grid-template-rows: ${({componentviewheight, gapwidth}) => componentviewheight - (gapwidth * 1.5)}vh ${({componentviewheight, gapwidth}) => componentviewheight - (gapwidth * 1.5)}vh;
     column-gap: ${({gapwidth}) => gapwidth}vw;
@@ -30,13 +28,10 @@ DashboardContainer.defaultProps = {
 }
 
 
-
-
-
 const Dashboard = (props) => {
     const {paramOptions, handleSwitch, viewwidth, viewheight, dashboardState,
-            lineChartData, geneArchData, identifier, template, handleSlider, paramPermutationData, grads,
-            isStatic, xAction, renderAction, cardAction, setStaticOpt, readableLabels, themes} = props;
+            lineChartData, geneArchData, identifier, template, handleSlider, paramPermutationData,
+            isStatic, xAction, renderAction, cardAction, readableLabels, themes} = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
     const componentviewwidth = viewwidth/2
@@ -66,7 +61,6 @@ const Dashboard = (props) => {
                 cardAction={cardAction(c)}
                 displayX={!isStatic}
                 readableLabels={readableLabels}
-                grads={grads}
                 themes={themes}
             />
 

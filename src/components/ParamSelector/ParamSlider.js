@@ -48,7 +48,7 @@ const prettifyText = (val) => {
 }
 
 export const ParamSlider = (props) => {
-    const {options, updateValChange, className, viewwidth, viewheight} = props;
+    const {options, updateValChange, className, viewwidth, viewheight, chartname, gridarea} = props;
     const optionValues = options.options.map(d => d.value)
     const minVal = min(optionValues)
     const initial = minVal - minVal
@@ -98,6 +98,8 @@ export const ParamSlider = (props) => {
 
     return (
         <SelectWrapperSlider className={className}
+            chartname={chartname}
+            gridarea={gridarea}
             viewwidth={viewwidth}
             viewheight={viewheight}
             paddings={{left: 2, right: 2}}>

@@ -8,6 +8,8 @@ import ChartCardView from './ChartCardView/ChartCardViewComponent';
 const DashboardComponentMainContainer = styled.div`
     grid-area: ${props => props.gridarea || 'none'};
     background-color: ${props => props.theme.color.main};
+    width: 95%;
+    height: 95%;
     border-radius: 10px;
 `
 
@@ -16,7 +18,7 @@ export const DashboardComponent = (props) => {
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction, handleSlider,
             geneArchData, template, identifier, selectedChart,
-            cardAction, gridarea, displayX, readableLabels, themes, paramPermutationData, grads } = props;
+            cardAction, gridarea, displayX, readableLabels, themes, paramPermutationData } = props;
     const chartviewwidth = viewwidth - 2; // because of the padding
     const chartviewheight = viewheight- 2 
     let viewDisplay;
@@ -40,7 +42,6 @@ export const DashboardComponent = (props) => {
                     displayX={displayX}
                     readableLabels={readableLabels}
                     paramPermutationData={paramPermutationData}
-                    grads={grads}
                     themes={themes}
                     >
                 </ChartViewMain>
