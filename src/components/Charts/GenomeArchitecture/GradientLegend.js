@@ -1,5 +1,4 @@
 import React from 'react';
-import { scaleLinear } from 'd3-scale';
 import styled from 'styled-components';
 
 

@@ -59,7 +59,7 @@ ChartViewLineChart.defaultProps = {
 
 export const ChartViewHistogram = (props) => {
     const { geneArchData, viewwidth, viewheight, params, useLocalParams, readableLabels,
-            paramOptions, themes, xAction,  handleSwitch, displayX, handleSlider } = props;
+            paramOptions, themes, xAction,  handleSwitch, displayX } = props;
 
     const xVar = 'effect_size_freq_diff'
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
@@ -84,7 +84,7 @@ export const ChartViewHistogram = (props) => {
                 filteredVar={'output_gen'}
                 useLocalParams={useLocalParams}
                 displayDims={{width: viewwidth, height: viewheight}}
-                paramOptions={paramOptions}
+                paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 readableLabels={readableLabels}
                 handleSwitch={handleSwitch}>
             </HistogramChart>
@@ -116,7 +116,6 @@ export const ChartViewGenomeChart = (props) => {
     const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
-    console.log(displayDimsContext)
 
     return (
         <DashboardComponentContainer viewwidth={viewwidth}
@@ -134,7 +133,7 @@ export const ChartViewGenomeChart = (props) => {
                     heightScaler={heightScaler}
                     genKeys={{genKeyFocus, genKeyContext}}
                     useLocalParams={useLocalParams}
-                    paramOptions={paramOptions}
+                    paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                     params={paramsCopy}
                     readableLabels={readableLabels}
                     handleSwitch={handleSwitch}/>      

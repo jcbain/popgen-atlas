@@ -9,6 +9,7 @@ import { ParamSelector } from '../../ParamSelector/ParamSelector';
 import GradientLegend from './GradientLegend'
 
 const LegendDiv = styled.div`
+grid-area: ${({ chartname }) => chartname}-${({ gridarea }) => gridarea};
     width: ${props => props.viewwidth}vw;
     height: ${props => props.viewheight}vh;
 `
@@ -80,6 +81,7 @@ const GenomeArchGroup = (props) => {
     return (
         <ChartDiv className={className} chartname={chartname}>
             <LegendDiv gridarea="legend"
+                chartname={chartname}
                 viewwidth={dimsLegend.width}
                 viewheight={dimsLegend.height}
             >

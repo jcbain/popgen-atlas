@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const SelectWrapper = styled.div`
-    width: ${props => props.viewwidth - props.paddings.left - props.paddings.right}vw;
-    padding-left: ${props => props.paddings.left}vw;
-    padding-right: ${props => props.paddings.right}vw;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
     position: relative;
     font-family: 'Ubuntu', sans-serif;
 `;
@@ -34,27 +34,23 @@ SelectWrapperSlider.defaultProps = {
 }
 
 export const ParamTitle = styled.span`
-    top: -${props => props.viewheight/2}vh;
+    top: -5px;
     left: 1vw;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-bottom: 0;
     font-size: .5em;
-    background-color: ${props => props.theme.color.main};
     position: absolute;
-    height: ${props => props.viewheight}vh;
-    line-height: ${props => props.viewheight}vh;
+    line-height: 100%;
     z-index: 150;
     padding-left: 4px;
     padding-right: 4px;
     overflow: hidden;
-    font-size: ${props => (props.viewwidth - 4)/props.viewwidth}em;
-    color: ${props => props.theme.color.grayMain};
+    font-size: 0.75em;
+    color: ${({ theme }) => theme.color.grayMain};
 `;
 
 ParamTitle.defaultProps = {
-    viewheight: 5,
-    viewwidth: 10,
     theme: {
         color: {
             main: '#fff',
@@ -73,21 +69,11 @@ export const ParamTitleSlider = styled.p`
 `
 
 export const SelectHeaderWrapper = styled.div`
-    height: ${props => props.viewheight}vh;
-    // border: 2px solid ${props => props.addhover ? props.theme.color.main : props.theme.color.secondary};
-    line-height: ${props => props.viewheight}vh;
+    line-height: 55px;
     font-size: 1em;
-    border-radius: 2px;
     z-index: 100;
     width: 100%;
     font-family: 'Baloo Tamma 2', cursive;
-    transition-duration: 1s;
-    &:hover {
-        // border: 2px solid ${props => props.addhover ? props.theme.color.secondary : props.theme.color.secondary};
-        svg > path {
-            color: ${props => props.addhover ? 'black' : 'black'};
-        }
-    }
 `
 
 SelectHeaderWrapper.propTypes = {
@@ -105,8 +91,8 @@ SelectHeaderWrapper.defaultProps ={
 }
 
 export const SelectTitle = styled.div`
-    margin-right: 1vw;
-    margin-left: 1vw;
+    margin-right: 10px;
+    margin-left: 10px;
     display: grid;
     grid-template-columns: 1fr .25fr;
     z-index: 200;

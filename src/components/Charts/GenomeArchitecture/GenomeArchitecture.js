@@ -65,7 +65,7 @@ const GenomeArchitecture = (props) => {
             chartname={chartname}
             gridarea={gridarea}
             viewBox={[0, 0, width, height]}
-            width="100%"
+            width={'100%'}
             >
                 <YAxis scale={yScale}
                     x0={chartPadding.left}
