@@ -10,7 +10,7 @@ import { closestFromArray } from '../../../helpers/Helpers';
 
 const GenomeArchitecture = (props) => {
     const { className, paramPermutationData,
-            data, xVar, yVar, gradients, includeXAxisLabel, xAxisLabel,
+            data, xVar, yVar, includeXAxisLabel, xAxisLabel,
             yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel, isContext } = props;
 
     const width = isContext ? 1000 : 500,
@@ -32,10 +32,9 @@ const GenomeArchitecture = (props) => {
     const barwidth = (width - chartPadding.left - chartPadding.right) / (xVals.length);
     const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]),
           yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
-    const colorLabel = isContext ? 'color-context' : 'color';
     const bars = xVals.map((x, i) => {
         const isFocus = (x >= contextDomain[0] && x < contextDomain[1]);
-        const colorIdentifier = isFocus ? colorLabel : 'gray';
+        const colorIdentifier = isFocus ? 'color' : 'gray';
         return (
             <rect key={i}
                 x={xScale(x)}
@@ -43,7 +42,6 @@ const GenomeArchitecture = (props) => {
                 width={barwidth}
                 height={barheight}
                 fill={`url(#gradient-${colorIdentifier}-${x}-${paramPermutationData[0].paramSetKey})`}
-                // fill={`url(#gradient-${colorIdentifier}-${x}-${genKey})`} 
                 />
         )
     })
@@ -63,11 +61,8 @@ const GenomeArchitecture = (props) => {
 
     return (
         <svg className={className}
-        
             viewBox={[0, 0, width, height]}
             width="100%"
-            // width={`${displayDims.width}vw`}
-            // height={`${displayDims.height}vh`}
             >
                 <YAxis scale={yScale}
                     x0={chartPadding.left}
@@ -77,8 +72,7 @@ const GenomeArchitecture = (props) => {
                     paddingLeft={chartPadding.left}
                     includeAxisLabel={includeYAxisLabel}
                     labelText={yAxisLabel}/>
-                {gradients}
-                
+
                 {bars}
                 {brush}
                 <XAxis scale={xScale} 
@@ -86,8 +80,6 @@ const GenomeArchitecture = (props) => {
                     includeAxisLine={false}
                     includeAxisLabel={includeXAxisLabel} 
                     labelText={xAxisLabel} />
-
-
         </svg>
 
 
@@ -96,9 +88,6 @@ const GenomeArchitecture = (props) => {
 
 GenomeArchitecture.defaultProps = {
     className: 'genome-architecture',
-    displayDims: {width: 100, height: 70},
-    chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
-    heightScaler: 5.5,
 }
 
 export default GenomeArchitecture;

@@ -6,61 +6,19 @@ import { uniq, uniqBy, uniqWith, union, unionBy, find, min, max } from 'lodash'
 import GenomeGradients from '../../components/Charts/GenomeArchitecture/GenomeGradients';
 import {filterDataByParams} from '../../helpers/DataHelpers'
 
-import data from '../../data/mutations_bg.json';
 import {ThemeProvider} from 'styled-components';
 
 // import individualData from '../../data/individuals_small';
 import template from '../../data/genome_template.json';
-import genome from '../../data/genome_data.json';
+import fullGenome from '../../data/genome_data.json';
 
 import {PlayGround} from '../../Playground'
 import AddTabs from '../../components/Tabs/Tabs';
 
 import './styles/local_adaptation_styles.css';
 
-data.forEach( d => 
-  d['positional_phen'] = d.freq * d.select_coef);
+const genome = fullGenome.filter(d => d.output_gen <= 10000);
 
-const dataDiff = nest()
-  .key(d => [d.output_gen, d.m, d.mu, d.r, d.sigsqr, d.position])
-  .rollup( v => {
-    return v.reduce((prev, curr) => {
-      prev['output_gen'] = curr['output_gen'];
-      prev['m'] = curr['m'];
-      prev['mu'] = curr['mu'];
-      prev['r'] = curr['r'];
-      prev['sigsqr'] = curr['sigsqr'];
-      prev['position'] = curr['position']
-      prev[curr['pop']] = curr.positional_phen
-      return prev;
-    }, {})
-  })
-  .entries(data)
-  .map(d => d.value)
-  .map(d => {
-    const d0 = (d['0'] === undefined) ? 0 : d['0']
-    const d1 = (d['1'] === undefined) ? 0 : d['1']
-    d['positional_phen'] = d0 - d1
-    return d;
-  })
-
-const dataPopPhen = nest()
-  .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
-  .rollup( v => {
-    const popPhen = sum(v, d => d.positional_phen);
-    return v.reduce((prev, curr) => {
-      prev['output_gen'] = curr['output_gen'];
-      prev['pop'] = curr['pop'];
-      prev['m'] = curr['m'];
-      prev['mu'] = curr['mu'];
-      prev['r'] = curr['r'];
-      prev['sigsqr'] = curr['sigsqr'];
-      prev['pop_phen'] = popPhen;
-      return prev;
-    }, {})
-  })
-  .entries(data)
-  .map(d => d.value);
 
 let summedGenome = nest()
   .key( d => [d.output_gen, d.pop, d.m, d.mu, d.r, d.sigsqr])
@@ -219,21 +177,6 @@ const expensiveFunction = () => {
       displayDims={displayDimsFocus}
       genKey={p.paramSetKey}
       />
-
-    const colorgradscontext = <GenomeGradients key={`color-context-${i}`}
-      data={fullGenomeData}
-      xVar={'output_gen'}
-      yVar={'ind'}
-      colorVar={'effect_size_freq_diff'}
-      colorMin={colorMin}
-      colorMax={colorMax}
-      chartPadding={chartPadding}
-      heightScaler={heightScaler}
-      displayDims={displayDimsContext}
-      genKey={p.paramSetKey}
-      isContext={true}
-      />
-
     const graygrads = <GenomeGradients key={`gray-${i}`}
       data={fullGenomeData}
       xVar={'output_gen'}
@@ -249,7 +192,6 @@ const expensiveFunction = () => {
       />
     allGrads.push(colorgrads)
     allGrads.push(graygrads)
-    allGrads.push(colorgradscontext)
 })
 setgrads(allGrads)
 

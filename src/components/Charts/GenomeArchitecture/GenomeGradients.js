@@ -45,30 +45,25 @@ const ScaledStop = (props) => {
 
 const GenomeGradients = (props) => {
     const { data, xVar, yVar, colorVar, genKey,
-            chartPadding, heightScaler, displayDims, useGrayScale, colorMin, colorMax, isContext } = props;
+            useGrayScale, colorMin, colorMax } = props;
     const xVals = uniq(data.map(d => d[xVar]))
     const yMin = min(data, d => d[yVar]),
           yMax = max(data, d => d[yVar]);
-        //   colorMin = min(data, d => d[colorVar]),
-        //   colorMax = max(data, d => d[colorVar]);
     const yScale = scaleLinear().domain([yMin, yMax]).range([0, 100]),
           colorScaleHigh = scaleLinear().domain([.00001, colorMax]).interpolate(interpolateHcl),
           colorScaleLow = scaleLinear().domain([-.00001, colorMin]).interpolate(interpolateHcl),
           grayScale = scaleLinear().domain([colorMin, colorMax]).interpolate(interpolateHcl);
-    const colorLabel = isContext ? 'color-context' : 'color'
-    const colorIdentifier = useGrayScale ? 'gray' : colorLabel;
+    const colorIdentifier = useGrayScale ? 'gray' : 'color';
 
     const gradients = xVals.map((x, i) => {
         return (
             <linearGradient key={i}
-                // gradientUnits='userSpaceOnUse'
+                gradientUnits='objectBoundingBox'
                 id={`gradient-${colorIdentifier}-${x}-${genKey}`}
                 x1={0}
                 x2={0}
                 y1={'0%'}
                 y2={'100%'}
-                // y1={chartPadding.top}
-                // y2={(displayDims.height * heightScaler) - chartPadding.bottom}
             >
                 {
                     data.filter(d => d[xVar] === x).map((v, j) => {

@@ -31,7 +31,7 @@ const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar, paramPermutationData,
             displayDims, chartPadding, heightScaler, colorMin, colorMax,
             params, paramOptions, handleSwitch, readableLabels,
-            className, useLocalParams, gradients, genKeys } = props;
+            className, useLocalParams } = props;
 
     const minX = min(data, d => d[xVar]),
           maxX = max(data, d => d[xVar]);
@@ -41,8 +41,7 @@ const GenomeArchGroup = (props) => {
           yAxisLabel = readableLabels[yVar],
           legendLabel = readableLabels[colorVar];
 
-    const { dimsMain, dimsContextChart, dimsFocusChart, dimsLegend } = displayDims;
-    const { gradientsFocus, gradientsContext } = gradients;
+    const { dimsMain, dimsLegend } = displayDims;
     const filteredParamOptions = paramOptions.filter(d => d.paramName !== xVar);
     const paramOptionsHeight = dimsMain.height * 2.5/20;
 
@@ -103,11 +102,8 @@ const GenomeArchGroup = (props) => {
                 xVar={xVar}
                 colorVar={colorVar}
                 paramPermutationData={paramPermutationData}
-                displayDims={dimsFocusChart} 
-                gradients={gradientsFocus}
                 chartPadding={chartPadding} 
                 heightScaler={heightScaler}
-                genKey={genKeys.genKeyFocus} 
                 addBrush={false}
                 contextDomain={[minX, maxX]}
                 xDomain={contextDomain}
@@ -119,11 +115,8 @@ const GenomeArchGroup = (props) => {
                 xVar={xVar}
                 colorVar={colorVar}
                 paramPermutationData={paramPermutationData}
-                displayDims={dimsContextChart} 
-                gradients={gradientsContext}
                 chartPadding={chartPadding} 
                 heightScaler={heightScaler}
-                genKey={genKeys.genKeyContext}
                 addBrush={true}
                 contextDomain={contextDomain}
                 xDomain={[minX, maxX]}
@@ -141,7 +134,6 @@ const GenomeArchGroup = (props) => {
 GenomeArchGroup.defaultProps = {
     className: 'genome-chart-group-brush',
     useLocalParams: false,
-    displayDims: {width: 50, height: 50}
 }
 
 export default GenomeArchGroup
