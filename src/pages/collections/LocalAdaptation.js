@@ -189,7 +189,7 @@ const displayDimsContext = {width: 36.5, height: 11.625}
 
 
 const LocalAdaptation = (props) => {
-  const [isLoaded, setIsLoaded] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
   const [grads, setgrads] = useState([])
 const expensiveFunction = () => { 
   let allGrads = []
@@ -256,9 +256,9 @@ setgrads(allGrads)
 setIsLoaded(true)
 }
 
-// useEffect(() => {
-//   expensiveFunction()
-// }, [])
+useEffect(() => {
+  expensiveFunction()
+}, [])
 
 
   return (

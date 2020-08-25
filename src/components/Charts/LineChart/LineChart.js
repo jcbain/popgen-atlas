@@ -28,7 +28,7 @@ const LineChart = (props) => {
 
     
     const width = isContext ? 1000 : 500,
-          height = isContext ? 100 : 200;
+          height = isContext ? 100 : 250;
 
     const chartPaddingPerc  = {top: 5, bottom: 15, left: 10, right: 5}
     const chartPadding = {
@@ -157,8 +157,6 @@ const LineChart = (props) => {
 
 LineChart.defaultProps = {
     className: 'linechart',
-    displayDims: {width: 100, height: 40},
-    chartPadding: {left: 20, right: 5, top: 10, bottom: 40},
     popStrokeWidth: 3,
     visibleOpacity: true,
     addBrush: false,

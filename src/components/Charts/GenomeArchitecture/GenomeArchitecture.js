@@ -9,12 +9,20 @@ import { closestFromArray } from '../../../helpers/Helpers';
 
 
 const GenomeArchitecture = (props) => {
-    const { className, displayDims, chartPadding, genKey, paramPermutationData,
-            data, xVar, yVar, gradients, heightScaler, includeXAxisLabel, xAxisLabel,
+    const { className, paramPermutationData,
+            data, xVar, yVar, gradients, includeXAxisLabel, xAxisLabel,
             yAxisLabel, addBrush, contextDomain, xDomain, getDomain, includeYAxisLabel, isContext } = props;
 
-    const width = displayDims.width * 12,
-          height = displayDims.height * heightScaler;
+    const width = isContext ? 1000 : 500,
+          height = isContext ? 100 : 250;
+    const chartPaddingPerc  = {top: 5, bottom: 15, left: 10, right: 5}
+    const chartPadding = {
+        top: height * (chartPaddingPerc.top/100),
+        bottom:  height * (chartPaddingPerc.bottom/100),
+        left: width * (chartPaddingPerc.left/100),
+        right: width * (chartPaddingPerc.right/100),
+    };
+
     const minY = min(data.map(d => d[yVar])),
           maxY = max(data.map(d => d[yVar]));
     const uniqXVals = uniq(data.map(d => d[xVar]));
@@ -25,7 +33,6 @@ const GenomeArchitecture = (props) => {
     const xScale = scaleLinear().domain(xDomain).range([chartPadding.left, width - chartPadding.right]),
           yScale = scaleLinear().domain([maxY, minY]).range([chartPadding.top, height - chartPadding.bottom]);
     const colorLabel = isContext ? 'color-context' : 'color';
-    console.log(paramPermutationData)
     const bars = xVals.map((x, i) => {
         const isFocus = (x >= contextDomain[0] && x < contextDomain[1]);
         const colorIdentifier = isFocus ? colorLabel : 'gray';
@@ -58,8 +65,10 @@ const GenomeArchitecture = (props) => {
         <svg className={className}
         
             viewBox={[0, 0, width, height]}
-            width={`${displayDims.width}vw`}
-            height={`${displayDims.height}vh`}>
+            width="100%"
+            // width={`${displayDims.width}vw`}
+            // height={`${displayDims.height}vh`}
+            >
                 <YAxis scale={yScale}
                     x0={chartPadding.left}
                     width={width - chartPadding.right}

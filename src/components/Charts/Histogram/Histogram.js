@@ -19,10 +19,18 @@ BinRect.defaultProps = {
 }
 
 const Histogram = (props) => {
-    const { data, xVar, nestedVar, className, displayDims,
-            xAxisLabel, chartPadding, themes} = props;
-    const width = displayDims.width * 9,
-          height = displayDims.height * 4.5;
+    const { data, xVar, nestedVar, className,
+            xAxisLabel, themes} = props;
+    const width = 500,
+          height = 250;
+
+    const chartPaddingPerc  = {top: 5, bottom: 15, left: 10, right: 5};
+    const chartPadding = {
+        top: height * (chartPaddingPerc.top/100),
+        bottom:  height * (chartPaddingPerc.bottom/100),
+        left: width * (chartPaddingPerc.left/100),
+        right: width * (chartPaddingPerc.right/100),
+    };
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
     const numBins = 10;
@@ -60,8 +68,10 @@ const Histogram = (props) => {
     return (
         <svg className={className}
             viewBox={[0, 0, width, height]}
-            width={`${displayDims.width}vw`}
-            height={`${displayDims.height}vh`}>
+            width="100%"
+            // width={`${displayDims.width}vw`}
+            // height={`${displayDims.height}vh`}
+            >
             <YAxis scale={yScale}
                 x0={chartPadding.left}
                 width={width - chartPadding.right}
@@ -83,8 +93,6 @@ const Histogram = (props) => {
 
 Histogram.defaultProps = {
     className: 'histogram',
-    displayDims: {width: 100, height: 60},
-    chartPadding: {left: 20, right: 5, top: 10, bottom: 40}
 }
 
 

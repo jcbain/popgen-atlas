@@ -61,14 +61,14 @@ const GenomeGradients = (props) => {
     const gradients = xVals.map((x, i) => {
         return (
             <linearGradient key={i}
-                gradientUnits='userSpaceOnUse'
+                // gradientUnits='userSpaceOnUse'
                 id={`gradient-${colorIdentifier}-${x}-${genKey}`}
                 x1={0}
                 x2={0}
-                // y1={'10%'}
-                // y2={'70%'}
-                y1={chartPadding.top}
-                y2={(displayDims.height * heightScaler) - chartPadding.bottom}
+                y1={'0%'}
+                y2={'100%'}
+                // y1={chartPadding.top}
+                // y2={(displayDims.height * heightScaler) - chartPadding.bottom}
             >
                 {
                     data.filter(d => d[xVar] === x).map((v, j) => {
