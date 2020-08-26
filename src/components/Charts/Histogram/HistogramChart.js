@@ -7,7 +7,7 @@ import { ParamLister } from '../../DashboardComponentCard/DashboardComponentCard
 import { ParamSelector } from '../../ParamSelector/ParamSelector';
 
 const HistogramChart = (props) => {
-    const { className, displayDims, data, themes, 
+    const { className, data, themes, 
             paramOptions, params, handleSwitch, readableLabels,
             nestedVar, xVar, filteredVar, useLocalParams} = props;
     
@@ -17,9 +17,6 @@ const HistogramChart = (props) => {
     const chartname = 'histogram'
     const options = paramOptions.find(d => d.paramName === filteredVar);
     const filteredParamOptions = paramOptions.filter(d=> d.paramName !== 'pop' && d.paramName !== filteredVar);
-    const histogramHeight = displayDims.height * (useLocalParams ? 12/20 : 13/20),
-          sliderHeight = displayDims.height * (useLocalParams ? 6/20 : 7/20),
-          paramOptionsHeight = displayDims.height * 2/20;
 
     const updateValChange = (d) => {
         updateSliderVal(d)
@@ -43,15 +40,12 @@ const HistogramChart = (props) => {
                     paramName={paramName}
                     paramNameReadable={paramNameReadable}
                     options={options}
-                    viewwidth={(displayDims.width - (numParams + .5) )/numParams}
-                    viewheight={paramOptionsHeight}
-                    addHover={true}
                     selectedValue={params[paramName]}
                     handleSwitch={handleSwitch}>
                 </ParamSelector>
             )
         })
-        paramBar = <ParamLister numparams={numParams} viewwidth={displayDims.width}>
+        paramBar = <ParamLister numparams={numParams}>
             { selectors }
         </ParamLister>
 
@@ -66,15 +60,12 @@ const HistogramChart = (props) => {
                 nestedVar={nestedVar}
                 xVar={xVar}
                 xAxisLabel={xAxisLabel}
-                themes={themes}
-                displayDims={{...displayDims, height: histogramHeight}}>
+                themes={themes}>
             </Histogram>
             <ParamSlider updateValChange={updateValChange} 
                 chartname={chartname}
                 gridarea="context"
                 options={options}
-                viewwidth={displayDims.width}
-                viewheight={sliderHeight}
             ></ParamSlider>
         </ChartDiv>
     )

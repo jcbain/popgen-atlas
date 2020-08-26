@@ -7,7 +7,7 @@ import { DashboardComponentContainer } from '../DashboardComponentStyles';
 
 
 export const ParamViewLineChart = (props) => {
-    const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
+    const { paramOptions, handleSwitch, renderAction, params} = props;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
@@ -17,9 +17,6 @@ export const ParamViewLineChart = (props) => {
                 paramName={d.paramName}
                 paramNameReadable={d.paramNameReadable}
                 options={d.options}
-                viewwidth={(viewwidth - (numParams + .5) )/numParams}
-                viewheight={7}
-                addHover={false}
                 selectedValue={params[d.paramName]}
                 handleSwitch={handleSwitch}>
             </ParamSelector>
@@ -29,13 +26,9 @@ export const ParamViewLineChart = (props) => {
 
 
     return (
-        <DashboardComponentContainer
-            viewwidth={viewwidth}
-            viewheight={viewheight}
-        >
+        <DashboardComponentContainer>
             <ParamCard description={'choose your parameters'}>
-                <ParamLister numparams={numParams}
-                    viewwidth={viewwidth-2}>
+                <ParamLister numparams={numParams}>
                     {selectors}
                 </ParamLister>
             </ParamCard>
@@ -50,7 +43,7 @@ ParamViewLineChart.defaultProps = {
 }
 
 export const ParamViewGenomeChart = (props) => {
-    const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
+    const { paramOptions, handleSwitch, renderAction, params} = props;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
@@ -60,9 +53,6 @@ export const ParamViewGenomeChart = (props) => {
                 paramName={d.paramName}
                 paramNameReadable={d.paramNameReadable}
                 options={d.options}
-                viewwidth={(viewwidth - (numParams + .5) )/numParams}
-                viewheight={7}
-                addHover={false}
                 selectedValue={params[d.paramName]}
                 handleSwitch={handleSwitch}>
             </ParamSelector>
@@ -71,13 +61,9 @@ export const ParamViewGenomeChart = (props) => {
     })
 
     return (
-        <DashboardComponentContainer
-            viewwidth={viewwidth}
-            viewheight={viewheight}
-        >
+        <DashboardComponentContainer>
             <ParamCard description={'choose your parameters'}>
-                <ParamLister numparams={numParams}
-                    viewwidth={viewwidth-2}>
+                <ParamLister numparams={numParams}>
                     {selectors}
                 </ParamLister>
             </ParamCard>
@@ -93,7 +79,7 @@ ParamViewGenomeChart.defaultProps = {
 }
 
 export const ParamViewHistogram = (props) => {
-    const {viewwidth, viewheight, paramOptions, handleSwitch, renderAction, params} = props;
+    const { paramOptions, handleSwitch, renderAction, params} = props;
     let paramOptionsCopy = [...paramOptions].filter(d => d.paramName !== 'pop' && d.paramName !== 'output_gen')
     const numParams = paramOptionsCopy.length;
     const selectors = paramOptionsCopy.map((d, i) => {
@@ -103,9 +89,6 @@ export const ParamViewHistogram = (props) => {
                 paramName={d.paramName}
                 paramNameReadable={d.paramNameReadable}
                 options={d.options}
-                viewwidth={(viewwidth - (numParams + .5) )/numParams}
-                viewheight={7}
-                addHover={false}
                 selectedValue={params[d.paramName]}
                 handleSwitch={handleSwitch}>
             </ParamSelector>
@@ -115,13 +98,9 @@ export const ParamViewHistogram = (props) => {
 
 
     return (
-        <DashboardComponentContainer
-            viewwidth={viewwidth}
-            viewheight={viewheight}
-        >
+        <DashboardComponentContainer>
             <ParamCard description={'choose your parameters'}>
-                <ParamLister numparams={numParams}
-                    viewwidth={viewwidth-2}>
+                <ParamLister numparams={numParams}>
                     {selectors}
                 </ParamLister>
             </ParamCard>

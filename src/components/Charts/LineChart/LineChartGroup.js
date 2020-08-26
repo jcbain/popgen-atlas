@@ -10,7 +10,7 @@ import { ChartDiv } from '../ChartStyles';
 
 const LineChartGroup = (props) => {
     const { data, nestedVar, xVar, yVar, useLocalParams, 
-            displayDims, className, themes, readableLabels,
+            className, themes, readableLabels,
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
@@ -18,7 +18,6 @@ const LineChartGroup = (props) => {
     const [contextDomain, setContextDomain] = useState([minX, maxX]);
     
     const chartname = "linechartgroup";
-    const paramOptionsHeight = displayDims.height * 2/20;
     
     const xAxisLabel = readableLabels[xVar]
     const yAxisLabel = readableLabels[yVar]
@@ -38,14 +37,11 @@ const LineChartGroup = (props) => {
                     paramName={d.paramName}
                     paramNameReadable={d.paramNameReadable}
                     options={d.options}
-                    viewwidth={(displayDims.width - (numParams + .5) )/numParams}
-                    viewheight={paramOptionsHeight}
-                    addHover={true}
                     selectedValue={params[d.paramName]}
                     handleSwitch={handleSwitch} />
             )
         })
-        paramBar = <ParamLister numparams={numParams} viewwidth={displayDims.width}>
+        paramBar = <ParamLister numparams={numParams}>
             { selectors }
         </ParamLister>
 
@@ -95,7 +91,6 @@ const LineChartGroup = (props) => {
 LineChartGroup.defaultProps = {
     getDomain: () => console.log('you need a function here'),
     useLocalParams: false,
-    displayDims: {width: 50, height: 50},
     className: "line-chart-group-brush"
 }
 

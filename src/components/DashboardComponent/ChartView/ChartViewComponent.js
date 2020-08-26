@@ -22,7 +22,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 export const ChartViewLineChart = (props) => {
-    const {lineChartData, viewwidth, viewheight, params, useLocalParams, 
+    const {lineChartData, params, useLocalParams, 
            paramOptions, xAction, handleSwitch, displayX, readableLabels, themes} = props;
     const xVar = 'pop_phen_diff'
     const paramsCopy = removeParams({...params}, ['pop', 'output_gen'])
@@ -32,8 +32,7 @@ export const ChartViewLineChart = (props) => {
     }
     const nestedData = nest().key(d => d.pop).entries(filteredLineChartData);
     return (
-        <DashboardComponentContainer viewwidth={viewwidth}
-            viewheight={viewheight}>
+        <DashboardComponentContainer>
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <LineChartGroup data={nestedData}
                 className={'component-line-chart-group'}
@@ -42,7 +41,6 @@ export const ChartViewLineChart = (props) => {
                 yVar={xVar}
                 params={paramsCopy}
                 useLocalParams={useLocalParams}
-                displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 handleSwitch={handleSwitch}
                 readableLabels={readableLabels}
@@ -58,7 +56,7 @@ ChartViewLineChart.defaultProps = {
 }
 
 export const ChartViewHistogram = (props) => {
-    const { geneArchData, viewwidth, viewheight, params, useLocalParams, readableLabels,
+    const { geneArchData, params, useLocalParams, readableLabels,
             paramOptions, themes, xAction,  handleSwitch, displayX } = props;
 
     const xVar = 'effect_size_freq_diff'
@@ -73,8 +71,7 @@ export const ChartViewHistogram = (props) => {
     const nestedData = nest().key(d => d.pop).entries(filteredGenomeData)
 
     return (
-        <DashboardComponentContainer viewwidth={viewwidth}
-            viewheight={viewheight}>
+        <DashboardComponentContainer >
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <HistogramChart data={nestedData}
                 themes={themes}
@@ -83,7 +80,6 @@ export const ChartViewHistogram = (props) => {
                 xVar={xVar}
                 filteredVar={'output_gen'}
                 useLocalParams={useLocalParams}
-                displayDims={{width: viewwidth, height: viewheight}}
                 paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
                 readableLabels={readableLabels}
                 handleSwitch={handleSwitch}>
@@ -100,26 +96,17 @@ ChartViewHistogram.defaultProps = {
 
 export const ChartViewGenomeChart = (props) => {
     const { geneArchData, params, paramOptions, readableLabels, colorMin, colorMax, paramPermutationData,
-            handleSwitch, viewwidth, viewheight, xAction, useLocalParams, displayX} = props;
+            handleSwitch, xAction, useLocalParams, displayX} = props;
 
     const paramsCopy = removeParams({...params}, ['output_gen'])
     const filteredData = filterDataByParams(geneArchData, paramsCopy)
     const filteredParamPermutation = filterDataByParams(paramPermutationData, paramsCopy)
 
-    const focusChartHeight = viewheight * (useLocalParams ? 10/20 : 10/20),
-          contextChartHeight = viewheight * (useLocalParams ? 5/20 : 5/20),
-          legendHeight = viewheight * (useLocalParams ? 2.5/20 : 2.5/20)
-    const displayDimsFocus = {width: viewwidth, height: focusChartHeight},
-          displayDimsContext = {width: viewwidth, height: contextChartHeight},
-          legendDims = {width: viewwidth, height: legendHeight};
-    const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
-    const heightScaler = 6.5;
     const genKeyFocus = uuidv4(),
           genKeyContext = uuidv4();
 
     return (
-        <DashboardComponentContainer viewwidth={viewwidth}
-            viewheight={viewheight}>
+        <DashboardComponentContainer >
             <StyledFontAwesomeIcon display={displayX ? 'block' : 'none'} onClick={xAction} size="xs" pull="right" icon={faTimes} />
             <GenomeArchGroup data={filteredData}
                     paramPermutationData={filteredParamPermutation}
@@ -128,9 +115,6 @@ export const ChartViewGenomeChart = (props) => {
                     colorVar={'effect_size_freq_diff'}
                     colorMax={colorMax}
                     colorMin={colorMin}
-                    displayDims={{dimsMain: {width: viewwidth, height: viewheight}, dimsFocusChart: displayDimsFocus, dimsContextChart: displayDimsContext, dimsLegend: legendDims}}
-                    chartPadding={chartPadding} 
-                    heightScaler={heightScaler}
                     genKeys={{genKeyFocus, genKeyContext}}
                     useLocalParams={useLocalParams}
                     paramOptions={paramOptions.filter(d=> d.paramName !== 'pop')}
@@ -147,9 +131,7 @@ ChartViewGenomeChart.defaultProps = {
 
 const ChartViewMain = (props) => {
     const {selectedChart, ...rest} = props;
-    // const chartviewwidth = viewwidth - 2;
-    // const chartviewheight = viewheight - 2
-
+ 
 
     let displayChart;
     switch(selectedChart){

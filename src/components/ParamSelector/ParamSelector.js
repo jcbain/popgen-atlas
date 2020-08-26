@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     & > path {
-        color: ${props => props.addhover ? 'white' : 'black'};
+        // color: ${props => props.addhover ? 'white' : 'black'};
         
     }
 `
@@ -18,13 +18,12 @@ StyledFontAwesomeIcon.propTypes = {
 }
 
 export const Option = (props) => {
-    const {value, label, getValues, viewheight} = props;
+    const {value, label, getValues } = props;
     const sendValues = () => getValues(value, label);
 
 
     return (
-        <OptionButton viewheight={viewheight} 
-            onClick={sendValues} 
+        <OptionButton onClick={sendValues} 
             value={value}>
             {label}
         </OptionButton>
@@ -34,11 +33,10 @@ export const Option = (props) => {
 Option.defaultProps = {
     value: 'value here',
     label: 'label here',
-    viewheight: 10
 }
 
 export const ParamSelector = (props) => {
-    const { className, paramName, paramNameReadable ,options, viewwidth, viewheight, handleSwitch, selectedValue, addHover} = props;
+    const { className, paramName, paramNameReadable ,options, handleSwitch, selectedValue } = props;
     const [open, setOpen] = useState(false);
     const handleMenuOpen = () => setOpen(!open)
     const handleOptionSelect = (value, label) => {
@@ -51,7 +49,6 @@ export const ParamSelector = (props) => {
     const opts = options.map((d, i) => {
         return (
             <Option key={i} 
-                viewheight={viewheight} 
                 getValues={handleOptionSelect} 
                 value={d.value} 
                 label={d.label}>
@@ -61,19 +58,15 @@ export const ParamSelector = (props) => {
 
 
     return (
-        <SelectWrapper className={className} 
-            viewwidth={viewwidth}>
-            <SelectHeaderWrapper addhover={addHover}
-                onClick={handleMenuOpen} viewheight={viewheight}>
-                <ParamTitle viewwidth={viewwidth} viewheight={viewheight/2}>{paramNameReadable.toLowerCase()}</ParamTitle>
+        <SelectWrapper className={className}>
+            <SelectHeaderWrapper onClick={handleMenuOpen}>
+                <ParamTitle>{paramNameReadable.toLowerCase()}</ParamTitle>
                 <SelectTitle>
                     {selectedValue} 
-                    <StyledFontAwesomeIcon addhover={addHover} size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
+                    <StyledFontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
                 </SelectTitle>
             </SelectHeaderWrapper>
-            <OptionWrapper displayopt={open ? 'flex' : 'none'}
-                offsetheight={viewheight - 2}
-            >
+            <OptionWrapper displayopt={open ? 'flex' : 'none'}>
                 {opts}
             </OptionWrapper>
         </SelectWrapper>
@@ -90,8 +83,6 @@ ParamSelector.defaultProps = {
     className: 'param-selector',
     paramName: 'Param Name',
     handleSwitch: () => console.log('handle passing up state here'),
-    viewwidth: 15,
-    viewheight: 7
 }
 
 export default ParamSelector;

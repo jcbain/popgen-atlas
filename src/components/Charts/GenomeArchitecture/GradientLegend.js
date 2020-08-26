@@ -23,7 +23,7 @@ const MinStop = styled.stop`
 `
 
 const TextVal = styled.text`
-    transform: translate(0px, 20px);
+    transform: translate(0px, 25px);
     text-anchor: ${props => props.textpos};
     font-family: ${({ theme }) => theme.tickfont};
     fill: ${({ theme }) => theme.tickfill};
@@ -38,13 +38,11 @@ TextVal.defaultProps = {
 }
 
 const GradientLegend = (props) => {
-    const { width, height, legendKey,
-            viewwidth, viewheight, minVal, maxVal, midVal } = props;
+    const { width, height, legendKey, minVal, maxVal, midVal } = props;
 
     const gradient = <linearGradient id={`legend-gradient-${legendKey}`}
-        gradientUnits='userSpaceOnUse'
-        x1={0} 
-        x2={width}
+        x1={'0%'} 
+        x2={'100%'}
         y1={0}
         y2={0}>
             <MinStop offset='0%' />
@@ -52,12 +50,11 @@ const GradientLegend = (props) => {
             <MidStop offset={`50%`} />
             <HighStop offset={`51%`} />
             <MaxStop offset={`100%`} />
-
     </linearGradient>
 
 
     return (
-        <svg width={`${viewwidth}vw`} height={`${viewheight}vh`} viewBox={[0, 0, width, height]}>
+        <svg width={`100%`} height={'100%'} viewBox={[0, 0, width, height]}>
             {gradient}
             <rect x={0} 
                 y={0} 

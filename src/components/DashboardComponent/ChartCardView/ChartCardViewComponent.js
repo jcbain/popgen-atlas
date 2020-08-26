@@ -13,8 +13,8 @@ const ChartCardsContainer = styled.div`
 const ChartCardContainer = styled.div`
     padding: 1rem;
     text-align: center;
-    border: 1px solid ${props => props.theme.color.graySecondary};
-    background-color: ${props => props.theme.color.main};
+    border: 1px solid ${({ theme }) => theme.color.graySecondary};
+    background-color: ${({ theme }) => theme.color.main};
     border-radius: 2px;
     box-shadow: 0px 1px 2px 0px rgba(168,168,168,1);
     cursor: pointer;
@@ -28,7 +28,7 @@ const chartData = [
 ]
 
 const ChartCardView = (props) => {
-    const {viewwidth, viewheight, cardAction} = props;
+    const { cardAction} = props;
 
     const chartCards = chartData.map((d, i) => {
         return (
@@ -42,8 +42,7 @@ const ChartCardView = (props) => {
 
 
     return (
-        <DashboardComponentContainer viewwidth={viewwidth}
-            viewheight={viewheight}>
+        <DashboardComponentContainer>
                 <ChartCardsContainer>
                     {chartCards}
                 </ChartCardsContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import {DashboardComponent} from '../DashboardComponent/DashboardComponent';
@@ -47,8 +47,6 @@ const Dashboard = (props) => {
                 lineChartData={lineChartData}
                 geneArchData={geneArchData}
                 template={template}
-                viewwidth={componentviewwidth - (gapwidth * 1.5)}
-                viewheight={componentviewheight  - (gapwidth * 1.5)}
                 params={isStatic ? componentGlobal['params'] : dashboardState[c]['params']}
                 useLocalParams={!isStatic}
                 paramOptions={paramOptions}

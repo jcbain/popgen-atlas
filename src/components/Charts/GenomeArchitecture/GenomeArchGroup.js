@@ -9,14 +9,11 @@ import { ParamSelector } from '../../ParamSelector/ParamSelector';
 import GradientLegend from './GradientLegend'
 
 const LegendDiv = styled.div`
-grid-area: ${({ chartname }) => chartname}-${({ gridarea }) => gridarea};
-    width: ${props => props.viewwidth}vw;
-    height: ${props => props.viewheight}vh;
+    grid-area: ${({ chartname }) => chartname}-${({ gridarea }) => gridarea};
+    width: 40%;
 `
 
 const LegendItems = styled.div`
-    width: ${props => props.viewwidth}vw;
-    height: ${props => props.viewheight}vh;
     display: flex;
     flex-direction: column;
 `;
@@ -30,7 +27,7 @@ const LegendTitle = styled.p`
 
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar, paramPermutationData,
-            displayDims, chartPadding, heightScaler, colorMin, colorMax,
+            colorMin, colorMax,
             params, paramOptions, handleSwitch, readableLabels,
             className, useLocalParams } = props;
 
@@ -43,9 +40,7 @@ const GenomeArchGroup = (props) => {
           legendLabel = readableLabels[colorVar];
     
     const chartname = "genarchgroup"
-    const { dimsMain, dimsLegend } = displayDims;
     const filteredParamOptions = paramOptions.filter(d => d.paramName !== xVar);
-    const paramOptionsHeight = dimsMain.height * 2.5/20;
 
     const getDomain = (domain) => {
         setContextDomain(domain)
@@ -62,15 +57,12 @@ const GenomeArchGroup = (props) => {
                     paramName={paramName}
                     paramNameReadable={paramNameReadable}
                     options={options}
-                    viewwidth={(dimsMain.width - (numParams + .5) )/numParams}
-                    viewheight={paramOptionsHeight}
-                    addHover={true}
                     selectedValue={params[paramName]}
                     handleSwitch={handleSwitch}>
                 </ParamSelector>
             )
         })
-        paramBar = <ParamLister numparams={numParams} viewwidth={displayDims.width}>
+        paramBar = <ParamLister numparams={numParams}>
             { selectors }
         </ParamLister>
 
@@ -82,17 +74,12 @@ const GenomeArchGroup = (props) => {
         <ChartDiv className={className} chartname={chartname}>
             <LegendDiv gridarea="legend"
                 chartname={chartname}
-                viewwidth={dimsLegend.width}
-                viewheight={dimsLegend.height}
             >
-                <LegendItems viewwidth={dimsLegend.width * (2/4)}
-                    viewheight={dimsLegend.height}>
+                <LegendItems>
                     <LegendTitle>{legendLabel}</LegendTitle>
 
                     <div>
-                    <GradientLegend viewwidth={dimsLegend.width/3}
-                        viewheight={dimsLegend.height/4} 
-                        minVal={colorMin}
+                    <GradientLegend minVal={colorMin}
                         maxVal={colorMax}/>
                     </div>
                 </LegendItems>
@@ -106,8 +93,6 @@ const GenomeArchGroup = (props) => {
                 xVar={xVar}
                 colorVar={colorVar}
                 paramPermutationData={paramPermutationData}
-                chartPadding={chartPadding} 
-                heightScaler={heightScaler}
                 addBrush={false}
                 contextDomain={[minX, maxX]}
                 xDomain={contextDomain}
@@ -122,8 +107,6 @@ const GenomeArchGroup = (props) => {
                 xVar={xVar}
                 colorVar={colorVar}
                 paramPermutationData={paramPermutationData}
-                chartPadding={chartPadding} 
-                heightScaler={heightScaler}
                 addBrush={true}
                 contextDomain={contextDomain}
                 xDomain={[minX, maxX]}

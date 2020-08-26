@@ -308,9 +308,6 @@ const AddTabs = (props) => {
                                 paramName={d.paramName}
                                 paramNameReadable={d.paramNameReadable}
                                 options={d.options}
-                                viewwidth={100 - dashboardviewwidth - 4 }
-                                viewheight={7}
-                                addhover={false}
                                 selectedValue={dashboardState[i].componentGlobal['params'][d.paramName]}
                                 handleSwitch={handleSwitch('componentGlobal')}
                             />

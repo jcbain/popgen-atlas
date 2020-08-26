@@ -14,21 +14,18 @@ const DashboardComponentMainContainer = styled.div`
 `
 
 export const DashboardComponent = (props) => {
-    const { selectedView, lineChartData, viewwidth, viewheight, 
+    const { selectedView, lineChartData,  
             params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction, handleSlider,
             geneArchData, template, identifier, selectedChart,
             cardAction, gridarea, displayX, readableLabels, themes, paramPermutationData } = props;
-    const chartviewwidth = viewwidth - 2; // because of the padding
-    const chartviewheight = viewheight- 2 
+
     let viewDisplay;
     switch(selectedView){
         case('chartview'):
             viewDisplay = (
                 <ChartViewMain selectedChart={selectedChart}
                     lineChartData={lineChartData}
-                    viewwidth={chartviewwidth}
-                    viewheight={chartviewheight}
                     useLocalParams={useLocalParams}
                     params={params}
                     specialOpts={specialOpts}
@@ -51,8 +48,6 @@ export const DashboardComponent = (props) => {
             viewDisplay = (
                 <ParamViewMain 
                     selectedChart={selectedChart}
-                    viewwidth={chartviewwidth}
-                    viewheight={chartviewheight}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     renderAction={renderAction}
@@ -62,13 +57,7 @@ export const DashboardComponent = (props) => {
             )
         break;
         case('cardview'):
-            viewDisplay = <ChartCardView 
-                viewwidth={chartviewwidth}
-                viewheight={chartviewheight}
-                cardAction={cardAction}
-                >
-
-            </ChartCardView>
+            viewDisplay = <ChartCardView cardAction={cardAction} />
             break;
         default: viewDisplay = <div></div>;
     }
