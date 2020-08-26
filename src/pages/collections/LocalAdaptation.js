@@ -44,6 +44,7 @@ const theme = {
     secondary: '#6fa1c7',
     grayMain: '#6e6e6e',
     graySecondary: '#efefef',
+    grayTertiary: '#4a4a4a',
     grayLight: '#d1d1d1',
     background: '#F6F8FF',
     backgroundLight: '#fafbff',

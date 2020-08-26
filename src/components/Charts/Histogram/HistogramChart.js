@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import Histogram from './Histogram';
 import { ChartDiv } from '../ChartStyles';
@@ -9,7 +10,7 @@ import { ParamSelector } from '../../ParamSelector/ParamSelector';
 const HistogramChart = (props) => {
     const { className, data, themes, 
             paramOptions, params, handleSwitch, readableLabels,
-            nestedVar, xVar, filteredVar, useLocalParams} = props;
+            nestedVar, xVar, filteredVar, useLocalParams, theme } = props;
     
     const [sliderVal, updateSliderVal] = useState(2000);
     
@@ -53,7 +54,9 @@ const HistogramChart = (props) => {
 
     return (
         <ChartDiv className={className} chartname={chartname}>
-            { paramBar }
+            <ThemeProvider theme={{...theme, color : { grayMain: '#F0C23A', grayTertiary: '#c9c9c9'}}}>
+                { paramBar }
+            </ThemeProvider>
             <Histogram data={updatedData}
                 chartname={chartname}
                 gridarea="focus"

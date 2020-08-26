@@ -27,7 +27,7 @@ export const SelectWrapperSlider = styled.div`
 
 export const ParamTitle = styled.span`
     top: -5px;
-    left: 1vw;
+    // left: 1vw;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-bottom: 0;
@@ -64,6 +64,7 @@ export const SelectHeaderWrapper = styled.div`
     font-size: 1em;
     z-index: 100;
     width: 100%;
+    color: ${({ theme }) => theme.color.grayTertiary};
     font-family: 'Baloo Tamma 2', cursive;
 `
 
@@ -78,8 +79,8 @@ SelectHeaderWrapper.defaultProps ={
 }
 
 export const SelectTitle = styled.div`
-    margin-right: 10px;
-    margin-left: 10px;
+    padding-right: 10px;
+    padding-left: 4px;
     display: grid;
     grid-template-columns: 1fr .25fr;
     z-index: 200;

@@ -6,11 +6,12 @@ import LineChart from './LineChart';
 import { ParamLister } from '../../DashboardComponentCard/DashboardComponentCardsStyles'
 import { ParamSelector } from '../../ParamSelector/ParamSelector';
 import { ChartDiv } from '../ChartStyles';
+import { ThemeProvider } from 'styled-components';
 
 
 const LineChartGroup = (props) => {
     const { data, nestedVar, xVar, yVar, useLocalParams, 
-            className, themes, readableLabels,
+            className, themes, readableLabels, theme,
             paramOptions, params, handleSwitch } = props;
     const minX = min(data.map(d => min(d[nestedVar], v => v[xVar]))),
           maxX = max(data.map(d => max(d[nestedVar], v => v[xVar])));
@@ -49,7 +50,9 @@ const LineChartGroup = (props) => {
 
     return (
         <ChartDiv className={className} chartname={chartname}>
-            {paramBar}
+            <ThemeProvider theme={{...theme, color : { grayMain: '#F0C23A', grayTertiary: '#c9c9c9'}}}>
+                {paramBar}
+            </ThemeProvider>
             <LineChart data={data}
                 chartname={chartname}
                 gridarea="focus"

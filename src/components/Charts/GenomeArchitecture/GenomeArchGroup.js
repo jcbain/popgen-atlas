@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { min, max } from 'd3-array';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import GenomeArchitecture from './GenomeArchitecture';
 import { ChartDiv } from '../ChartStyles';
@@ -36,7 +36,7 @@ const LegendTitle = styled.p`
 
 const GenomeArchGroup = (props) => {
     const { data, xVar, yVar, colorVar, paramPermutationData,
-            colorMin, colorMax,
+            colorMin, colorMax, theme,
             params, paramOptions, handleSwitch, readableLabels,
             className, useLocalParams } = props;
 
@@ -93,7 +93,9 @@ const GenomeArchGroup = (props) => {
                     </div>
                 </LegendItems>
             </LegendDiv>
-            { paramBar }
+            <ThemeProvider theme={{...theme, color : { grayMain: '#F0C23A', grayTertiary: '#c9c9c9'}}}>
+                { paramBar }
+            </ThemeProvider>
 
             <GenomeArchitecture data={data}
                 chartname={chartname}
