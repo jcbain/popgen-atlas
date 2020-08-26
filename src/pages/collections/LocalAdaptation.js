@@ -2,22 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { sum } from 'd3-array'
 import { nest } from 'd3-collection';
 import { v4 as uuidv4 } from 'uuid';
-import { uniq, uniqBy, uniqWith, union, unionBy, find, min, max } from 'lodash'
-import GenomeGradients from '../../components/Charts/GenomeArchitecture/GenomeGradients';
-import {filterDataByParams} from '../../helpers/DataHelpers'
-
+import { uniq, uniqBy, min, max } from 'lodash';
 import {ThemeProvider} from 'styled-components';
 
-// import individualData from '../../data/individuals_small';
+import GenomeGradients from '../../components/Charts/GenomeArchitecture/GenomeGradients';
+import {filterDataByParams} from '../../helpers/DataHelpers';
 import template from '../../data/genome_template.json';
 import fullGenome from '../../data/genome_data.json';
-
-import {PlayGround} from '../../Playground'
 import AddTabs from '../../components/Tabs/Tabs';
 
 import './styles/local_adaptation_styles.css';
 
-const genome = fullGenome.filter(d => d.output_gen <= 10000);
+const genome = fullGenome.filter(d => d.output_gen <= 20000);
 
 
 let summedGenome = nest()
@@ -115,22 +111,15 @@ const readableLabels = {
   'ind': 'locus'
 }
 
-// put key here for reference of set
 let uniqParamPermutations = uniqBy(genome.map(({ m, mu, sigsqr, r, pop}) => ({ m, mu, sigsqr, r, pop  })), (elem) => { return [elem['m'], elem['mu'], elem['sigsqr'], elem['pop'], elem['r']].join()})
-uniqParamPermutations.map( d => {
+uniqParamPermutations.forEach( d => {
   d['paramSetKey'] = `ps${uuidv4().slice(0, 8)}`;
 })
 
 const uniqGenerations = uniq(genome.map( d => d.output_gen))
 const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
       colorMax = max(genome.map(g => g.effect_size_freq_diff));
-const chartPadding = {left: 20, right: 5, top: 10, bottom: 40};
-const heightScaler = 6.5;
-const displayDimsFocus = {width: 36.5, height: 46.5}
-const displayDimsContext = {width: 36.5, height: 11.625}
 
-// 10 101.125 // 151.125
-// 10 25.5625 // 75.5625
 
 
 const LocalAdaptation = (props) => {

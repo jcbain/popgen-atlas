@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {DashboardComponent} from '../DashboardComponent/DashboardComponent';
+import { DashboardComponent } from '../DashboardComponent/DashboardComponent';
 
 
 const DashboardContainer = styled.div`

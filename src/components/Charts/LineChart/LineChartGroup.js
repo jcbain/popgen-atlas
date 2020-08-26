@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { min, max } from 'd3-array';
 import { v4 as uuidv4 } from 'uuid';
 
