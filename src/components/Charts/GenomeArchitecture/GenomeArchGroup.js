@@ -10,17 +10,26 @@ import GradientLegend from './GradientLegend'
 
 const LegendDiv = styled.div`
     grid-area: ${({ chartname }) => chartname}-${({ gridarea }) => gridarea};
-    width: 40%;
+    width: 88%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: ". gradient-legend .";
+    padding-left: 6%;
+    padding-right: 6%;
 `
 
 const LegendItems = styled.div`
+    grid-area: gradient-legend;
     display: flex;
     flex-direction: column;
 `;
 
 const LegendTitle = styled.p`
-    font-family: 'Baloo Tamma 2', cursive;
+    font-family: 'Itim', cursive;
+    text-align: center;
+    color: ${({ theme }) => theme.color.grayMain};
     font-size: .75em;
+    padding-bottom: 2px;
     margin-block-start: 0;
     margin-block-end: 0;
 `

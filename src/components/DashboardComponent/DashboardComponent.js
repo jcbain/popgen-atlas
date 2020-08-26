@@ -14,32 +14,22 @@ const DashboardComponentMainContainer = styled.div`
 `
 
 export const DashboardComponent = (props) => {
-    const { selectedView, lineChartData,  
-            params, useLocalParams, specialOpts, paramOptions,
+    const { selectedView, params, useLocalParams, specialOpts, paramOptions,
             handleSwitch, xAction, renderAction, handleSlider,
-            geneArchData, template, identifier, selectedChart,
-            cardAction, gridarea, displayX, readableLabels, themes, paramPermutationData } = props;
+            selectedChart, cardAction, gridarea, ...rest} = props;
 
     let viewDisplay;
     switch(selectedView){
         case('chartview'):
             viewDisplay = (
                 <ChartViewMain selectedChart={selectedChart}
-                    lineChartData={lineChartData}
                     useLocalParams={useLocalParams}
                     params={params}
-                    specialOpts={specialOpts}
                     paramOptions={paramOptions}
                     handleSwitch={handleSwitch}
                     handleSlider={handleSlider}
                     xAction={xAction}
-                    geneArchData={geneArchData}
-                    template={template}
-                    identifier={identifier}
-                    displayX={displayX}
-                    readableLabels={readableLabels}
-                    paramPermutationData={paramPermutationData}
-                    themes={themes}
+                    {...rest}
                     >
                 </ChartViewMain>
             )

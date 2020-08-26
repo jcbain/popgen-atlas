@@ -29,9 +29,9 @@ DashboardContainer.defaultProps = {
 
 
 const Dashboard = (props) => {
-    const {paramOptions, handleSwitch, viewwidth, viewheight, dashboardState,
-            lineChartData, geneArchData, identifier, template, handleSlider, paramPermutationData,
-            isStatic, xAction, renderAction, cardAction, readableLabels, themes} = props;
+    const { handleSwitch, viewwidth, viewheight, dashboardState,
+            identifier, handleSlider, 
+            isStatic, xAction, renderAction, cardAction, ...rest } = props;
     const dashboardStateKeys = Object.keys(dashboardState)
     const { componentGlobal } = dashboardState;
     const componentviewwidth = viewwidth/2
@@ -42,14 +42,9 @@ const Dashboard = (props) => {
         return (
             <DashboardComponent key={i}
                 gridarea={c}
-                paramPermutationData={paramPermutationData}
                 selectedView={dashboardState[c]['view']}
-                lineChartData={lineChartData}
-                geneArchData={geneArchData}
-                template={template}
                 params={isStatic ? componentGlobal['params'] : dashboardState[c]['params']}
                 useLocalParams={!isStatic}
-                paramOptions={paramOptions}
                 selectedChart={dashboardState[c]['selectedChart']}
                 identifier={identifier}
                 handleSwitch={handleSwitch(c)}
@@ -58,8 +53,7 @@ const Dashboard = (props) => {
                 renderAction={renderAction(c)}
                 cardAction={cardAction(c)}
                 displayX={!isStatic}
-                readableLabels={readableLabels}
-                themes={themes}
+                {...rest}
             />
 
         )

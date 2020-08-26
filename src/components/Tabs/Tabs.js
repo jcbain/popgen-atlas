@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Dashboard from '../Dashboard/Dashboard';
 import { ParamSelector } from '../ParamSelector/ParamSelector';
 import Switch from '../Buttons/Switch';
+import { min, max } from 'lodash';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -173,7 +174,13 @@ const ButtonDiv = styled.div`
 
 
 const AddTabs = (props) => {
-    const {lineChartData, geneArchData, template, identifier, viewwidth, themes, maxTabs, paramOptions, readableLabels, paramPermutationData, grads} = props;
+    const { lineChartData, geneArchData, template, identifier, 
+            themes, maxTabs, paramOptions, readableLabels, 
+            paramPermutationData } = props;
+
+    const minEffectVal = min(geneArchData.map(d => d['effect_size_freq_diff'])),
+          maxEffectVal = max(geneArchData.map(d => d['effect_size_freq_diff']));
+
     let initParams = {}
     paramOptions.map(d => {
         return initParams[d.paramName] = d.options[0].value;
@@ -270,7 +277,6 @@ const AddTabs = (props) => {
             }
         }))
     }
-
     const tabs = [...Array(currentNumTabs)];
     const tabpanels = [...Array(currentNumTabs)].map((t, i) => {
         return ( 
@@ -293,6 +299,8 @@ const AddTabs = (props) => {
                     readableLabels={readableLabels}
                     themes={themes}
                     paramPermutationData={paramPermutationData}
+                    colorMax={maxEffectVal}
+                    colorMin={minEffectVal}
                     >
                 </Dashboard> 
             </TabPanel>

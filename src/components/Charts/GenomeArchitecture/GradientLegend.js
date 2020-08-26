@@ -24,6 +24,7 @@ const MinStop = styled.stop`
 
 const TextVal = styled.text`
     transform: translate(0px, 25px);
+    font-family: Itim;
     text-anchor: ${props => props.textpos};
     font-family: ${({ theme }) => theme.tickfont};
     fill: ${({ theme }) => theme.tickfill};

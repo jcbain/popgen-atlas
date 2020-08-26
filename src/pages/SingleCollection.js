@@ -7,9 +7,6 @@ function SingleCollection({match}){
 
     return(
         <div className="collection-item">
-            {/* <div className="banner title-banner collection-title-container">
-                <h1 className="collection-title">{collection.title.toLocaleUpperCase()}</h1>
-            </div> */}
             <collection.component />
         </div>
     )
