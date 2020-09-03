@@ -37,7 +37,6 @@ const LoadingBar = (props) => {
                 <CircleBar cwidth={svgWidth/2}/>
                 <CircleTracker cwidth={svgWidth/2} perc={perc}/>
             </svg>
-
         </Parent>
     )
 }

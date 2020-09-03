@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Dashboard from '../Dashboard/Dashboard';
 import { ParamSelector } from '../ParamSelector/ParamSelector';
-import Switch from '../Buttons/Switch';
+import SwitchContainer from '../Buttons/Switch/SwitchContainer';
 import { min, max } from 'lodash';
 
 const TabPanel = (props) => {
@@ -338,9 +338,7 @@ const AddTabs = (props) => {
             </DashboardTopBar>
             <DashboardWrapper>{tabpanels}</DashboardWrapper>
             <SideBar>
-                <ButtonDiv>
-                    <Switch isOn={staticOpt} handleToggle={() => setStaticOpt(!staticOpt)}/><p>Static</p>
-                </ButtonDiv>
+                <SwitchContainer label={'static'} width={'100%'} isOn={staticOpt} handleToggle={() => setStaticOpt(!staticOpt)}/>
                 {parampanels}
                 <ParamText>Results for a two-patch model of migration-selection balance. Migration rate indicates the proportion of individuals in each population that migrated from the other patch. Selection indicates the width of the fitness function (smaller values = stronger selection). Mutation indicates the rate per locus, per generation. Recombination indicates the rate between adjacent loci on a chromosome, per generation.</ParamText>
             </SideBar>

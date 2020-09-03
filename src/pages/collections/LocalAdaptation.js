@@ -6,11 +6,12 @@ import { uniq, uniqBy, min, max } from 'lodash';
 import {ThemeProvider} from 'styled-components';
 
 import GenomeGradients from '../../components/Charts/GenomeArchitecture/GenomeGradients';
-import {filterDataByParams} from '../../helpers/DataHelpers';
+import { filterDataByParams } from '../../helpers/DataHelpers';
 import template from '../../data/genome_template.json';
 import fullGenome from '../../data/genome_data.json';
 import AddTabs from '../../components/Tabs/Tabs';
 import LoadingBar from '../../components/Loading/LoadingBar';
+import SwitchContainer from '../../components/Buttons/Switch/SwitchContainer';
 
 import './styles/local_adaptation_styles.css';
 
@@ -64,6 +65,7 @@ const theme = {
   lowcolorgray: '#fff',
   buttoncolor: '#682CFE',
   buttoncoloralpha: 'rgba(103, 44, 254, .3)',
+  buttoncoloralpha2: 'rgba(103, 44, 254, .1)',
 }
 
 const themePop1 = {
@@ -126,9 +128,6 @@ const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
 
 const LocalAdaptation = (props) => {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [percLoaded, setPercLoaded] = useState(0);
-  const totNumOfPermutation = uniqParamPermutations.length;
-
   const [grads, setgrads] = useState([]);
 
 
@@ -188,9 +187,8 @@ useEffect(() => {
 
 
   return (
-    <ThemeProvider theme={theme}>
-      <LoadingBar />
-      
+    <ThemeProvider theme={theme}>     
+      {/* <SwitchContainer label={'static'}/> */}
       <svg className="gradient-container">
         {grads}
       </svg>
@@ -207,15 +205,11 @@ useEffect(() => {
           identifier={'identifier'}
           maxTabs={4}
           readableLabels={readableLabels}
-          themes={themes} /> : <LoadingBar perc={percLoaded}/>}
+          themes={themes} /> : <LoadingBar perc={.5}/>}
       </section>
     </ThemeProvider>
   )
 
 }
-
-
-
-
 
 export default LocalAdaptation

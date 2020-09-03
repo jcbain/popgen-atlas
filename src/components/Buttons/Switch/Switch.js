@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledInput = styled.input`
     height: 0;
     width: 0;
+    margin: unset;
     visibility: hidden;
     &:checked + .switch-label .switch-button {
         left: calc(100% - 2px);
@@ -48,7 +49,7 @@ const Switch = (props) => {
 
 
     return (
-        <div>
+        <div style={{paddingTop: "calc(50% - 12.5px)"}}>
             <StyledInput checked={isOn}
                 onChange={handleToggle}
                 type="checkbox" id={identifier}/>
