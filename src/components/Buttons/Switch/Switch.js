@@ -47,7 +47,6 @@ const StyledSpan = styled.span`
 const Switch = (props) => {
     const { identifier, isOn, handleToggle } = props;
 
-
     return (
         <div style={{paddingTop: "calc(50% - 12.5px)"}}>
             <StyledInput checked={isOn}
