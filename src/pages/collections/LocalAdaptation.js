@@ -10,6 +10,7 @@ import {filterDataByParams} from '../../helpers/DataHelpers';
 import template from '../../data/genome_template.json';
 import fullGenome from '../../data/genome_data.json';
 import AddTabs from '../../components/Tabs/Tabs';
+import LoadingBar from '../../components/Loading/LoadingBar';
 
 import './styles/local_adaptation_styles.css';
 
@@ -125,57 +126,71 @@ const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
 
 const LocalAdaptation = (props) => {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [grads, setgrads] = useState([])
-const expensiveFunction = () => { 
-  let allGrads = []
-  uniqParamPermutations.forEach( (p, i) => {
-    const filteredData = filterDataByParams(genome, p);
-    let fullGenomeData = [];
-    uniqGenerations.forEach(g => {
-      const filteredGen = filteredData.filter(d => d.output_gen === g)
-      const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
-      template.forEach((t,i) => {
-        const position = t.position;
-        let match = filteredGen.find(v => v.position === position);
-        match = match !== undefined ? match : {...emptyRow, position: position};
-        match.ind = i;
-        fullGenomeData.push(match)
+  const [percLoaded, setPercLoaded] = useState(0);
+  const totNumOfPermutation = uniqParamPermutations.length;
+
+  const [grads, setgrads] = useState([]);
+
+
+
+
+
+  const createAllGrads = () => { 
+    let allGrads = []
+    uniqParamPermutations.forEach( (p, i) => {
+      const filteredData = filterDataByParams(genome, p);
+      let fullGenomeData = [];
+      uniqGenerations.forEach(g => {
+        const filteredGen = filteredData.filter(d => d.output_gen === g)
+        const emptyRow = {...filteredGen[0], position: undefined, select_coef: 0, freq: 0, effect_size_freq_diff: 0, effect_size_freq: 0};
+        template.forEach((t,i) => {
+          const position = t.position;
+          let match = filteredGen.find(v => v.position === position);
+          match = match !== undefined ? match : {...emptyRow, position: position};
+          match.ind = i;
+          fullGenomeData.push(match)
+
+        })
       })
-    })
-    const colorgrads = <GenomeGradients key={`color-${i}`}
-      data={fullGenomeData}
-      xVar={'output_gen'}
-      yVar={'ind'}
-      colorVar={'effect_size_freq_diff'}
-      colorMin={colorMin}
-      colorMax={colorMax}
-      genKey={p.paramSetKey}
-      />
-    const graygrads = <GenomeGradients key={`gray-${i}`}
-      data={fullGenomeData}
-      xVar={'output_gen'}
-      yVar={'ind'}
-      colorVar={'effect_size_freq_diff'}
-      colorMin={colorMin}
-      colorMax={colorMax}
-      genKey={p.paramSetKey}
-      useGrayScale={true}
-      />
-    allGrads.push(colorgrads)
-    allGrads.push(graygrads)
-})
-setgrads(allGrads)
 
-setIsLoaded(true)
-}
+      const colorgrads = <GenomeGradients key={`color-${i}`}
+        data={fullGenomeData}
+        xVar={'output_gen'}
+        yVar={'ind'}
+        colorVar={'effect_size_freq_diff'}
+        colorMin={colorMin}
+        colorMax={colorMax}
+        genKey={p.paramSetKey}
+        />
 
-useEffect(() => {
-  expensiveFunction()
+      const graygrads = <GenomeGradients key={`gray-${i}`}
+        data={fullGenomeData}
+        xVar={'output_gen'}
+        yVar={'ind'}
+        colorVar={'effect_size_freq_diff'}
+        colorMin={colorMin}
+        colorMax={colorMax}
+        genKey={p.paramSetKey}
+        useGrayScale={true}
+        />
+      allGrads.push(colorgrads)
+      allGrads.push(graygrads)
+
+  })
+  setgrads(allGrads)
+  }
+
+useEffect(() => {   
+  createAllGrads()
+
+  setIsLoaded(true)
 }, [])
 
 
   return (
     <ThemeProvider theme={theme}>
+      <LoadingBar />
+      
       <svg className="gradient-container">
         {grads}
       </svg>
@@ -192,7 +207,7 @@ useEffect(() => {
           identifier={'identifier'}
           maxTabs={4}
           readableLabels={readableLabels}
-          themes={themes} /> : <h1>Loading</h1>}
+          themes={themes} /> : <LoadingBar perc={percLoaded}/>}
       </section>
     </ThemeProvider>
   )
