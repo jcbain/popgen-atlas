@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import {SelectWrapper, ParamTitle, SelectHeaderWrapper, SelectTitle, OptionWrapper, OptionButton} from './ParamSelectorStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,11 +38,24 @@ Option.defaultProps = {
 export const ParamSelector = (props) => {
     const { className, paramName, paramNameReadable ,options, handleSwitch, selectedValue } = props;
     const [open, setOpen] = useState(false);
+    const optionsRef = useRef();
+
     const handleMenuOpen = () => setOpen(!open)
     const handleOptionSelect = (value, label) => {
         handleSwitch(paramName, value);
         setOpen(!open);
     }
+
+    const handleClickOutside = e => {
+        e.preventDefault();
+        if (optionsRef && !optionsRef.current.contains(e.target)){
+            setOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside)
+    }, [])
 
     
 
@@ -66,7 +79,7 @@ export const ParamSelector = (props) => {
                     <StyledFontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
                 </SelectTitle>
             </SelectHeaderWrapper>
-            <OptionWrapper displayopt={open ? 'flex' : 'none'}>
+            <OptionWrapper ref={optionsRef} displayopt={open ? 'flex' : 'none'}>
                 {opts}
             </OptionWrapper>
         </SelectWrapper>
