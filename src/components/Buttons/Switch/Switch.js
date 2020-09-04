@@ -48,7 +48,7 @@ const Switch = (props) => {
     const { identifier, isOn, handleToggle } = props;
 
     return (
-        <div style={{paddingTop: "calc(50% - 12.5px)"}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <StyledInput checked={isOn}
                 onChange={handleToggle}
                 type="checkbox" id={identifier}/>

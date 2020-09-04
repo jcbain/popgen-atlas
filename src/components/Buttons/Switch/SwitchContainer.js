@@ -2,17 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Switch from './Switch'
-import { rest } from 'lodash';
 
 const SwitchWrapper = styled.div`
     width: ${({ width }) => width};
-    height: 50px;
     background: ${({ theme }) => theme.buttoncoloralpha2};
     border-radius: 5px;
     display: grid;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 4px;
+    // padding-left: 4px;
+    // padding-right: 4px;
     grid-template-columns: 0.5fr 1.0fr;
+    column-gap: 10px;
     border: 3px solid ${({ theme }) => theme.buttoncolor};
     color: ${({ theme }) => theme.buttoncolor};
 `
@@ -20,7 +20,10 @@ const SwitchWrapper = styled.div`
 const Label = styled.p`
     text-align: center;
     font-family: 'Baloo Tamma 2', cursive;
+    font-size: 1.4em;
     font-weight: 600;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
 
 `
 
