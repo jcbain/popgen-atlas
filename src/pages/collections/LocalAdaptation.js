@@ -11,7 +11,6 @@ import template from '../../data/genome_template.json';
 import fullGenome from '../../data/genome_data.json';
 import AddTabs from '../../components/Tabs/Tabs';
 import LoadingBar from '../../components/Loading/LoadingBar';
-import SwitchContainer from '../../components/Buttons/Switch/SwitchContainer';
 
 import './styles/local_adaptation_styles.css';
 
@@ -41,6 +40,7 @@ let summedGenome = nest()
 
 
 const theme = {
+  sliderbar: '#e0e0e0',
   color: {
     main: '#fff',
     secondary: '#6fa1c7',
@@ -147,8 +147,7 @@ const LocalAdaptation = (props) => {
           let match = filteredGen.find(v => v.position === position);
           match = match !== undefined ? match : {...emptyRow, position: position};
           match.ind = i;
-          fullGenomeData.push(match)
-
+          fullGenomeData.push(match) 
         })
       })
 
@@ -185,6 +184,20 @@ useEffect(() => {
   setIsLoaded(true)
 }, [])
 
+const display = isLoaded ? <AddTabs viewwidth={100}
+paramOptions={paramOptions}
+lineChartData={summedGenome}
+paramPermutationData={uniqParamPermutations}
+grads={[]}
+colorMin={colorMin}
+colorMax={colorMax}
+geneArchData={genome}
+template={template}
+identifier={'identifier'}
+maxTabs={4}
+readableLabels={readableLabels}
+themes={themes} /> : <LoadingBar perc={.5}/>
+
 
   return (
     <ThemeProvider theme={theme}>     
@@ -193,7 +206,9 @@ useEffect(() => {
         {grads}
       </svg>
       <section className={'dashboard'}>
-        {isLoaded ? <AddTabs viewwidth={100}
+
+        { display }
+        {/* {isLoaded ? <AddTabs viewwidth={100}
           paramOptions={paramOptions}
           lineChartData={summedGenome}
           paramPermutationData={uniqParamPermutations}
@@ -205,7 +220,7 @@ useEffect(() => {
           identifier={'identifier'}
           maxTabs={4}
           readableLabels={readableLabels}
-          themes={themes} /> : <LoadingBar perc={.5}/>}
+          themes={themes} /> : <LoadingBar perc={.5}/>} */}
       </section>
     </ThemeProvider>
   )

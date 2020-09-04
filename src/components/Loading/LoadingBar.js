@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 
@@ -28,8 +28,14 @@ const CircleTracker = styled.circle`
 `;
 
 const LoadingBar = (props) => {
-    const { perc } = props;
+    // const { perc } = props;
+    const [ perc, setPerc ] = useState(.2)
     const svgWidth = 100;
+
+    useEffect(() => {
+        setPerc(perc + 0.2)
+        console.log("it is on")
+    } , [perc])
 
     return (
         <Parent>

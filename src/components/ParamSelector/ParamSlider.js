@@ -10,14 +10,14 @@ import { SelectWrapperSlider, ParamTitleSlider } from './ParamSelectorStyles'
 const SliderRangeBar = styled.div`
     position: relative;
     border-radius: 10px;
-    background: ${props => props.theme.slidercolor};
-    height: ${props => props.sliderheight}vh;
+    background: ${({ theme }) => theme.sliderbar};
+    height: ${({ sliderheight }) => sliderheight}vh;
 `
 
 SliderRangeBar.defaultProps = {
     sliderheight : 1,
     theme : {
-        slidercolor: '#5a02d6'
+        sliderbar: '#5a02d6'
     }
 }
 

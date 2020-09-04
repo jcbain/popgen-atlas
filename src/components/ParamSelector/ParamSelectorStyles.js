@@ -39,7 +39,7 @@ export const ParamTitle = styled.span`
     padding-right: 4px;
     overflow: hidden;
     font-size: 0.75em;
-    color: ${({ theme }) => theme.color.grayMain};
+    color: ${({ theme, disabled }) => disabled ? '#e1e1e1' : theme.color.grayMain};
 `;
 
 ParamTitle.defaultProps = {
@@ -64,7 +64,7 @@ export const SelectHeaderWrapper = styled.div`
     font-size: 1em;
     z-index: 100;
     width: 100%;
-    color: ${({ theme }) => theme.color.grayTertiary};
+    color: ${({ theme, disabled }) => disabled ? '#e1e1e1' : theme.color.grayTertiary};
     font-family: 'Baloo Tamma 2', cursive;
 `
 

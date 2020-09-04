@@ -74,8 +74,8 @@ export const ParamSelector = (props) => {
 
     return (
         <SelectWrapper className={className}>
-            <SelectHeaderWrapper onClick={handleMenuOpen}>
-                <ParamTitle>{paramNameReadable.toLowerCase()}</ParamTitle>
+            <SelectHeaderWrapper onClick={handleMenuOpen} disabled={!openable}>
+                <ParamTitle disabled={!openable}>{paramNameReadable.toLowerCase()}</ParamTitle>
                 <SelectTitle>
                     {selectedValue} 
                     <StyledFontAwesomeIcon size="xs" pull="right" icon={open ? faAngleUp : faAngleDown} />
