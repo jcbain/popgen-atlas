@@ -48,7 +48,7 @@ export const ParamSelector = (props) => {
 
     const handleClickOutside = e => {
         e.preventDefault();
-        if (optionsRef && !optionsRef.current.contains(e.target)){
+        if (optionsRef.current && !optionsRef.current.contains(e.target)){
             setOpen(false)
         }
     }
