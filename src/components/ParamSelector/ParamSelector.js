@@ -36,14 +36,16 @@ Option.defaultProps = {
 }
 
 export const ParamSelector = (props) => {
-    const { className, paramName, paramNameReadable ,options, handleSwitch, selectedValue } = props;
+    const { className, paramName, paramNameReadable ,options, handleSwitch, selectedValue, openable } = props;
     const [open, setOpen] = useState(false);
     const optionsRef = useRef();
 
-    const handleMenuOpen = () => setOpen(!open)
+    const handleMenuOpen = () => { openable && setOpen(!open)}
+
     const handleOptionSelect = (value, label) => {
         handleSwitch(paramName, value);
         setOpen(!open);
+
     }
 
     const handleClickOutside = e => {
@@ -93,6 +95,7 @@ ParamSelector.propTypes = {
 }
 
 ParamSelector.defaultProps = {
+    openable: true,
     className: 'param-selector',
     paramName: 'Param Name',
     handleSwitch: () => console.log('handle passing up state here'),
