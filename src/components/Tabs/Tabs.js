@@ -318,6 +318,7 @@ const AddTabs = (props) => {
                                 options={d.options}
                                 selectedValue={dashboardState[i].componentGlobal['params'][d.paramName]}
                                 handleSwitch={handleSwitch('componentGlobal')}
+                                openable={staticOpt}
                             />
                     )
                 })}
