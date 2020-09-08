@@ -11,6 +11,9 @@ import template from '../../data/genome_template.json';
 import fullGenome from '../../data/genome_data.json';
 import AddTabs from '../../components/Tabs/Tabs';
 import LoadingBar from '../../components/Loading/LoadingBar';
+import LoadingIcon from '../../components/Loading/LoadingIcon'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import './styles/local_adaptation_styles.css';
 
@@ -196,31 +199,18 @@ template={template}
 identifier={'identifier'}
 maxTabs={4}
 readableLabels={readableLabels}
-themes={themes} /> : <LoadingBar perc={.5}/>
+themes={themes} /> : <LoadingIcon /> //<LoadingBar perc={.5}/>
 
 
   return (
     <ThemeProvider theme={theme}>     
-      {/* <SwitchContainer label={'static'}/> */}
       <svg className="gradient-container">
         {grads}
       </svg>
       <section className={'dashboard'}>
 
         { display }
-        {/* {isLoaded ? <AddTabs viewwidth={100}
-          paramOptions={paramOptions}
-          lineChartData={summedGenome}
-          paramPermutationData={uniqParamPermutations}
-          grads={[]}
-          colorMin={colorMin}
-          colorMax={colorMax}
-          geneArchData={genome}
-          template={template}
-          identifier={'identifier'}
-          maxTabs={4}
-          readableLabels={readableLabels}
-          themes={themes} /> : <LoadingBar perc={.5}/>} */}
+
       </section>
     </ThemeProvider>
   )
