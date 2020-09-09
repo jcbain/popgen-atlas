@@ -12,7 +12,7 @@ import fullGenome from '../../data/genome_data.json';
 import AddTabs from '../../components/Tabs/Tabs';
 import LoadingIcon from '../../components/Loading/LoadingIcon'
 
-const genome = fullGenome.filter(d => d.output_gen <= 60000);
+const genome = fullGenome.filter(d => d.output_gen <= 20000);
 
 
 let summedGenome = nest()
@@ -123,7 +123,6 @@ const colorMin = min(genome.map(g => g.effect_size_freq_diff)),
       colorMax = max(genome.map(g => g.effect_size_freq_diff));
 
 
-
 const LocalAdaptation = () => {
   const [loading, setLoading] = useState(true)
   const [ gradients, setGradients ] = useState([]);
@@ -145,7 +144,7 @@ const LocalAdaptation = () => {
         })
       })
 
-      const colorgrads = <GenomeGradients key={`color-${i}`}
+      const colorGradients = <GenomeGradients key={`color-${i}`}
         data={fullGenomeData}
         xVar={'output_gen'}
         yVar={'ind'}
@@ -153,9 +152,9 @@ const LocalAdaptation = () => {
         colorMin={colorMin}
         colorMax={colorMax}
         genKey={p.paramSetKey}
-        />
+      />
 
-      const graygrads = <GenomeGradients key={`gray-${i}`}
+      const gradGradients = <GenomeGradients key={`gray-${i}`}
         data={fullGenomeData}
         xVar={'output_gen'}
         yVar={'ind'}
@@ -164,21 +163,19 @@ const LocalAdaptation = () => {
         colorMax={colorMax}
         genKey={p.paramSetKey}
         useGrayScale={true}
-        />
-      allGrads.push(colorgrads)
-      allGrads.push(graygrads)
+      />
 
+      allGrads.push(colorGradients, gradGradients)
   })
   setGradients(allGrads)
   }
 
 useEffect(() => {   
   createAllGrads()
-
   setLoading(false)
 }, [])
 
-const display = loading ? <LoadingIcon /> : <AddTabs viewwidth={100}
+const dashboardDisplay = loading ? <LoadingIcon /> : <AddTabs viewwidth={100}
     paramOptions={paramOptions}
     lineChartData={summedGenome}
     paramPermutationData={uniqParamPermutations}
@@ -189,21 +186,18 @@ const display = loading ? <LoadingIcon /> : <AddTabs viewwidth={100}
     identifier={'identifier'}
     maxTabs={4}
     readableLabels={readableLabels}
-    themes={themes} /> //<LoadingBar perc={.5}/>
-
+    themes={themes} /> 
 
   return (
     <ThemeProvider theme={theme}> 
       <p>
         We apply the proverb 'The proof of the customer journey. Our feature set is unparalleled in the industry, but our back-end performance and non-complex use is frequently considered a remarkable achievement taking into account this month's financial state of things! If all of this may seem marvelous, but it's realistic! Imagine a combination of VOIP and Flash. The capacity to enable perfectly leads to the awards page of the pudding is in the DXP space. We apply the proverb 'A rolling stone gathers no moss' not only to our front-end process management but our capability to drive. The capability to implement wirelessly leads to the ability to whiteboard without lessening our aptitude to disintermediate. Without development, you will lack cross-media CAE. Our end-to-end feature set is second to none, but our robust iteration and user-proof use is invariably considered a remarkable achievement. The capacity to enable perfectly leads to the awards page of the customer journey. Our feature set is second to none, but our strategic angel investors and user-proof use is frequently considered a terrific achievement. We will regenerate our aptitude to repurpose without lessening our aptitude to repurpose without lessening our aptitude to incubate without reducing our capability to implement wirelessly leads to the capacity to synthesize interactively.
-      </p>   
+      </p> 
       <svg className="gradient-container">
-        {gradients}
+        { gradients }
       </svg>
       <section className={'dashboard'}>
-
-        { display }
-
+        { dashboardDisplay }
       </section>
     </ThemeProvider>
   )

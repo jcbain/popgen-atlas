@@ -1,8 +1,19 @@
 import React from 'react';
 import { Route, NavLink, Switch } from "react-router-dom";
-import routes from './routes'
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import styled from 'styled-components';
 
+import routes from './routes'
+
+const Header = styled.header`
+  width: 100vw;
+  heigth: 200px;
+`
+
+const HeaderTitle = styled.h1`
+  font-family: 'Yeseva One', cursive;
+
+`
 
 const routeComponents = routes.map(({path, component, refresh}, key) => <Route exact path={path} refresh={refresh} component={component} key={key} />);
 
@@ -32,14 +43,15 @@ function App() {
           <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet" /> 
           <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600&display=swap" rel="stylesheet" /> 
+          <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600&display=swap" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet" /> 
         </Helmet>
-      <header className="App-header">
-          <h1>Atlas of Population Genetics</h1>
+      <Header className="App-header">
+          <HeaderTitle>Atlas of Population Genetics</HeaderTitle>
           <div className="nav-links">
             { links }
           </div>
-      </header>
+      </Header>
       <Switch>
           {routeComponents}
       </Switch>

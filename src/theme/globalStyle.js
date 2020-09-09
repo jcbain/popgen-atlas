@@ -28,13 +28,13 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
       }
       
-      header {
-        width: 100vw;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        justify-content: center;
-        text-align: center;
-      }
+      // header {
+      //   width: 100vw;
+      //   display: grid;
+      //   grid-template-rows: 1fr 1fr;
+      //   justify-content: center;
+      //   text-align: center;
+      // }
       
       .nav-links {
         display: flex;
