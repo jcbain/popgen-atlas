@@ -6,8 +6,21 @@ import {Helmet} from "react-helmet";
 
 const routeComponents = routes.map(({path, component, refresh}, key) => <Route exact path={path} refresh={refresh} component={component} key={key} />);
 
+const linksData = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Resources', path: '/resources' },
+  { name: 'Collections', path: '/collections' }
+]
+
 
 function App() {
+
+  const links = linksData.map((l, i) => {
+    const { name, path } = l;
+    return <p key={i}><NavLink to={path}>{ name }</NavLink></p>
+  })
+
   return (
     <div className="content">
       <Helmet>
@@ -24,10 +37,7 @@ function App() {
       <header className="App-header">
           <h1>Atlas of Population Genetics</h1>
           <div className="nav-links">
-            <p><NavLink to="/">Home</NavLink></p>
-            <p><NavLink to="/about">About</NavLink></p>
-            <p><NavLink to="/resources">Resources</NavLink></p>
-            <p><NavLink to="/collections">Collection</NavLink></p>
+            { links }
           </div>
       </header>
       <Switch>
