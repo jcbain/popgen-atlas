@@ -42,6 +42,7 @@ const BrushHorizontal = (props) => {
     function centerBrushOnTouch(){
         const dx = xScale(5000);
         const [cx] = mouse(this);
+        console.log(cx)
         const [x0, x1] = [cx - dx / 2, cx + dx / 2].map(d => interval(xScale.invert(d)));
         select(brushRef.current)
             .call(horizontalBrush.move, x1 > maxX ? [maxX - dx, maxX].map(xScale) 
