@@ -15,10 +15,7 @@ const MapDiv = styled.div`
     top: 0;
 `
 
-const Text = styled.div`
-    position: relative;
-    width: 30vw;
-`
+
 
 
 const Map = (props) => {
