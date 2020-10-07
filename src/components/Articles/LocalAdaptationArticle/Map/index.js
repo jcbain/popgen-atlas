@@ -19,6 +19,7 @@ const MapDiv = styled.div`
 
 
 const Map = (props) => {
+    const { refDict } = props;
     const width = 500, 
           height = 500;
     const scale = 1.75;
@@ -33,7 +34,7 @@ const Map = (props) => {
     return(
         <MapDiv>
             <svg viewBox={[0, 0, width, height]} width={'100%'} height={"100%"}>
-                <MapShapes data={namerica.features} path={path} fill={'#cae0cb'}/>
+                <MapShapes ref={refDict['ref']} trigger={refDict['trigger']} displayMarkers={true} data={namerica.features} path={path} fill={'#cae0cb'}/>
                 <MapShapes data={pinusRange.features} path={path} fill={'#32a852'}/>
             </svg>
 

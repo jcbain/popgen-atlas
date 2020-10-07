@@ -1,16 +1,31 @@
 import React, { useEffect, forwardRef } from 'react';
-// import gsap from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 
-// gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-const MapShapes = (props) => {
-    const { data, path } = props;
+const MapShapes = forwardRef((props, ref) => {
+    const { data, path, trigger, displayMarkers } = props;
+
+    useEffect(() => {
+        if(ref) {
+            gsap.to(ref.current, {
+                scrollTrigger: {
+                    trigger: trigger.current,
+                    markers: displayMarkers,
+                    start: "top 80%",
+                    end: "top 15%",
+                    toggleActions: "restart pause reverse pause",
+                },
+                fill: 'purple'
+            })
+        }
+    }, [])
     
     const shapes = data.map((d, i) => {
         return (
-            <path key={i}
+            <path ref={ref} key={i}
                 d={path(d)}
                 // stroke={'green'}
                 fill={props.fill}
@@ -19,6 +34,6 @@ const MapShapes = (props) => {
     })
 
     return shapes
-}
+});
 
 export default MapShapes;
