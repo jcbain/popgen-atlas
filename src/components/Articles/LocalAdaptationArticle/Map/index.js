@@ -15,16 +15,17 @@ const MapDiv = styled.div`
     top: 0;
 `
 
-const ScrollTextDiv = styled.div`
-    
+const Text = styled.div`
+    position: relative;
+    width: 30vw;
 `
 
 
 const Map = (props) => {
     const width = 500, 
           height = 500;
-    const scale = 2.25;
-    const centerLat = 50,
+    const scale = 1.75;
+    const centerLat = 53,
           centerLong = 100;
     const projection = geoAlbers().scale([ width * scale ])
         .rotate([centerLong, 0])
@@ -38,7 +39,9 @@ const Map = (props) => {
                 <MapShapes data={namerica.features} path={path} fill={'#cae0cb'}/>
                 <MapShapes data={pinusRange.features} path={path} fill={'#32a852'}/>
             </svg>
+
         </MapDiv>
+
     ) 
 
 }
