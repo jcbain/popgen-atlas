@@ -20,7 +20,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-scrollama": "^2.1.0",
-    "react-spring": "^8.0.27",
+    "react-spring": "^9.0.0-rc.3",
     "styled-components": "^5.1.0",
     "uuid": "^8.0.0"
   },
