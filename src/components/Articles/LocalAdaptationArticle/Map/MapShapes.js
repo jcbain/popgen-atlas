@@ -4,7 +4,6 @@ import useScrollTrigger from '../../../../hooks/useScrollTrigger'
 
 const MapShapes = forwardRef((props, ref) => {
     const { data, path, trigger, displayMarkers } = props;
-    const [ color, setColor ] = useState(props.fill || 'green')
     const [ toggle ] = useScrollTrigger(ref, trigger)
     const animatedProps = useSpring({opacity: toggle ? 0.3 : 0.9})
     
@@ -12,8 +11,7 @@ const MapShapes = forwardRef((props, ref) => {
         return (
             <animated.path ref={ref} key={i}
                 d={path(d)}
-                // stroke={'green'}
-                fill={color}
+                fill={props.fill}
                 opacity={animatedProps.opacity}
             />
         )

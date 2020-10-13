@@ -23,9 +23,7 @@ const useScrollTrigger = (ref, triggerRef, config={displayMarkers: true, start: 
             })
 
         }
-        
-
-    }, [])
+    }, [config.start, config.end, ref, triggerRef])
 
 
     return [ toggle ]
