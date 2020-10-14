@@ -1,4 +1,5 @@
 import LocalAdaptation from './collections/LocalAdaptation';
+import Map from './collections/Map';
 
 const collectionsList = [
     {
@@ -6,9 +7,9 @@ const collectionsList = [
         title: 'Local Adaptation',
         component: LocalAdaptation,
     }, {
-        id: 'sample-page',
-        title: 'Sample Page',
-        component: undefined,
+        id: 'google-map',
+        title: 'Gooogle Map',
+        component: Map,
     }
 ]
 
