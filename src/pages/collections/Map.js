@@ -40,18 +40,33 @@ const Map = (props) => {
         return { lat: d[1], lng: d[0] }
     })
 
+
     const shapeOptions = {
         fillColor: "lightblue",
-        fillOpacity: 0.2,
-        strokeColor: "red",
+        fillOpacity: 0.5,
+        // strokeColor: "none",
         strokeOpacity: 1,
-        strokeWeight: 2,
+        strokeWeight: 0,
         clickable: false,
         draggable: false,
         editable: false,
         geodesic: false,
         zIndex: 1
     }
+
+
+    const polygons = data.features.map( (f, i) => {
+        const shape = f.geometry.coordinates[0].map(s => {
+            return { lng: s[0], lat: s[1]}
+        })
+
+        return (
+            <Polygon key={i}
+                path={shape}
+                options={shapeOptions}
+            />
+        )
+    })
 
 
     const moveCenter = () => {
@@ -68,10 +83,11 @@ const Map = (props) => {
                 zoom={zoom}
                 center={center}
                 options={options}>
-                        <Polygon
+                    { polygons }
+                        {/* <Polygon
                         paths={shape}
                         options={shapeOptions}
-                        />
+                        /> */}
                 </GoogleMap>
             <button onClick={() => setZoom(prev => prev + 1)}>Zoom In</button>
             <button onClick={() => setZoom(prev => prev - 1)}>Zoom Out</button>
