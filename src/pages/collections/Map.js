@@ -9,6 +9,11 @@ import {
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 
 import mapStyle from '../../theme/mapStyle'
+import data from './data/pinucont'
+
+console.log(data.features[0].geometry.coordinates[0].map( d => {
+    return { lat: d[1], lng: d[0] }
+}))
 
 const Map = (props) => {
     const { isLoaded, loadError } = useLoadScript({
@@ -25,13 +30,30 @@ const Map = (props) => {
         height: '80vh'
     }
     
-
-
     const options = {
         styles: mapStyle,
         disableDefaultUI: true,
         mapTypeId: 'terrain'
     }
+
+    const shape = data.features[0].geometry.coordinates[0].map( d => {
+        return { lat: d[1], lng: d[0] }
+    })
+
+    const shapeOptions = {
+        fillColor: "lightblue",
+        fillOpacity: 0.2,
+        strokeColor: "red",
+        strokeOpacity: 1,
+        strokeWeight: 2,
+        clickable: false,
+        draggable: false,
+        editable: false,
+        geodesic: false,
+        zIndex: 1
+    }
+
+
     const moveCenter = () => {
         setCenter(prev => ({
             ...prev, lng: prev.lng - 1, lat: prev.lat -1
@@ -45,7 +67,12 @@ const Map = (props) => {
             <GoogleMap mapContainerStyle={mapContainerStyles} 
                 zoom={zoom}
                 center={center}
-                options={options} />
+                options={options}>
+                        <Polygon
+                        paths={shape}
+                        options={shapeOptions}
+                        />
+                </GoogleMap>
             <button onClick={() => setZoom(prev => prev + 1)}>Zoom In</button>
             <button onClick={() => setZoom(prev => prev - 1)}>Zoom Out</button>
             <button onClick={moveCenter}>Move Center</button>
