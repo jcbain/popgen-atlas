@@ -16,9 +16,9 @@ const useScrollTrigger = (ref, triggerRef, config={displayMarkers: true, start: 
                     start: config.start,
                     end: config.end,
                     onEnter: () => setToggle(true),
-                    onLeave: () => setToggle(false),
+                    // onLeave: () => setToggle(false),
                     onLeaveBack: () => setToggle(false),
-                    onEnterBack: () => setToggle(true)
+                    // onEnterBack: () => setToggle(true)
                 }
             })
 
