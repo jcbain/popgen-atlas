@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import {
-    GoogleMap,
-    useLoadScript,
-    Polygon
-} from '@react-google-maps/api';
+import { GoogleMap, Polygon } from '@react-google-maps/api';
+import styled from 'styled-components';
 
 import mapStyle from '../../../../theme/mapStyle';
 import data from '../../LocalAdaptationArticle/data/pinucont'
 
+const MapDiv = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: sticky;
+    top: 0px;
+`;
+
 const GMap = (props) => {
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-    })
+
     const [ zoom, setZoom ] = useState(4);
     const [ center, setCenter ] = useState({
         lng: -95,
@@ -19,8 +21,8 @@ const GMap = (props) => {
     });
 
     const mapContainerStyles = {
-        width: '100vw',
-        height: '100vh'
+        width: '100%',
+        height: '100%',
     };
 
     const options = {
@@ -55,9 +57,8 @@ const GMap = (props) => {
         )
     });
 
-    if (!isLoaded) return "Loading";
     return (
-        <>
+        <MapDiv>
             <GoogleMap mapContainerStyle={mapContainerStyles}
                 zoom={zoom}
                 center={center}
@@ -66,7 +67,7 @@ const GMap = (props) => {
                 { polygons }
 
             </GoogleMap>
-        </>
+        </MapDiv>
     )
 }
 
