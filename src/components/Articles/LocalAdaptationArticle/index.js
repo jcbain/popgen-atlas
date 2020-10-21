@@ -7,7 +7,6 @@ const Text = styled.div`
     position: relative;
     width: 30vw;
     margin-left: 60vw;
-
 `
 
 const LocalAdaptationArticle = () => {
