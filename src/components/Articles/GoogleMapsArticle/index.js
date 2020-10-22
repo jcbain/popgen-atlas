@@ -10,6 +10,7 @@ const Text = styled.div`
 `;
 
 const GoogleMapArticle = () => {
+    // https://www.youtube.com/watch?v=WZcxJGmLbSo
     // moved this here for rendeirng purposes
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
