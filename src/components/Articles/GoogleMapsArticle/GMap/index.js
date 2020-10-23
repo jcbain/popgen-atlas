@@ -16,7 +16,7 @@ const MapDiv = styled(animated.div)`
 `;
 
 const GMap = forwardRef((props, ref) => {
-    const { mapRefs, panRefs } = props;
+    const { mapRefs, panRefs, vizRefs } = props;
     
     const [ center, setCenter ] = useState({
         lng: -95,
@@ -24,6 +24,7 @@ const GMap = forwardRef((props, ref) => {
     });
     const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
     const [ toggle2 ] = useScrollTrigger(panRefs.ref, panRefs.trigger)
+    const [ toggle3 ] = useScrollTrigger(panRefs.ref, vizRefs.trigger)
     const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
         width: '100%',
@@ -84,7 +85,7 @@ const GMap = forwardRef((props, ref) => {
                 center={center}
                 options={options}
             >   
-                <Polygon paths={polys} options={polygonOptions}></Polygon>
+                { toggle3 && <Polygon paths={polys} options={polygonOptions}></Polygon>}
             </GoogleMap>
         </MapDiv>
     )
