@@ -34,16 +34,18 @@ const GMap = forwardRef((props, ref) => {
     const onMapLoad = useCallback((map) => {
         panRefs.ref.current = map;
     }, [] )
-    const panTo = useCallback(({ lat, lng }) => {
+
+    const pan = useCallback(({ lat, lng }) => {
         panRefs.ref.current.panTo({ lat, lng })
         panRefs.ref.current.setZoom(6)
-
     }, [])
+    
 
     useEffect(() => {
         if(toggle2) {
-            panTo({lat: 55, lng: -120})
-        }
+            pan({lat: 55, lng: -120}) 
+        } 
+        
     }, [toggle2]) 
 
     const options = {
@@ -79,7 +81,7 @@ const GMap = forwardRef((props, ref) => {
 
     return (
         <MapDiv ref={ref} style={springProps}>
-            <GoogleMap onLoad={onMapLoad} onClick={() => panTo({lat: 55, lng: -120})} 
+            <GoogleMap onLoad={onMapLoad}  
                 ref={panRefs.ref} mapContainerStyle={mapContainerStyles}
                 zoom={4}
                 center={center}
