@@ -64,18 +64,17 @@ const GMap = forwardRef((props, ref) => {
         zIndex: 1
     }
 
-    const polygons = data.features.map((f, i) => {
+    let polys = []
+    data.features.forEach((f, i) => {
         const shape = f.geometry.coordinates[0].map(s => {
             return { lng: s[0], lat: s[1] };
         })
+        polys.push(shape)
 
-        return (
-            <Polygon key={i}
-                path={shape}
-                options={polygonOptions}
-            />
-        )
-    });
+
+    })
+
+
 
     return (
         <MapDiv ref={ref} style={springProps}>
@@ -84,9 +83,8 @@ const GMap = forwardRef((props, ref) => {
                 zoom={4}
                 center={center}
                 options={options}
-            >
-                { polygons }
-
+            >   
+                <Polygon paths={polys} options={polygonOptions}></Polygon>
             </GoogleMap>
         </MapDiv>
     )
