@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useRef, useCallback } from 'react';
+import React, { useState, forwardRef, useRef, useCallback, useEffect } from 'react';
 import { GoogleMap, Polygon } from '@react-google-maps/api';
 import styled from 'styled-components';
 import useScrollTrigger from '../../../../hooks/useScrollTrigger';
@@ -16,27 +16,34 @@ const MapDiv = styled(animated.div)`
 `;
 
 const GMap = forwardRef((props, ref) => {
-    const { mapRefs } = props;
-    const gmapRef = useRef(null)
-    const onMapLoad = useCallback((map) => {
-        gmapRef.current = map;
-    }, [] )
-    const panTo = useCallback(({ lat, lng }) => {
-        gmapRef.current.panTo({ lat, lng })
-        gmapRef.current.setZoom(6)
-
-    }, [])
-
+    const { mapRefs, panRefs } = props;
+    
     const [ center, setCenter ] = useState({
         lng: -95,
         lat: 53
     });
     const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
+    const [ toggle2 ] = useScrollTrigger(panRefs.ref, panRefs.trigger)
     const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
         width: '100%',
         height: '100%',
     };
+    // const gmapRef = useRef(null)
+    const onMapLoad = useCallback((map) => {
+        panRefs.ref.current = map;
+    }, [] )
+    const panTo = useCallback(({ lat, lng }) => {
+        panRefs.ref.current.panTo({ lat, lng })
+        panRefs.ref.current.setZoom(6)
+
+    }, [])
+
+    useEffect(() => {
+        if(toggle2) {
+            panTo({lat: 55, lng: -120})
+        }
+    }, [toggle2]) 
 
     const options = {
         styles: mapStyle,
@@ -72,7 +79,8 @@ const GMap = forwardRef((props, ref) => {
 
     return (
         <MapDiv ref={ref} style={springProps}>
-            <GoogleMap onLoad={onMapLoad} onClick={() => panTo({lat: 55, lng: -120})} ref={gmapRef} mapContainerStyle={mapContainerStyles}
+            <GoogleMap onLoad={onMapLoad} onClick={() => panTo({lat: 55, lng: -120})} 
+                ref={panRefs.ref} mapContainerStyle={mapContainerStyles}
                 zoom={4}
                 center={center}
                 options={options}
