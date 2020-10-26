@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -8,15 +8,15 @@ const useScrollFunction = (ref, trigger, triggerFunc, triggerFuncBack, config={d
 
     const [ status, setStatus ] = useState("")
     
-    const onEnter = () => {
+    const onEnter = useCallback(() => {
         triggerFunc()
         setStatus("on enter called")
-    }
+    }, [triggerFunc])
 
-    const onLeaveBack = () => {
+    const onLeaveBack = useCallback(() => {
         triggerFuncBack()
         setStatus("on leave back called")
-    }
+    }, [triggerFuncBack])
 
     useEffect(() => {
         if(ref) {
