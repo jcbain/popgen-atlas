@@ -2,11 +2,14 @@ import React, { useState, forwardRef, useRef, useCallback, useEffect } from 'rea
 import { GoogleMap, Polygon } from '@react-google-maps/api';
 import styled from 'styled-components';
 import useScrollTrigger from '../../../../hooks/useScrollTrigger';
+import useScrollFunction from '../../../../hooks/useScrollFunction'
 import { useSpring, animated} from 'react-spring';
 
 
 import mapStyle from '../../../../theme/mapStyle';
 import DistributionLayer from './DistributionLayer';
+
+
 
 
 const MapDiv = styled(animated.div)`
@@ -16,15 +19,12 @@ const MapDiv = styled(animated.div)`
     top: 0px;
 `;
 
+
+
 const GMap = forwardRef((props, ref) => {
     const { mapRefs, panRefs, vizRefs } = props;
     
-    const [ center, setCenter ] = useState({
-        lng: -95,
-        lat: 53
-    });
     const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
-    const [ toggle2 ] = useScrollTrigger(panRefs.ref, panRefs.trigger)
     const [ toggle3 ] = useScrollTrigger(panRefs.ref, vizRefs.trigger)
     const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
@@ -36,18 +36,18 @@ const GMap = forwardRef((props, ref) => {
         panRefs.ref.current = map;
     }, [] )
 
-    const pan = useCallback(({ lat, lng }) => {
+    const pan = useCallback(({ lat, lng, zoom }) => {
         panRefs.ref.current.panTo({ lat, lng })
-        panRefs.ref.current.setZoom(6)
+        panRefs.ref.current.setZoom(zoom)
     }, [])
-    
 
-    useEffect(() => {
-        if(toggle2) {
-            pan({lat: 55, lng: -120}) 
-        } 
-        
-    }, [toggle2]) 
+    const status = useScrollFunction(
+        panRefs.ref, 
+        panRefs.trigger, 
+        () => pan({lat: 55, lng: -120, zoom: 6}),
+        () => pan({lat: 53, lng: -95, zoom: 4})
+    )
+
 
     const options = {
         styles: mapStyle,
@@ -63,7 +63,7 @@ const GMap = forwardRef((props, ref) => {
             <GoogleMap onLoad={onMapLoad}  
                 ref={panRefs.ref} mapContainerStyle={mapContainerStyles}
                 zoom={4}
-                center={center}
+                center={{lat: 53, lng: -95}}
                 options={options}
             >   
                 { toggle3 && <DistributionLayer /> }
