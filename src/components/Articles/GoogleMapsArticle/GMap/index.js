@@ -6,7 +6,8 @@ import { useSpring, animated} from 'react-spring';
 
 
 import mapStyle from '../../../../theme/mapStyle';
-import data from '../../LocalAdaptationArticle/data/pinucont'
+import DistributionLayer from './DistributionLayer';
+
 
 const MapDiv = styled(animated.div)`
     width: 100vw;
@@ -30,7 +31,7 @@ const GMap = forwardRef((props, ref) => {
         width: '100%',
         height: '100%',
     };
-    // const gmapRef = useRef(null)
+
     const onMapLoad = useCallback((map) => {
         panRefs.ref.current = map;
     }, [] )
@@ -56,28 +57,6 @@ const GMap = forwardRef((props, ref) => {
         editable: false
     }
 
-    const polygonOptions = {
-        fillColor: "#035715",
-        fillOpacity: 0.5,
-        strokeWeight: 0,
-        clickable: false,
-        draggable: false,
-        editable: false,
-        geodesic: false,
-        zIndex: 1
-    }
-
-    let polys = []
-    data.features.forEach((f, i) => {
-        const shape = f.geometry.coordinates[0].map(s => {
-            return { lng: s[0], lat: s[1] };
-        })
-        polys.push(shape)
-
-
-    })
-
-
 
     return (
         <MapDiv ref={ref} style={springProps}>
@@ -87,7 +66,7 @@ const GMap = forwardRef((props, ref) => {
                 center={center}
                 options={options}
             >   
-                { toggle3 && <Polygon paths={polys} options={polygonOptions}></Polygon>}
+                { toggle3 && <DistributionLayer /> }
             </GoogleMap>
         </MapDiv>
     )
