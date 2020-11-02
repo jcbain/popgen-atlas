@@ -18,7 +18,7 @@ const Text = styled.div`
 const GoogleMapArticle = () => {
     const width = 400,
           height = 400;
-    const data = generateData(height, width, 80);
+    const data = generateData(height, width, 160);
           
 
     const { isLoaded, loadError } = useLoadScript({
