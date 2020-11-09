@@ -15,10 +15,10 @@ const ContainerSvg = styled.svg`
 const GroupedTrees = (props) => {
     const { popOne, popTwo, toggle, transferOne, transferTwo } = props;
 
-    const newPosXOne = transferOne ? popTwo.posX : random(popOne.posX - 5, popOne.posX + 5),
-          newPosYOne = transferOne ? popTwo.posY : random(popOne.posY - 5, popOne.posY + 5),
-          newPosXTwo = transferTwo ? popTwo.posX : random(popTwo.posX - 5, popTwo.posX + 5),
-          newPosYTwo = transferTwo ? popTwo.posY : random(popTwo.posY - 5, popTwo.popY + 5);
+    const newPosXOne = transferOne ? popTwo.posX : random(0, 199),
+          newPosYOne = transferOne ? popTwo.posY : random(0, 400),
+          newPosXTwo = transferTwo ? popOne.posX : random(200, 400),
+          newPosYTwo = transferTwo ? popOne.posY : random(0, 400);
     
     
     const springProps = useSpring({ x: toggle ? newPosXOne : popOne.posX, y: toggle ? newPosYOne : popOne.posY, config: {friction: 200} })
@@ -26,10 +26,10 @@ const GroupedTrees = (props) => {
 
     return (
         <>
-            <SingleTree h={popOne.h} w={popOne.w} posX={popOne.posX} posY={popOne.posY} opac={0.5} color={'green'} />
+            <SingleTree h={popOne.h} w={popOne.w} posX={popOne.posX} posY={popOne.posY} opac={0.5} color={'blue'} />
             <SingleTree h={popTwo.h} w={popTwo.w} posX={popTwo.posX} posY={popTwo.posY} opac={0.5} color={'red'}  />
             {/* <line x1={popOne.posX} x2={popTwo.posX} y1={popOne.posY} y2={popTwo.posY} stroke="orange" stroke-width="1"/> */}
-            <animated.circle cx={springProps.x} cy={springProps.y} r={2} fill={'green'}/>
+            <animated.circle cx={springProps.x} cy={springProps.y} r={2} fill={'blue'}/>
             <animated.circle cx={springProps2.x} cy={springProps2.y} r={2} fill={'red'}/>
         </>
     )
@@ -49,9 +49,6 @@ const Trees = (props) => {
         const transferTwo = flippedy(0.1)
         return <GroupedTrees key={i} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo}/>
     })
-
-    const popOne = { h: 20, w: 10, posX: 10, posY: 10 },
-          popTwo = { h: 20, w: 10, posX: 375, posY: 10 }
 
     return (
         <>
