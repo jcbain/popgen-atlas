@@ -5,6 +5,7 @@ import { random } from 'lodash'
 
 
 import SingleTree from './SingleTree';
+import Buddy from './Buddy';
 
 const ContainerSvg = styled.svg`
     position: sticky;
@@ -54,6 +55,7 @@ const Trees = (props) => {
         <>
             <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
                 {treeGroups}
+                <Buddy />
                 
             </ContainerSvg>
             <button onClick={() => setToggle(prev => !prev)}>Hello</button>
