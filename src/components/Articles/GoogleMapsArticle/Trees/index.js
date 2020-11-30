@@ -55,7 +55,22 @@ const Trees = (props) => {
         <>
             <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
                 {treeGroups}
-                <Buddy width={"10%"} x={10} y={-10}/>
+                <Buddy width={"10%"} 
+                    x={10} 
+                    y={-10}
+                    strokeWidth={3}
+                    fillOpacity={1} 
+                    colorPrimary={'#9696fa'} 
+                    colorSecondary={'#5252D4'}
+                />
+                <Buddy width={"10%"} 
+                    x={300} 
+                    y={-10}
+                    strokeWidth={3}
+                    fillOpacity={1} 
+                    colorPrimary={'#f77286'} 
+                    colorSecondary={'#E71435'}
+                />
                 
             </ContainerSvg>
             <button onClick={() => setToggle(prev => !prev)}>Hello</button>
