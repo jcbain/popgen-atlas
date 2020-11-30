@@ -62,14 +62,12 @@ const GoogleMapArticle = () => {
 }
 
 function generateData(height, width, num) {
-    const minX = (width/2) - width,
-          maxX = width/2,
-          minY = (height/2) - height,
+    const minY = (height/2) - height,
           maxY = height/2
     let data = [];
     for(let i = 0; i < num; i++) {
-        const popOne = {h: 20, w: 10, posX: random(minX,  maxX/2), posY: random(minY, maxY)},
-              popTwo = {h: 20, w: 10, posX: random(maxX/2, maxX), posY: random(minY, maxY)};
+        const popOne = {h: 20, w: 10, posX: random(0,  width/2), posY: random(minY, maxY)},
+              popTwo = {h: 20, w: 10, posX: random(width/2, width), posY: random(minY, maxY)};
         data.push({ popOne, popTwo })
     }
 

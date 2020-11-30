@@ -41,12 +41,12 @@ const GroupedBuddies = (props) => {
 
     const newPositionOne = {
         x: transferOne ? popTwo.posX : popOne.posX,
-        y: transferOne ? popTwo.posX : popOne.posX
+        y: transferOne ? popTwo.posY : popOne.posY
     }
 
     const newPositionTwo = {
         x: transferTwo ? popOne.posX : popTwo.posX,
-        y: transferTwo ? popOne.posX : popTwo.posX
+        y: transferTwo ? popOne.posY : popTwo.posY
     }
 
     return (
@@ -105,7 +105,7 @@ const Trees = (props) => {
             <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
                 {/* {treeGroups} */}
                 { buddyGroups }
-                <Buddy width={"10%"} 
+                {/* <Buddy width={"10%"} 
                     x={10} 
                     y={-10}
                     strokeWidth={3}
@@ -120,7 +120,7 @@ const Trees = (props) => {
                     fillOpacity={1} 
                     colorPrimary={'#f77286'} 
                     colorSecondary={'#E71435'}
-                />
+                /> */}
                 
             </ContainerSvg>
             <button onClick={() => setToggle(prev => !prev)}>Hello</button>
