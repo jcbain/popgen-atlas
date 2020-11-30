@@ -1,13 +1,24 @@
-import * as React from "react"
+import React from "react"
+import { useSpring, animated } from 'react-spring';
+
+
 
 function Buddy(props) {
-  const {strokeWidth, fillOpacity, colorPrimary, colorSecondary,...rest} = props;
+  const {strokeWidth, fillOpacity, colorPrimary, colorSecondary, 
+         toggle, initialX, newX, initialY, newY,...rest} = props;
+
+  const position = useSpring({ 
+    x: toggle ? newX : initialX, 
+    y: toggle ? newY : initialY
+  })
 
   return (
-    <svg
+    <animated.svg
       id="prefix__Layer_1"
       data-name="Layer 1"
       viewBox="0 0 87.69 56.59"
+      x={position.x}
+      y={position.y}
       {...rest}
     >
    
@@ -36,7 +47,7 @@ function Buddy(props) {
         fill="none"
         stroke={colorSecondary}
       />
-    </svg>
+    </animated.svg>
   )
 }
 

@@ -35,6 +35,48 @@ const GroupedTrees = (props) => {
     )
 }
 
+const GroupedBuddies = (props) => {
+
+    const { toggle, popOne, popTwo, transferOne, transferTwo } = props;
+
+    const newPositionOne = {
+        x: transferOne ? popTwo.posX : popOne.posX,
+        y: transferOne ? popTwo.posX : popOne.posX
+    }
+
+    const newPositionTwo = {
+        x: transferTwo ? popOne.posX : popTwo.posX,
+        y: transferTwo ? popOne.posX : popTwo.posX
+    }
+
+    return (
+        <>
+            <Buddy strokeWidth={3} 
+                fillOpacity={0.75}   
+                width={"10%"}                    
+                colorPrimary={'#9696fa'} 
+                colorSecondary={'#5252D4'}
+                toggle={toggle}
+                initialX={popOne.posX}
+                newX={newPositionOne.x}
+                initialY={popOne.posY}
+                newY={newPositionOne.y}
+            />
+            <Buddy strokeWidth={3} 
+                fillOpacity={0.75}   
+                width={"10%"}                  
+                colorPrimary={'#f77286'} 
+                colorSecondary={'#E71435'}
+                toggle={toggle}
+                initialX={popTwo.posX}
+                newX={newPositionTwo.x}
+                initialY={popTwo.posY}
+                newY={newPositionTwo.y}
+            />
+        </>
+    )
+}
+
 const flippedy = (prob) => Math.random() < prob ? true : false;
 
 const Trees = (props) => {
@@ -44,17 +86,25 @@ const Trees = (props) => {
 
    
 
-    const treeGroups = props.data.map((d, i) => {
+    // const treeGroups = props.data.map((d, i) => {
+    //     const { popOne, popTwo } = d;
+    //     const transferOne = flippedy(0.1)
+    //     const transferTwo = flippedy(0.1)
+    //     return <GroupedTrees key={i} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} height={height} width={width}  />
+    // })
+
+    const buddyGroups = props.data.map((d, i) => {
         const { popOne, popTwo } = d;
         const transferOne = flippedy(0.1)
         const transferTwo = flippedy(0.1)
-        return <GroupedTrees key={i} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} height={height} width={width}  />
+        return <GroupedBuddies key={i} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} />
     })
 
     return (
         <>
             <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
-                {treeGroups}
+                {/* {treeGroups} */}
+                { buddyGroups }
                 <Buddy width={"10%"} 
                     x={10} 
                     y={-10}
@@ -64,8 +114,8 @@ const Trees = (props) => {
                     colorSecondary={'#5252D4'}
                 />
                 <Buddy width={"10%"} 
-                    x={300} 
-                    y={-10}
+                    x={350} 
+                    y={-150}
                     strokeWidth={3}
                     fillOpacity={1} 
                     colorPrimary={'#f77286'} 
