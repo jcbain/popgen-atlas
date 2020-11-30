@@ -6,14 +6,9 @@ function Buddy(props) {
       id="prefix__Layer_1"
       data-name="Layer 1"
       viewBox="0 0 87.69 56.59"
-      width="10%"
       {...props}
     >
-      {/* <defs>
-        <style>
-          {".prefix__cls-1{fill:none;stroke:#0d87ff;stroke-miterlimit:10}"}
-        </style>
-      </defs> */}
+   
       <path
         className="prefix__cls-1"
         d="M6.5 47.5a12.81 12.81 0 013-5c8-8.78 32-22.74 56-13 12.51 5.08 29.17 18.28 27 30-3.24 17.52-48.44 31.31-71 15-6.65-4.8-18-17.04-15-27z"

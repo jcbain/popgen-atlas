@@ -55,7 +55,7 @@ const Trees = (props) => {
         <>
             <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
                 {treeGroups}
-                <Buddy />
+                <Buddy width={"10%"} x={10} y={-10}/>
                 
             </ContainerSvg>
             <button onClick={() => setToggle(prev => !prev)}>Hello</button>
