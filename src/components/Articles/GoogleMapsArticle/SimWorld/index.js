@@ -12,7 +12,7 @@ const ContainerSvg = styled.svg`
 
 const GroupedBuddies = (props) => {
 
-    const { toggle, popOne, popTwo, transferOne, transferTwo } = props;
+    const { toggle, isOffspring, invisible, popOne, popTwo, transferOne, transferTwo } = props;
 
     const newPositionOne = {
         x: transferOne ? popTwo.posX : popOne.posX,
@@ -33,6 +33,8 @@ const GroupedBuddies = (props) => {
                 // colorSecondary={'#5252D4'}
                 colorSecondary={"#3e3e3e"}
                 toggle={toggle}
+                invisible={invisible}
+                isOffspring={isOffspring}
                 initialX={popOne.posX}
                 newX={newPositionOne.x}
                 initialY={popOne.posY}
@@ -45,6 +47,8 @@ const GroupedBuddies = (props) => {
                 // colorSecondary={'#E71435'}
                 colorSecondary={"#3e3e3e"}
                 toggle={toggle}
+                invisible={invisible}
+                isOffspring={isOffspring}
                 initialX={popTwo.posX}
                 newX={newPositionTwo.x}
                 initialY={popTwo.posY}
@@ -59,14 +63,15 @@ const flippedy = (prob) => Math.random() < prob ? true : false;
 const SimWorld = forwardRef((props, ref) => {
     const { height, width, buddyRefs } = props;
     const [ toggle ] = useScrollTrigger(buddyRefs.ref, buddyRefs.trigger)
-    
+    const [ shrink ] = useScrollTrigger(buddyRefs.ref, buddyRefs.shrinkTrigger)
+    const [ disappear ] = useScrollTrigger(buddyRefs.ref, buddyRefs.disappearTrigger)
 
 
     const buddyGroups = props.data.map((d, i) => {
         const { popOne, popTwo } = d;
         const transferOne = flippedy(0.1)
         const transferTwo = flippedy(0.1)
-        return <GroupedBuddies key={i} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} />
+        return <GroupedBuddies key={i} invisible={disappear} isOffspring={shrink} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} />
     })
 
     return (
