@@ -5,11 +5,19 @@ import { useSpring, animated } from 'react-spring';
 
 function Buddy(props) {
   const {strokeWidth, fillOpacity, colorPrimary, colorSecondary, 
-         toggle, initialX, newX, initialY, newY,...rest} = props;
+         toggle, invisible, isOffspring, initialX, newX, initialY, newY,...rest} = props;
 
   const position = useSpring({ 
     x: toggle ? newX : initialX, 
     y: toggle ? newY : initialY
+  })
+
+  const opacity = useSpring({
+    opacity: invisible ? 0 : 1,
+  })
+
+  const {width} = useSpring({
+    width: isOffspring ? 5 : 10,
   })
 
   return (
@@ -19,9 +27,11 @@ function Buddy(props) {
       viewBox="0 0 87.69 56.59"
       x={position.x}
       y={position.y}
+      opacity={opacity.opacity}
+      width={width.to(x => `${x}%`)}
       {...rest}
     >
-   
+
       <path
         className="prefix__cls-1"
         d="M6.5 47.5a12.81 12.81 0 013-5c8-8.78 32-22.74 56-13 12.51 5.08 29.17 18.28 27 30-3.24 17.52-48.44 31.31-71 15-6.65-4.8-18-17.04-15-27z"

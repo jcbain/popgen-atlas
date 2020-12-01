@@ -1,7 +1,5 @@
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
-import { animated, useSpring } from 'react-spring'
-import { random } from 'lodash'
 
 import useScrollTrigger from '../../../../hooks/useScrollTrigger'
 import Buddy from './Buddy';
@@ -29,8 +27,8 @@ const GroupedBuddies = (props) => {
     return (
         <>
             <Buddy strokeWidth={2} 
-                fillOpacity={0.75}   
-                width={"10%"}                    
+                fillOpacity={0.1}   
+                // width={"10%"}                    
                 colorPrimary={'#9696fa'} 
                 // colorSecondary={'#5252D4'}
                 colorSecondary={"#3e3e3e"}
@@ -41,8 +39,8 @@ const GroupedBuddies = (props) => {
                 newY={newPositionOne.y}
             />
             <Buddy strokeWidth={2} 
-                fillOpacity={0.75}   
-                width={"10%"}                  
+                fillOpacity={0.1}   
+                // width={"10%"}                  
                 colorPrimary={'#f77286'} 
                 // colorSecondary={'#E71435'}
                 colorSecondary={"#3e3e3e"}
@@ -58,9 +56,8 @@ const GroupedBuddies = (props) => {
 
 const flippedy = (prob) => Math.random() < prob ? true : false;
 
-const Trees = forwardRef((props, ref) => {
+const SimWorld = forwardRef((props, ref) => {
     const { height, width, buddyRefs } = props;
-    // const [ toggle, setToggle ] = useState(false)
     const [ toggle ] = useScrollTrigger(buddyRefs.ref, buddyRefs.trigger)
     
 
@@ -73,12 +70,11 @@ const Trees = forwardRef((props, ref) => {
     })
 
     return (
-            <ContainerSvg width='50%' height='100%' viewBox={[0, 0, width, height]}>
-                { buddyGroups }
-                
+            <ContainerSvg width='55%' height='100%' viewBox={[0, 0, width, height]}>
+                { buddyGroups }  
             </ContainerSvg>
     )
 
 })
 
-export default Trees;
+export default SimWorld;
