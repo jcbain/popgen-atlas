@@ -4,8 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const useScrollTrigger = (ref, triggerRef, config={displayMarkers: true, start: "top 80%", end: "top 15%"}) => {
-    const [ toggle, setToggle ] = useState(false);
+const useScrollTrigger = (ref, triggerRef, initial=false, config={displayMarkers: true, start: "top 80%", end: "top 15%"}) => {
+    const [ toggle, setToggle ] = useState(initial);
 
     useEffect(() => {
         if(ref){
@@ -15,9 +15,9 @@ const useScrollTrigger = (ref, triggerRef, config={displayMarkers: true, start: 
                     markers: config.displayMarkers,
                     start: config.start,
                     end: config.end,
-                    onEnter: () => setToggle(true),
+                    onEnter: () => setToggle(!initial),
                     // onLeave: () => setToggle(false),
-                    onLeaveBack: () => setToggle(false),
+                    onLeaveBack: () => setToggle(initial),
                     // onEnterBack: () => setToggle(true)
                 }
             })
