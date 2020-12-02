@@ -16,14 +16,12 @@ const useScrollTrigger = (ref, triggerRef, initial=false, config={displayMarkers
                     start: config.start,
                     end: config.end,
                     onEnter: () => setToggle(!initial),
-                    // onLeave: () => setToggle(false),
                     onLeaveBack: () => setToggle(initial),
-                    // onEnterBack: () => setToggle(true)
                 }
             })
 
         }
-    }, [config.start, config.end, ref, triggerRef])
+    }, [config, ref, triggerRef, initial])
 
 
     return [ toggle ]

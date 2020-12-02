@@ -12,16 +12,16 @@ const ContainerSvg = styled.svg`
 
 const GroupedBuddies = (props) => {
 
-    const { toggle, isOffspring, invisible, popOne, popTwo, transferOne, transferTwo } = props;
+    const { toggle, isOffspring, invisible, popOne, popTwo } = props;
 
     const newPositionOne = {
-        x: transferOne ? popTwo.posX : popOne.posX,
-        y: transferOne ? popTwo.posY : popOne.posY
+        x: popOne.transfer ? popTwo.posX : popOne.posX,
+        y: popOne.transfer ? popTwo.posY : popOne.posY
     }
 
     const newPositionTwo = {
-        x: transferTwo ? popOne.posX : popTwo.posX,
-        y: transferTwo ? popOne.posY : popTwo.posY
+        x: popTwo.transfer ? popOne.posX : popTwo.posX,
+        y: popTwo.transfer ? popOne.posY : popTwo.posY
     }
 
     return (
@@ -66,16 +66,15 @@ const SimWorld = forwardRef((props, ref) => {
     const [ shrink ] = useScrollTrigger(buddyRefs.ref, buddyRefs.shrinkTrigger)
     const [ disappear ] = useScrollTrigger(buddyRefs.ref, buddyRefs.disappearTrigger)
 
-
+    console.log(toggle)
+    console.log("shrink", shrink)
     const buddyGroups = props.data.map((d, i) => {
         const { popOne, popTwo } = d;
-        const transferOne = flippedy(0.1)
-        const transferTwo = flippedy(0.1)
-        return <GroupedBuddies key={i} invisible={disappear} isOffspring={shrink} popOne={popOne} popTwo={popTwo} toggle={toggle} transferOne={transferOne} transferTwo={transferTwo} />
+        return <GroupedBuddies key={i} invisible={disappear} isOffspring={shrink} popOne={popOne} popTwo={popTwo} toggle={toggle}  />
     })
 
     return (
-            <ContainerSvg width='55%' height='100%' viewBox={[0, 0, width, height]}>
+            <ContainerSvg ref={ref} width='55%' height='100%' viewBox={[0, 0, width, height]}>
                 { buddyGroups }  
             </ContainerSvg>
     )

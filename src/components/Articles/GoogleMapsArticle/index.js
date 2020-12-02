@@ -7,6 +7,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import { random } from 'lodash'
 
 import useVisualMode from '../../../hooks/useVisualMode'
+import useScrollTrigger from '../../../hooks/useScrollTrigger'
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 // moved this here for renderirng purposes
@@ -69,7 +70,6 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
-
     if (!isLoaded) return "Loading";
     return (
         <article style={{background: '#f7f7f7'}}>
@@ -93,13 +93,16 @@ const GoogleMapArticle = () => {
     )
 }
 
+const flippedy = (prob) => Math.random() < prob ? true : false;
+
+
 function generateData(height, width, num) {
     const minY = (height/2) - height,
           maxY = height/2
     let data = [];
     for(let i = 0; i < num; i++) {
-        const popOne = {h: 20, w: 10, posX: random(0,  width/2), posY: random(minY, maxY)},
-              popTwo = {h: 20, w: 10, posX: random(width/2, width), posY: random(minY, maxY)};
+        const popOne = {h: 20, w: 10, posX: random(0,  width/2), posY: random(minY, maxY), transfer: flippedy(0.1)},
+              popTwo = {h: 20, w: 10, posX: random(width/2, width), posY: random(minY, maxY), transfer: flippedy(0.1)};
         data.push({ popOne, popTwo })
     }
 
