@@ -33,6 +33,7 @@ const GoogleMapArticle = () => {
     const width = 400,
           height = 400;
     const data = generateData(height-50, width-50, 100);
+    console.log(data)
           
 
     const { isLoaded, loadError } = useLoadScript({
@@ -104,8 +105,8 @@ function generateData(height, width, num) {
           maxY = height/2
     let data = [];
     for(let i = 0; i < num; i++) {
-        const popOne = {h: 20, w: 10, posX: random(0,  width/2 - 20), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.5)},
-              popTwo = {h: 20, w: 10, posX: random(width/2 + 20, width), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.1)};
+        const popOne = {posX: random(0,  width/2 - 20), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.5)},
+              popTwo = {posX: random(width/2 + 20, width), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.1)};
         data.push({ popOne, popTwo })
     }
 
