@@ -34,10 +34,10 @@ function generateData(minX, maxX, minY, maxY,
 
     let data = [];
     for(let i = 0; i < num; i++) {
-        const posX     = random(minX, maxX),
-              posY     = random(minY, maxY),
-              transfer = flipWeightedCoin(transferProb),
-              willDie  = flipWeightedCoin(dieProb),
+        const posX         = random(minX, maxX),
+              posY         = random(minY, maxY),
+              transfer     = flipWeightedCoin(transferProb),
+              willDie      = flipWeightedCoin(dieProb),
               transferPosX = transfer ? random(minTransferX, maxTransferX) : posX,
               transferPosY = transfer ? random(minTransferY, maxTransferY) : posY;
         const individual = { posX, posY, transfer, willDie, transferPosX, transferPosY };
