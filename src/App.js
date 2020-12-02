@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from 'styled-components';
 
@@ -7,7 +7,6 @@ import routes from './routes'
 
 const Header = styled.header`
   width: 100vw;
-  heigth: 200px;
 `
 
 const HeaderTitle = styled.h1`

@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle></GlobalStyle>
+    <GlobalStyle />
     <BrowserRouter forceRefresh={true}>
       <App />
     </BrowserRouter>

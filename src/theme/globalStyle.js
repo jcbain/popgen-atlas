@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
     html, body {
         margin: 0;
         padding: 0;
-        background-color: #ffffff;
+        background-color: ${({mainbackground}) => mainbackground };
       }
       
       .main-wrapper {
@@ -28,19 +28,13 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
       }
       
-      // header {
-      //   width: 100vw;
-      //   display: grid;
-      //   grid-template-rows: 1fr 1fr;
-      //   justify-content: center;
-      //   text-align: center;
-      // }
-      
       .nav-links {
         display: flex;
         justify-content: space-around;
       }
-      
-
 `;
+
+GlobalStyle.defaultProps = {
+    mainbackground: '#fff'
+}
 

@@ -26,28 +26,28 @@ const GroupedBuddies = (props) => {
 
     return (
         <>
-            <Buddy strokeWidth={2} 
-                fillOpacity={0.1}   
+            <Buddy strokeWidth={3} 
+                fillOpacity={1}   
                 // width={"10%"}                    
                 colorPrimary={'#9696fa'} 
                 // colorSecondary={'#5252D4'}
                 colorSecondary={"#3e3e3e"}
                 toggle={toggle}
-                invisible={invisible}
+                invisible={popOne.willDie ? invisible : false}
                 isOffspring={isOffspring}
                 initialX={popOne.posX}
                 newX={newPositionOne.x}
                 initialY={popOne.posY}
                 newY={newPositionOne.y}
             />
-            <Buddy strokeWidth={2} 
-                fillOpacity={0.1}   
+            <Buddy strokeWidth={3} 
+                fillOpacity={1}   
                 // width={"10%"}                  
                 colorPrimary={'#f77286'} 
                 // colorSecondary={'#E71435'}
                 colorSecondary={"#3e3e3e"}
                 toggle={toggle}
-                invisible={invisible}
+                invisible={popTwo.willDie ? invisible : false}
                 isOffspring={isOffspring}
                 initialX={popTwo.posX}
                 newX={newPositionTwo.x}

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import GMap from './GMap'
 import SimWorld from './SimWorld/index.js'
 import { Helmet } from 'react-helmet'
@@ -7,7 +7,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import { random } from 'lodash'
 
 import useVisualMode from '../../../hooks/useVisualMode'
-import useScrollTrigger from '../../../hooks/useScrollTrigger'
+import { GlobalStyle } from '../../../theme/globalStyle'
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 // moved this here for renderirng purposes
@@ -72,24 +72,27 @@ const GoogleMapArticle = () => {
 
     if (!isLoaded) return "Loading";
     return (
-        <article style={{background: '#f7f7f7'}}>
-            <Helmet>
-                <title>Local Adaptation</title>
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-                <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
-            </Helmet>
-            {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
-            {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={data} width={width} height={height}/>}
-            <Text>
-                <TextSection>Here is a map. It is a cool map and it begs to be looked at.</TextSection>
-                <TextSection ref={mapTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
-                <TextSection ref={vizTrigger}>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
-                <TextSection ref={panTrigger}>Let's take a closer look</TextSection>
-                <TextSection ref={migrationTrigger}>Here we have 2 populations. 10% from each will migrate</TextSection>
-                <TextSection ref={shrinkTrigger}>Just a new batch of offspring coming along</TextSection>
-                <TextSection ref={disappearTrigger}>Some will die off. You know...like they do</TextSection>
-            </Text>
-        </article>
+        <ThemeProvider theme={{mainbackground: '#f7f7f7'}}>
+            <GlobalStyle mainbackground='#fcfcfc' />
+            <article>
+                <Helmet>
+                    <title>Local Adaptation</title>
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
+                </Helmet>
+                {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
+                {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={data} width={width} height={height}/>}
+                <Text>
+                    <TextSection>Here is a map. It is a cool map and it begs to be looked at.</TextSection>
+                    <TextSection ref={mapTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
+                    <TextSection ref={vizTrigger}>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
+                    <TextSection ref={panTrigger}>Let's take a closer look</TextSection>
+                    <TextSection ref={migrationTrigger}>Here we have 2 populations. 10% from each will migrate</TextSection>
+                    <TextSection ref={shrinkTrigger}>Just a new batch of offspring coming along</TextSection>
+                    <TextSection ref={disappearTrigger}>Some will die off. You know...like they do</TextSection>
+                </Text>
+            </article>
+        </ThemeProvider>
     )
 }
 
@@ -101,8 +104,8 @@ function generateData(height, width, num) {
           maxY = height/2
     let data = [];
     for(let i = 0; i < num; i++) {
-        const popOne = {h: 20, w: 10, posX: random(0,  width/2), posY: random(minY, maxY), transfer: flippedy(0.1)},
-              popTwo = {h: 20, w: 10, posX: random(width/2, width), posY: random(minY, maxY), transfer: flippedy(0.1)};
+        const popOne = {h: 20, w: 10, posX: random(0,  width/2 - 20), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.5)},
+              popTwo = {h: 20, w: 10, posX: random(width/2 + 20, width), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.1)};
         data.push({ popOne, popTwo })
     }
 
