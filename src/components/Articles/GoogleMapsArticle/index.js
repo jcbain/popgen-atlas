@@ -4,7 +4,6 @@ import GMap from './GMap'
 import SimWorld from './SimWorld/index.js'
 import { Helmet } from 'react-helmet'
 import { useLoadScript } from '@react-google-maps/api';
-import { random } from 'lodash'
 
 import useVisualMode from '../../../hooks/useVisualMode'
 import usePopData from '../../../hooks/usePopData'
@@ -37,10 +36,7 @@ const GoogleMapArticle = () => {
 
     const { popData, loaded } = usePopData(100, 100);
 
-    console.log(popData)
-    const data = generateData(height-50, width-50, 100);
-    console.log(data)
-          
+
 
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
@@ -103,20 +99,5 @@ const GoogleMapArticle = () => {
     )
 }
 
-const flippedy = (prob) => Math.random() < prob ? true : false;
-
-
-function generateData(height, width, num) {
-    const minY = (height/2) - height,
-          maxY = height/2
-    let data = [];
-    for(let i = 0; i < num; i++) {
-        const popOne = {posX: random(0,  width/2 - 20), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.5)},
-              popTwo = {posX: random(width/2 + 20, width), posY: random(minY, maxY), transfer: flippedy(0.1), willDie: flippedy(0.1)};
-        data.push({ popOne, popTwo })
-    }
-
-    return data;
-}
 
 export default GoogleMapArticle;
