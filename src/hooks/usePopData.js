@@ -14,10 +14,12 @@ const usePopData = (n1, n2, options={minWidth: 0, maxWidth: 400, minHeight: -200
           maxY       = options.maxHeight - options.padding; 
 
     useEffect(() => {
-        const popOne = generateData(popOneMinX, popOneMaxX, minY, maxY, n1, 0.1, 0.5),
-              popTwo = generateData(popTwoMinX, popTwoMaxX, minY, maxY, n2, 0.1, 0.3);
+        const popOne = generateData(popOneMinX, popOneMaxX, minY, maxY, popTwoMinX,popTwoMaxX, minY, maxY,  n1, 0.1, 0.5, 1),
+              popTwo = generateData(popTwoMinX, popTwoMaxX, minY, maxY, popOneMinX, popOneMaxX, minY, maxY, n2, 0.1, 0.3, 2);
+        console.log(popOne)
+        const populations = joinPopulationArrays('willTransfer', popOne, popTwo);
         
-        setPopData({ 1: { popOne, popTwo }})
+        setPopData({ g1: populations})
         setLoading(false)
     }, [])
     
@@ -30,21 +32,31 @@ function flipWeightedCoin(prob) {
 
 function generateData(minX, maxX, minY, maxY, 
                       minTransferX, maxTransferX, minTransferY, maxTransferY,
-                      num, transferProb, dieProb) {
+                      num, transferProb, dieProb, originPop) {
 
     let data = [];
     for(let i = 0; i < num; i++) {
         const posX         = random(minX, maxX),
               posY         = random(minY, maxY),
-              transfer     = flipWeightedCoin(transferProb),
+              willTransfer = flipWeightedCoin(transferProb),
               willDie      = flipWeightedCoin(dieProb),
-              transferPosX = transfer ? random(minTransferX, maxTransferX) : posX,
-              transferPosY = transfer ? random(minTransferY, maxTransferY) : posY;
-        const individual = { posX, posY, transfer, willDie, transferPosX, transferPosY };
+              transferPosX = willTransfer ? random(minTransferX, maxTransferX) : posX,
+              transferPosY = willTransfer ? random(minTransferY, maxTransferY) : posY;
+        const individual = { posX, posY, willTransfer, willDie, transferPosX, transferPosY, originPop };
         data.push(individual);
     }
 
     return data;
+}
+
+function joinPopulationArrays(logicVar, ...popArrays) {
+    const res = popArrays.reduce((acc, val) => {
+        return acc.concat(...val);
+     }, []);
+
+     res.sort((x, y) => (x[logicVar] === y[logicVar]) ? 0 : x[logicVar] ? 1 : -1)
+
+     return res;
 }
 
 export default usePopData;

@@ -7,6 +7,8 @@ import { useLoadScript } from '@react-google-maps/api';
 import { random } from 'lodash'
 
 import useVisualMode from '../../../hooks/useVisualMode'
+import usePopData from '../../../hooks/usePopData'
+
 import { GlobalStyle } from '../../../theme/globalStyle'
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
@@ -32,6 +34,10 @@ const GoogleMapArticle = () => {
     const { mode, transition, goBack } = useVisualMode("BUDDY");
     const width = 400,
           height = 400;
+
+    const { popData, loaded } = usePopData(100, 100);
+
+    console.log(popData)
     const data = generateData(height-50, width-50, 100);
     console.log(data)
           
@@ -82,7 +88,7 @@ const GoogleMapArticle = () => {
                     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
                 </Helmet>
                 {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
-                {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={data} width={width} height={height}/>}
+                {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height}/>}
                 <Text>
                     <TextSection>Here is a map. It is a cool map and it begs to be looked at.</TextSection>
                     <TextSection ref={mapTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
