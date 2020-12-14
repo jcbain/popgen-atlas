@@ -21,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
       margin: 0;
       padding: 0;
       background-color: ${({theme}) => theme.mainColor };
+      text-align: left;
     }
         
 `;
@@ -29,7 +30,9 @@ export const topTheme = {
   mainColor: '#ffffff',
   textColor: '#303030',
   fontFlashy: "'Playfair Display', serif",
+  fontMain: "'Karla', sans-serif",
   mainPaddingX: '5vw',
+  darkGray: `#5e5e5e`
 }
 
 GlobalStyle.defaultProps = {

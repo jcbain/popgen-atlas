@@ -32,6 +32,7 @@ const HeaderTitle = styled.h1`
 `
 
 const Nav = styled.nav`
+    font-family: ${({ theme }) => theme.fontMain};
     display: flex;
     flex-direction: row;
     justify-content: space-between;

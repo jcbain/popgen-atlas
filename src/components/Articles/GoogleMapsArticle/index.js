@@ -75,8 +75,7 @@ const GoogleMapArticle = () => {
 
     if (!isLoaded) return "Loading";
     return (
-        <ThemeProvider theme={{mainbackground: '#f7f7f7'}}>
-            <GlobalStyle mainbackground='#fcfcfc' />
+
             <article>
                 <Helmet>
                     <title>Local Adaptation</title>
@@ -95,7 +94,6 @@ const GoogleMapArticle = () => {
                     <TextSection ref={disappearTrigger}>Some will die off. You know...like they do</TextSection>
                 </Text>
             </article>
-        </ThemeProvider>
     )
 }
 
