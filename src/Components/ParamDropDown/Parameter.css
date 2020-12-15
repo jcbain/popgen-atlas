@@ -1,0 +1,42 @@
+
+.Global-Params{
+    float: right;
+    margin-top: 5%;
+    margin-right: 50px;
+    width: 450px;
+    height: 680px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 1px 10px 1px rgb(143, 143, 143);
+    align-items: center;
+}
+
+.param {
+    border-color: rgb(140, 171, 201);
+    height: 30px;
+    width: 95%;
+    margin-left: 10px;
+}
+
+h1{
+    margin: 45px;
+    font-family: 'Courier New', monospace;
+    color: rgb(65, 95, 124);
+    font-size: 30px;
+}
+
+h2{
+    font-family: 'Courier New', monospace;
+    font-size: 19px;
+    margin-left: 10px;
+}
+
+.about-Container p{
+    margin-top: 3em;
+    margin-left: 1em;
+    margin-right: 1em;
+    color: rgb(82, 82, 82);
+    font-weight: 350;
+    font-size: .9rem;
+    text-align: justify;
+}

@@ -1,29 +1,35 @@
-import React from 'react';
-import { Helmet } from "react-helmet";
-import styled, { ThemeProvider } from 'styled-components';
-
-import { GlobalStyle, topTheme } from './theme/globalStyle';
-import Navigation from './components/AppComponents/Navigation';
-
-const Main = styled.main`
-  font-family: ${({ theme }) => theme.fontMain};
-`
+import { useEffect, useState } from 'react';
+import FetchData from './Components/Data/FetchData';
+import ChartData from './Components/Chart/ChartData';
+import Nav from './Components/NavBar/Navbar'
+import Home from './Pages/Home'
+import About from './Pages/About'
+import Resources from './Pages/Resources'
+import Collections from './Pages/Collections'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import './App.css';
 
 function App() {
+  const[data, setData] = useState ([]); //All data stored in indexedDB
+
+  useEffect(() => { //Fetch data stored in indexedDB
+    FetchData().then(result => setData(result));
+  }, [])
+
   return (
-    <ThemeProvider theme={topTheme}>
-      <GlobalStyle />
-      <Main className="content">
-        <Helmet>
-            <meta charSet="utf-8" />
-            <title>PopGen Atlas</title>
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-            <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
-        </Helmet>
-        <Navigation />
-      </Main>
-    </ThemeProvider>
+    <Router>
+      <div className='App'>
+        <Nav/>
+          <Switch>
+            <Route path="/" exact component={Home}/>
+            <Route path="/about" component={About}/>
+            <Route path="/resources" component={Resources}/>
+            <Route path="/collections" component={Collections}>
+              <ChartData chartData={data}/>
+            </Route>
+          </Switch>
+      </div>
+    </Router>
   );
 }
 
