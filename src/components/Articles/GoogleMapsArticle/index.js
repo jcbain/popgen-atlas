@@ -8,15 +8,11 @@ import { useLoadScript } from '@react-google-maps/api';
 import useVisualMode from '../../../hooks/useVisualMode'
 import usePopData from '../../../hooks/usePopData'
 
-import { GlobalStyle } from '../../../theme/globalStyle'
-
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 // moved this here for renderirng purposes
 
 const Text = styled.div`
     position: relative;
-    width: 30vw;
-    margin-left: 60vw;
     font-family: 'Mukta', sans-serif;
     font-size: 18px;
 `;
@@ -76,7 +72,7 @@ const GoogleMapArticle = () => {
     if (!isLoaded) return "Loading";
     return (
 
-            <article>
+            <article style={{width: '100%'}}>
                 <Helmet>
                     <title>Local Adaptation</title>
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
