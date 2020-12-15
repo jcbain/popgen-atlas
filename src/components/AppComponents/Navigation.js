@@ -2,6 +2,9 @@ import React from 'react';
 import { Route, NavLink, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Home from '../../pages/Home'
+import Collections from '../../pages/Collections'
+
 import { device } from '../../devices';
 import routes from '../../routes';
 
@@ -80,7 +83,13 @@ const Navigation = (props) => {
                 { links }
             </Nav>
             <Switch>
-                { routeComponents }
+            <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/collections">
+            <Collections />
+          </Route>
+                {/* { routeComponents } */}
             </Switch>
         </Header>
     )

@@ -20,11 +20,12 @@ const routes = [{
     path: '/collections',
     component: Collections,
     refresh: false,
-}, {
-    path: '/collections/:collectionId',
-    component: SingleCollection,
-    refresh: true,
 }
+// }, {
+//     path: '/collections/:collectionId',
+//     component: SingleCollection,
+//     refresh: true,
+// }
 ]
 
 export default routes;

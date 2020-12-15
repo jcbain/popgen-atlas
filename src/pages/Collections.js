@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import collectionsList from './collectionsList';
+import SingleCollection from './SingleCollection';
 import Card from '../components/AppComponents/Card';
 import { device } from '../devices';
 
@@ -20,19 +21,29 @@ const CollectionCards = styled.div`
 `
 
 function Collections({match}){
+    const { path, url } = useRouteMatch();
     const collectionCards = collectionsList.map(({id, title, description}) => (
         // <Card key={id} title={title} description={description} match={match}/>
         <div className="collection-card" key={id}>
-            <Link to={`${match.url}/${id}`}>{title}</Link>
+            <Link to={`${url}/${id}`}>{title}</Link>
         </div>
     ))
+    console.log(path)
 
     return(
         <Section className='collection' style={{width: '100%'}}>
-            <h1>Collections</h1>
-            <CollectionCards>
-                {collectionCards}
-            </CollectionCards>
+            <Switch>
+                <Route exact path={path} >
+                    <h1>Collections</h1>
+                    <CollectionCards>
+                        {collectionCards}
+                    </CollectionCards>
+                </Route>
+                <Route path={`${path}/:collectionId`}>
+                    <SingleCollection />
+                    {/* <h1>hello</h1> */}
+                </Route>
+            </Switch>
             
         </Section>
     )
