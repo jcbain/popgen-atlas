@@ -1,4 +1,6 @@
 import React from 'react';
+import LocalAdaptation from './collections/LocalAdaptation';
+import Map from './collections/Map'
 
 import collectionsList from './collectionsList';
 

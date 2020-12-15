@@ -28,7 +28,7 @@ function Collections({match}){
     ))
 
     return(
-        <Section className='collection'>
+        <Section className='collection' style={{width: '100%'}}>
             <h1>Collections</h1>
             <CollectionCards>
                 {collectionCards}

@@ -5,8 +5,8 @@ import useScrollTrigger from '../../../../hooks/useScrollTrigger'
 import Buddy from './Buddy';
 
 const ContainerSvg = styled.svg`
-    position: sticky;
-    top: 0px;
+    /* position: sticky;
+    top: 0px; */
 `
 
 
@@ -35,7 +35,7 @@ const SimWorld = forwardRef((props, ref) => {
     })
 
     return (
-            <ContainerSvg ref={ref} width='55%' height='100%' viewBox={[0, 0, width, height]}>
+            <ContainerSvg ref={ref} width='100%' height='100%' viewBox={[0, 0, width, height]}>
                 {buddies}
             </ContainerSvg>
     )

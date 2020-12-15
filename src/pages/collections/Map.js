@@ -3,9 +3,7 @@ import GoogleMapArticle from '../../components/Articles/GoogleMapsArticle';
 
 const Map = (props) => {
     return (
-        <>
-            <GoogleMapArticle />
-        </>
+        <GoogleMapArticle />
     )
 }
 

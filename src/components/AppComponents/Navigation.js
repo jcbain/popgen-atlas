@@ -74,7 +74,7 @@ const Navigation = (props) => {
 
 
     return(
-        <Header className="header">
+        <Header>
             <HeaderTitle>Atlas of Population Genetics</HeaderTitle>
             <Nav>
                 { links }
