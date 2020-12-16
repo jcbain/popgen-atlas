@@ -77,11 +77,14 @@ const Navigation = (props) => {
 
 
     return(
+        <>
         <Header>
             <HeaderTitle>Atlas of Population Genetics</HeaderTitle>
             <Nav>
                 { links }
             </Nav>
+            </Header>
+            
             <Switch>
             <Route exact path="/">
             <Home />
@@ -89,9 +92,9 @@ const Navigation = (props) => {
           <Route path="/collections">
             <Collections />
           </Route>
-                {/* { routeComponents } */}
             </Switch>
-        </Header>
+            </>
+        
     )
 }
 

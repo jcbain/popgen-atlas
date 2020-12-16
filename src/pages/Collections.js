@@ -41,7 +41,6 @@ function Collections({match}){
                 </Route>
                 <Route path={`${path}/:collectionId`}>
                     <SingleCollection />
-                    {/* <h1>hello</h1> */}
                 </Route>
             </Switch>
             

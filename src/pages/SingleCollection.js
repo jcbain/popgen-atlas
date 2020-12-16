@@ -18,6 +18,8 @@ function SingleCollection({match}){
         case('google-map'):
             element = <Map />
             break;
+        default:
+            element = <div></div>
 
     }
 
