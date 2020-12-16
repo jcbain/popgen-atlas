@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GoogleMapArticle from '../../components/Articles/GoogleMapsArticle';
 
-const Map = (props) => {
+const Map = () => {
     return (
         <GoogleMapArticle />
     )

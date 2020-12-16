@@ -41,8 +41,7 @@ function Collections(){
                 <Route path={`${path}/:collectionId`}>
                     <SingleCollection />
                 </Route>
-            </Switch>
-            
+            </Switch>  
         </Section>
     )
 }
