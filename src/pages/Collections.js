@@ -20,15 +20,14 @@ const CollectionCards = styled.div`
     }
 `
 
-function Collections({match}){
+function Collections(){
     const { path, url } = useRouteMatch();
     const collectionCards = collectionsList.map(({id, title, description}) => (
-        // <Card key={id} title={title} description={description} match={match}/>
         <div className="collection-card" key={id}>
             <Link to={`${url}/${id}`}>{title}</Link>
         </div>
     ))
-    console.log(path)
+
 
     return(
         <Section className='collection' style={{width: '100%'}}>

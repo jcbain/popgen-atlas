@@ -1,12 +1,14 @@
 import React from 'react';
-import { Route, NavLink, Switch } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Home from '../../pages/Home'
-import Collections from '../../pages/Collections'
+import Home from '../../pages/Home';
+import Collections from '../../pages/Collections';
+import Resources from '../../pages/Resources';
+import About from '../../pages/About';
 
 import { device } from '../../devices';
-import routes from '../../routes';
+
 
 const Header = styled.header`
     width: 100%;
@@ -45,7 +47,7 @@ const Nav = styled.nav`
     }
 `;
 
-const StyledNavLink = styled(NavLink)`
+const StyledNavLink = styled(Link)`
     text-decoration: none;
     color: ${({ theme }) => theme.textColor };
     &:active {
@@ -59,41 +61,46 @@ const StyledNavLink = styled(NavLink)`
     }
 `;
 
-const routeComponents = routes.map(({path, component, refresh}, key) => <Route key={key} exact path={path} refresh={refresh} component={component} />);
 
 const linkData = [
-    { name: 'home', path: '/' },
-    { name: 'about', path: '/about' },
-    { name: 'resources', path: '/resources' },
-    { name: 'collections', path: '/collections' }
+    { name: 'home', path: '/', component: Home, exact: true },
+    { name: 'about', path: '/about', component: About },
+    { name: 'resources', path: '/resources', component: Resources },
+    { name: 'collections', path: '/collections', component: Collections }
 ];
+ 
 
 
 const Navigation = (props) => {
-    const links = linkData.map((l, i) => {
-        const { name, path } = l;
-        return <p key={i}><StyledNavLink to={path}>{ name }</StyledNavLink></p>
-      })
+    let links = [];
+    let routes = [];
 
+    linkData.forEach((l, i) => {
+        const { name, path, exact } = l;
+        const link = (
+            <p key={i}><StyledNavLink to={path}>{ name }</StyledNavLink></p>
+        );
+        const route = (
+            <Route key={i} exact={exact} path={path}>
+                <l.component />
+            </Route>
+        );
+        links.push(link);
+        routes.push(route);
+    })
 
     return(
         <>
-        <Header>
-            <HeaderTitle>Atlas of Population Genetics</HeaderTitle>
-            <Nav>
-                { links }
-            </Nav>
+            <Header>
+                <HeaderTitle>Atlas of Population Genetics</HeaderTitle>
+                <Nav>
+                    { links }
+                </Nav>
             </Header>
-            
             <Switch>
-            <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/collections">
-            <Collections />
-          </Route>
+                {routes}
             </Switch>
-            </>
+        </>
         
     )
 }
