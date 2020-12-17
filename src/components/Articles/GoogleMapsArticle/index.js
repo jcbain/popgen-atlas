@@ -24,6 +24,8 @@ const Text = styled.div`
     position: relative;
     font-family: 'Mukta', sans-serif;
     font-size: 18px;
+    width: 20%;
+    margin-left: 70%;
 `;
 
 

@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
+import { device } from '../../../../devices';
 import useScrollTrigger from '../../../../hooks/useScrollTrigger'
 import Squiggle from './Squiggle';
 
 const ContainerSvg = styled.svg`
-    /* position: sticky;
-    top: 0px; */
+    width: 70%;
+    margin-left: ${({ theme }) => theme.mainPaddingX};
+    height: 100vh;
 `
 
 
@@ -35,7 +37,7 @@ const SimWorld = forwardRef((props, ref) => {
     })
 
     return (
-            <ContainerSvg ref={ref} width='100%' height='100%' viewBox={[0, 0, width, height]}>
+            <ContainerSvg ref={ref} viewBox={[0, 0, width, height]}>
                 {buddies}
             </ContainerSvg>
     )
