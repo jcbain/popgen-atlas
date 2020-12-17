@@ -4,9 +4,8 @@ import Map from './collections/Map'
 import { useParams } from "react-router-dom";
 
 
-function SingleCollection({match}){
+function SingleCollection(){
     const {collectionId} = useParams();
-    console.log("I hav ebeen called")
 
     let element = <div></div>
     switch(collectionId){

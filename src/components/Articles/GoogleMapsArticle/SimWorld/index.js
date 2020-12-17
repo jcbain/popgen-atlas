@@ -1,8 +1,8 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import useScrollTrigger from '../../../../hooks/useScrollTrigger'
-import Buddy from './Buddy';
+import Squiggle from './Squiggle';
 
 const ContainerSvg = styled.svg`
     /* position: sticky;
@@ -18,7 +18,7 @@ const SimWorld = forwardRef((props, ref) => {
 
     const buddies = data.map((d , i) => {
         return (
-            <Buddy key={i}
+            <Squiggle key={i}
                 strokeWidth={3} 
                 fillOpacity={1}                   
                 colorPrimary={d.originPop === 1 ? '#9696fa' : '#f77286'} 
