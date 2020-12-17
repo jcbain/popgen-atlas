@@ -6,7 +6,7 @@ const usePopData = (n1, n2, options={minWidth: 0, maxWidth: 400, minHeight: -200
     const [ popData, setPopData ] = useState({})
     const [ loading, setLoading ] = useState(true)
 
-    const popOneMinX = options.minWidth + options.padding,
+    const popOneMinX = options.minWidth,
           popOneMaxX = options.maxWidth/2 - options.padding,
           popTwoMinX = options.maxWidth/2 + options.padding,
           popTwoMaxX = options.maxWidth - options.padding,

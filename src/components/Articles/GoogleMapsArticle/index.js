@@ -39,7 +39,7 @@ const GoogleMapArticle = () => {
     const width = 400,
           height = 400;
 
-    const { popData, loaded } = usePopData(50, 75);
+    const { popData, loaded } = usePopData(30, 30);
 
 
 
