@@ -7,6 +7,7 @@ import { useLoadScript } from '@react-google-maps/api';
 
 import useVisualMode from '../../../hooks/useVisualMode'
 import usePopData from '../../../hooks/usePopData'
+import useTriggers from './hooks/useTriggers';
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 // moved this here for renderirng purposes
@@ -60,6 +61,7 @@ const GoogleMapArticle = () => {
     const shrinkTrigger = useRef(null)
 
 
+
     const mapRefs = {
         mapRef: mapRef,
         mapTrigger: mapTrigger
@@ -80,6 +82,9 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
+    const { isAppear } = useTriggers({ main: buddyRefs.ref, trigger: buddyRefs.disappearTrigger })
+    console.log(isAppear)
+
     if (!isLoaded) return "Loading";
     return (
 
@@ -91,7 +96,9 @@ const GoogleMapArticle = () => {
                 </Helmet>
                 <VizContainer>
                     {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
-                    {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height}/>}
+                    {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
+                    disappear={isAppear}
+                    />}
                 </VizContainer>
                 
                 <Text>

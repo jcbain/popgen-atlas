@@ -8,7 +8,7 @@ const useScrollTrigger = (ref, triggerRef, initial=false, config={displayMarkers
     const [ toggle, setToggle ] = useState(initial);
 
     useEffect(() => {
-        if(ref){
+        if(ref.current){
             gsap.to(ref.current, {
                 scrollTrigger: {
                     trigger: triggerRef.current,
