@@ -30,6 +30,8 @@ const Text = styled.div`
 `;
 
 
+
+
 const TextSection = styled.p`
     background-color: #fff;
     padding: 10%;
