@@ -1,10 +1,12 @@
 import useScrollTrigger from '../../../../hooks/useScrollTrigger';
 
-const useTriggers = ( appear ) => {
+const useTriggers = ( mainRef, migrationTrigger, appearTrigger, growTrigger ) => {
 
-    const [ isAppear ] = useScrollTrigger(appear.main, appear.trigger, false);
+    const [ isMigrate ] = useScrollTrigger(mainRef, migrationTrigger);
+    const [ isAppear ] = useScrollTrigger(mainRef, appearTrigger);
+    const [ isGrow ] = useScrollTrigger(mainRef, growTrigger, true);
 
-    return { isAppear };
+    return { isMigrate, isAppear, isGrow };
 }
 
 export default useTriggers;

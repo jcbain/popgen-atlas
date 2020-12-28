@@ -13,12 +13,8 @@ const ContainerSvg = styled.svg`
 
 
 const SimWorld = forwardRef((props, ref) => {
-    const { height, width, buddyRefs, data, disappear, loaded } = props;
-    const [ toggle ] = useScrollTrigger(buddyRefs.ref, buddyRefs.trigger)
-    const [ shrink ] = useScrollTrigger(buddyRefs.ref, buddyRefs.shrinkTrigger, true)
-    // const [ disappear ] = useScrollTrigger(buddyRefs.ref, buddyRefs.disappearTrigger)
-    // const [something] = useScrollTrigger(buddyRefs.ref, buddyRefs.disappearTrigger)
-    // console.log('trigger in component', something)
+    const { height, width, buddyRefs, data, migrate, disappear, grow, loaded } = props;
+
 
     const buddies = data.map((d , i) => {
         return (
@@ -27,9 +23,9 @@ const SimWorld = forwardRef((props, ref) => {
                 fillOpacity={1}                   
                 colorPrimary={d.originPop === 1 ? '#9696fa' : '#f77286'} 
                 colorSecondary={"#3e3e3e"}
-                toggle={toggle}
+                toggle={migrate}
                 invisible={d.willDie ? disappear : false}
-                isOffspring={shrink}
+                isOffspring={grow}
                 initialX={d.posX}
                 newX={d.transferPosX}
                 initialY={d.posY}

@@ -82,8 +82,7 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
-    const { isAppear } = useTriggers({ main: buddyRefs.ref, trigger: buddyRefs.disappearTrigger })
-    console.log(isAppear)
+    const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
     if (!isLoaded) return "Loading";
     return (
@@ -98,6 +97,8 @@ const GoogleMapArticle = () => {
                     {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
                     {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
                     disappear={isAppear}
+                    migrate={isMigrate}
+                    grow={isGrow}
                     />}
                 </VizContainer>
                 
