@@ -40,7 +40,7 @@ const TextSection = styled.p`
 `
 const GoogleMapArticle = () => {
 
-    const { mode, transition, goBack } = useVisualMode("BUDDY");
+    const { mode, transition, goBack } = useVisualMode("MAP");
     const width = 400,
           height = 400;
 

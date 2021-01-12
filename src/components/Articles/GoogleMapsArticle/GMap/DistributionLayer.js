@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Polygon } from '@react-google-maps/api';
 
 import data from '../../LocalAdaptationArticle/data/pinucont';
 
 
 const DistributionLayer = (props) => {
+    const ref = useRef()
+
 
     const polys = [];
     data.features.forEach(( f, i ) => {
@@ -25,7 +27,9 @@ const DistributionLayer = (props) => {
         zIndex: 1
     }
 
-    return <Polygon paths={polys} options={options}/>
+    console.log(ref.current)
+
+    return <Polygon ref={ref} paths={polys} options={options}/>
 }
 
 export default DistributionLayer;
