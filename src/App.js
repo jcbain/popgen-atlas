@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import styled from 'styled-components';
 
 import routes from './routes'
+import useMutationData from './hooks/useMutationData'
 
 const Header = styled.header`
   width: 100vw;
@@ -26,6 +27,9 @@ const linksData = [
 
 
 function App() {
+  const { mutations, loaded } = useMutationData()
+
+  console.log(mutations[0])
 
   const links = linksData.map((l, i) => {
     const { name, path } = l;
@@ -55,6 +59,7 @@ function App() {
       <Switch>
           {routeComponents}
       </Switch>
+      {loaded && <h1>Done</h1>}
     </div>
   );
 }
