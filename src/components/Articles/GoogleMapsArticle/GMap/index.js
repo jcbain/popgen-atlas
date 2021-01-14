@@ -12,10 +12,10 @@ import DistributionLayer from './DistributionLayer';
 
 
 
-const MapDiv = styled(animated.div)`
+const MapDiv = styled.div`
     width: 100vw;
     height: 100vh;
-    position: sticky;
+    /* position: sticky; */
     top: 0px;
 `;
 
@@ -24,8 +24,8 @@ const MapDiv = styled(animated.div)`
 const GMap = forwardRef((props, ref) => {
     const { mapRefs, panRefs, vizRefs } = props;
     
-    const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
-    const springProps = useSpring({opacity: toggle ? 1: 0})
+    // const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
+    // const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
         width: '100%',
         height: '100%',
@@ -58,7 +58,7 @@ const GMap = forwardRef((props, ref) => {
 
 
     return (
-        <MapDiv ref={ref} style={springProps}>
+        <MapDiv ref={ref}>
             <GoogleMap onLoad={onMapLoad}  
                 ref={panRefs.ref} mapContainerStyle={mapContainerStyles}
                 zoom={4}

@@ -4,9 +4,11 @@ import GMap from './GMap'
 import SimWorld from './SimWorld/index.js'
 import { Helmet } from 'react-helmet'
 import { useLoadScript } from '@react-google-maps/api';
+import { animated, useSpring } from 'react-spring'
 
-import useVisualMode from './hooks/useVisualMode'
-import usePopData from './hooks/usePopData'
+import useScrollTrigger from '../../../hooks/useScrollTrigger';
+import useVisualMode from './hooks/useVisualMode';
+import usePopData from './hooks/usePopData';
 import useTriggers from './hooks/useTriggers';
 
 
@@ -17,7 +19,7 @@ const ArticleContainer  = styled.article`
     width: 100%;
 `;
 
-const VizContainer = styled.div`
+const VizContainer = styled(animated.div)`
     position: sticky;
     top: 0px;
 `
@@ -31,17 +33,19 @@ const Text = styled.div`
 `;
 
 
-
-
 const TextSection = styled.p`
     background-color: #fff;
     padding: 10%;
     border-radius: 5px;
     margin-bottom: 50vh;
+    border: 3px solid #303030;
 `
 const GoogleMapArticle = () => {
 
     const { mode, transition, goBack } = useVisualMode("MAP");
+
+    
+
     const width = 400,
           height = 400;
 
@@ -85,6 +89,9 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
+    const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
+    const springProps = useSpring({opacity: toggle ? 1: 0})
+
     const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
     if (!isLoaded) return "Loading";
@@ -96,13 +103,15 @@ const GoogleMapArticle = () => {
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
                 </Helmet>
-                <VizContainer>
+                <VizContainer style={springProps}>
                     {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
-                    {mode === "BUDDY" && <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
-                    disappear={isAppear}
-                    migrate={isMigrate}
-                    grow={isGrow}
-                    />}
+                    {mode === "BUDDY" && (
+                        <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
+                                  disappear={isAppear}
+                                  migrate={isMigrate}
+                                  grow={isGrow}
+                        />
+                    )}
                 </VizContainer>
                 
                 <Text>
