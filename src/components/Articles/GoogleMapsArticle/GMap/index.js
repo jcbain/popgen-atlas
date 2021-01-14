@@ -25,7 +25,6 @@ const GMap = forwardRef((props, ref) => {
     const { mapRefs, panRefs, vizRefs } = props;
     
     const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
-    const [ toggle3 ] = useScrollTrigger(panRefs.ref, vizRefs.trigger)
     const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
         width: '100%',
@@ -41,7 +40,7 @@ const GMap = forwardRef((props, ref) => {
         panRefs.ref.current.setZoom(zoom)
     }, [])
 
-    const status = useScrollFunction(
+    const _ = useScrollFunction(
         panRefs.ref, 
         panRefs.trigger, 
         () => pan({lat: 55, lng: -120, zoom: 6}),
@@ -66,7 +65,8 @@ const GMap = forwardRef((props, ref) => {
                 center={{lat: 53, lng: -95}}
                 options={options}
             >   
-                { toggle3 && <DistributionLayer /> }
+                <DistributionLayer />
+                {/* { toggle3 && <DistributionLayer /> } */}
             </GoogleMap>
         </MapDiv>
     )

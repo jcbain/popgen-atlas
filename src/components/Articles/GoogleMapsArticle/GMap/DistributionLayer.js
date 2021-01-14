@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Polygon } from '@react-google-maps/api';
 
 import data from '../../LocalAdaptationArticle/data/pinucont';
 
+// TODO : make distributional layer fade in and out
 
 const DistributionLayer = (props) => {
-    const ref = useRef()
-
 
     const polys = [];
     data.features.forEach(( f, i ) => {
@@ -27,9 +26,7 @@ const DistributionLayer = (props) => {
         zIndex: 1
     }
 
-    console.log(ref.current)
-
-    return <Polygon ref={ref} paths={polys} options={options}/>
+    return <Polygon  paths={polys} options={options}/>
 }
 
 export default DistributionLayer;

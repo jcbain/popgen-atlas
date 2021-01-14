@@ -5,9 +5,10 @@ import SimWorld from './SimWorld/index.js'
 import { Helmet } from 'react-helmet'
 import { useLoadScript } from '@react-google-maps/api';
 
-import useVisualMode from '../../../hooks/useVisualMode'
-import usePopData from '../../../hooks/usePopData'
+import useVisualMode from './hooks/useVisualMode'
+import usePopData from './hooks/usePopData'
 import useTriggers from './hooks/useTriggers';
+
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
 // moved this here for renderirng purposes
