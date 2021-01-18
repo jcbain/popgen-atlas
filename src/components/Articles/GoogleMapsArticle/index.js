@@ -95,6 +95,7 @@ const GoogleMapArticle = () => {
     const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
     if (!isLoaded) return "Loading";
+
     return (
 
             <ArticleContainer>
