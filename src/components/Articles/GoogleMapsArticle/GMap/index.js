@@ -22,27 +22,27 @@ const MapDiv = styled.div`
 
 
 const GMap = forwardRef((props, ref) => {
-    const { mapRefs, panRefs, vizRefs } = props;
+    const { panRefs, refs } = props;
+
+
     
-    // const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
-    // const springProps = useSpring({opacity: toggle ? 1: 0})
     const mapContainerStyles = {
         width: '100%',
         height: '100%',
     };
 
     const onMapLoad = useCallback((map) => {
-        panRefs.ref.current = map;
+        refs.main.current = map;
     }, [] )
 
     const pan = useCallback(({ lat, lng, zoom }) => {
-        panRefs.ref.current.panTo({ lat, lng })
-        panRefs.ref.current.setZoom(zoom)
+        refs.main.current.panTo({ lat, lng })
+        refs.main.current.setZoom(zoom)
     }, [])
 
     const _ = useScrollFunction(
-        panRefs.ref, 
-        panRefs.trigger, 
+        refs.main, 
+        refs.trigger, 
         () => pan({lat: 55, lng: -120, zoom: 6}),
         () => pan({lat: 53, lng: -95, zoom: 4})
     )
@@ -60,7 +60,7 @@ const GMap = forwardRef((props, ref) => {
     return (
         <MapDiv ref={ref}>
             <GoogleMap onLoad={onMapLoad}  
-                ref={panRefs.ref} mapContainerStyle={mapContainerStyles}
+                ref={refs.main} mapContainerStyle={mapContainerStyles}
                 zoom={4}
                 center={{lat: 53, lng: -95}}
                 options={options}

@@ -58,28 +58,16 @@ const GoogleMapArticle = () => {
     })
 
     const mapRef = useRef(null)
-    const mapTrigger = useRef(null)
-    const panRef = useRef(null)
-    const panTrigger = useRef(null)
-    const vizTrigger = useRef(null)
+    const mapShowTrigger = useRef(null);
+    const mapDisappearTrigger = useRef(null);
     const migrationRef = useRef(null)
     const migrationTrigger = useRef(null);
     const disappearTrigger = useRef(null);
     const shrinkTrigger = useRef(null)
 
-
-
     const mapRefs = {
-        mapRef: mapRef,
-        mapTrigger: mapTrigger
-    }
-    const panRefs = {
-        ref: panRef,
-        trigger: panTrigger
-    }
-    const vizRefs = {
-        ref: panRef,
-        trigger: vizTrigger
+        main: useRef(null),
+        trigger: useRef(null)
     }
 
     const buddyRefs = {
@@ -89,12 +77,14 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
-    const [ toggle ] = useScrollTrigger(mapRefs.mapRef, mapRefs.mapTrigger)
-    const springProps = useSpring({opacity: toggle ? 1: 0})
+    const [ showMap ] = useScrollTrigger(mapRef, mapShowTrigger);
+    
+    const springProps = useSpring({opacity: showMap ? 1: 0});
 
     const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
     if (!isLoaded) return "Loading";
+
 
     return (
 
@@ -105,7 +95,7 @@ const GoogleMapArticle = () => {
                     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
                 </Helmet>
                 <VizContainer style={springProps}>
-                    {mode === "MAP" && <GMap ref={mapRef} mapRefs={mapRefs} vizRefs={vizRefs} panRefs={panRefs}/>}
+                    {mode === "MAP" && <GMap ref={mapRef} refs={mapRefs} />}
                     {mode === "BUDDY" && (
                         <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
                                   disappear={isAppear}
@@ -117,9 +107,10 @@ const GoogleMapArticle = () => {
                 
                 <Text>
                     <TextSection>Here is a map. It is a cool map and it begs to be looked at.</TextSection>
-                    <TextSection ref={mapTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
-                    <TextSection ref={vizTrigger}>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
-                    <TextSection ref={panTrigger}>Let's take a closer look</TextSection>
+                    <TextSection ref={mapShowTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
+                    <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
+                    <TextSection ref={mapRefs.trigger}>Let's take a closer look</TextSection>
+                    <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
                     <TextSection ref={migrationTrigger}>Here we have 2 populations. 10% from each will migrate</TextSection>
                     <TextSection ref={shrinkTrigger}>Just a new batch of offspring coming along</TextSection>
                     <TextSection ref={disappearTrigger}>Some will die off. You know...like they do</TextSection>
