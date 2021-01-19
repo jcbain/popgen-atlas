@@ -12,7 +12,7 @@ import DistributionLayer from './DistributionLayer';
 
 
 
-const MapDiv = styled.div`
+const MapDiv = styled(animated.div)`
     width: 100vw;
     height: 100vh;
     /* position: sticky; */
@@ -22,7 +22,10 @@ const MapDiv = styled.div`
 
 
 const GMap = forwardRef((props, ref) => {
-    const { panRefs, refs } = props;
+    const { refs } = props;
+
+    const [ showMap ] = useScrollTrigger(ref, refs.mapShowTrigger);
+    const appearProps = useSpring({ opacity: showMap ? 1 : 0 })
 
 
     
@@ -58,7 +61,7 @@ const GMap = forwardRef((props, ref) => {
 
 
     return (
-        <MapDiv ref={ref}>
+        <MapDiv ref={ref} style={appearProps}>
             <GoogleMap onLoad={onMapLoad}  
                 ref={refs.main} mapContainerStyle={mapContainerStyles}
                 zoom={4}

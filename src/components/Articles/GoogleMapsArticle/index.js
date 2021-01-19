@@ -58,8 +58,6 @@ const GoogleMapArticle = () => {
     })
 
     const mapRef = useRef(null)
-    const mapShowTrigger = useRef(null);
-    const mapDisappearTrigger = useRef(null);
     const migrationRef = useRef(null)
     const migrationTrigger = useRef(null);
     const disappearTrigger = useRef(null);
@@ -67,7 +65,8 @@ const GoogleMapArticle = () => {
 
     const mapRefs = {
         main: useRef(null),
-        trigger: useRef(null)
+        trigger: useRef(null),
+        mapShowTrigger: useRef(null)
     }
 
     const buddyRefs = {
@@ -76,10 +75,6 @@ const GoogleMapArticle = () => {
         disappearTrigger: disappearTrigger,
         shrinkTrigger: shrinkTrigger 
     }
-
-    const [ showMap ] = useScrollTrigger(mapRef, mapShowTrigger);
-    
-    const springProps = useSpring({opacity: showMap ? 1: 0});
 
     const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
@@ -94,7 +89,7 @@ const GoogleMapArticle = () => {
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
                 </Helmet>
-                <VizContainer style={springProps}>
+                <VizContainer>
                     {mode === "MAP" && <GMap ref={mapRef} refs={mapRefs} />}
                     {mode === "BUDDY" && (
                         <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
@@ -107,7 +102,7 @@ const GoogleMapArticle = () => {
                 
                 <Text>
                     <TextSection>Here is a map. It is a cool map and it begs to be looked at.</TextSection>
-                    <TextSection ref={mapShowTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
+                    <TextSection ref={mapRefs.mapShowTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
                     <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
                     <TextSection ref={mapRefs.trigger}>Let's take a closer look</TextSection>
                     <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
