@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import GMap from './GMap'
 import SimWorld from './SimWorld/index.js'
@@ -7,9 +7,11 @@ import { useLoadScript } from '@react-google-maps/api';
 import { animated, useSpring } from 'react-spring'
 
 import useScrollTrigger from '../../../hooks/useScrollTrigger';
+import useScrollFunction from '../../../hooks/useScrollFunction';
 import useVisualMode from './hooks/useVisualMode';
 import usePopData from './hooks/usePopData';
 import useTriggers from './hooks/useTriggers';
+import { fade } from '@material-ui/core';
 
 
 // https://www.youtube.com/watch?v=WZcxJGmLbSo
@@ -42,7 +44,10 @@ const TextSection = styled.p`
 `
 const GoogleMapArticle = () => {
 
-    const { mode, transition, goBack } = useVisualMode("MAP");
+    // const { mode, transition, goBack } = useVisualMode("MAP");
+    const [ mode, setMode ] = useState("BUDDY")
+    const [ transition, setTransition ] = useState(false)
+
 
     
 
@@ -53,11 +58,14 @@ const GoogleMapArticle = () => {
 
 
 
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     })
 
     const mapRef = useRef(null)
+    const vizRef = useRef(null)
+    const buddyTrigger = useRef(null)
     const migrationRef = useRef(null)
     const migrationTrigger = useRef(null);
     const disappearTrigger = useRef(null);
@@ -76,8 +84,9 @@ const GoogleMapArticle = () => {
         shrinkTrigger: shrinkTrigger 
     }
 
-    const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
 
+    // const _ = useScrollFunction(vizRef, buddyTrigger, () => setMode("BUDDY"), () => setMode("MAP"))
+    const { isMigrate, isAppear, isGrow } = useTriggers(migrationRef, migrationTrigger, disappearTrigger, shrinkTrigger)
     if (!isLoaded) return "Loading";
 
 
@@ -89,8 +98,8 @@ const GoogleMapArticle = () => {
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet" /> 
                 </Helmet>
-                <VizContainer>
-                    {mode === "MAP" && <GMap ref={mapRef} refs={mapRefs} />}
+                <VizContainer ref={vizRef}>
+                    {/* {mode === "MAP" && isLoaded && <GMap ref={mapRef} refs={mapRefs} isLoaded={isLoaded}/>} */}
                     {mode === "BUDDY" && (
                         <SimWorld ref={migrationRef} buddyRefs={buddyRefs} data={popData['g1']} loaded={loaded} width={width} height={height} 
                                   disappear={isAppear}
@@ -105,7 +114,7 @@ const GoogleMapArticle = () => {
                     <TextSection ref={mapRefs.mapShowTrigger}>Actually this is the map and it still begs to be looked at</TextSection>
                     <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
                     <TextSection ref={mapRefs.trigger}>Let's take a closer look</TextSection>
-                    <TextSection>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
+                    <TextSection ref={buddyTrigger}>This is where all of those lodgepoll pines are. In other word, this is their distribution.</TextSection>
                     <TextSection ref={migrationTrigger}>Here we have 2 populations. 10% from each will migrate</TextSection>
                     <TextSection ref={shrinkTrigger}>Just a new batch of offspring coming along</TextSection>
                     <TextSection ref={disappearTrigger}>Some will die off. You know...like they do</TextSection>

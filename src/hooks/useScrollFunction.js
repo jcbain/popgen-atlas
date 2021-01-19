@@ -13,13 +13,15 @@ const useScrollFunction = (ref, trigger, triggerFunc, triggerFuncBack, config={d
         setStatus("on enter called")
     }, [triggerFunc])
 
+ 
+
     const onLeaveBack = useCallback(() => {
         triggerFuncBack()
         setStatus("on leave back called")
     }, [triggerFuncBack])
 
     useEffect(() => {
-        if(ref) {
+        if(ref.current) {
             gsap.to(ref.current, {
                 scrollTrigger: {
                     trigger: trigger.current,
@@ -33,7 +35,7 @@ const useScrollFunction = (ref, trigger, triggerFunc, triggerFuncBack, config={d
         }
 
         return () => console.log("unmounted")
-    }, [trigger, ref, onEnter, onLeaveBack])
+    }, [trigger, ref.current, onEnter, onLeaveBack])
 
     return status
 

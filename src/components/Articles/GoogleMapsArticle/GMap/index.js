@@ -22,7 +22,7 @@ const MapDiv = styled(animated.div)`
 
 
 const GMap = forwardRef((props, ref) => {
-    const { refs } = props;
+    const { refs, isLoaded } = props;
 
     const [ showMap ] = useScrollTrigger(ref, refs.mapShowTrigger);
     const appearProps = useSpring({ opacity: showMap ? 1 : 0 })
@@ -35,13 +35,19 @@ const GMap = forwardRef((props, ref) => {
     };
 
     const onMapLoad = useCallback((map) => {
-        refs.main.current = map;
-    }, [] )
+        if (isLoaded) {
+            refs.main.current = map;
+        }
+
+    }, [isLoaded] )
 
     const pan = useCallback(({ lat, lng, zoom }) => {
-        refs.main.current.panTo({ lat, lng })
-        refs.main.current.setZoom(zoom)
-    }, [])
+        if (isLoaded) {
+            refs.main.current.panTo({ lat, lng })
+            refs.main.current.setZoom(zoom)
+        }
+
+    }, [isLoaded])
 
     const _ = useScrollFunction(
         refs.main, 
