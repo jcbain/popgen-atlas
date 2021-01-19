@@ -23,9 +23,9 @@ const useScrollFunction = (ref, trigger, triggerFunc, triggerFuncBack, config={d
             gsap.to(ref.current, {
                 scrollTrigger: {
                     trigger: trigger.current,
-                    markers: true,
-                    start: "top 80%",
-                    end: "top 15%",
+                    markers: config.displayMarkers,
+                    start: config.start,
+                    end: config.end,
                     onEnter: onEnter, 
                     onLeaveBack: onLeaveBack
                 }
