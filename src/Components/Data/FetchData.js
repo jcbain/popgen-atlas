@@ -1,34 +1,35 @@
-import DataStore from './DataStore';
+/* =============================================================================
+    @TODO: Make hash for genomeTemp, if possible, combine code with genomeData?
+    
+    Returns data stored in indexedDB. If hashcode of json files are different
+    from the code stored in localstorage, CreateStore is called, which
+    cleans file and stores clean data in dexie.
+============================================================================= */
 
-async function FetchData() {
-    const ar = await DataStore().coordinates.toArray(); //Table to array (DataStore returns db)
+import genomeData from './genome_data.json'
+import genomeTemp from './genome_template.json'
+import db from '../Dexie/indexeddb'
+import sha256 from 'crypto-js/sha256'
+import Base64 from 'crypto-js/enc-base64'
+import CreateStore from '../Dexie/CreateStore'
 
-    setColor(ar)
+export default async function FetchData() {
+    if(newChanges()) {
+        CreateStore(); // Creates dexie tables if Json file is different
+    }
+
+    const ar = await db.coordinates.toArray(); // Table stored in dexie
     return ar[0];
 }
 
-function setColor(ar) { //***Should not be here: Put in clean file
-    const numColor = 7; //6 colors to create gradient
-    var min = 1;
-    var max = 0;
-    var range = 0;
+function newChanges() {
+    const hash = localStorage.getItem('hash'); // Hashcode for json file saved in localstorage
+    const newH = Base64.stringify(sha256(JSON.stringify(genomeData))) // Json file hashcode
 
-    for(var gene of ar[0]) {
-        if (gene.esf < min) {min = gene.esf} 
-        else if (gene.esf > max) {max = gene.esf}
+    if (hash === null || hash !== newH) {
+        localStorage.setItem('hash', newH);
+        return true;
     }
 
-    range = (max-min)/numColor;
-
-    for(var gene of ar[0]) {
-        if(gene.esf <= min+(range)) {gene.color = '#aa00ff'} //purple
-        else if (gene.esf <= min+(2*range)) {gene.color = '#0000ff'} //blue
-        else if (gene.esf <= min+(3*range)) {gene.color = '#4296f5'} //light blue
-        else if (gene.esf <= min+(4*range)) {gene.color = '#42cbf5'} //light-er blue
-        else if (gene.esf <= min+(5*range)) {gene.color = '#ffe100'} //yellow
-        else if (gene.esf <= min+(6*range)) {gene.color = '#ff9500'} //orange
-        else if (gene.esf <= max) {gene.color = '#ff0000'} //red
-    }
+    return false;
 }
-
-export default FetchData 
