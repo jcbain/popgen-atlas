@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from "react";
+import {dashedLine, drawText, fillRectangle} from './CanvasFunctions'
 
 export default function Axis(props) {
     const {
-        chartRatio,
         width,
         height,
         padding,
@@ -15,31 +15,43 @@ export default function Axis(props) {
         xGuides,
         yGuides,
         gColor,
-        guideOffset} = props
+        textColor,
+        guideOffset,
+        titleX,
+        titleY,
+        textSize} = props
 
     const ref = useRef()
     const tickSize = 5
+    const roundCorner = 20
+    
+    useEffect( () => {
+      let canvas = ref.current
+      let ctx = canvas.getContext('2d')
 
-    function drawYGuide(ctx) { // Draws y guide lines
+      ctx.clearRect(0, 0, width, height)
+      fillRectangle(ctx, '#ffffff','#ffffff', 1.0, 1.0, font, font, width-roundCorner, height-roundCorner, roundCorner, roundCorner)
+
+      drawYGuide(ctx)
+      LabelsXAxis(ctx)
+      LabelsYAxis(ctx)
+      titleXAxis(ctx)
+      titleYAxis(ctx)
+    });
+
+    const drawYGuide = (ctx) => { // Draws y guide lines
       const startX = padding+tickSize
-      const endX = width - padding
+      const endX = chartWidth+padding
       
       Array(yGuides).fill(0).map((_, index) => {
         const ratio = (index + guideOffset) / yGuides
-        const yOffset = chartHeight - chartHeight * ratio + padding
+        const yOffset = (chartHeight - ratio * chartHeight + padding)-tickSize
 
-        ctx.setLineDash([10, 20])
-        ctx.lineWidth = 3
-        ctx.strokeStyle = gColor
-
-        ctx.beginPath()
-        ctx.moveTo(startX, yOffset)
-        ctx.lineTo(endX, yOffset)
-        ctx.stroke()
+        dashedLine(ctx, startX, yOffset, endX, yOffset, gColor, 10, 2)
       });
     };
   
-    function LabelsXAxis(ctx) { // Where to change X label
+    const LabelsXAxis = (ctx) => { // Where to change X label
       const xIncrement = Math.ceil(maxX/xGuides)
 
       Array(xGuides+1).fill(0).map((_, index) => {
@@ -50,43 +62,36 @@ export default function Axis(props) {
 
         if(parseFloat(xLabel).toFixed(1) != 0) {
           const yOffset = chartHeight - chartHeight * (guideOffset/yGuides) + padding + font + tickSize
-
-          ctx.font = "17px Comic Sans MS"
-          ctx.fillStyle = "#4f4f4f"
-          ctx.fillText(xLabel+"k", xOffset, yOffset)
+          drawText(ctx, textColor, xLabel+"k", "13pt Roboto Slab", xOffset, yOffset)
         };
       });
     };
   
-    function LabelsYAxis(ctx) { // Y labels
+    const LabelsYAxis = (ctx) => { // Y labels
       Array(yGuides+1).fill(0).map((_, index) => {
         const ratio = index / yGuides
-        const yLabel = maxY * ratio
+        const yLabel = (maxY * ratio)
 
-        if(parseFloat(yLabel).toFixed(precision) != 0) {
-          const yOffset = chartHeight - chartHeight * ratio + padding + font / chartRatio
-
-          ctx.font = "17px Comic Sans MS"
-          ctx.fillStyle = "#4f4f4f"
-          ctx.fillText(yLabel, padding-(font+tickSize), yOffset)
+        if(parseFloat(yLabel) != 0) {
+          const yOffset = (chartHeight - (yLabel / maxY) * chartHeight + padding)
+          drawText(ctx, textColor, yLabel.toFixed(precision), "13pt Roboto", padding-(font+tickSize+precision), yOffset)
         };
       });
     };
     
-    useEffect( () => {
-        let canvas = ref.current
-        let ctx = canvas.getContext('2d')
-
-        ctx.clearRect(0, 0, width, height)
-        ctx.fillStyle="#ffffff"
-        ctx.fillRect(font, font, width, height)
-        ctx.lineCap = 'round'
-
-        drawYGuide(ctx)
-        LabelsXAxis(ctx)
-        LabelsYAxis(ctx)
-      }
-    );
+    const titleXAxis = (ctx) => {
+      const yOffset = chartHeight - chartHeight * (guideOffset/yGuides) + padding + font + tickSize
+      const titleOffX = (chartWidth + padding) / 2
+      drawText(ctx, textColor, titleX, "15pt Roboto Slab", titleOffX, yOffset+(font+tickSize+textSize))
+    }
+    
+    const titleYAxis = (ctx) => {
+      ctx.save();
+      ctx.translate(padding-(font+tickSize+precision+(textSize*2)), padding+(chartHeight-((textSize-2.5)*titleY.length))/2)
+      ctx.rotate(90*Math.PI/180);
+      drawText(ctx, textColor, titleY, "15pt Roboto Slab",0, 0)
+      ctx.restore();
+    }
 
     return (
         <canvas id="axis" ref={ref} width={width} height={height} style={{zIndex:2, position: 'inherit'}}></canvas>
