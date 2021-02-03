@@ -44,7 +44,6 @@ export default function Parameters(props) { // Handles user input for parameters
             <Title> Global Parameters </Title>
                 <ParamName>Migration</ParamName>
                 <Param onChange={(e) => props.onChange({...props.param, m: e.target.value})}>
-                    <option value="">All Values</option>
                     <option value='0.001'>0.001</option>
                     <option value='0.0001'>0.0001</option>
                     <option value='0.00001'>0.00001</option>
@@ -52,22 +51,19 @@ export default function Parameters(props) { // Handles user input for parameters
 
                 <ParamName>Mutation</ParamName>
                 <Param onChange={(e) => props.onChange({...props.param, mu: e.target.value})}>
-                    <option value="">All Values</option>
                     <option value='0.000001'>0.000001</option>
                 </Param>
 
                 <ParamName>Recombination</ParamName>
                 <Param onChange={(e) => props.onChange({...props.param, r: e.target.value})}>
-                    <option value="">All Values</option>
                     <option value='0.000001'>0.000001</option>
                 </Param>
 
                 <ParamName>Selection</ParamName>
                 <Param onChange={(e) => props.onChange({...props.param, sigSqr: e.target.value})}>
-                    <option value="">All Values</option>
-                    <option value='2'>2</option>
-                    <option value='5'>5</option>
                     <option value='25'>25</option>
+                    <option value='5'>5</option>
+                    <option value='2'>2</option>
                 </Param>
                 
             <div className="about-Container">

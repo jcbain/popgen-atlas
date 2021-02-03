@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Parameters from '../ParamDropDown/Parameters';
-import GenomeArchitecture from './GenomeArchitecture';
-import LineChart from './LineChart';
+import LineChart from './LineChartParent';
 import './Chart.css';
 import FetchData from '../Data/FetchData';
+import GenomeArch from './GenomeArchParent';
+import DisplayView from './GenomeArchChild';
+import LineView from './LineChartChild';
 
 export default function ChartData() {
     const[data, setData] = useState ([]) // Complete gene data stored in indexedDB
@@ -11,10 +13,10 @@ export default function ChartData() {
 
     // Updated when user selects a value in parameter select
     const[param, setParam] = useState({ 
-        m: "",
-        mu: "",
-        r: "",
-        sigSqr: ""
+        m: 0.001,
+        mu: 0.000001,
+        r: 0.000001,
+        sigSqr: 25
     })
 
     useEffect(() => { //Fetch data stored in indexedDB
@@ -31,13 +33,25 @@ export default function ChartData() {
                     <Parameters onChange={filtered => setParam(filtered)} param={param}/>
                 </div>
                 
-                <div className="wrapper-chart">  {/* Change so only renders if data changes not param */}
-                    <div>
-                        <GenomeArchitecture filteredData={filterParams(data, param)}/>
-                    </div>
-                    <div>
-                        <LineChart filteredData={lineChartData(data, uniqueX, param)}/>
-                    </div>
+                <div>
+                    <LineChart filteredData={lineChartData(data, uniqueX, param)}>
+                        {selection => <LineView filteredData={lineChartData(data, uniqueX, param)} selection={selection}/>}
+                    </LineChart>
+                </div>
+                <div>
+                    <GenomeArch filteredData={filterParams(data, param)}>
+                        {selection => <DisplayView filteredData={filterParams(data, param)} selection={selection}/>}
+                    </GenomeArch>
+                </div>
+                <div>
+                    <GenomeArch filteredData={filterParams(data, param)}>
+                        {selection => <DisplayView filteredData={filterParams(data, param)} selection={selection}/>}
+                    </GenomeArch>
+                </div>
+                <div>
+                    <LineChart filteredData={lineChartData(data, uniqueX, param)}>
+                        {selection => <LineView filteredData={lineChartData(data, uniqueX, param)} selection={selection}/>}
+                    </LineChart>
                 </div>
             </div>
         </div>
@@ -75,6 +89,5 @@ function lineChartData(data, uniqueX, param) {
             })
         }
     })
-
     return points;
 }

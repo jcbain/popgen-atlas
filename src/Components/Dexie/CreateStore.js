@@ -37,7 +37,7 @@ async function setData() {
         const yIndex = genePos.findIndex(g => g === unique[i].position);
 
         data.push({ // Stores all data needed for puniqueameters and plots
-            x: (unique[i].output_gen)/1000,
+            x: (unique[i].output_gen),
             y: yIndex,
             esf: unique[i].effect_size_freq,
             m: unique[i].m,

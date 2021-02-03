@@ -12,7 +12,3 @@
 .param-select {
     grid-area: param;
 }
-
-.wrapper-chart {
-    grid-area: 1;
-}
