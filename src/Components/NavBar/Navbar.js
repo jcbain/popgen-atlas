@@ -1,26 +1,27 @@
 import React from 'react'
-import './Navbar.css'
 import {Link} from 'react-router-dom'
+import {NavBar, NavTitle,LinkWrapper, NavLinks} from './NavBarStyle'
+
 
 function Nav() {
     return (
-        <nav> 
-            <h3>Atlas of Population Genetics</h3>
-            <ul className="nav-links">
+        <NavBar> 
+            <NavTitle>Atlas of Population Genetics</NavTitle>
+            <LinkWrapper>
                 <Link to="/">
-                    <li>Home</li>
+                    <NavLinks>Home</NavLinks>
                 </Link>
                 <Link to="/about">
-                    <li>About</li>
+                    <NavLinks>About</NavLinks>
                 </Link>
                 <Link to="/resources">
-                    <li>Resources</li>
+                    <NavLinks>Resources</NavLinks>
                 </Link>
                 <Link to="/collections">
-                    <li>Collections</li>
+                    <NavLinks>Collections</NavLinks>
                 </Link>
-            </ul>
-        </nav>
+            </LinkWrapper>
+        </NavBar>
     )
 }
 

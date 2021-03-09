@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from 'd3'
-import { brush, getXAxis, getYAxis, getXTick, getYTick, getX, getY, yTickGuide, getContext, getSvg, getContainer, chartTitle } from './ChartComponents'
+import { brush, getXAxis, getYAxis, setXTick, setYTick, getX, getY, yTickGuide, getContext, getSvg, getContainer, chartTitle} from './ChartComponents'
 import { drawLine } from './DrawData'
 
 const LineChart= styled.div`
@@ -13,47 +13,48 @@ const LineChart= styled.div`
     background: white;
     border-radius: 10px;
 `
-const margin = { top: 50, right: 30, bottom: 60, left: 60 };
-const canvasPad = {top: 50, right: 60, bottom: 120, left: 120 }
-const font = 15
+const margin = { top: 70, right: 30, bottom: 50, left: 60 };
+const canvasPad = {top: 70, right: 60, bottom: 100, left: 120 };
+const font = 15;
 const outerWidth = 850;
-const outerHeight = 350;
+const outerHeight = 200;
 const width = outerWidth - margin.left - margin.right;
-const height = (outerHeight - margin.top - margin.bottom)/3;
+const height = (outerHeight - margin.top - margin.bottom);
 
 export default function GenomeArch(props) {
-  const data = props.filteredData
-  const children = props.children
-  const ref = useRef()
+  const data = props.filteredData;
+  const children = props.children;
+  const minY = d3.min(data, (d) => d.y);
+  const ref = useRef();
   const [selection, setSelection] = useState([0, width]);
 
-  useEffect(() => { //Fetch data stored in indexedDB
-    const container = getContainer(ref)
-    container.selectAll("*").remove()
+  useEffect(() => {
+    const container = getContainer(ref);
+    container.selectAll("*").remove();
 
-    const chartSvg = getSvg(container, outerWidth, outerHeight, margin)
-    const context = getContext(container, width, height, canvasPad)
-    const x = getX(data, width)
-    const y = getY(data, height)
-    const xAxis = getXAxis(x)
-    const yAxis = getYAxis(y, 2)
-    const xTick = getXTick(chartSvg, xAxis, height)
-    const yTick = getYTick(chartSvg, yAxis)
+    const chartSvg = getSvg(container, outerWidth, outerHeight, margin);
+    const context = getContext(container, width, height, canvasPad);
+    const x = getX(data, width);
+    const y = getY(data, minY, height);
+    const xAxis = getXAxis(x, ".2s");
+    const yAxis = getYAxis(y, 2);
 
-    yTickGuide(chartSvg, y, 2, width)
-    brush(chartSvg, x, setSelection, width, height)
-    drawLine(d3.zoomIdentity, 5, '#6f00ff', data, context, x, y)
+    setXTick(chartSvg, xAxis, height);
+    setYTick(chartSvg, yAxis);
+    chartTitle(chartSvg, '', 'generation', width, height, margin, font);
+    yTickGuide(chartSvg, yAxis, width);
+    brush(chartSvg, x, setSelection, width, height);
+    drawLine(5, '#6f00ff', data, context, x, y);
 
-    },[data])
+  },[data]);
     
-    return (
-      <React.Fragment>
-        <LineChart>
-          <div ref={ref}>
-          </div>
-          {children(selection)}
-        </LineChart>
-      </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <LineChart>
+        {children(selection)}
+        <div ref={ref}></div>
+      </LineChart>
+    </React.Fragment>
+  );
 }
 

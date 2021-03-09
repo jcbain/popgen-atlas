@@ -5,12 +5,12 @@ import Resources from './pages/Resources'
 import Collections from './pages/Collections'
 import ChartData from './Components/Chart/ChartData';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import './App.css';
+
 
 function App() {
   return (
     <Router>
-      <div className='App'>
+      <div>
         <Nav/>
           <Switch>
             <Route exact path="/" component={Home}/>

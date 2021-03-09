@@ -1,9 +1,10 @@
 import React from 'react'
+import {PageTitle} from './PageStyles'
 
 function Home() {
     return (
         <div>
-            <h1 className="title">Home</h1>
+            <PageTitle>Home</PageTitle>
         </div>
     )
 }

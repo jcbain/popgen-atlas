@@ -1,35 +1,40 @@
-export function drawLine(transform, lineSize, color, data, context, x, y) {
-    const scaleX = transform.rescaleX(x);
-    const scaleY = transform.rescaleY(y);
-  
+export function drawLine(lineSize, color, data, context, x, y) {
     context.lineWidth = lineSize;
     context.strokeStyle = color;
+    context.globalAlpha = 1;
     context.lineJoin = "round";
     context.beginPath();
   
     data.forEach(point => {
-      const px = scaleX(point.x);
-      const py = scaleY(point.y);
-      context.lineTo(px, py);
+      context.lineTo(x(point.x), y(point.y));
     });
   
     context.stroke();
 };
 
-export function drawLocus(transform, data, context, x, y, barHeight) {
-    const scaleX = transform.rescaleX(x);
-    const scaleY = transform.rescaleY(y);
-    
-    const f = scaleX(4000);
-    const d = scaleX(2000);
+export function drawLocus(data, context, x, y, barHeight) {
+    const f = x(4000); // Need to change so not hardcoded
+    const d = x(2000);
     const barWidth = f-d;
-  
+
     data.forEach(point => {
-      const px = scaleX(point.x);
-      const py = scaleY(point.y);
       context.fillStyle = point.color;
-      context.fillRect(px, py, barWidth, barHeight);
+      context.globalAlpha = 1;
+      context.fillRect(x(point.x), y(point.y), barWidth, barHeight);
     });
 };
 
-export default { drawLine, drawLocus }
+export function drawBar(context, data, color, x, y, height) {
+  const lineSize = 4;
+
+  data.forEach(point => {
+    context.rect(x(point.x), y(point.y)+(lineSize/2), x.bandwidth(), height-(y(point.y)+lineSize));
+    context.fillStyle = "#bda6ff";
+    context.fill();
+    context.lineWidth = lineSize;
+    context.strokeStyle = color;
+    context.stroke();
+  });
+}
+
+export default { drawLine, drawLocus, drawBar }

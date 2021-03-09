@@ -1,9 +1,10 @@
 import React from 'react'
+import {PageTitle} from './PageStyles'
 
 function Collections() {
     return (
         <div>
-            <h1 className="title">Collections</h1>
+            <PageTitle>Collections</PageTitle>
         </div>
     )
 }
