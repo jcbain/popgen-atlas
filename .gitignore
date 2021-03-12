@@ -11,10 +11,6 @@
 # production
 /build
 
-# data files
-**/data/**
-**/DATA/**
-
 # misc
 .DS_Store
 .env.local
@@ -25,6 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Local Netlify folder
-.netlify

@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
+import {PageTitle} from './PageStyles'
 
-function About(){
-    return(
+function About() {
+    return (
         <div>
-            <h1>About</h1>
+            <PageTitle>About</PageTitle>
         </div>
     )
 }
 
-export default About;
+export default About

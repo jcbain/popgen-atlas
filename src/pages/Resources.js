@@ -1,13 +1,12 @@
-import React from 'react';
+import React from 'react'
+import {PageTitle} from './PageStyles'
 
-function Resources(){
-    return(
-       
+function Resources() {
+    return (
         <div>
-            <h1>Resources</h1>
-
+            <PageTitle>Resources</PageTitle>
         </div>
     )
 }
 
-export default Resources;
+export default Resources
