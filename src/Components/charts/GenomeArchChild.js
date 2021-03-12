@@ -4,8 +4,8 @@ import { getXAxis, getYAxis, setXTick, setYTick, getX, getY, getContext, getSvg,
 import { drawLocus } from './DrawData'
 import * as d3 from 'd3'
 
-const margin = { top: 80, right: 30, bottom: 50, left: 60 };
-const canvasPad = {top: 80, right: 60, bottom: 100, left: 120 }
+const margin = { top: 80, right: 30, bottom: 90, left: 60 };
+const canvasPad = {top: 80, right: 60, bottom: 180, left: 120 }
 const font = 15
 const outerWidth = 850;
 const outerHeight = 350;
@@ -18,7 +18,7 @@ export default function DisplayView(props) {
   const selection = props.selection
   const minY = d3.min(data, (d) => d.y);
 
-  const newData = data.filter((value, index) => value.x > selection[0] && value.x-1 < selection[1])
+  const newData = data.filter((value) => value.x > selection[0] && value.x-1 < selection[1])
 
   useEffect(() => { //Fetch data stored in indexedDB
     const container = getContainer(ref);

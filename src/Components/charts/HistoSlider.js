@@ -1,5 +1,4 @@
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import React, { useState } from "react";
 import styled from 'styled-components';
@@ -7,13 +6,11 @@ import styled from 'styled-components';
 const margin = { top: 80, right: 40, bottom: 70, left: 70 };
 
 const HistogramStyle= styled.div`
-    float: right;
-    margin-top: 1%;
-    margin-left: 20px;
-    width: 1000px;
-    height: 500px;
-    background: white;
-    border-radius: 10px;
+  margin-left: 1%;
+  width: 100%;
+  height: 450px;
+  background: white;
+  border-radius: 10px;
 `
 const HistogramSlider = withStyles({
   root: {

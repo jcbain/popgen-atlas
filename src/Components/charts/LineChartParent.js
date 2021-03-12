@@ -5,16 +5,14 @@ import { brush, getXAxis, getYAxis, setXTick, setYTick, getX, getY, yTickGuide, 
 import { drawLine } from './DrawData'
 
 const LineChart= styled.div`
-    float: right;
-    margin-top: 1%;
-    margin-left: 20px;
-    width: 1000px;
-    height: 500px;
-    background: white;
-    border-radius: 10px;
+  margin-left: 1%;
+  width: 100%;
+  height: 450px;
+  background: white;
+  border-radius: 10px;
 `
-const margin = { top: 70, right: 30, bottom: 50, left: 60 };
-const canvasPad = {top: 70, right: 60, bottom: 100, left: 120 };
+const margin = { top: 60, right: 30, bottom: 80, left: 60 };
+const canvasPad = {top: 60, right: 60, bottom: 160, left: 120 };
 const font = 15;
 const outerWidth = 850;
 const outerHeight = 200;
@@ -27,7 +25,7 @@ export default function GenomeArch(props) {
   const minY = d3.min(data, (d) => d.y);
   const ref = useRef();
   const [selection, setSelection] = useState([0, width]);
-
+  
   useEffect(() => {
     const container = getContainer(ref);
     container.selectAll("*").remove();
@@ -57,4 +55,3 @@ export default function GenomeArch(props) {
     </React.Fragment>
   );
 }
-

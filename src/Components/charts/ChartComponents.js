@@ -164,7 +164,7 @@ export function brush(chartSvg, x, setSelection, width, height) {
 
 export function chartTitle(chartSvg, yLabel, xLabel, width, height, margin, font) {
     chartSvg.append('text')
-            .attr('x', `-${height / 2+(((yLabel.length)-5)*5)}`)
+            .attr('x', `-${height / 2+(((yLabel.length))*5)}`)
             .attr('dy', -(margin.right+font) + "px")
             .attr('transform', 'rotate(-90)')
             .attr("font-family", "Verdana")

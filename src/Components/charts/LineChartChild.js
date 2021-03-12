@@ -4,8 +4,8 @@ import * as d3 from 'd3'
 import { hoverContainer, getXAxis, getYAxis, setXTick, setYTick, getX, getY, yTickGuide, getContext, getSvg, getContainer, chartTitle } from './ChartComponents'
 import { drawLine } from './DrawData'
 
-const margin = { top: 50, right: 30, bottom: 70, left: 60 };
-const canvasPad = {top: 50, right: 60, bottom: 140, left: 120 };
+const margin = { top: 30, right: 30, bottom: 100, left: 60 };
+const canvasPad = {top: 30, right: 60, bottom: 180, left: 120 };
 const font = 15;
 const outerWidth = 850;
 const outerHeight = 350;

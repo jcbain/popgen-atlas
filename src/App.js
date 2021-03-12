@@ -1,11 +1,10 @@
-import Nav from './Components/NavBar/Navbar'
+import Nav from './Components/navbar/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
 import Resources from './pages/Resources'
 import Collections from './pages/Collections'
-import ChartData from './Components/Chart/ChartData';
+import MainDashboard from './Components/dashboard/MainDashboard';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-
 
 function App() {
   return (
@@ -17,7 +16,7 @@ function App() {
             <Route exact path="/about" component={About}/>
             <Route exact path="/resources" component={Resources}/>
             <Route exact path="/collections" component={Collections}>
-              <ChartData/>
+              <MainDashboard/>
             </Route>
           </Switch>
       </div>

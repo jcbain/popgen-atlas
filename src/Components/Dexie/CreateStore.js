@@ -5,8 +5,8 @@
     Otherwise, data saved in indexedDB is used to plot charts.
 ============================================================== */
 
-import genomeData from '../Data/genome_data.json'
-import genomeTemp from '../Data/genome_template.json'
+import genomeData from '../data/genome_data.json'
+import genomeTemp from '../data/genome_template.json'
 import db from './indexeddb'
 import Dexie from 'dexie'
 

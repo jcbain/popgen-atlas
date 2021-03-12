@@ -8,10 +8,10 @@
 
 import genomeData from './genome_data.json'
 import genomeTemp from './genome_template.json'
-import db from '../Dexie/indexeddb'
+import db from '../dexie/indexeddb'
 import sha256 from 'crypto-js/sha256'
 import Base64 from 'crypto-js/enc-base64'
-import CreateStore from '../Dexie/CreateStore'
+import CreateStore from '../dexie/CreateStore'
 
 export default async function FetchData() {
     if(newChanges()) {

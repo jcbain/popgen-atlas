@@ -5,16 +5,14 @@ import { drawLocus } from './DrawData'
 import * as d3 from 'd3'
 
 const GenomeChart= styled.div`
-    float: right;
-    margin-top: 1%;
-    margin-left: 20px;
-    width: 1000px;
-    height: 500px;
-    background: white;
-    border-radius: 10px;
+  margin-left: 1%;
+  width: 100%;
+  height: 450px;
+  background: white;
+  border-radius: 10px;
 `
-const margin = { top: 40, right: 30, bottom: 80, left: 60 };
-const canvasPad = {top: 40, right: 60, bottom: 160, left: 120 };
+const margin = { top: 60, right: 30, bottom: 80, left: 60 };
+const canvasPad = {top: 60, right: 60, bottom: 160, left: 120 };
 const font = 15;
 const outerWidth = 850;
 const outerHeight = 195;
