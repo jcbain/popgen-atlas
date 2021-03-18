@@ -1,4 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -21,3 +20,38 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/tmp
+node_modules
+misc
+coverage
+/.netlify
+.idea
+
+# node sdk
+vendor
+
+# osx
+.DS_STORE
+.vscode
+coverage
+test-site
+site/dist
+site-cra
+
+site/src/**/*.md
+!site/src/register-addon.md
+!site/src/register-addon-thanks.md
+oclif.manifest.json
+
+# Local Netlify folder
+.netlify
+
+.eslintcache
+
+# Custom directories and files
+data/

@@ -1,9 +1,9 @@
-import Nav from './Components/navbar/Navbar'
+import Nav from './components/navbar/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
 import Resources from './pages/Resources'
 import Collections from './pages/Collections'
-import MainDashboard from './Components/dashboard/MainDashboard';
+import MainDashboard from './components/dashboard/MainDashboard';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
