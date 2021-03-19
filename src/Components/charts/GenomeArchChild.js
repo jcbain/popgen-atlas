@@ -7,7 +7,7 @@ import * as d3 from 'd3'
 const margin = { top: 80, right: 30, bottom: 90, left: 60 };
 const canvasPad = {top: 80, right: 60, bottom: 180, left: 120 }
 const font = 15
-const outerWidth = 850;
+const outerWidth = 650;
 const outerHeight = 350;
 const width = outerWidth - margin.left - margin.right;
 const height = outerHeight - margin.top - margin.bottom;

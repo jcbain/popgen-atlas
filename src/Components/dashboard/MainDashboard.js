@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FetchData from '../data/FetchData';
+import FetchData from '../data2/FetchData';
 import Parameters from './Parameters';
 import Charts from '../charts/Charts';
 import SwitchState from './SwitchState';
@@ -43,6 +43,7 @@ export default function MainDashboard() {
             setUniqueX(result.uX)
         ))
     }, [])
+
 
     const handleChangeTab = (event, newValue) => {
         setValue(newValue);
