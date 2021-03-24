@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 
 const HistogramChart = ({ data, variable, pop, mutation, migration, sigsqr }) => {
 
-    // const { data, loaded } = useData('effect_size_freq_diff');
     const [ generation, setGeneration ] = useState(1000)
 
 

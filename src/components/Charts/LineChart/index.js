@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import useData from '../../../hooks/useData';
-import useTheme from '../../../hooks/useTheme';
 import useFonts from '../../../hooks/useFonts'
 import GroupedLines from './GroupedLines';
 // import Line from './Line';
 
 const Wrapper = styled.div`
     width: 100%;
-    /* height: 100px; */
-    /* background: blue; */
 `;
 
 

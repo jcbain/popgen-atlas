@@ -39,9 +39,12 @@ const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
         const minX = 0;
         const maxX = width;
         const { clientX } = e;
+        const offset = e.target.getBoundingClientRect().left
+
+        const position = clientX - offset;
        
         const dx = xScale(50000)
-        const [x0, x1] = [clientX - dx / 2, clientX + dx / 2].map(d => xScale(xScale.invert(d)));
+        const [x0, x1] = [position - dx / 2, position + dx / 2].map(d => xScale(xScale.invert(d)));
         select(brushRef.current)
             .call(horizontalBrush.move, x1 > maxX ? [x0, maxX]
                     : x0 < minX ? [minX, x1]
