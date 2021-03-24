@@ -16,10 +16,10 @@ const Thumb = styled.div`
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    position: relative;
-    top: -8px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     left: ${({leftposition}) => leftposition}px;
-
     background: purple;
     cursor: pointer;
 `
@@ -29,15 +29,17 @@ const Inner = styled.p`
     width: 21px;
     height: 21px;
     border-radius: 50%;
-    position: relative;
-    top: 2px;
+    position: absolute;
+    top: 0.5px;
+    transform: translateY(-50%);
     left: 2px;
     text-align: center;
     line-height: 21px;
+    font-size: 12px;
     font-family: 'Roboto';
 `
 
-const Slider = ({data}) => {
+const Slider = ({data, setValue}) => {
     const sliderRef = useRef()
     const thumbRef = useRef();
     const [leftPosition, setLeftPosition ] = useState(0)
@@ -63,7 +65,7 @@ const Slider = ({data}) => {
         const value = this.domain()[index]
         return value ? value: this.domain()[0]
     }
-    console.log(Math.round(0.05))
+
     const handleMouseMove = e => {
         const thumbWidth = thumbRef.current.clientWidth
         const nextPosition = e.clientX - thumbWidth
@@ -72,6 +74,7 @@ const Slider = ({data}) => {
         if(e.clientX > thumbWidth && e.clientX < sliderWidth) {
             const invert = xScale.invert(nextPosition )
             setCurrentVal(invert)
+            setValue(invert)
             setLeftPosition(xScale(invert) )
         }
         
@@ -90,9 +93,14 @@ const Slider = ({data}) => {
 
     return (
         <SliderDiv ref={sliderRef}>
-            <Thumb ref={thumbRef} onMouseDown={handleMouseDown} leftposition={leftPosition}><Inner>{currentVal}</Inner></Thumb>
+            <Thumb ref={thumbRef} onMouseDown={handleMouseDown} leftposition={leftPosition}><Inner>{cleanValue(currentVal)}</Inner></Thumb>
         </SliderDiv>
     )
+}
+
+function cleanValue(val) {
+    const cleanVal = val >= 1000 ? `${val/1000}k` : `${val}`;
+    return cleanVal
 }
 
 export default Slider;
