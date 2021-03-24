@@ -20,7 +20,7 @@ const Thumb = styled.div`
     top: 50%;
     transform: translateY(-50%);
     left: ${({leftposition}) => leftposition}px;
-    background: purple;
+    background: #682CFE;
     cursor: pointer;
 `
 

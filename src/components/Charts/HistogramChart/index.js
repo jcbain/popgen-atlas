@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { uniq } from 'lodash';
 
-import useData from '../../../hooks/useData';
-import useTheme from '../../../hooks/useTheme';
 import useFonts from '../../../hooks/useFonts'
 import HistogramGroup from './HistogramGroup'
-// import Line from './Line';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -14,9 +11,9 @@ const Wrapper = styled.div`
 `;
 
 
-const HistogramChart = ({ variable, pop, mutation, migration, sigsqr }) => {
+const HistogramChart = ({ data, variable, pop, mutation, migration, sigsqr }) => {
 
-    const { data, loaded } = useData('effect_size_freq_diff');
+    // const { data, loaded } = useData('effect_size_freq_diff');
     const [ generation, setGeneration ] = useState(1000)
 
 
@@ -28,7 +25,7 @@ const HistogramChart = ({ variable, pop, mutation, migration, sigsqr }) => {
 
     return (
         <Wrapper>
-            {loaded && <HistogramGroup data={filtered} variable={variable} uniqVals={uniqVals} setGeneration={setGeneration}/>}
+            <HistogramGroup data={filtered} variable={variable} uniqVals={uniqVals} setGeneration={setGeneration}/>
 
         </Wrapper>
     )

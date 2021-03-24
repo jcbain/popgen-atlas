@@ -14,17 +14,15 @@ const Wrapper = styled.div`
 `;
 
 
-const LineChart = ({ xVar, yVar, pop, mutation, migration, sigsqr }) => {
+const LineChart = ({ data, xVar, yVar, pop, mutation, migration, sigsqr }) => {
 
-    const { phen, phenLoaded } = useData('effect_size_freq_diff');
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
 
     useFonts()
 
+    const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr)
 
-    const filtered = phen.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr)
-    
 
     return (
         <Wrapper>

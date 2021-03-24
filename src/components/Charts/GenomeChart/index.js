@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { max, min } from 'lodash'
 
-import useData from '../../../hooks/useData';
 import GroupedGenomes from './GroupedGenomes'
 
 const Wrapper = styled.div`
@@ -10,9 +9,8 @@ const Wrapper = styled.div`
 `;
 
 
-const GenomeChart = ({ xVar, yVar, outputGen, pop, mutation, migration, sigsqr }) => {
+const GenomeChart = ({ data, xVar, yVar, outputGen, pop, mutation, migration, sigsqr }) => {
 
-    const { data, loaded } = useData('effect_size_freq_diff');
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
     const [ minVal, setMinVal ] = useState()
@@ -27,7 +25,7 @@ const GenomeChart = ({ xVar, yVar, outputGen, pop, mutation, migration, sigsqr }
 
     return (
         <Wrapper>
-            {loaded && <GroupedGenomes data={filtered} xVar={xVar} yVar={yVar} pop={pop} outputGen={outputGen} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower} minVal={minVal} maxVal={maxVal}/>}
+            <GroupedGenomes data={filtered} xVar={xVar} yVar={yVar} pop={pop} outputGen={outputGen} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower} minVal={minVal} maxVal={maxVal}/>
         </Wrapper>
     )
 }

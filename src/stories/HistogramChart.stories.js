@@ -1,14 +1,15 @@
 import React from 'react';
 
 import HistogramChart from '../components/charts/HistogramChart'
+import useData from '../hooks/useData'
 
 
 export default {
   title: 'Charts/HistogramChart',
-  component: HistogramChart,
+  component: Wrapper,
 };
 
-const Template = (args) => <HistogramChart {...args} />;
+const Template = (args) => <Wrapper {...args} />;
 
 export const WithData = Template.bind({});
 WithData.args = {
@@ -19,3 +20,13 @@ WithData.args = {
   mutation: 1e-5,
   sigsqr: 25
 };
+
+function Wrapper(props){
+  const { data, loaded } = useData()
+
+  return (
+    <>
+      {loaded && <HistogramChart data={data} {...props} />}
+    </>
+  )
+}

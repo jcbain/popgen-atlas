@@ -1,15 +1,15 @@
 import React from 'react';
-import '../fonts/Roboto/Roboto-Regular.ttf'
 
-import LineChart from '../components/charts/LineChart'
+import LineChart from '../components/charts/LineChart';
+import useData from '../hooks/useData';
 
 
 export default {
   title: 'Charts/LineChart',
-  component: LineChart,
+  component: Wrapper,
 };
 
-const Template = (args) => <LineChart {...args} />;
+const Template = (args) => <Wrapper {...args} />;
 
 export const WithData = Template.bind({});
 WithData.args = {
@@ -21,3 +21,13 @@ WithData.args = {
   mutation: 1e-5,
   sigsqr: 25
 };
+
+function Wrapper(props){
+  const { phen, phenLoaded } = useData('effect_size_freq_diff');
+
+  return (
+    <>
+      {phenLoaded && <LineChart data={phen} {...props} />}
+    </>
+  )
+}
