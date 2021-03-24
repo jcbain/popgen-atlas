@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
+import {PageTitle} from './PageStyles'
 
-function Home(){
-    return(
+function Home() {
+    return (
         <div>
-            <h1>Home</h1>
+            <PageTitle>Home</PageTitle>
         </div>
     )
 }
 
-export default Home;
+export default Home
