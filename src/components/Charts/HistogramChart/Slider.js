@@ -68,10 +68,10 @@ const Slider = ({data, setValue}) => {
 
     const handleMouseMove = e => {
         const thumbWidth = thumbRef.current.clientWidth
-        const nextPosition = e.clientX - thumbWidth
+        const nextPosition = e.clientX - thumbWidth - sliderRef.current.getBoundingClientRect().left
         const sliderWidth = sliderRef.current.clientWidth
 
-        if(e.clientX > thumbWidth && e.clientX < sliderWidth) {
+        if((e.clientX - sliderRef.current.getBoundingClientRect().left) > thumbWidth && (e.clientX - sliderRef.current.getBoundingClientRect().left) < sliderWidth) {
             const invert = xScale.invert(nextPosition )
             setCurrentVal(invert)
             setValue(invert)
