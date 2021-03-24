@@ -17,12 +17,12 @@ const LineChart = ({ data, xVar, yVar, pop, mutation, migration, sigsqr }) => {
 
     useFonts()
 
-    const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr)
+    // const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr)
 
 
     return (
         <Wrapper>
-            <GroupedLines data={filtered} xVar={xVar} yVar={yVar} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
+            <GroupedLines data={data} xVar={xVar} yVar={yVar} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
 
         </Wrapper>
     )

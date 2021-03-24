@@ -24,19 +24,20 @@ const Grid = styled.div`
 
 const Dashboard = ({pop, mutation, migration, sigsqr}) => {
 
-    const { data, phen, loaded, phenLoaded } = useData('effect_size_freq_diff');
+    const { phen, phenLoaded, gene, geneLoaded, changeParams } = useData('effect_size_freq_diff');
     // const uniqX = uniq(data.filter(d => d['output_gen']))
 
     
 
     return (
         <Wrapper>
+            <button onClick={changeParams}>Change</button>
             <Grid>
 
                 {phenLoaded && <LineChart data={phen} xVar={'output_gen'} yVar={'phen_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {loaded && <GenomeChart data={data} xVar={'output_gen'} yVar={'position'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {loaded && <HistogramChart data={data} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {loaded && <HistogramChart data={data} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <GenomeChart data={gene} xVar={'output_gen'} yVar={'position'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <HistogramChart data={gene} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <HistogramChart data={gene} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
             </Grid>
         </Wrapper>
     )

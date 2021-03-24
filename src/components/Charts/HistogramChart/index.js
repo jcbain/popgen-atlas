@@ -18,7 +18,8 @@ const HistogramChart = ({ data, variable, pop, mutation, migration, sigsqr }) =>
 
     useFonts()
 
-    const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr && d.output_gen === generation)
+    // const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr && d.output_gen === generation)
+    const filtered = data.filter(d => d.output_gen === generation)
     const uniqVals = uniq(data.map(d => d['output_gen']))
     
 
