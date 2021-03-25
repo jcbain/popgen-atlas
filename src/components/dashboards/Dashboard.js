@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { uniq } from 'lodash'
 
 import useData from '../../hooks/useData'
 import useFilteredData from '../../hooks/useFilteredData'
+import useParams from '../../hooks/useParams'
 import HistogramChart from '../charts/HistogramChart';
 import GenomeChart from '../charts/GenomeChart';
 import LineChart from '../charts/LineChart'
@@ -23,11 +23,11 @@ const Grid = styled.div`
     column-gap: 10px;
 `
 
-const Dashboard = ({currentSet}) => {
+const Dashboard = ({}) => {
 
     const { data, loaded } = useData()
-    const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', currentSet)
-
+    const { paramOptions, chosenSet } = useParams(data)
+    const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
     return (
         <Wrapper>

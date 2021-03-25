@@ -35,8 +35,6 @@ const Histogram = ({data, variable}) => {
     const { minX, maxY } = useDataSummaries(newData, 'x0', 'length')
     const { maxX } = useDataSummaries(newData, 'x1', 'length')
 
-    console.log(maxX)
-
 
     useEffect(() => {
         const canvas = ref.current;
