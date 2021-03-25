@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 `;
 
 
-const GenomeChart = ({ data, xVar, yVar, outputGen }) => {
+const GenomeChart = ({ data, xVar, yVar, colorVar }) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -17,14 +17,22 @@ const GenomeChart = ({ data, xVar, yVar, outputGen }) => {
     const [ maxVal, setMaxVal ] = useState()
     
     useEffect(() => {
- 
-        setMinVal(min(data.map(d => d['effect_size_freq_diff'])))
-        setMaxVal(max(data.map(d => d['effect_size_freq_diff'])))
-    }, [data])
+        setMinVal(min(data.map(d => d[colorVar])))
+        setMaxVal(max(data.map(d => d[colorVar])))
+    }, [data, colorVar])
 
     return (
         <Wrapper>
-            <GroupedGenomes data={data} xVar={xVar} yVar={yVar} outputGen={outputGen} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower} minVal={minVal} maxVal={maxVal}/>
+            <GroupedGenomes data={data} 
+                xVar={xVar} 
+                yVar={yVar} 
+                colorVar={colorVar}
+                upperLimit={upper} 
+                lowerLimit={lower} 
+                setUpperLimit={setUpper} 
+                setLowerLimit={setLower} 
+                minVal={minVal} 
+                maxVal={maxVal}/>
         </Wrapper>
     )
 }

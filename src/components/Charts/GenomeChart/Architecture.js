@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { scaleLinear, scaleBand, interpolateHcl, interpolateHsl } from 'd3'
+import { scaleLinear, scaleBand, interpolateHcl } from 'd3'
 import { range } from 'lodash';
 
 import useResizeObserver from '../../../hooks/useResizeObserver'
@@ -23,14 +23,14 @@ const StyledForeign = styled.foreignObject`
 // TODO: use theme variables for all colors including gray
 // TODO: make color vars dynamic with props
 
-const Architecture = ({ xVar, yVar, data, upperLimit, lowerLimit, addBrush, setLowerLimit, setUpperLimit, secondaryUL, secondaryLL, minVal, maxVal}) => {
+const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addBrush, setLowerLimit, setUpperLimit, secondaryUL, secondaryLL, minVal, maxVal}) => {
     const ref = useRef()
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
     const { theme } = useTheme();
 
-    const newData = data.filter( d => d.output_gen <= upperLimit && d.output_gen >=lowerLimit)
+    const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >=lowerLimit)
     const { minY, maxY, uniqX } = useDataSummaries(newData, xVar, yVar)
 
     const uniqY = range(minY, maxY + 1)
@@ -39,9 +39,6 @@ const Architecture = ({ xVar, yVar, data, upperLimit, lowerLimit, addBrush, setL
     const colorScaleUp = scaleLinear().domain([0, maxVal]).range([theme.minGreaterZeroColor, theme.maxGreaterZeroColor]).interpolate(interpolateHcl)
     const colorScaleDown = scaleLinear().domain([minVal, 0]).range([theme.minLessZeroColor, theme.maxLessZeroColor]).interpolate(interpolateHcl)
    
-
-
-
     useEffect(() => {
         const canvas = ref.current;
         const context = canvas.getContext('2d');
@@ -53,26 +50,23 @@ const Architecture = ({ xVar, yVar, data, upperLimit, lowerLimit, addBrush, setL
         const xBand = scaleBand().domain(uniqX).range([0, canvas.width])
         const yBand = scaleBand().domain(uniqY).range([0, canvas.height])
         
-
         newData.forEach((v, i) => {
             if(secondaryLL) {
-                if(v.output_gen < secondaryLL || v.output_gen >= secondaryUL){
+                if(v[xVar] < secondaryLL || v[xVar] >= secondaryUL){
                     context.fillStyle = 'lightgray'
                 } else {
-                    context.fillStyle = v.effect_size_freq_diff < 0 ? colorScaleDown(v.effect_size_freq_diff) : colorScaleUp(v.effect_size_freq_diff)
+                    context.fillStyle = v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
                 }
 
             } else {
-                context.fillStyle = v.effect_size_freq_diff < 0 ? colorScaleDown(v.effect_size_freq_diff) : colorScaleUp(v.effect_size_freq_diff)
+                context.fillStyle = v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
 
             }
             context.fillRect(xBand(v[xVar]), yBand(v[yVar]), xBand.bandwidth(), yBand.bandwidth())
             
         })
 
-
-
-    }, [newData, xVar, yVar, width])
+    }, [newData, xVar, yVar, width, colorVar])
 
 
 

@@ -10,12 +10,30 @@ const Charts = styled.div`
     row-gap: 10px;
 `
 
-const GroupedGenomes = ({ xVar, yVar, outputGen, data, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, minVal, maxVal }) => {
-
+const GroupedGenomes = ({  data, xVar, yVar, colorVar, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, minVal, maxVal }) => {
     return (
         <Charts>
-            <Architecture xVar={xVar} yVar={yVar} outputGen={outputGen} data={data} upperLimit={upperLimit} lowerLimit={lowerLimit} minVal={minVal} maxVal={maxVal}/>
-            <Architecture xVar={xVar} yVar={yVar} outputGen={outputGen} data={data} upperLimit={250000} lowerLimit={1000} addBrush={true} setLowerLimit={setLowerLimit} setUpperLimit={setUpperLimit} secondaryLL={lowerLimit} secondaryUL={upperLimit} minVal={minVal} maxVal={maxVal}/>
+            <Architecture data={data} 
+                xVar={xVar} 
+                yVar={yVar}   
+                colorVar={colorVar}
+                upperLimit={upperLimit} 
+                lowerLimit={lowerLimit} 
+                minVal={minVal} 
+                maxVal={maxVal}/>
+            <Architecture data={data} 
+                xVar={xVar} 
+                yVar={yVar} 
+                colorVar={colorVar}  
+                upperLimit={250000} 
+                lowerLimit={1000} 
+                addBrush={true} 
+                setLowerLimit={setLowerLimit} 
+                setUpperLimit={setUpperLimit} 
+                secondaryLL={lowerLimit} 
+                secondaryUL={upperLimit} 
+                minVal={minVal} 
+                maxVal={maxVal}/>
         </Charts>
     )
 }
