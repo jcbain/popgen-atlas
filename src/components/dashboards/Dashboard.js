@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { uniq } from 'lodash'
 
 import useData from '../../hooks/useData'
+import useFilteredData from '../../hooks/useFilteredData'
 import HistogramChart from '../charts/HistogramChart';
 import GenomeChart from '../charts/GenomeChart';
 import LineChart from '../charts/LineChart'
@@ -24,20 +25,24 @@ const Grid = styled.div`
 
 const Dashboard = ({pop, mutation, migration, sigsqr}) => {
 
-    const { phen, phenLoaded, gene, geneLoaded, changeParams } = useData('effect_size_freq_diff');
+    // const { phen, phenLoaded, gene, geneLoaded, changeParams } = useData('effect_size_freq_diff');
+    const { data, loaded } = useData()
+    // console.log(data)
+    const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff')
+    console.log(genes)
     // const uniqX = uniq(data.filter(d => d['output_gen']))
 
     
 
     return (
         <Wrapper>
-            <button onClick={changeParams}>Change</button>
+            {/* <button onClick={changeParams}>Change</button> */}
             <Grid>
 
-                {phenLoaded && <LineChart data={phen} xVar={'output_gen'} yVar={'phen_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {geneLoaded && <GenomeChart data={gene} xVar={'output_gen'} yVar={'position'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {geneLoaded && <HistogramChart data={gene} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
-                {geneLoaded && <HistogramChart data={gene} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} pop={pop} mutation={mutation} migration={migration} sigsqr={sigsqr}/>}
             </Grid>
         </Wrapper>
     )
