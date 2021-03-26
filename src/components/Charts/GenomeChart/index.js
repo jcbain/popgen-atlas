@@ -9,24 +9,27 @@ const Wrapper = styled.div`
 `;
 
 
-const GenomeChart = ({ data, xVar, yVar, colorVar }) => {
+const GenomeChart = ({ data, xVar, yVar, colorVar, theme }) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
     const [ minVal, setMinVal ] = useState()
     const [ maxVal, setMaxVal ] = useState()
     
+    const tmpFiltered = data.filter(d => d[colorVar] !== 0)
+
     useEffect(() => {
-        setMinVal(min(data.map(d => d[colorVar])))
-        setMaxVal(max(data.map(d => d[colorVar])))
-    }, [data, colorVar])
+        setMinVal(min(tmpFiltered.map(d => d[colorVar])))
+        setMaxVal(max(tmpFiltered.map(d => d[colorVar])))
+    }, [tmpFiltered, colorVar])
 
     return (
         <Wrapper>
-            <GroupedGenomes data={data} 
+            <GroupedGenomes data={tmpFiltered} 
                 xVar={xVar} 
                 yVar={yVar} 
                 colorVar={colorVar}
+                theme={theme}
                 upperLimit={upper} 
                 lowerLimit={lower} 
                 setUpperLimit={setUpper} 

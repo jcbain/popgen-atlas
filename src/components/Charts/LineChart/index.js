@@ -10,19 +10,16 @@ const Wrapper = styled.div`
 `;
 
 
-const LineChart = ({ data, xVar, yVar, pop, mutation, migration, sigsqr }) => {
+const LineChart = ({ data, xVar, yVar, theme }) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
 
     useFonts()
 
-    // const filtered = data.filter(d => d.pop === pop && d.m === migration && d.mu === mutation && d.sigsqr === sigsqr)
-
-
     return (
         <Wrapper>
-            <GroupedLines data={data} xVar={xVar} yVar={yVar} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
+            <GroupedLines data={data} xVar={xVar} yVar={yVar} theme={theme} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
 
         </Wrapper>
     )

@@ -32,7 +32,7 @@ const ParamsDiv = styled.div`
 
 `
 
-const Dashboard = ({}) => {
+const Dashboard = ({theme}) => {
 
     const { data, loaded } = useData()
     const { paramOptions, chosenSet, changeParam } = useParams(data)
@@ -52,10 +52,10 @@ const Dashboard = ({}) => {
            
             <Grid>
 
-                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'}  />}
-                {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'}  />}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} />}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} />}
+                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
+                {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} theme={theme}/>}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} theme={theme}/>}
             </Grid>
             <ParamsDiv>
                 {paramSelectors}

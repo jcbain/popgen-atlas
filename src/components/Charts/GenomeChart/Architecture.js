@@ -6,13 +6,12 @@ import { range } from 'lodash';
 import useResizeObserver from '../../../hooks/useResizeObserver'
 import useDataSummaries from '../../../hooks/useDataSummaries'
 import Brush from './Brush'
-import useTheme from '../../../hooks/useTheme'
 import XAxis from '../axes/XAxis'
 
 const StyledCanvas = styled.canvas`
     position: absolute;
     width: 100%;
-    height: 75%;
+    height: ${({ heightperc }) => heightperc}%;
 `
 
 const StyledForeign = styled.foreignObject`
@@ -20,15 +19,16 @@ const StyledForeign = styled.foreignObject`
     height: 100%;
 `
 
-// TODO: use theme variables for all colors including gray
-// TODO: make color vars dynamic with props
 
-const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addBrush, setLowerLimit, setUpperLimit, secondaryUL, secondaryLL, minVal, maxVal}) => {
+const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit, 
+                        lowerLimit, addBrush, setLowerLimit, setUpperLimit, 
+                        secondaryUL, secondaryLL, minVal, maxVal}) => {
     const ref = useRef()
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
-    const { theme } = useTheme();
+    const heightModifier = addBrush ? .6 : .75;
+    const heightPerc = heightModifier * 100;
 
     const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >=lowerLimit)
     const { minY, maxY, uniqX } = useDataSummaries(newData, xVar, yVar)
@@ -42,8 +42,8 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
     useEffect(() => {
         const canvas = ref.current;
         const context = canvas.getContext('2d');
-        canvas.width = 4000;
-        canvas.height = 4000;
+        canvas.width = 1000;
+        canvas.height = 500;
         context.clearRect(0, 0, canvas.width, canvas.height)
     
 
@@ -53,13 +53,13 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
         newData.forEach((v, i) => {
             if(secondaryLL) {
                 if(v[xVar] < secondaryLL || v[xVar] >= secondaryUL){
-                    context.fillStyle = 'lightgray'
+                    context.fillStyle = theme.nonFocusColor;
                 } else {
-                    context.fillStyle = v[colorVar] === 0 ? '#fff': v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                    context.fillStyle = v[colorVar] === 0 ? theme.zeroColor : v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
                 }
 
             } else {
-                context.fillStyle = v[colorVar] === 0 ? '#fff': v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                context.fillStyle = v[colorVar] === 0 ? theme.zeroColor: v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
 
             }
             context.fillRect(xBand(v[xVar]), yBand(v[yVar]), xBand.bandwidth(), yBand.bandwidth())
@@ -74,8 +74,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
         if(observedEntry.target){
           const { target } = observedEntry;
           setWidth(target.clientWidth)        
-          setHeight(target.clientHeight * 0.75)
-
+          setHeight(target.clientHeight * heightModifier)
         }
       }, [observedEntry])
 
@@ -95,7 +94,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
     return (
         <svg ref={svgRef} width="100%" height="100%">
             <StyledForeign>
-                <StyledCanvas ref={ref}></StyledCanvas>
+                <StyledCanvas ref={ref} heightperc={heightPerc}></StyledCanvas>
 
             </StyledForeign>
             {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}

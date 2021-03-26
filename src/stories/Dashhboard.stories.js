@@ -16,7 +16,6 @@ const Template = (args) => <Wrapper {...args} />;
 export const WithData = Template.bind({});
 WithData.args = {
   variable: 'effect_size_freq_diff',
-  // currentSet: "m0.001_mu1e-05_r0.00625_sigsqr25_n1000_pop1"
 };
 
 function Wrapper(props){
@@ -24,7 +23,7 @@ function Wrapper(props){
 
   return (
     <ThemeProvider theme={theme}>
-      <Dashboard {...props} />
+      <Dashboard {...props} theme={theme}/>
     </ThemeProvider>
   )
 }

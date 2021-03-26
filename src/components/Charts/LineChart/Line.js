@@ -11,7 +11,7 @@ import useDataSummaries from '../../../hooks/useDataSummaries';
 const StyledCanvas = styled.canvas`
     position: absolute;
     width: 100%;
-    height: 75%;
+    height: ${({ heightperc }) => heightperc}%;
 `
 
 const StyledForeign = styled.foreignObject`
@@ -19,15 +19,17 @@ const StyledForeign = styled.foreignObject`
     height: 100%;
 `
 
-const Line = ({data, xVar, yVar, addBrush, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, secondaryLL, secondaryUL}) => {
+const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, secondaryLL, secondaryUL}) => {
     const ref = useRef();
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
     const [ leftPadding, setLeftPadding ] = useState()
     const leftPaddingModifier = 0.1
+    const heightModifier = addBrush ? .6 : .75;
+    const heightPerc = heightModifier * 100;
 
-    const newData = data.filter( d => d.output_gen <= upperLimit && d.output_gen >=lowerLimit)
+    const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >= lowerLimit)
     const { minX, maxX, uniqX } = useDataSummaries(newData, xVar, yVar)
     const { minY, maxY } = useDataSummaries(data, xVar, yVar)
   
@@ -42,8 +44,8 @@ const Line = ({data, xVar, yVar, addBrush, upperLimit, lowerLimit, setUpperLimit
         const yScale = scaleLinear().domain([maxY, minY]).range([0, canvas.height])
 
         context.beginPath();
-        context.lineWidth = 2;
-        context.strokeStyle = secondaryUL ? 'lightgray' : '#682CFE';
+        context.lineWidth = 4;
+        context.strokeStyle = secondaryUL ? theme.nonFocusColor : theme.lineColor;
         context.globalAlpha = 1;
         context.lineJoin = "round";
         newData.forEach(d => {
@@ -53,8 +55,8 @@ const Line = ({data, xVar, yVar, addBrush, upperLimit, lowerLimit, setUpperLimit
         context.closePath();
 
         context.beginPath();
-        context.lineWidth = 1;
-        context.strokeStyle = '#682CFE';
+        context.lineWidth = 2;
+        context.strokeStyle = theme.lineColor;
         context.globalAlpha = 1;
         context.lineJoin = "round";
         newData.filter(v => v[xVar] >= secondaryLL && v[xVar] <= secondaryUL).forEach(d => {
@@ -72,7 +74,7 @@ const Line = ({data, xVar, yVar, addBrush, upperLimit, lowerLimit, setUpperLimit
             const newWidth = target.clientWidth
             setWidth(newWidth) 
             setLeftPadding(newWidth * leftPaddingModifier)       
-            setHeight(target.clientHeight * 0.75)
+            setHeight(target.clientHeight * heightModifier)
 
         }
     }, [observedEntry])
@@ -96,7 +98,7 @@ const Line = ({data, xVar, yVar, addBrush, upperLimit, lowerLimit, setUpperLimit
             <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5}/>
             <XAxis width={width} height={height} scale={xScale} includeAxisLine={false}/>
             <StyledForeign>
-                <StyledCanvas ref={ref}></StyledCanvas>
+                <StyledCanvas ref={ref} heightperc={heightPerc} />
             </StyledForeign>
             {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}
         </svg>

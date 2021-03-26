@@ -10,12 +10,12 @@ const Charts = styled.div`
     row-gap: 10px;
 `
 
-const GroupedLines = ({ xVar, yVar, data, upperLimit, lowerLimit, setUpperLimit, setLowerLimit }) => {
+const GroupedLines = ({ xVar, yVar, data, theme, upperLimit, lowerLimit, setUpperLimit, setLowerLimit }) => {
 
     return (
         <Charts>
-            <Line data={data} xVar={xVar} yVar={yVar} upperLimit={upperLimit} lowerLimit={lowerLimit}/>
-            <Line data={data} xVar={xVar} yVar={yVar} addBrush={true} upperLimit={2500000} lowerLimit={1000} setLowerLimit={setLowerLimit} setUpperLimit={setUpperLimit} secondaryLL={lowerLimit} secondaryUL={upperLimit}/>
+            <Line data={data} xVar={xVar} yVar={yVar} theme={theme} upperLimit={upperLimit} lowerLimit={lowerLimit}/>
+            <Line data={data} xVar={xVar} yVar={yVar} theme={theme} addBrush={true} upperLimit={2500000} lowerLimit={1000} setLowerLimit={setLowerLimit} setUpperLimit={setUpperLimit} secondaryLL={lowerLimit} secondaryUL={upperLimit}/>
 
         </Charts>
     )
