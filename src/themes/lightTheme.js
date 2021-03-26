@@ -31,7 +31,7 @@ const lightTheme = {
     maxLessZeroColor: colors.blues.blue1,
     dropDownArrowColor: colors.blacks.black2,
     dropDownItemsColor: colors.whites.white1,
-    dropDownItemsBorder: colors.whites.white1,
+    dropDownItemsBorder: colors.blacks.black2,
     dropDownHighLightGradient1: colors.purples.purple3,
     dropDownHighLightGradient2: colors.purples.purple2
  

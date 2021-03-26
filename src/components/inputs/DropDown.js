@@ -60,7 +60,7 @@ const List = styled.div`
     z-index: 100;
     background: ${({ theme }) => theme.dropDownItemsColor};
     border: 2px solid ${({ theme }) => theme.dropDownItemsBorder};
-    border-radius: 2px;
+    border-radius: 5px;
 `
 
 const ListItem = styled.div`
