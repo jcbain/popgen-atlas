@@ -1,24 +1,41 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import DropDown from '../components/inputs/DropDown'
 
+const WrapperDiv = styled.div`
+  width: 120px;
+`
+
 const data = [
-    { id: 0, option: 'dogs'},
-    { id: 1, option: 'cats'},
-    { id: 2, option: 'pigs'}
+    'dogs', 
+    'cats',
+    'chicken'
 ]
 
 export default {
   title: 'Components/DropDown',
-  component: DropDown,
+  component: Wrapper,
 };
 
-const Template = (args) => <DropDown {...args} />;
+const Template = (args) => <Wrapper {...args} />;
 
 export const WithData = Template.bind({});
 WithData.args = {
     options: data,
     selection: 'dog',
+    param: 'animal',
     makeSelection: (i) => console.log(i)
 
 };
+
+function Wrapper(props){
+
+
+  return (
+    <WrapperDiv>
+
+      <DropDown {...props} />
+    </WrapperDiv>
+  )
+}

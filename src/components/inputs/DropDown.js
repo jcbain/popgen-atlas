@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { DownArrow, UpArrow } from '@styled-icons/boxicons-regular';
+import { DownArrow, UpArrow } from '@styled-icons/boxicons-regular';
 
 const Wrapper = styled.div`
     position: relative;
@@ -38,14 +38,19 @@ const Selection = styled.p`
 `
 
 const Arrow = styled.div`
-    width: 100%;
+    width: 10px;
     cursor: pointer;
 `
 
-// const StyledUpArrow = styled(UpArrow)`
-//     font-size: 0.5em;
-//     color: ${({ theme }) => theme.dropDownArrowColor};
-// `
+const StyledUpArrow = styled(UpArrow)`
+    font-size: 10px;
+    color: ${({ theme }) => theme.dropDownArrowColor};
+`
+
+const StyledDownArrow = styled(DownArrow)`
+    font-size: 10px;
+    color: ${({ theme }) => theme.dropDownArrowColor};
+`
 
 const List = styled.div`
     position: absolute;
@@ -75,18 +80,18 @@ const Option = styled.p`
 
 `
 
-const DropDown = ({ options, selection, makeSelection }) => {
+const DropDown = ({ options, selection, param, makeSelection }) => {
     const [ open, setOpen ] = useState(false);
 
-    const chooseSelection = (id) => {
-        makeSelection(id)
+    const chooseSelection = (v) => {
+        makeSelection(v)
         setOpen(false)
     }
 
     const optionItems = options.map( (o, i) => {
         return (
-            <ListItem key={o.id} onClick={() => chooseSelection(o.id)}>
-                <Option>{o.option}</Option>
+            <ListItem key={i} onClick={() => chooseSelection(o)}>
+                <Option>{o}</Option>
             </ListItem>
         )
     } )
@@ -95,10 +100,9 @@ const DropDown = ({ options, selection, makeSelection }) => {
     return (
         <Wrapper>
             <Header>
-                <Title>param</Title>
-                <Selection>{selection}</Selection>
-                {/* <Arrow onClick={() => setOpen(prev => !prev)}>{open ? <StyledUpArrow /> : <DownArrow /> }</Arrow> */}
-                <Arrow onClick={() => setOpen(prev => !prev)}>{open ? '+': '-' }</Arrow>
+                <Title>{param}</Title>
+                <Selection onClick={() => setOpen(prev => !prev)}>{selection}</Selection>
+                <Arrow >{open ? <StyledUpArrow /> : <StyledDownArrow /> }</Arrow>
 
             </Header>
             {open && <List>
