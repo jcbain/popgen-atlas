@@ -95,8 +95,8 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
     return (
         <svg ref={svgRef} width="100%" height="100%">
 
-            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5}/>
-            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false}/>
+            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false}  includeAxisLabel={!addBrush} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5}/>
+            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false}/>
             <StyledForeign>
                 <StyledCanvas ref={ref} heightperc={heightPerc} />
             </StyledForeign>

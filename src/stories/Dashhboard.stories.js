@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components'
 
 import Dashboard from '../components/dashboards/Dashboard'
 import useTheme from '../hooks/useTheme'
+import useFonts from '../hooks/useFonts'
 
 
 
@@ -20,6 +21,7 @@ WithData.args = {
 
 function Wrapper(props){
   const { theme } = useTheme()
+  useFonts();
 
   return (
     <ThemeProvider theme={theme}>

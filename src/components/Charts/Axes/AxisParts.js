@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 export const TickText = styled.text`
-    font-family: ${props => props.theme.tickfont};
-    fill: ${props => props.theme.tickfill};
+    font-family: ${({ theme }) => theme.simpleFont};
+    fill: ${({ theme }) => theme.axisTickFill };
 `
 
 TickText.defaultProps = {
     theme: {
-        tickfont: 'Roboto',
-        tickfill: 'black'
+        simpleFont: 'sans-serif',
+        axisTickFill: 'black'
     }
 }
 
 export const TickLine = styled.line`
-    stroke: ${props => props.theme.tickfill};
+    fill: ${({ theme }) => theme.axisTickFill };
 `;

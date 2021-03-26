@@ -19,7 +19,7 @@ const StyledForeign = styled.foreignObject`
     height: 100%;
 `
 
-const Histogram = ({data, variable}) => {
+const Histogram = ({data, variable, theme}) => {
     const ref = useRef();
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
@@ -49,8 +49,8 @@ const Histogram = ({data, variable}) => {
 
             
     
-            context.fillStyle = hexToRGB('#682CFE', 0.5)
-            context.strokeStyle = '#682CFE'
+            context.fillStyle = theme.binColor;
+            context.strokeStyle = theme.binOutline;
 
             context.fillRect(xScale(v.x0) + 10, yScale(v.length), width,  canvas.height - yScale(v.length))
             context.strokeRect(xScale(v.x0) + 10, yScale(v.length), width,  canvas.height - yScale(v.length))

@@ -47,15 +47,12 @@ const Dashboard = ({theme}) => {
 
     return (
         <Wrapper>
-            {/* <button onClick={() => changeParam("mu", 0.000001)}>Change</button>
-            <button onClick={() => changeParam("m", 0.005)}>Change2</button> */}
-           
             <Grid>
 
                 {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
                 {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} theme={theme}/>}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} theme={theme}/>}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
             </Grid>
             <ParamsDiv>
                 {paramSelectors}

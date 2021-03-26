@@ -11,12 +11,12 @@ const Charts = styled.div`
     row-gap: 10px;
 `
 
-const HistogramGroup = ({data, variable, uniqVals, setGeneration}) =>{
+const HistogramGroup = ({data, variable, uniqVals, setGroup, theme}) =>{
 
     return (
         <Charts>
-            <Histogram data={data} variable={variable} />
-            <Slider data={uniqVals} setValue={setGeneration}/>
+            <Histogram data={data} variable={variable} theme={theme} />
+            <Slider data={uniqVals} setValue={setGroup}/>
 
         </Charts>
     )

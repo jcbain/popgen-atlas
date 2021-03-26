@@ -98,7 +98,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
 
             </StyledForeign>
             {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}
-            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false}/>
+            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false}/>
         </svg>
     )
 }

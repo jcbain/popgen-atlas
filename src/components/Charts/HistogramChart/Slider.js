@@ -9,7 +9,7 @@ const SliderDiv = styled.div`
     position: relative;
     border-radius: 3px;
     height: 8px;
-    background: #dddddd;
+    background: ${({ theme }) => theme.sliderColor};
 `
 
 const Thumb = styled.div`
@@ -20,12 +20,12 @@ const Thumb = styled.div`
     top: 50%;
     transform: translateY(-50%);
     left: ${({leftposition}) => leftposition}px;
-    background: #682CFE;
+    background: ${({ theme }) => theme.thumbSliderOutline};
     cursor: pointer;
 `
 
 const Inner = styled.p`
-    background: #fffff7;
+    background: ${({ theme }) => theme.thumbSliderColor};
     width: 21px;
     height: 21px;
     border-radius: 50%;
