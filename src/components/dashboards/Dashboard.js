@@ -26,12 +26,13 @@ const Grid = styled.div`
 const Dashboard = ({}) => {
 
     const { data, loaded } = useData()
-    const { paramOptions, chosenSet } = useParams(data)
+    const { paramOptions, chosenSet, changeParam } = useParams(data)
     const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
     return (
         <Wrapper>
-            {/* <button onClick={changeParams}>Change</button> */}
+            <button onClick={() => changeParam("mu", 0.000001)}>Change</button>
+            <button onClick={() => changeParam("m", 0.005)}>Change2</button>
             <Grid>
 
                 {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'}  />}

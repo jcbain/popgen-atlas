@@ -38,12 +38,12 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
 
     const colorScaleUp = scaleLinear().domain([0, maxVal]).range([theme.minGreaterZeroColor, theme.maxGreaterZeroColor]).interpolate(interpolateHcl)
     const colorScaleDown = scaleLinear().domain([minVal, 0]).range([theme.minLessZeroColor, theme.maxLessZeroColor]).interpolate(interpolateHcl)
-   
+
     useEffect(() => {
         const canvas = ref.current;
         const context = canvas.getContext('2d');
-        canvas.width = 1000;
-        canvas.height = 1000;
+        canvas.width = 4000;
+        canvas.height = 4000;
         context.clearRect(0, 0, canvas.width, canvas.height)
     
 
@@ -55,11 +55,11 @@ const Architecture = ({ data, xVar, yVar, colorVar, upperLimit, lowerLimit, addB
                 if(v[xVar] < secondaryLL || v[xVar] >= secondaryUL){
                     context.fillStyle = 'lightgray'
                 } else {
-                    context.fillStyle = v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                    context.fillStyle = v[colorVar] === 0 ? '#fff': v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
                 }
 
             } else {
-                context.fillStyle = v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                context.fillStyle = v[colorVar] === 0 ? '#fff': v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
 
             }
             context.fillRect(xBand(v[xVar]), yBand(v[yVar]), xBand.bandwidth(), yBand.bandwidth())
