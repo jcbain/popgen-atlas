@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import DropDown from '../components/inputs/DropDown'
+import useTheme from '../hooks/useTheme'
 
 const WrapperDiv = styled.div`
   width: 120px;
@@ -30,12 +31,15 @@ WithData.args = {
 };
 
 function Wrapper(props){
+  const { theme } = useTheme();
 
 
   return (
-    <WrapperDiv>
+    <ThemeProvider theme={theme}>
+      <WrapperDiv>
 
-      <DropDown {...props} />
-    </WrapperDiv>
+        <DropDown {...props} />
+      </WrapperDiv>
+    </ThemeProvider>
   )
 }

@@ -1,10 +1,39 @@
-const colors = {}
+const colors = {
+    blacks: {
+        black1: '#000000',
+        black2: '#303030'
+    },
+    whites: {
+        white1: '#ffffff',
+        white2: '#fffff7'
+    },
+    purples: {
+        purple1: '#5d0096', 
+        purple2: '#9538f2',
+        purple3: '#a751fc'
+    },
+    blues: {
+        blue1: '#0082e6', 
+        blue2: '#026dd9'
+    },
+    yellows: {
+        yellow1: '#ffd000'
+    },
+    reds: {
+        red1: '#eb4034'
+    }
+}
 
 const lightTheme = {
-    maxGreaterZeroColor: '#eb4034',
-    minGreaterZeroColor: '#ffd000',
-    minLessZeroColor: '#5d0096',
-    maxLessZeroColor: '#0082e6',
+    maxGreaterZeroColor: colors.reds.red1,
+    minGreaterZeroColor: colors.yellows.yellow1,
+    minLessZeroColor: colors.purples.purple1,
+    maxLessZeroColor: colors.blues.blue1,
+    dropDownArrowColor: colors.blacks.black2,
+    dropDownItemsColor: colors.whites.white1,
+    dropDownItemsBorder: colors.whites.white1,
+    dropDownHighLightGradient1: colors.purples.purple3,
+    dropDownHighLightGradient2: colors.purples.purple2
  
 }
 

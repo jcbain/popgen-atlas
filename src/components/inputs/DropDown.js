@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-regular';
+
+import useOutsideAlerter from '../../hooks/useOutsideAlerter'
 
 const Wrapper = styled.div`
     position: relative;
@@ -56,7 +58,7 @@ const List = styled.div`
     position: absolute;
     width: 100%;
     z-index: 100;
-    background: ${({ theme }) => theme.dropDownItemsColors};
+    background: ${({ theme }) => theme.dropDownItemsColor};
     border: 2px solid ${({ theme }) => theme.dropDownItemsBorder};
     border-radius: 2px;
 `
@@ -81,7 +83,10 @@ const Option = styled.p`
 `
 
 const DropDown = ({ options, selection, param, makeSelection }) => {
+    const ref = useRef()
     const [ open, setOpen ] = useState(false);
+
+    useOutsideAlerter(ref, () => setOpen(false))
 
     const chooseSelection = (v) => {
         makeSelection(v)
@@ -98,14 +103,14 @@ const DropDown = ({ options, selection, param, makeSelection }) => {
 
 
     return (
-        <Wrapper>
-            <Header>
+        <Wrapper ref={ref}>
+            <Header onClick={() => setOpen(prev => !prev)}>
                 <Title>{param}</Title>
-                <Selection onClick={() => setOpen(prev => !prev)}>{selection}</Selection>
+                <Selection >{selection}</Selection>
                 <Arrow >{open ? <StyledUpArrow /> : <StyledDownArrow /> }</Arrow>
 
             </Header>
-            {open && <List>
+            {open && <List >
                     {optionItems}
                 </List>
             }
