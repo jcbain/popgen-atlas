@@ -24,8 +24,17 @@ const useParams = (data) => {
                 }
             }
         })
+  
+        for ( const [key, v] of Object.entries(optValPairs)) {
+            if (v.values.length > 1) {
+                optValPairs[key] = {...v, isVariable: true}
+            } else {
+                optValPairs[key] = {...v, isVariable: false}
+            }
+        }
         setParamOptions(optValPairs)
     }, [data])
+
 
     useEffect(() => {
         const paramArray = Object.values(paramOptions).map((v, i) => {

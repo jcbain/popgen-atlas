@@ -7,7 +7,8 @@ import useParams from '../../hooks/useParams'
 import HistogramChart from '../charts/HistogramChart';
 import GenomeChart from '../charts/GenomeChart';
 import LineChart from '../charts/LineChart';
-import ParamBar from './ParamBar'
+import VariableParamBar from './VariableParamBar'
+import ConstParamBar from './ConstParamBar';
 
 
 
@@ -16,6 +17,10 @@ const Wrapper = styled.div`
     /* padding: 20px; */
     display: grid;
     grid-template-columns: 1fr .25fr;
+    grid-template-rows: 70px 1fr;
+    grid-template-areas: 
+        "constbar varbar"
+        "plots varbar";
     column-gap: 20px;
     background-color: ${({ theme }) => theme.dashboardBackground};
 `
@@ -47,7 +52,8 @@ const Dashboard = ({theme}) => {
 
     return (
         <Wrapper>
-            <Grid>
+            <ConstParamBar style={{gridArea: 'constbar', paddingLeft: '20px', paddingTop: '10px', paddingRight: '20px'} } paramOptions={paramOptions}/>
+            <Grid style={{gridArea: 'plots'} }>
                 <ChartHolder style={{gridArea:'genome'}}>
                     {geneLoaded && <GenomeChart  data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
                 </ChartHolder>
@@ -60,7 +66,7 @@ const Dashboard = ({theme}) => {
                     {geneLoaded && <HistogramChart  data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
                 </ChartHolder>
             </Grid>
-            <ParamBar paramOptions={paramOptions} changeParam={changeParam}/>
+            <VariableParamBar style={{gridArea: 'varbar'} } paramOptions={paramOptions} changeParam={changeParam}/>
         </Wrapper>
     )
 }

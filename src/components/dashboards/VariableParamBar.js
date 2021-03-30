@@ -33,22 +33,22 @@ const Description = styled.p`
 
 `;
 
-const ParamBar = ({paramOptions, changeParam}) => {
+const VariableParamBar = ({paramOptions, changeParam, ...rest}) => {
     const { friendlyLabels } = useFriendlyLabels();
 
     const paramSelectors = Object.keys(paramOptions).map((p, i) => {
-        const { paramName, values, selectedValue } = paramOptions[p];
+        const { paramName, values, selectedValue, isVariable } = paramOptions[p];
 
-        return <StyledDropDown key={i} param={friendlyLabels[paramName]} options={values} selection={selectedValue} makeSelection={(v) => changeParam(paramName, v)} />
+        return isVariable && <StyledDropDown key={i} param={friendlyLabels[paramName]} options={values} selection={selectedValue} makeSelection={(v) => changeParam(paramName, v)} />
 
     })
 
 
     return (
-        <BarWrapper>
+        <BarWrapper {...rest}>
             
             <ParamSection>
-                <Header>parameters</Header>
+                <Header>variable parameters</Header>
                 {paramSelectors}
                 <Description>
                     Results for a two-patch model of migration-selection balance. Migration rate indicates the proportion of individuals in each population that migrated from the other patch. Selection indicates the width of the fitness function (smaller values = stronger selection). Mutation indicates the rate per locus, per generation. Recombination indicates the rate between adjacent loci on a chromosome, per generation.
@@ -60,4 +60,4 @@ const ParamBar = ({paramOptions, changeParam}) => {
     )
 }
 
-export default ParamBar;
+export default VariableParamBar;
