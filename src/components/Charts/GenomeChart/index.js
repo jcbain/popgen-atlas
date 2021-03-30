@@ -8,7 +8,6 @@ import useFriendlyLabels from '../../../hooks/useFriendlyLabels'
 
 const Wrapper = styled.div`
     width: 100%;
-    grid-area: genome;
     display: grid;
     grid-template-rows: .2fr 1fr;
 `;

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 
-const LineChart = ({ data, xVar, yVar, theme }) => {
+const LineChart = ({ data, xVar, yVar, theme, ...rest }) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -18,7 +18,7 @@ const LineChart = ({ data, xVar, yVar, theme }) => {
     useFonts()
 
     return (
-        <Wrapper>
+        <Wrapper {...rest}>
             <GroupedLines data={data} xVar={xVar} yVar={yVar} theme={theme} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
 
         </Wrapper>

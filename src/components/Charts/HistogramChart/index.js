@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 
-const HistogramChart = ({ data, variable, groupVar, theme }) => {
+const HistogramChart = ({ data, variable, groupVar, theme, ...rest }) => {
 
     const [ group, setGroup ] = useState(1000)
     const { friendlyLabels } = useFriendlyLabels();
@@ -25,7 +25,7 @@ const HistogramChart = ({ data, variable, groupVar, theme }) => {
     
 
     return (
-        <Wrapper>
+        <Wrapper {...rest}>
             <HistogramGroup data={filtered} variable={variable} theme={theme} uniqVals={uniqVals} setGroup={setGroup} sliderLabel={friendlyLabels[groupVar]}/>
 
         </Wrapper>

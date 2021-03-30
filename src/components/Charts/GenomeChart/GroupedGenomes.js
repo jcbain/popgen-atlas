@@ -6,7 +6,7 @@ import Architecture from './Architecture';
 const Charts = styled.div`
     width: 100%;
     display: grid;
-    grid-template-rows: 1fr 0.25fr;
+    grid-template-rows: 300px 100px;
     row-gap: 10px;
 `
 
@@ -21,7 +21,9 @@ const GroupedGenomes = ({  data, xVar, yVar, colorVar, theme, upperLimit, lowerL
                 upperLimit={upperLimit} 
                 lowerLimit={lowerLimit} 
                 minVal={minVal} 
-                maxVal={maxVal}/>
+                maxVal={maxVal}
+                addBrush={false}
+                />
             <Architecture data={data} 
                 xVar={xVar} 
                 yVar={yVar} 

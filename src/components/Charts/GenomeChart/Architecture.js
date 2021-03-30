@@ -73,8 +73,12 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
     useEffect(() => {
         if(observedEntry.target){
           const { target } = observedEntry;
+          console.log(target)
           setWidth(target.clientWidth)        
           setHeight(target.clientHeight * heightModifier)
+          console.log(target.clientHeight)
+          console.log(heightModifier)
+          console.log(target.clientHeight * heightModifier)
         }
       }, [observedEntry])
 
@@ -90,6 +94,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
         const value = this.domain()[index]
         return value ? value: this.domain()[this.domain().length - 1]
     }
+
 
     return (
         <svg ref={svgRef} width="100%" height="100%">

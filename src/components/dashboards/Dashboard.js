@@ -52,9 +52,9 @@ const Dashboard = ({theme}) => {
         <Wrapper>
             <Grid>
 
-                {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
-                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                {geneLoaded && <GenomeChart style={{gridArea:'genome'}} data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                {phenLoaded && <LineChart style={{gridArea:'line'}} data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
+                {geneLoaded && <HistogramChart style={{gridArea:'hist'}} data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
             </Grid>
             <ParamsDiv>
                 {paramSelectors}
