@@ -73,12 +73,9 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
     useEffect(() => {
         if(observedEntry.target){
           const { target } = observedEntry;
-          console.log(target)
-          setWidth(target.clientWidth)        
-          setHeight(target.clientHeight * heightModifier)
-          console.log(target.clientHeight)
-          console.log(heightModifier)
-          console.log(target.clientHeight * heightModifier)
+          setWidth(target.clientWidth)     
+          // TODO: FIX THIS IS TOO HACKY AND DEPENDS ON ELEMENT ABOVE   
+          addBrush ? setHeight(75 * heightModifier) : setHeight(300 * heightModifier)
         }
       }, [observedEntry])
 
