@@ -70,7 +70,7 @@ const YAxis = (props) => {
         axisLabel = <TickText fontSize={fontSize}
           style={{
             textAnchor: 'middle',
-            transform: `translate(${0}px, ${(rangeMax - rangeMin)/2}px) rotate(90deg)`
+            transform: `translate(${5}px, ${(rangeMax - rangeMin)/2}px) rotate(90deg)`
           }
 
           }
