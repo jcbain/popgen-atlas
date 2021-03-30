@@ -4,6 +4,7 @@ import { uniq } from 'lodash';
 
 import useFonts from '../../../hooks/useFonts'
 import HistogramGroup from './HistogramGroup'
+import useFriendlyLabels from '../../../hooks/useFriendlyLabels';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
 const HistogramChart = ({ data, variable, groupVar, theme }) => {
 
     const [ group, setGroup ] = useState(1000)
+    const { friendlyLabels } = useFriendlyLabels();
 
 
     useFonts()
@@ -24,7 +26,7 @@ const HistogramChart = ({ data, variable, groupVar, theme }) => {
 
     return (
         <Wrapper>
-            <HistogramGroup data={filtered} variable={variable} theme={theme} uniqVals={uniqVals} setGroup={setGroup}/>
+            <HistogramGroup data={filtered} variable={variable} theme={theme} uniqVals={uniqVals} setGroup={setGroup} sliderLabel={friendlyLabels[groupVar]}/>
 
         </Wrapper>
     )

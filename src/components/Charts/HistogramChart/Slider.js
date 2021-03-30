@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import { scaleBand } from 'd3';
 import { min } from 'lodash';
 
-import useFonts from '../../../hooks/useFonts'
+const SliderWrapper = styled.div`
+    display: grid;
+    grid-template-rows: 1fr 0.2fr;
+`
 
 const SliderDiv = styled.div`
     position: relative;
     border-radius: 3px;
     height: 8px;
     background: ${({ theme }) => theme.sliderColor};
+    align-self: end;
 `
 
 const Thumb = styled.div`
@@ -30,16 +34,22 @@ const Inner = styled.p`
     height: 21px;
     border-radius: 50%;
     position: absolute;
-    top: 0.5px;
+    top: 2.5px;
     transform: translateY(-50%);
     left: 2px;
     text-align: center;
     line-height: 21px;
-    font-size: 12px;
+    font-size: 10px;
     font-family: 'Roboto';
 `
 
-const Slider = ({data, setValue}) => {
+const Title = styled.p`
+    font-size: 12px;
+    font-family: ${({ theme }) => theme.simpleFont};
+    justify-self: center;
+`
+
+const Slider = ({data, setValue, label}) => {
     const sliderRef = useRef()
     const thumbRef = useRef();
     const [leftPosition, setLeftPosition ] = useState(0)
@@ -47,7 +57,6 @@ const Slider = ({data, setValue}) => {
     const [end, setEnd] = useState()
     const [currentVal, setCurrentVal] = useState(min(data.map(d => d)))
 
-    useFonts()
 
     useEffect(() => {
         if(thumbRef.current && sliderRef.current){
@@ -92,9 +101,13 @@ const Slider = ({data, setValue}) => {
  
 
     return (
-        <SliderDiv ref={sliderRef}>
-            <Thumb ref={thumbRef} onMouseDown={handleMouseDown} leftposition={leftPosition}><Inner>{cleanValue(currentVal)}</Inner></Thumb>
-        </SliderDiv>
+        <SliderWrapper>
+
+            <SliderDiv ref={sliderRef}>
+                <Thumb ref={thumbRef} onMouseDown={handleMouseDown} leftposition={leftPosition}><Inner>{cleanValue(currentVal)}</Inner></Thumb>
+            </SliderDiv>
+            <Title>{label}</Title>
+        </SliderWrapper>
     )
 }
 
