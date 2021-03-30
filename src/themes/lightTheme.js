@@ -9,13 +9,15 @@ const colors = {
         white2: '#fffff7'
     },
     grays: {
-        gray1: '#e0e0e0'
+        gray1: '#e0e0e0',
+        gray2: '#9e9e9e'
     },
     purples: {
         purple1: '#5d0096', 
         purple2: '#9538f2',
         purple3: '#a751fc',
-        purple4: '#682CFE'
+        purple4: '#682CFE',
+        purple5: '#fafbff'
     },
     blues: {
         blue1: '#0082e6', 
@@ -31,6 +33,7 @@ const colors = {
 
 const lightTheme = {
     simpleFont: 'Roboto',
+    funFont: 'Rubik',
     maxGreaterZeroColor: colors.reds.red1,
     minGreaterZeroColor: colors.yellows.yellow1,
     minLessZeroColor: colors.purples.purple1,
@@ -49,6 +52,11 @@ const lightTheme = {
     thumbSliderOutline: colors.purples.purple1,
     sliderColor: colors.grays.gray1,
     axisTickFill: colors.blacks.black3,
+    dashboardBackground: colors.purples.purple5,
+    chartCardBackground: colors.whites.white1,
+    paramBarBackground: colors.whites.white1,
+    paramHeaderColor: colors.purples.purple2,
+    paramDescriptionColor: colors.grays.gray2
  
 }
 

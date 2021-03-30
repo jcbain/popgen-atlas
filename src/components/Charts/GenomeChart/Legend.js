@@ -22,13 +22,13 @@ const GradientLegend = styled.div`
     display: grid;
     grid-template-columns: 48% 4% 48%;
     flex-direction: row;
-    height: 10px;
+    height: 7px;
 `
 
 const LegendHigh = styled.div`
     background: linear-gradient(to left, ${({ theme }) => theme.maxGreaterZeroColor}, ${({ theme }) => theme.minGreaterZeroColor});
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 3.5px;
+    border-bottom-right-radius: 3.5px;
 `
 
 const LegendMid = styled.div`

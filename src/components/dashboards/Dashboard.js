@@ -4,25 +4,27 @@ import styled from 'styled-components';
 import useData from '../../hooks/useData'
 import useFilteredData from '../../hooks/useFilteredData'
 import useParams from '../../hooks/useParams'
-import useFriendlyLabels from '../../hooks/useFriendlyLabels'
 import HistogramChart from '../charts/HistogramChart';
 import GenomeChart from '../charts/GenomeChart';
 import LineChart from '../charts/LineChart';
-import DropDown from '../inputs/DropDown'
+import ParamBar from './ParamBar'
 
 
 
 const Wrapper = styled.div`
-    padding: 20px;
+    width: 1200px;
+    /* padding: 20px; */
     display: grid;
-    grid-template-columns: 1160px 160px;
+    grid-template-columns: 1fr .25fr;
     column-gap: 20px;
+    background-color: ${({ theme }) => theme.dashboardBackground};
 `
 
 const Grid = styled.div`
     display: grid;
-    grid-template-columns: 550px 550px;
-    grid-template-rows: 500px 400px;
+    padding: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 600px 500px;
     grid-template-areas:
         'genome genome'
         'line hist';
@@ -30,9 +32,11 @@ const Grid = styled.div`
     column-gap: 40px;
 `
 
-const ParamsDiv = styled.div`
-    width: 100%;
-
+const ChartHolder = styled.div`
+    padding: 50px 40px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    background-color: ${({ theme }) => theme.chartCardBackground};
 `
 
 const Dashboard = ({theme}) => {
@@ -40,25 +44,23 @@ const Dashboard = ({theme}) => {
     const { data, loaded } = useData()
     const { paramOptions, chosenSet, changeParam } = useParams(data)
     const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
-    const { friendlyLabels } = useFriendlyLabels()
-    const paramSelectors = Object.keys(paramOptions).map((p, i) => {
-        const { paramName, values, selectedValue } = paramOptions[p];
-
-        return <DropDown key={i} param={friendlyLabels[paramName]} options={values} selection={selectedValue} makeSelection={(v) => changeParam(paramName, v)} />
-
-    })
 
     return (
         <Wrapper>
             <Grid>
+                <ChartHolder style={{gridArea:'genome'}}>
+                    {geneLoaded && <GenomeChart  data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                </ChartHolder>
+                <ChartHolder style={{gridArea:'line'}}>
+                    {phenLoaded && <LineChart  data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
 
-                {geneLoaded && <GenomeChart style={{gridArea:'genome'}} data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
-                {phenLoaded && <LineChart style={{gridArea:'line'}} data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
-                {geneLoaded && <HistogramChart style={{gridArea:'hist'}} data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                </ChartHolder>
+                <ChartHolder style={{gridArea:'hist'}}>
+
+                    {geneLoaded && <HistogramChart  data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                </ChartHolder>
             </Grid>
-            <ParamsDiv>
-                {paramSelectors}
-            </ParamsDiv>
+            <ParamBar paramOptions={paramOptions} changeParam={changeParam}/>
         </Wrapper>
     )
 }

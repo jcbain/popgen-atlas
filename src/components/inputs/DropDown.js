@@ -82,7 +82,7 @@ const Option = styled.p`
 
 `
 
-const DropDown = ({ options, selection, param, makeSelection }) => {
+const DropDown = ({ options, selection, param, makeSelection, ...rest }) => {
     const ref = useRef()
     const [ open, setOpen ] = useState(false);
 
@@ -103,7 +103,7 @@ const DropDown = ({ options, selection, param, makeSelection }) => {
 
 
     return (
-        <Wrapper ref={ref}>
+        <Wrapper ref={ref} {...rest}>
             <Header onClick={() => setOpen(prev => !prev)}>
                 <Title>{param}</Title>
                 <Selection >{selection}</Selection>
