@@ -4,6 +4,7 @@ import { max, min } from 'lodash'
 
 import GroupedGenomes from './GroupedGenomes'
 import Legend from './Legend'
+import useFriendlyLabels from '../../../hooks/useFriendlyLabels'
 
 const Wrapper = styled.div`
     width: 100%;
@@ -26,6 +27,8 @@ const GenomeChart = ({ data, xVar, yVar, colorVar, theme, ...rest}) => {
     const [ lower, setLower ] = useState(1000)
     const [ minVal, setMinVal ] = useState()
     const [ maxVal, setMaxVal ] = useState()
+
+    const { friendlyLabels } = useFriendlyLabels()
     
     const tmpFiltered = data.filter(d => d[colorVar] !== 0)
 
@@ -37,7 +40,7 @@ const GenomeChart = ({ data, xVar, yVar, colorVar, theme, ...rest}) => {
     return (
         <Wrapper {...rest}>
             <LegendWrapper>
-                <Legend minVal={minVal} maxVal={maxVal} title={'who knows'}/>
+                <Legend minVal={minVal} maxVal={maxVal} title={friendlyLabels[colorVar]}/>
             </LegendWrapper>
             <GroupedGenomes data={tmpFiltered} 
                 xVar={xVar} 

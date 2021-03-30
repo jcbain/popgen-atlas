@@ -7,6 +7,7 @@ import XAxis from '../axes/XAxis'
 import YAxis from '../axes/YAxis'
 import useResizeObserver from '../../../hooks/useResizeObserver';
 import useDataSummaries from '../../../hooks/useDataSummaries';
+import useFriendlyLabels from '../../../hooks/useFriendlyLabels'
 
 const StyledCanvas = styled.canvas`
     position: absolute;
@@ -21,6 +22,7 @@ const StyledForeign = styled.foreignObject`
 
 const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, secondaryLL, secondaryUL}) => {
     const ref = useRef();
+    const { friendlyLabels } = useFriendlyLabels()
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
@@ -95,8 +97,8 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
     return (
         <svg ref={svgRef} width="100%" height="100%">
 
-            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false}  includeAxisLabel={!addBrush} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5}/>
-            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false}/>
+            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false}  includeAxisLabel={!addBrush} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5} labelText={friendlyLabels[yVar]}/>
+            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false} labelText={friendlyLabels[xVar]}/>
             <StyledForeign>
                 <StyledCanvas ref={ref} heightperc={heightPerc} />
             </StyledForeign>

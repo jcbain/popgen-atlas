@@ -5,6 +5,7 @@ import { range } from 'lodash';
 
 import useResizeObserver from '../../../hooks/useResizeObserver'
 import useDataSummaries from '../../../hooks/useDataSummaries'
+import useFriendlyLabels from '../../../hooks/useFriendlyLabels'
 import Brush from './Brush'
 import XAxis from '../axes/XAxis'
 
@@ -24,6 +25,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
                         lowerLimit, addBrush, setLowerLimit, setUpperLimit, 
                         secondaryUL, secondaryLL, minVal, maxVal}) => {
     const ref = useRef()
+    const { friendlyLabels } = useFriendlyLabels()
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
@@ -91,12 +93,12 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
 
     return (
         <svg ref={svgRef} width="100%" height="100%">
+            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false} labelText={friendlyLabels[xVar]}/>
             <StyledForeign>
                 <StyledCanvas ref={ref} heightperc={heightPerc}></StyledCanvas>
 
             </StyledForeign>
             {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}
-            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false}/>
         </svg>
     )
 }

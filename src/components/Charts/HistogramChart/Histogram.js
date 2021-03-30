@@ -6,6 +6,7 @@ import useResizeObserver from '../../../hooks/useResizeObserver';
 import useDataSummaries from '../../../hooks/useDataSummaries'
 import XAxis from '../axes/XAxisContinuous';
 import YAxis from '../axes/YAxis'
+import useFriendlyLabels from '../../../hooks/useFriendlyLabels';
 
 
 const StyledCanvas = styled.canvas`
@@ -21,6 +22,7 @@ const StyledForeign = styled.foreignObject`
 
 const Histogram = ({data, variable, theme}) => {
     const ref = useRef();
+    const { friendlyLabels } = useFriendlyLabels();
     const [ svgRef, observedEntry ] = useResizeObserver();
     const [ width, setWidth ] = useState()
     const [ height, setHeight ] = useState()
@@ -78,8 +80,8 @@ const Histogram = ({data, variable, theme}) => {
 
     return (
         <svg ref={svgRef} width="100%" height="100%">
-            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false}/>
-            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5}/>
+            <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} labelText={friendlyLabels[variable]}/>
+            <YAxis width={width} scale={yScale} x0={width * leftPaddingModifier} includeAxisLine={false} includeTicks={true} paddingLeft={width * leftPaddingModifier} pixelsPerTick={height/5} labelText={'count'}/>
 
             <StyledForeign>
                 <StyledCanvas ref={ref}></StyledCanvas>
