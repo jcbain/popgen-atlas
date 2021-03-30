@@ -14,21 +14,23 @@ import DropDown from '../inputs/DropDown'
 const Wrapper = styled.div`
     padding: 20px;
     display: grid;
-    grid-template-columns: 1300px 200px;
-    column-gap: 40px;
+    grid-template-columns: 1160px 160px;
+    column-gap: 20px;
 `
 
 const Grid = styled.div`
     display: grid;
     grid-template-columns: 550px 550px;
-    grid-template-rows: 400px 400px;
+    grid-template-rows: 500px 400px;
+    grid-template-areas:
+        'genome genome'
+        'line hist';
     row-gap: 40px;
     column-gap: 40px;
 `
 
 const ParamsDiv = styled.div`
     width: 100%;
-    padding: 20px;
 
 `
 
@@ -49,10 +51,10 @@ const Dashboard = ({theme}) => {
         <Wrapper>
             <Grid>
 
-                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
                 {geneLoaded && <GenomeChart data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                {phenLoaded && <LineChart data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
                 {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
-                {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                {/* {geneLoaded && <HistogramChart data={genes} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>} */}
             </Grid>
             <ParamsDiv>
                 {paramSelectors}

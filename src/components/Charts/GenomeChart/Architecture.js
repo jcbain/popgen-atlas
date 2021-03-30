@@ -35,10 +35,8 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
 
     const uniqY = range(minY, maxY + 1)
     
-
-    const colorScaleUp = scaleLinear().domain([0, maxVal]).range([theme.minGreaterZeroColor, theme.maxGreaterZeroColor]).interpolate(interpolateHcl)
-    const colorScaleDown = scaleLinear().domain([minVal, 0]).range([theme.minLessZeroColor, theme.maxLessZeroColor]).interpolate(interpolateHcl)
-
+    const colorScale = colorScaleCreator(minVal, maxVal, theme)
+    
     useEffect(() => {
         const canvas = ref.current;
         const context = canvas.getContext('2d');
@@ -55,11 +53,11 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
                 if(v[xVar] < secondaryLL || v[xVar] >= secondaryUL){
                     context.fillStyle = theme.nonFocusColor;
                 } else {
-                    context.fillStyle = v[colorVar] === 0 ? theme.zeroColor : v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                    context.fillStyle = colorScale(v[colorVar])
                 }
 
             } else {
-                context.fillStyle = v[colorVar] === 0 ? theme.zeroColor: v[colorVar] < 0 ? colorScaleDown(v[colorVar]) : colorScaleUp(v[colorVar])
+                context.fillStyle = colorScale(v[colorVar])
 
             }
             context.fillRect(xBand(v[xVar]), yBand(v[yVar]), xBand.bandwidth(), yBand.bandwidth())
@@ -101,6 +99,14 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
             <XAxis width={width} height={height} scale={xScale} includeAxisLine={false} includeAxisLabel={addBrush ? true : false}/>
         </svg>
     )
+}
+
+function colorScaleCreator(minVal, maxVal, theme){
+    const colorScaleUp = scaleLinear().domain([0, maxVal]).range([theme.minGreaterZeroColor, theme.maxGreaterZeroColor]).interpolate(interpolateHcl)
+    const colorScaleDown = scaleLinear().domain([minVal, 0]).range([theme.minLessZeroColor, theme.maxLessZeroColor]).interpolate(interpolateHcl)
+
+    return (i) => i === 0 ? theme.zeroColor : i < 0 ? colorScaleDown(i) : colorScaleUp(i)
+
 }
 
 export default Architecture;

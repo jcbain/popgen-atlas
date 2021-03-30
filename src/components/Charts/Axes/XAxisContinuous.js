@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 
-import { TickText, TickLine } from './AxisParts';
+import { TickText, TickLine } from './axisParts';
 
 // const abbreviateValue = (val) =>{
 //   const updatedVal = val >= 1000 ? `${val/1000}K` : `${val}`

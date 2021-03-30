@@ -6,7 +6,7 @@ import Architecture from './Architecture';
 const Charts = styled.div`
     width: 100%;
     display: grid;
-    grid-template-rows: 300px 75px;
+    grid-template-rows: 1fr 0.25fr;
     row-gap: 10px;
 `
 

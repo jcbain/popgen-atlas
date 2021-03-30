@@ -3,13 +3,24 @@ import styled from 'styled-components';
 import { max, min } from 'lodash'
 
 import GroupedGenomes from './GroupedGenomes'
+import Legend from './Legend'
 
 const Wrapper = styled.div`
     width: 100%;
+    grid-area: genome;
+    display: grid;
+    grid-template-rows: .2fr 1fr;
 `;
 
+const LegendWrapper = styled.div`
+    width: 300px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+`
 
-const GenomeChart = ({ data, xVar, yVar, colorVar, theme }) => {
+
+const GenomeChart = ({ data, xVar, yVar, colorVar, theme, ...rest}) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -24,7 +35,10 @@ const GenomeChart = ({ data, xVar, yVar, colorVar, theme }) => {
     }, [tmpFiltered, colorVar])
 
     return (
-        <Wrapper>
+        <Wrapper {...rest}>
+            <LegendWrapper>
+                <Legend minVal={minVal} maxVal={maxVal} title={'who knows'}/>
+            </LegendWrapper>
             <GroupedGenomes data={tmpFiltered} 
                 xVar={xVar} 
                 yVar={yVar} 

@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 
-import { TickText } from './AxisParts';
+import { TickText } from './axisParts';
 
 const YAxis = (props) => {
   const { scale, width, x0, pixelsPerTick, 
