@@ -86,10 +86,10 @@ const TabState = () => {
             </Tabs>
             {/* {tabList.map((t,i) => (
                 <TabPanel
-                    value={t.id}
+                    value={i}
                     index={i}
                 >
-                    <Dashboard/>
+                
                 </TabPanel>
             ))} */}
         </div>

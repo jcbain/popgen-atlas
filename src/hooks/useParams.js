@@ -5,7 +5,7 @@ const useParams = (data) => {
     const [ paramOptions, setParamOptions ] = useState({})
     const [ chosenSet, setChosenSet ] = useState("")
     const [ loadedSet, setLoadedSet ] = useState(false) 
-
+    
     useEffect(() => {
         const paramSetStrings = Object.keys(data);
         const allOpts = paramSetStrings.flatMap(d => d.split("_"))

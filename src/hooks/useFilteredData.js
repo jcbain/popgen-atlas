@@ -10,6 +10,7 @@ const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
     const [ geneLoaded, setGeneLoaded ] = useState(false);
     const [ phenLoaded, setPhenLoaded ] = useState(false);
     // const [ selectedParamSet, setSelectedParamSet ] = useState("m0.001_mu0.00001_r0.00625_sigsqr25_n1000_pop1")
+
     useEffect(() => {
         if(data[chosenSet]){
             setGenes(data[chosenSet])
