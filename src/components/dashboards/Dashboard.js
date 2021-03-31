@@ -10,7 +10,7 @@ import LineChart from '../charts/LineChart';
 import VariableParamBar from './VariableParamBar'
 import ConstParamBar from './ConstParamBar';
 
-
+import TabState from '../tabs/TabState'
 
 const Wrapper = styled.div`
     width: 1200px;
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr .25fr;
     grid-template-rows: 70px 1fr;
     grid-template-areas: 
+        "tabs tabs"
         "constbar varbar"
         "plots varbar";
     column-gap: 20px;
@@ -52,6 +53,7 @@ const Dashboard = ({theme}) => {
 
     return (
         <Wrapper>
+            <TabState/>
             <ConstParamBar style={{gridArea: 'constbar', paddingLeft: '20px', paddingTop: '10px', paddingRight: '20px'} } paramOptions={paramOptions}/>
             <Grid style={{gridArea: 'plots'} }>
                 <ChartHolder style={{gridArea:'genome'}}>

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@styled-icons/boxicons-regular": "^10.23.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -18,6 +20,9 @@
     "styled-components": "^5.2.1",
     "web-vitals": "^1.0.1",
     "webfontloader": "^1.6.28"
+  },
+  "resolutions": {
+    "babel-loader": "8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
