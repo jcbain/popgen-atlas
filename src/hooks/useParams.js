@@ -27,10 +27,11 @@ const useParams = (data) => {
   
         for ( const [key, v] of Object.entries(optValPairs)) {
             if (v.values.length > 1) {
-                optValPairs[key] = {...v, isVariable: true}
+                optValPairs[key] = {...v, isVariable: true, include: key === 'pop' ? false : true}
             } else {
-                optValPairs[key] = {...v, isVariable: false}
+                optValPairs[key] = {...v, isVariable: false, include: key === 'pop' ? false : true}
             }
+            
         }
         setParamOptions(optValPairs)
     }, [data])

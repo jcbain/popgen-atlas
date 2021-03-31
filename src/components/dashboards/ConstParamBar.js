@@ -23,9 +23,9 @@ const ConstParamBar = ({paramOptions, ...rest}) => {
     const { friendlyLabels } = useFriendlyLabels();
 
     const constParams = Object.keys(paramOptions).map((p, i) => {
-        const { paramName, values,  selectedValue } = paramOptions[p];
+        const { paramName, include,  selectedValue } = paramOptions[p];
 
-        return <StyledParamCard key={i} label={friendlyLabels[paramName]} value={selectedValue} />
+        return include && <StyledParamCard key={i} label={friendlyLabels[paramName]} value={selectedValue} />
 
     })
 
