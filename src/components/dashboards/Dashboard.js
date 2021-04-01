@@ -50,125 +50,127 @@ const ChartHolder = styled.div`
     border: 1px solid #efefef;
     background-color: ${({ theme }) => theme.chartCardBackground};
 `
-
-
 const Dashboard = ({theme}) => {
-
+    const maxTab = 4;
     const { data, loaded } = useData()
     const { paramOptions, chosenSet, changeParam } = useParams(data)
-    const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
+    const { genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
     const [value, setValue] = useState(0);
-    const [geneData, setGeneData] = useState();
-    const [phenData, setPhenData] = useState()
+    const tabProperties = {
+        geneData: genes,
+        phenData: phens,
+        parameter: paramOptions
+    };
     const [tabList, setTabList] = useState([{
-        title: "D1",
-        key: 0,
+        key: 1,
         id: 0
     }]);
 
-    const maxTab = 4;
+    const [tabData, setTabData] = useState([tabProperties]);
 
     useEffect(() => {
-        setGeneData([genes]);
-        setPhenData([phens]);
-    },[genes,phens])
+        let tempTabData = [...tabData];
+        let newTabData = [tempTabData[value]];
 
+        newTabData.geneData = genes;
+        newTabData.phenData = phens;
+        newTabData.parameter = paramOptions;
+
+        tempTabData[value] = newTabData;
+        setTabData(tempTabData);
+
+    }, [genes, phens, paramOptions]);
 
     const handleChangeTab = (event, newValue) => {
         setValue(newValue);
     }
 
-    console.log(value)
-
     const handleAddTab = () => {
         let id = tabList[tabList.length - 1].id + 1;
-    
-        const newTab =  { 
-            title: "D" + `${tabList.length+1}`, 
-            key: id, 
-            id: id}
+        const newTab =  {
+            key: id+1,
+            id: id
+        }
 
         if (tabList.length <= maxTab) {
-            setTabList([...tabList, newTab]);
-            setGeneData([...geneData, genes]);
-            setPhenData([...phenData, phens]);
+            setTabList([ ...tabList, newTab ]);
+            setTabData([ ...tabData, tabProperties ]);
         }
     }
 
-
-    const handleDeleteTab = e => {
-        e.stopPropagation();
-
-        if (tabList.length === 1) {
-            return;
-        }
+    const handleDeleteTab = (e) => {
+        let curValue = value;
         let tabId = parseInt(e.target.id);
-        let tabIDIndex = 0;
-      
-        let tabs = tabList.filter((value, index) => {
-            if (value.id === tabId) {
-                tabIDIndex = index;
-            }
-                return value.id !== tabId;
-        });
-      
-        let curValue = parseInt(value);
-        if (curValue === tabId) {
-            if (tabIDIndex === 0) {
-              curValue = tabList[tabIDIndex + 1].id;
-            } else {
-              curValue = tabList[tabIDIndex - 1].id;
-            }
-        }
-        setValue(curValue);
-        setTabList(tabs);
-    };
+        e.stopPropagation();
+        
+        if (tabList.length !== 1 && tabId >= 0) {
+            let newTabData = tabData.filter((prop, index) => (tabId !== index));
+            let tabs = tabList.filter((value) => value.id !== tabId);
 
+            tabs.map((tab) => {
+                let val = ((tab.id > tabId) ? 1 : 0);
+
+                tab.id = tab.id-val;
+                tab.key = tab.key-val;
+            });
+
+            if (curValue > 0) {
+                curValue--;
+            }
+
+            setValue(curValue);
+            setTabData(newTabData);
+            setTabList(tabs);
+        }
+    };
 
     return (
         <Wrapper>
-            <ConstParamBar style={{gridArea: 'constbar', paddingLeft: '20px', paddingTop: '10px', paddingRight: '20px'} } paramOptions={paramOptions}/>
+            <ConstParamBar style={{gridArea: 'constbar', paddingLeft: '20px', paddingTop: '10px', paddingRight: '20px'} } paramOptions={tabData[value].parameter}/>
             <Grid style={{gridArea: 'plots'} }>
                 <Tabs 
                     value={value} 
                     onChange={handleChangeTab} 
                     orientation="vertical"
-                    variant="scrollable" 
-                    scrollButtons="auto" 
+                    variant="scrollable"
+                    scrollButtons="auto"
                     aria-label="chart tabs"
                     style={{width: "100px"}}
-                    
                 >
-                    {tabList.map(tab => (
+                    { tabList.map(tab => (
                         <Tab
                             key={tab.key}
                             value={tab.id}
-                            label={tab.title}
+                            label={"D"+tab.key}
                             icon={<Close 
                                 id={tab.id} 
-                                style={{ display: "inline-block", marginLeft:"-100px", fontSize: "15px", gridArea: "tab"}} 
+                                style={{ display: "inline-block", marginLeft:"-100px", fontSize: "20px", gridArea: "tab"}} 
                                 onClick={handleDeleteTab}/>}
                             className="mytab"
                         />
-                    ))}
+                    )) }
 
                     <Button onClick={handleAddTab}>
                         <AddIcon/>
                     </Button>
                 </Tabs>
+
                 <ChartHolder style={{gridArea:'genome'}}>
-                    {geneLoaded && <GenomeChart  data={geneData[value]} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                    {geneLoaded && <GenomeChart  data={tabData[value].geneData} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
                 </ChartHolder>
+
                 <ChartHolder style={{gridArea:'line'}}>
-                    {phenLoaded && <LineChart  data={phenData[value]} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
-
+                    {phenLoaded && <LineChart  data={tabData[value].phenData} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
                 </ChartHolder>
+
                 <ChartHolder style={{gridArea:'hist'}}>
-
-                    {geneLoaded && <HistogramChart  data={geneData[value]} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
+                    {geneLoaded && <HistogramChart  data={tabData[value].geneData} variable={'effect_size_freq_diff'} groupVar={'output_gen'} theme={theme}/>}
                 </ChartHolder>
+
             </Grid>
-            <VariableParamBar style={{gridArea: 'varbar'} } paramOptions={paramOptions} changeParam={changeParam}/>
+
+            <VariableParamBar style={{gridArea: 'varbar'} } paramOptions={tabData[value].parameter} changeParam={changeParam}/>
+
         </Wrapper>
     )
 }

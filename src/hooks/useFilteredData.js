@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { tidy, summarize, sum, groupBy, mutate } from '@tidyjs/tidy'
 
-const defaultParams = ['m', 'mu', 'sigsqr', 'pop',  'r'];
+// const defaultParams = ['m', 'mu', 'sigsqr', 'pop',  'r'];
 const defaultGroupParams = ['m', 'mu', 'sigsqr', 'pop', 'output_gen', 'r']
 
 const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
@@ -12,7 +12,7 @@ const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
     // const [ selectedParamSet, setSelectedParamSet ] = useState("m0.001_mu0.00001_r0.00625_sigsqr25_n1000_pop1")
 
     useEffect(() => {
-        if(data[chosenSet]){
+        if(data[chosenSet]) {
             setGenes(data[chosenSet])
             setGeneLoaded(true)
         }
@@ -20,7 +20,7 @@ const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
     }, [data, chosenSet])
 
     useEffect(() => { 
-        if(data[chosenSet]){
+        if(data[chosenSet]) {
             const grouped = tidy(data[chosenSet], 
                 groupBy(defaultGroupParams, [summarize({ phen_diff: sum(colorVar) })]),
                 mutate({ 'phen_diff': d => d.phen_diff * 2})
@@ -28,8 +28,7 @@ const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
             setPhens(grouped)
             setPhenLoaded(true)
 
-        } 
-       
+        }
 
     }, [data, chosenSet])
 

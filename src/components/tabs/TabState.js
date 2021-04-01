@@ -84,14 +84,6 @@ const TabState = () => {
                     <AddIcon/>
                 </Button>
             </Tabs>
-            {/* {tabList.map((t,i) => (
-                <TabPanel
-                    value={i}
-                    index={i}
-                >
-                
-                </TabPanel>
-            ))} */}
         </div>
     )
 
