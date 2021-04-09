@@ -34,6 +34,8 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
     const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >= lowerLimit)
     const { minX, maxX, uniqX } = useDataSummaries(newData, xVar, yVar)
     const { minY, maxY } = useDataSummaries(data, xVar, yVar)
+
+    const brushClickRange = (uniqX[1] - uniqX[0] )* 25
   
 
     useEffect(() => {
@@ -102,7 +104,7 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
             <StyledForeign>
                 <StyledCanvas ref={ref} heightperc={heightPerc} />
             </StyledForeign>
-            {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}
+            {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit} brushClickRange={brushClickRange}/>}
         </svg>
     )
 }

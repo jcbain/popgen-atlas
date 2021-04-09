@@ -15,7 +15,7 @@ const StyledG = styled.g`
 `
 
 
-const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
+const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit, brushClickRange }) => {
 
     const brushRef = useRef(null);
 
@@ -44,7 +44,7 @@ const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
 
         const position = clientX - offset;
        
-        const dx = xScale(50000)
+        const dx = xScale(brushClickRange)
         const [x0, x1] = [position - dx / 2, position + dx / 2].map(d => xScale(xScale.invert(d)));
         select(brushRef.current)
             .call(horizontalBrush.move, x1 > maxX ? [x0, maxX]

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { uniq } from 'lodash';
+import { uniq, min } from 'lodash';
 
-import useFonts from '../../../hooks/useFonts'
 import HistogramGroup from './HistogramGroup'
 import useFriendlyLabels from '../../../hooks/useFriendlyLabels';
 
@@ -13,15 +12,15 @@ const Wrapper = styled.div`
 
 
 const HistogramChart = ({ data, variable, groupVar, theme, ...rest }) => {
-
-    const [ group, setGroup ] = useState(1000)
+    
+    const uniqVals = uniq(data.map(d => d[groupVar]))
+    const [ group, setGroup ] = useState(min(uniqVals))
     const { friendlyLabels } = useFriendlyLabels();
 
 
-    useFonts()
 
     const filtered = data.filter(d => d[groupVar] === group)
-    const uniqVals = uniq(data.map(d => d[groupVar]))
+    
     
 
     return (

@@ -34,6 +34,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
 
     const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >=lowerLimit)
     const { minY, maxY, uniqX } = useDataSummaries(newData, xVar, yVar)
+    const brushClickRange = (uniqX[1] - uniqX[0] )* 25
 
     const uniqY = range(minY, maxY + 1)
     
@@ -100,7 +101,7 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
                 <StyledCanvas ref={ref} heightperc={heightPerc}></StyledCanvas>
 
             </StyledForeign>
-            {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit}/>}
+            {addBrush && <Brush width={width} height={height} xScale={xScale} setUpperLimit={setUpperLimit} setLowerLimit={setLowerLimit} brushClickRange={brushClickRange}/>}
         </svg>
     )
 }

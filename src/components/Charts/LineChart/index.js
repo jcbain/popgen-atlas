@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { min, max } from 'lodash';
 
-import useFonts from '../../../hooks/useFonts'
 import GroupedLines from './GroupedLines';
-// import Line from './Line';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -12,10 +11,10 @@ const Wrapper = styled.div`
 
 const LineChart = ({ data, xVar, yVar, theme, ...rest }) => {
 
-    const [ upper, setUpper ] = useState(250000)
-    const [ lower, setLower ] = useState(1000)
+    const xVals = data.map(d => d[xVar])
 
-    useFonts()
+    const [ upper, setUpper ] = useState(max(xVals))
+    const [ lower, setLower ] = useState(min(xVals))
 
     return (
         <Wrapper {...rest}>
