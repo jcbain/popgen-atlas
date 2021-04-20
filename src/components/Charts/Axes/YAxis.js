@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 
-import { TickText } from './AxesStyles';
+import { TickText } from './axisParts';
 
 const YAxis = (props) => {
   const { scale, width, x0, pixelsPerTick, 
@@ -11,7 +11,6 @@ const YAxis = (props) => {
     const tickXMove = (0.75 * paddingLeft)
     const ticks = useMemo(() => {
         const height = rangeMax - rangeMin
-        // const pixelsPerTick = 39
         const numberOfTicksTarget = Math.max(
           1,
           Math.floor(
@@ -71,7 +70,7 @@ const YAxis = (props) => {
         axisLabel = <TickText fontSize={fontSize}
           style={{
             textAnchor: 'middle',
-            transform: `translate(${0}px, ${(rangeMax - rangeMin)/2}px) rotate(90deg)`
+            transform: `translate(${5}px, ${(rangeMax - rangeMin)/2}px) rotate(90deg)`
           }
 
           }

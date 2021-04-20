@@ -2,10 +2,10 @@ import React, {useMemo} from 'react';
 
 import { TickText, TickLine } from './axisParts';
 
-const abbreviateValue = (val) =>{
-  const updatedVal = val >= 1000 ? `${val/1000}K` : `${val}`
-   return updatedVal;
-}
+// const abbreviateValue = (val) =>{
+//   const updatedVal = val >= 1000 ? `${val/1000}K` : `${val}`
+//    return updatedVal;
+// }
 
 const XAxis = (props) => {
   const { scale, height, axisMargin, 
@@ -24,11 +24,7 @@ const XAxis = (props) => {
           width / pixelsPerTick
         )
       )
-      return scale.domain().filter((d, i) => {
-          if(d % 20000 === 0) {
-              return d;
-          }
-        })
+      return scale.ticks(numberOfTicksTarget)
         .map(value => ({
           value,
           xOffset: scale(value)
@@ -74,7 +70,7 @@ const XAxis = (props) => {
                 textAnchor: "middle",
                 transform: "translateY(15px) translateX(0px)"
               }}>
-              { abbreviateValue(value) }
+              { value }
             </TickText>
           </g>
         ))}
