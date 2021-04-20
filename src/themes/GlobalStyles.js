@@ -9,6 +9,14 @@ const GlobalStyle = createGlobalStyle`
   .no-decoration {
     text-decoration: none;
   }
+
+  .hidden {
+      display: none;
+  }
+
+  .show {
+      display: block;
+  }
 `;
  
 export default GlobalStyle;

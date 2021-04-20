@@ -15,10 +15,18 @@ export default {
 
 const Template = (args) => <Wrapper {...args} />;
 
-export const Normal = Template.bind({});
-Normal.args = {
+export const Full = Template.bind({});
+Full.args = {
   name: "Atlas of Population Genetics",
-  links: [ {name: 'articles', link: '/articles' }, {name: 'dashboards', link: '/dashboards'}]
+  links: [ {name: 'articles', link: '/articles' }, {name: 'dashboards', link: '/dashboards'}],
+  isFullView: true
+};
+
+export const Small = Template.bind({});
+Small.args = {
+  name: "Atlas of Population Genetics",
+  links: [ {name: 'articles', link: '/articles' }, {name: 'dashboards', link: '/dashboards'}],
+  isFullView: false
 };
 
 function Wrapper(props){
