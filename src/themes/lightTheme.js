@@ -34,6 +34,8 @@ const colors = {
 const lightTheme = {
     simpleFont: 'Roboto',
     funFont: 'Rubik',
+    linkColor: colors.blacks.black2,
+    navNameColor: colors.blacks.black2,
     maxGreaterZeroColor: colors.reds.red1,
     minGreaterZeroColor: colors.yellows.yellow1,
     minLessZeroColor: colors.purples.purple1,
@@ -59,7 +61,6 @@ const lightTheme = {
     paramDescriptionColor: colors.grays.gray2,
     paramCardBackground: colors.whites.white1,
     paramCardOutline: colors.purples.purple4,
- 
 }
 
 function hexToRGB(hex, alpha) {
