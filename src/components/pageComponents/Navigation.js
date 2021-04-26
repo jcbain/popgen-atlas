@@ -67,9 +67,9 @@ const Navigation = ({ links, isFullView, ...rest }) => {
     })
 
     return (
-        <StyledNav {...rest}>
+        <StyledNav ref={linksRef} {...rest}>
             <MobileButton className={classNames({'hidden': isFullView})} onClick={() => setOpen(prev => !prev)}/>
-            <LinksWrapper ref={linksRef} className={classNames({'full-view-wrapper': isFullView, 'hidden': !open})}> 
+            <LinksWrapper  className={classNames({'full-view-wrapper': isFullView, 'hidden': !open})}> 
                 <LinkContainer className={classNames({'full-view-menu': isFullView })}>
                     {navLinks}
                 </LinkContainer>
