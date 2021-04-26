@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { MenuAltLeft } from '@styled-icons/boxicons-regular'
 
 import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 
@@ -53,6 +54,12 @@ const StyledLink = styled(Link)`
     }
 `
 
+const StyledMenuIcon = styled(MenuAltLeft)`
+    color: white;
+    width: 30px;
+    padding: 10px;
+`
+
 const Navigation = ({ links, isFullView, ...rest }) => {
 
     const [ open, setOpen ] = useState(isFullView && true);
@@ -68,7 +75,10 @@ const Navigation = ({ links, isFullView, ...rest }) => {
 
     return (
         <StyledNav ref={linksRef} {...rest}>
-            <MobileButton className={classNames({'hidden': isFullView})} onClick={() => setOpen(prev => !prev)}/>
+            <MobileButton className={classNames({'hidden': isFullView})} 
+                onClick={() => setOpen(prev => !prev)}>
+                    <StyledMenuIcon />
+            </MobileButton>
             <LinksWrapper  className={classNames({'full-view-wrapper': isFullView, 'hidden': !open})}> 
                 <LinkContainer className={classNames({'full-view-menu': isFullView })}>
                     {navLinks}
