@@ -12,10 +12,12 @@ const MobileButton = styled.div`
     height: 50px;
     border-radius: 50%;
     background: black;
+    z-index: 100;
 `
 
 const StyledNav = styled.nav`
     position: relative; 
+    z-index: 200;
 `
 
 const LinksWrapper = styled.div`
@@ -25,6 +27,7 @@ const LinksWrapper = styled.div`
     left: 40px;
     border: 2px solid black;
     border-radius: 5px;
+    z-index: 100;
     &.full-view-wrapper {
         position: static;
         max-width: 100%;
@@ -48,6 +51,7 @@ const StyledLink = styled(Link)`
     padding-bottom: 5px;
     padding-top: 5px;
     padding: 10px 20px;
+    background: white;
     &.partial-view-link:hover {
         background: linear-gradient(to left, ${({ theme }) => theme.dropDownHighLightGradient1}, ${({ theme }) => theme.dropDownHighLightGradient2});
         color:  white;
