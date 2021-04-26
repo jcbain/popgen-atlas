@@ -11,13 +11,18 @@ const MobileButton = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: black;
+    /* background: black; */
     z-index: 100;
 `
 
 const StyledNav = styled.nav`
     position: relative; 
     z-index: 200;
+    &.nav-not-full{
+        position: absolute;
+        top: 10px;
+        left: 80vw;
+    }
 `
 
 const LinksWrapper = styled.div`
@@ -59,7 +64,7 @@ const StyledLink = styled(Link)`
 `
 
 const StyledMenuIcon = styled(MenuAltLeft)`
-    color: white;
+    color: black;
     width: 30px;
     padding: 10px;
 `
@@ -78,7 +83,7 @@ const Navigation = ({ links, isFullView, ...rest }) => {
     })
 
     return (
-        <StyledNav ref={linksRef} {...rest}>
+        <StyledNav ref={linksRef} {...rest} className={classNames({'nav-not-full': !isFullView})}>
             <MobileButton className={classNames({'hidden': isFullView})} 
                 onClick={() => setOpen(prev => !prev)}>
                     <StyledMenuIcon />

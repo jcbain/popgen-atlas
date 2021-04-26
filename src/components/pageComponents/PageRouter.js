@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Navigation from './Navigation';
+import Dashboard from '../dashboards/Dashboard'
+
 
 const links = [ 
     {name: 'articles', path: '/articles' }, 
     {name: 'dashboards', path: '/dashboards'},  
     {name: 'about', path: '/about'}
 ]
-const PageRouter = ({}) => {
+const PageRouter = ({theme}) => {
 
     const [ navigationIsFull, setNavigationIsFull ] = useState(false)
 
@@ -21,7 +23,7 @@ const PageRouter = ({}) => {
                     <div>hello</div>
                 </Route>
                 <Route path={'/dashboards'}>
-                    <div>hello again</div>
+                    <Dashboard theme={theme}/>
                 </Route>
                 <Route path={'/about'}>
                     <div>hello for the last time</div>

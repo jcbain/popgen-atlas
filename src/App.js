@@ -1,5 +1,4 @@
 
-import Dashboard from './components/dashboards/Dashboard'
 import { ThemeProvider } from 'styled-components';
 import PageRouter from './components/pageComponents/PageRouter';
 
@@ -16,7 +15,7 @@ function App() {
 
       <div className="App">
         {/* <Dashboard theme={theme}/> */}
-        <PageRouter />
+        <PageRouter theme={theme} />
 
       </div>
     </ThemeProvider>
