@@ -24,7 +24,8 @@ const Spacer = styled.div`
     width: 100%;
     /* background: black; */
     display: grid;
-    justify-content: center;
+    padding-left: 20px;
+    /* justify-content: center; */
     align-items: center;
 `
 
@@ -35,9 +36,12 @@ const StyledMenu = styled(MenuAltLeft)`
 `
 
 const Title = styled.p`
-    font-size: 24px;
+    font-size: 28px;
+    color: ${({ theme }) => theme.linkColor};
     margin-block-end: 0;
     margin-block-start: 0;
+    padding-left: 20px;
+    font-family: 'Orelega One', serif;
 `
 
 const NavWrapper = styled.div`
@@ -45,10 +49,8 @@ const NavWrapper = styled.div`
     align-self: center;
     &.sidebar-container{
         z-index: 100;
-        width: 400px;
+        width: 450px;
         height: calc(100vh - 50px);
-        /* border: 1px solid ${({ theme }) => theme.navSideOutline}; */
-        /* border-top: 1px solid gray; */
         padding: 20px 0px;
         position: absolute;
         border-radius: 2px;
@@ -57,7 +59,6 @@ const NavWrapper = styled.div`
         transform: translate(-100%, 0);
         transition: transform 0.5s;
         background: ${({ theme }) => theme.navSideColor};
-        /* filter: drop-shadow(1px 2px 1px #dbdbdb); */
         &.sidebar-open{
             transform: translate(0%, 0);
         }
