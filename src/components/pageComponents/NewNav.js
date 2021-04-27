@@ -45,9 +45,9 @@ const NavWrapper = styled.div`
     align-self: center;
     &.sidebar-container{
         z-index: 100;
-        width: 200px;
+        width: 400px;
         height: calc(100vh - 50px);
-        border: 1px solid gray;
+        /* border: 1px solid ${({ theme }) => theme.navSideOutline}; */
         /* border-top: 1px solid gray; */
         padding: 20px 0px;
         position: absolute;
@@ -56,8 +56,8 @@ const NavWrapper = styled.div`
         top: 50px;
         transform: translate(-100%, 0);
         transition: transform 0.5s;
-        background: white;
-        filter: drop-shadow(1px 2px 1px #dbdbdb);
+        background: ${({ theme }) => theme.navSideColor};
+        /* filter: drop-shadow(1px 2px 1px #dbdbdb); */
         &.sidebar-open{
             transform: translate(0%, 0);
         }
@@ -91,7 +91,10 @@ const NewNav = ({ name, links, isSide }) => {
         return (
             <StyledLink key={i}
                 className={classNames({'no-decoration': true, 'sidebar-link': isSide })} 
-                to={l.path}>{l.name}</StyledLink>
+                to={l.path}
+                onClick={() => setOpen(false)}>
+                    {l.name}
+            </StyledLink>
         )
     })
 

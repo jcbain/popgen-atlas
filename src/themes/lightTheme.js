@@ -36,6 +36,8 @@ const lightTheme = {
     funFont: 'Rubik',
     linkColor: colors.blacks.black2,
     navNameColor: colors.blacks.black2,
+    navSideColor: colors.whites.white1,
+    navSideOutline: colors.blues.blue2,
     maxGreaterZeroColor: colors.reds.red1,
     minGreaterZeroColor: colors.yellows.yellow1,
     minLessZeroColor: colors.purples.purple1,
