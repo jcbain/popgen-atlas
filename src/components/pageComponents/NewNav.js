@@ -15,13 +15,23 @@ const Wrapper = styled.div`
 const Header = styled.div`
     display: grid;
     grid-template-columns: 50px 1fr; 
+    align-items: center;
 
 `
 
 const Spacer = styled.div`
     height: 100%;
     width: 100%;
-    background: black;
+    /* background: black; */
+    display: grid;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledMenu = styled(MenuAltLeft)`
+    color: black;
+    width: 30px;
+    
 `
 
 const Title = styled.p`
@@ -32,18 +42,25 @@ const Title = styled.p`
 
 const NavWrapper = styled.div`
     position: relative;
+    align-self: center;
     &.sidebar-container{
+        z-index: 100;
         width: 200px;
+        height: calc(100vh - 50px);
+        border: 1px solid gray;
+        /* border-top: 1px solid gray; */
+        padding: 20px 0px;
         position: absolute;
+        border-radius: 2px;
         left: 0px;
-        top: 74px;
+        top: 50px;
         transform: translate(-100%, 0);
         transition: transform 0.5s;
+        background: white;
+        filter: drop-shadow(1px 2px 1px #dbdbdb);
         &.sidebar-open{
             transform: translate(0%, 0);
         }
-
-
     }
 
 `
@@ -59,6 +76,12 @@ const Nav = styled.nav`
 
 const StyledLink = styled(Link)`
     font-size: 18px;
+    color: ${({ theme }) => theme.linkColor};
+    font-family: ${({ theme }) => theme.simpleFont};
+    &.sidebar-link {
+        padding-left: 30px;
+        padding-bottom: 15px;
+    }
 `
 
 const NewNav = ({ name, links, isSide }) => {
@@ -67,7 +90,7 @@ const NewNav = ({ name, links, isSide }) => {
     const navLinks = links.map((l, i) => {
         return (
             <StyledLink key={i}
-                className={classNames({'no-decoration': true})} 
+                className={classNames({'no-decoration': true, 'sidebar-link': isSide })} 
                 to={l.path}>{l.name}</StyledLink>
         )
     })
@@ -76,7 +99,7 @@ const NewNav = ({ name, links, isSide }) => {
         <Wrapper>
             <Header>
                 <Spacer onClick={() => setOpen(prev => !prev)}>
-
+                    <StyledMenu />
                 </Spacer>
                 <Title>
                     {name}
