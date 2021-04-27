@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Navigation from './Navigation';
 import Dashboard from '../dashboards/Dashboard'
+import NewNav from './NewNav';
 
 
 const links = [ 
@@ -12,12 +12,12 @@ const links = [
 ]
 const PageRouter = ({theme}) => {
 
-    const [ navigationIsFull, setNavigationIsFull ] = useState(false)
+    const [ isSideNav, setIsSideNav ] = useState(true)
 
 
     return (
         <Router>
-            <Navigation links={links} isFullView={navigationIsFull}/>
+            <NewNav name={"Atlas of Population Genetics"} links={links} isSide={isSideNav}/>
             <Switch>
                 <Route path={'/articles'}>
                     <div>hello</div>
