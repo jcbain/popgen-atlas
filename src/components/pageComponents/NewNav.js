@@ -58,7 +58,9 @@ const NavWrapper = styled.div`
         top: 50px;
         transform: translate(-100%, 0);
         transition: transform 0.5s;
-        background: ${({ theme }) => theme.navSideColor};
+        background-color: rgba(255, 255, 255, .90);  
+        backdrop-filter: blur(5px);
+        /* background: ${({ theme }) => theme.navSideColor}; */
         &.sidebar-open{
             transform: translate(0%, 0);
         }
@@ -80,7 +82,7 @@ const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.linkColor};
     font-family: ${({ theme }) => theme.simpleFont};
     &.sidebar-link {
-        padding-left: 30px;
+        padding-left: 70px;
         padding-bottom: 15px;
     }
 `
