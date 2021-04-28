@@ -38,6 +38,7 @@ const lightTheme = {
     smallPaddingH: '20px',
     smallPaddingV: '20px',
     headerHeight: '50px',
+    articleMaxWidth: '1024px',
     articleHeaderColor: colors.blues.blue1,
     articleTitleColor: colors.whites.white2,
     linkColor: colors.blacks.black2,

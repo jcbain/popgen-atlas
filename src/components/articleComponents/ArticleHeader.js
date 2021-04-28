@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.h1`
-    max-width: 760px;
+    max-width: ${({ theme }) => theme.articleMaxWidth};
     margin-left: auto;
     margin-right: auto;
     text-align: center;
