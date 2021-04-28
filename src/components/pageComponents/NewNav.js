@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 50px;
+    height: ${({ theme }) => theme.headerHeight};
     position: fixed;
     top: 0;
 
@@ -16,8 +16,11 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
     display: grid;
-    grid-template-columns: 50px 1fr; 
+    grid-template-columns: ${({ theme }) => theme.headerHeight} 1fr; 
     align-items: center;
+    &.full-header{
+        grid-template-columns: 0px 1fr;
+    }
 `
 
 const Spacer = styled.div`
@@ -49,7 +52,7 @@ const NavWrapper = styled.div`
     &.sidebar-container{
         z-index: 100;
         width: 450px;
-        height: calc(100vh - 50px);
+        height: calc(100vh - ${({ theme }) => theme.headerHeight});
         padding: ${({ theme }) => theme.smallPaddingH} 0px;
         position: absolute;
         border-radius: 2px;
@@ -102,9 +105,9 @@ const NewNav = ({ name, links, isSide }) => {
 
     return (
         <Wrapper>
-            <Header>
+            <Header className={classNames({'full-header': !isSide})}>
                 <Spacer onClick={() => setOpen(prev => !prev)}>
-                    <StyledMenu />
+                    <StyledMenu className={classNames({'hidden': !isSide})}/>
                 </Spacer>
                 <Title>
                     {name}

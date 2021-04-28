@@ -4,6 +4,8 @@ const Wrapper = styled.div`
     width: 100%;
     height: 500px;
     background: ${({ theme }) => theme.articleHeaderColor};
+    display: grid;
+    align-items: center;
 `
 
 const Title = styled.h1`
@@ -11,6 +13,8 @@ const Title = styled.h1`
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    color: ${({ theme }) => theme.articleTitleColor};
+    font-family: ${({ theme }) => theme.funFont};
 `
 
 const ArticleHeader = ({title}) => {
