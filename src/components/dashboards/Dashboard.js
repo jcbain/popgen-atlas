@@ -14,20 +14,19 @@ import ConstParamBar from './ConstParamBar';
 
 const Wrapper = styled.div`
     width: 1200px;
-    /* padding: 20px; */
     display: grid;
     grid-template-columns: 1fr .25fr;
     grid-template-rows: 70px 1fr;
     grid-template-areas: 
         "constbar varbar"
         "plots varbar";
-    column-gap: 20px;
+    column-gap: ${({ theme }) => theme.smallPaddingH};
     background-color: ${({ theme }) => theme.dashboardBackground};
 `
 
 const Grid = styled.div`
     display: grid;
-    padding: 20px;
+    padding: ${({ theme }) => theme.smallPaddingH};
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 600px 500px;
     grid-template-areas:
@@ -52,7 +51,7 @@ const Dashboard = ({theme}) => {
 
     return (
         <Wrapper>
-            <ConstParamBar style={{gridArea: 'constbar', paddingLeft: '20px', paddingTop: '10px', paddingRight: '20px'} } paramOptions={paramOptions}/>
+            <ConstParamBar style={{gridArea: 'constbar', paddingLeft: theme.smallPaddingH, paddingTop: '10px', paddingRight: theme.smallPaddingH} } paramOptions={paramOptions}/>
             <Grid style={{gridArea: 'plots'} }>
                 <ChartHolder style={{gridArea:'genome'}}>
                     {geneLoaded && <GenomeChart  data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}

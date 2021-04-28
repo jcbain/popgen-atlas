@@ -34,9 +34,12 @@ const colors = {
 const lightTheme = {
     simpleFont: 'Roboto',
     funFont: 'Rubik',
+    serifFont: 'Orelega One',
+    smallPaddingH: '20px',
+    smallPaddingV: '20px',
+    articleHeaderColor: colors.blues.blue1,
     linkColor: colors.blacks.black2,
     navNameColor: colors.blacks.black2,
-    navSideColor: colors.whites.white1,
     navSideOutline: colors.blues.blue2,
     maxGreaterZeroColor: colors.reds.red1,
     minGreaterZeroColor: colors.yellows.yellow1,

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Dashboard from '../dashboards/Dashboard'
+import MigrationSelectionBalance from '../../articles/migrationSelectionBalance'
 import NewNav from './NewNav';
 
 
@@ -12,7 +13,7 @@ const links = [
 ]
 const PageRouter = ({theme}) => {
 
-    const [ isSideNav, setIsSideNav ] = useState(true)
+    const [ isSideNav, setIsSideNav ] = useState(false)
 
 
     return (
@@ -20,7 +21,7 @@ const PageRouter = ({theme}) => {
             <NewNav name={"Atlas of Population Genetics"} links={links} isSide={isSideNav}/>
             <Switch>
                 <Route path={'/articles'}>
-                    <div>hello</div>
+                    <MigrationSelectionBalance />
                 </Route>
                 <Route path={'/dashboards'}>
                     <Dashboard theme={theme}/>

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-
 const Wrapper = styled.div`
     width: 100%;
     height: 500px;
+    background: ${({ theme }) => theme.articleHeaderColor};
 `
 
 const Title = styled.h1`

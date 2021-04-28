@@ -9,28 +9,27 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 50px;
-    position: relative;
+    position: fixed;
+    top: 0;
+
 `
 
 const Header = styled.div`
     display: grid;
     grid-template-columns: 50px 1fr; 
     align-items: center;
-
 `
 
 const Spacer = styled.div`
     height: 100%;
     width: 100%;
-    /* background: black; */
     display: grid;
-    padding-left: 20px;
-    /* justify-content: center; */
+    padding-left: ${({ theme }) => theme.smallPaddingH};
     align-items: center;
 `
 
 const StyledMenu = styled(MenuAltLeft)`
-    color: black;
+    color: ${({ theme }) => theme.linkColor};;
     width: 30px;
     
 `
@@ -40,8 +39,8 @@ const Title = styled.p`
     color: ${({ theme }) => theme.linkColor};
     margin-block-end: 0;
     margin-block-start: 0;
-    padding-left: 20px;
-    font-family: 'Orelega One', serif;
+    padding-left: ${({ theme }) => theme.smallPaddingH};
+    font-family: ${({ theme }) => theme.serifFont}, serif;
 `
 
 const NavWrapper = styled.div`
@@ -51,7 +50,7 @@ const NavWrapper = styled.div`
         z-index: 100;
         width: 450px;
         height: calc(100vh - 50px);
-        padding: 20px 0px;
+        padding: ${({ theme }) => theme.smallPaddingH} 0px;
         position: absolute;
         border-radius: 2px;
         left: 0px;
@@ -60,7 +59,6 @@ const NavWrapper = styled.div`
         transition: transform 0.5s;
         background-color: rgba(255, 255, 255, .90);  
         backdrop-filter: blur(5px);
-        /* background: ${({ theme }) => theme.navSideColor}; */
         &.sidebar-open{
             transform: translate(0%, 0);
         }
@@ -72,6 +70,7 @@ const Nav = styled.nav`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-right: ${({ theme }) => theme.smallPaddingH};
     &.sidebar-nav{
         flex-direction: column;
     }

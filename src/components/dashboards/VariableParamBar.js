@@ -18,13 +18,13 @@ const ParamSection = styled.div`
 `
 
 const StyledDropDown = styled(DropDown)`
-    margin-bottom: 20px;
+    margin-bottom: ${({ theme }) => theme.smallPaddingV};
 `
 
 const Header = styled.h2`
     color: ${({ theme }) => theme.paramHeaderColor};
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: ${({ theme }) => theme.smallPaddingV};
 `
 
 const Description = styled.p`
