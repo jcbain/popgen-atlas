@@ -5,11 +5,11 @@ const Wrapper = styled.aside`
     position: sticky;
     top: 50px;
     height: 400px;
-    padding: 0px ${({ theme }) => theme.smallPaddingV};
 `
 
 const SectionText = styled.p`
     font-size: 18px;
+    padding: 0px ${({ theme }) => theme.smallPaddingV};
 `
 
 const ArticleToc = ({headers}) => {
