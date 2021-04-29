@@ -7,6 +7,8 @@ import ArticleContent from '../../components/articleComponents/ArticleContent'
 import ArticleToc from '../../components/articleComponents/ArticleToc';
 import ArticleText  from '../../components/articleComponents/ArticleText';
 
+// import StickyNavCushion from '../../components/pageComponents/StickyNavCushion';
+
 import Migration from './Migration';
 import msTheme from './theme';
 
@@ -19,6 +21,7 @@ const MigrationSelectionBalance = () => {
     return (
         <ThemeProvider theme={msTheme}>
             <ArticleWrapper>
+                
                 <ArticleHeader title={"Migration Selection Balance"}/>
                 <ArticleBody hasTOC={true}>
                     <ArticleContent>

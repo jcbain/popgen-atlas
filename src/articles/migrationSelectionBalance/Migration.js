@@ -9,8 +9,10 @@ import classNames from 'classnames';
 const buddies = { red: buddyRed, blue: buddyBlue, purple: buddyPurple };
 
 const Wrapper = styled.div`
-    width: 100%;
+    width: calc(100% - 40px);
     height: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
 `
 
 const DrawingArea = styled.div`
@@ -19,6 +21,9 @@ const DrawingArea = styled.div`
     width: 100%;
     height: 100%;
     grid-template-columns: 1fr 1fr;
+    border-radius: 5px;
+    border: 2px solid;
+    
 `
 
 const LandDivider = styled.div`
@@ -43,7 +48,7 @@ const Migration = ({}) => {
         <Wrapper>
             <DrawingArea>
                 <LandDivider />
-                <LandDivider className={classNames({'cold-side': true})}/>
+                <LandDivider className={classnames({'cold-side': true})}/>
                 <BuddyImg src={buddies.red} leftperc={10}/>
                 <BuddyImg src={buddies.blue} leftperc={90}/>
             </DrawingArea>

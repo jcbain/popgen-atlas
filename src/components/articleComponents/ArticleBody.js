@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import classnames from 'classnames';
 
+import StickyNavCushion from '../pageComponents/StickyNavCushion';
+
 const Wrapper = styled.div`
     width: 100%;
+    background-color: ${({ theme }) => theme.articleBodyColor};
 `
 const InnerWrapper = styled.div`
     position: relative;
@@ -19,6 +22,7 @@ const ArticleBody = ({hasTOC, children}) => {
 
     return (
         <Wrapper>
+            <StickyNavCushion />
             <InnerWrapper className={classnames({'wrapper-toc': hasTOC})}>
                 {children}
             </InnerWrapper>

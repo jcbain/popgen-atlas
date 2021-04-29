@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     height: ${({ theme }) => theme.headerHeight};
     position: fixed;
     top: 0;
+    z-index: 12;
 
 `
 

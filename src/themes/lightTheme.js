@@ -41,6 +41,7 @@ const lightTheme = {
     articleMaxWidth: '1024px',
     articleHeaderColor: colors.blues.blue1,
     articleTitleColor: colors.whites.white2,
+    articleBodyColor: colors.whites.white1,
     linkColor: colors.blacks.black2,
     navNameColor: colors.blacks.black2,
     navSideOutline: colors.blues.blue2,

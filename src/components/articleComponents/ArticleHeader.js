@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import StickyNavCushion from '../pageComponents/StickyNavCushion';
+
+
 const Wrapper = styled.div`
     width: 100%;
     height: 500px;
@@ -21,6 +24,7 @@ const ArticleHeader = ({title}) => {
 
     return (
         <Wrapper>
+            <StickyNavCushion />
             <Title>{title}</Title>
         </Wrapper>
     )
