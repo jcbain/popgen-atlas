@@ -18,6 +18,11 @@ const Wrapper = styled.div`
     margin-bottom: 80px;
 `
 
+const ButtonBar = styled.div`
+    padding-top: 10px;
+    padding-bottom: 10px;
+`
+
 const DrawingArea = styled.div`
     position: relative;
     display: grid;
@@ -42,15 +47,40 @@ const BuddyImg = styled.img`
     position: absolute;
     top: ${({ topperc }) => topperc}%;
     left: ${({ leftperc }) => leftperc}%;
-    width: 5%;
+    /* width: 5%; */
     transition: all 0.5s;
+    &.adult {
+        width: 5%;
+        &.adult-show {
+            opacity: 1;
+        }
+        &.adult-hide{ 
+            opacity: 0;
+        }
+    }
     &.transfer{
         top: ${({ transfertop }) => transfertop}%;
         left: ${({ transferleft }) => transferleft}%;
     }
     &.disappear{
-        display: none;
+        opacity: 0;
     }
+    &.offspring{
+        width: 2.5%;
+        &.offspring-show{
+            opacity: 1;
+        }
+        &.offspring-hide{
+            opacity: 0;
+        }
+        &.grow{
+            width: 5%;
+        }
+        &.die {
+            opacity: 0;
+        }
+    }
+
 `
 
 const buddyPositions = [
@@ -84,33 +114,82 @@ const buddyPositions = [
     {color: 'blue', top: 80, left: 80},
     {color: 'red', top: 70, left: 25},
     {color: 'blue', top: 70, left: 70},
-    {color: 'red', top: 80, left: 35},
-    {color: 'blue', top: 80, left: 60}
+    {color: 'red', top: 80, left: 35, transfer: true, transferTop: 20, transferLeft: 70},
+    {color: 'blue', top: 80, left: 60},
+    {color: 'red', top: 15, left: 5, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 15, left: 90, offspring: true, lives: true,  grow: true},
+    {color: 'purple', top: 25, left: 15, offspring: true, lives: true,  grow: false},
+    {color: 'blue', top: 25, left: 80, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 15, left: 25, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 15, left: 70, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 25, left: 35, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 25, left: 60, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 35, left: 5, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 35, left: 90, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 45, left: 15, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 45, left: 80, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 35, left: 25, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 35, left: 70, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 45, left: 35, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 45, left: 60, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 55, left: 5, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 55, left: 90, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 65, left: 15, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 65, left: 80, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 55, left: 25, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 55, left: 70, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 65, left: 35, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 65, left: 60, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 75, left: 5, offspring: true, lives: true, grow: true},
+    {color: 'purple', top: 75, left: 90, offspring: true, lives: true, grow: false},
+    {color: 'red', top: 85, left: 15, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 85, left: 80, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 75, left: 25, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 75, left: 70, offspring: true, lives: true, grow: true},
+    {color: 'red', top: 85, left: 35 , offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 85, left: 60, offspring: true, lives: true, grow: true},
 ]
+
+
 
 const Migration = ({}) => {
     const [ migrate, setMigrate ] = useState(false)
     const [ die, setDie ] = useState(false);
-    const [ positionModified, setPositionModified ] = useState(false);
-    const [counter, setCounter] = useState(0)
+    const [ offspring, setOffspring ] = useState(false);
+    const [ grow, setGrow ] = useState(false);
 
     const script = [
         () => setMigrate(true),
-        () => setDie(true),
-        () => setDie(false)
+        () => setOffspring(true),
+        () => {
+            setGrow(true)
+            setMigrate(false)
+        },
+        () => {}
     ]
 
     const reset = () => {   
         setMigrate(false)
-        setDie(false)
+        setOffspring(false)
+        setGrow(false)
     }
 
 
     const buds = buddyPositions.map((b, i) => {
         return (
             <BuddyImg key={i}
-                className={classnames({'transfer': b.transfer && migrate, 'disappear': die})}
-                src={b.color === 'red' ? buddies.red : buddies.blue}
+                className={classnames({
+                    'transfer': b.transfer && migrate, 
+                    'offspring-show': offspring, 
+                    'offspring-hide': !offspring,
+                    'grow': grow && b.grow, 
+                    'die': grow && !b.grow,
+                    'adult-show': !offspring,
+                    'adult-hide': offspring,
+                    'offspring': b.offspring,
+                    'adult': !b.offspring
+                })}
+                src={b.color === 'red' ? buddies.red : b.color === 'blue' ? buddies.blue : buddies.purple}
                 leftperc={b.left}
                 topperc={b.top}
                 transfertop={b.transferTop}
@@ -126,11 +205,10 @@ const Migration = ({}) => {
                 <LandDivider />
                 <LandDivider className={classnames({'cold-side': true})}/>
                 {buds}
-                {/* <BuddyImg src={buddies.red} leftperc={5} topperc={10}/>
-                <BuddyImg src={buddies.blue} leftperc={90} topperc={10}/> */}
             </DrawingArea>
-            <><PlayPauseReset script={script} resetter={reset} /><p>{counter}</p></>
-            {/* <button onClick={() => setDie(prev => !prev)}>Click Me</button> */}
+            <ButtonBar>
+                <PlayPauseReset script={script} resetter={reset} stepInterval={2}/>
+            </ButtonBar>
         </Wrapper>
     )
 }
