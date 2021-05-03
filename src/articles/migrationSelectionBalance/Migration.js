@@ -89,10 +89,21 @@ const buddyPositions = [
 ]
 
 const Migration = ({}) => {
-    const [ migrate, setMigrate ] = useState(true)
+    const [ migrate, setMigrate ] = useState(false)
     const [ die, setDie ] = useState(false);
     const [ positionModified, setPositionModified ] = useState(false);
     const [counter, setCounter] = useState(0)
+
+    const script = [
+        () => setMigrate(true),
+        () => setDie(true),
+        () => setDie(false)
+    ]
+
+    const reset = () => {   
+        setMigrate(false)
+        setDie(false)
+    }
 
 
     const buds = buddyPositions.map((b, i) => {
@@ -118,7 +129,7 @@ const Migration = ({}) => {
                 {/* <BuddyImg src={buddies.red} leftperc={5} topperc={10}/>
                 <BuddyImg src={buddies.blue} leftperc={90} topperc={10}/> */}
             </DrawingArea>
-            <><PlayPauseReset updater={() => setCounter(prev => prev + 1)} resetter={() => setCounter(0)} /><p>{counter}</p></>
+            <><PlayPauseReset script={script} resetter={reset} /><p>{counter}</p></>
             {/* <button onClick={() => setDie(prev => !prev)}>Click Me</button> */}
         </Wrapper>
     )

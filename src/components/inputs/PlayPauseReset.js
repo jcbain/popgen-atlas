@@ -31,7 +31,7 @@ const StyledReset = styled(Reset)`
     width: 25px;
 `
 
-const PlayPauseReset = ({updater, resetter}) => {
+const PlayPauseReset = ({updater, resetter, script}) => {
 
     const [ play, setPlay ] = useState(false);
     const [ currentPoint, setCurrentPoint ] = useState(0);
@@ -46,8 +46,17 @@ const PlayPauseReset = ({updater, resetter}) => {
         let interval = null;
         if (play) {
             interval = setInterval(() => {
-                setCurrentPoint(s => s + 1);
-                updater()
+                setCurrentPoint(s => {
+                    if(s >= script.length) {
+                        reset()
+                        // return 0
+                    } else {
+                        script[s]()
+                        return s + 1
+                    }
+                  
+                } );
+                // updater()
              }, 1000);
             } else if (!play && currentPoint !== 0) {
                 clearInterval(interval);
