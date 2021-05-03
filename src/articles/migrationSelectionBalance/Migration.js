@@ -66,6 +66,7 @@ const BuddyImg = styled.img`
         opacity: 0;
     }
     &.offspring{
+        transition: opacity ${( { multiple }) => 0.5 + multiple}s;
         width: 3.5%;
         &.offspring-show{
             opacity: 1;
@@ -117,11 +118,11 @@ const buddyPositions = [
     {color: 'red', top: 80, left: 35, transfer: true, transferTop: 20, transferLeft: 70},
     {color: 'blue', top: 80, left: 60},
     {color: 'red', top: 15, left: 5, offspring: true, lives: true, grow: true},
-    {color: 'blue', top: 15, left: 90, offspring: true, lives: true,  grow: true},
+    {color: 'blue', top: 15, left: 90, offspring: true, lives: true,  grow: true, multiple: 0.1},
     {color: 'purple', top: 25, left: 15, offspring: true, lives: true,  grow: false},
-    {color: 'blue', top: 25, left: 80, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 25, left: 80, offspring: true, lives: true, grow: true, multiple: 0.2},
     {color: 'red', top: 15, left: 25, offspring: true, lives: true, grow: true},
-    {color: 'blue', top: 15, left: 70, offspring: true, lives: true, grow: true},
+    {color: 'blue', top: 15, left: 70, offspring: true, lives: true, grow: true, multiple: 0.3},
     {color: 'red', top: 25, left: 35, offspring: true, lives: true, grow: true},
     {color: 'blue', top: 25, left: 60, offspring: true, lives: true, grow: true},
     {color: 'red', top: 35, left: 5, offspring: true, lives: true, grow: true},
