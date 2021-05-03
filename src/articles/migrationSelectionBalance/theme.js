@@ -33,7 +33,10 @@ const colors = {
 
 const msTheme = {
     hotSideColor: hexToRGB(colors.reds.red1, 0.1),
-    coldSideColor: hexToRGB(colors.blues.blue1, 0.1)
+    coldSideColor: hexToRGB(colors.blues.blue1, 0.1),
+    progressBarColor: colors.grays.gray1,
+    progressHighlight: colors.blues.blue2,
+    playPauseColor: colors.blacks.black2,
     
 }
 

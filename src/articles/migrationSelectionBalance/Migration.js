@@ -66,7 +66,7 @@ const BuddyImg = styled.img`
         opacity: 0;
     }
     &.offspring{
-        width: 2.5%;
+        width: 3.5%;
         &.offspring-show{
             opacity: 1;
         }
@@ -159,13 +159,13 @@ const Migration = ({}) => {
     const [ grow, setGrow ] = useState(false);
 
     const script = [
-        () => setMigrate(true),
-        () => setOffspring(true),
-        () => {
+        {action: () => setMigrate(true), description: 'migration'},
+        {action: () => setOffspring(true), description: 'offspring'},
+        {action: () => {
             setGrow(true)
             setMigrate(false)
-        },
-        () => {}
+        }, description: 'differential survival'},
+        {action: () => {}, description: ''}
     ]
 
     const reset = () => {   

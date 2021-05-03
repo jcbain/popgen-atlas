@@ -17,27 +17,30 @@ const PlayResetWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.button`
-    border: 2px solid black;
+    border: 2px solid ${({ theme }) => theme.playPauseColor};;
     background-color: white;
-    color: black;
+    color: ${({ theme }) => theme.playPauseColor};
     border-radius: 5px;
     width: 100%;
 `
 
 const StyledPlay = styled(Play)`
     width: 25px;
+    color: ${({ theme }) => theme.playPauseColor};
 `
 
 const StyledPause = styled(Pause)`
     width: 25px;
+    color: ${({ theme }) => theme.playPauseColor};
 `
 
 const StyledReset = styled(Reset)`
     width: 25px;
+    color: ${({ theme }) => theme.playPauseColor};
 `
 
 const ProgressWrapper = styled.div`
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     padding-left: 20px;
     /* padding-right: 20px; */
     position: relative;
@@ -46,7 +49,7 @@ const ProgressWrapper = styled.div`
 const Bar = styled.div`
     position: absolute;
     top: calc(50% - 2.5px);
-    background: lightgray;
+    background: ${({ theme }) => theme.progressBarColor};
     height: 5px;
     width: calc(100% - 20px);
     border-radius: 2px;
@@ -65,22 +68,48 @@ const DotsContainer = styled.div`
 const Dot = styled.div`
     width: 10px;
     border-radius: 50%;
-    background: lightgray;
+    background: ${({ theme }) => theme.progressBarColor};
     &.dot-selected {
-        background: darkgray;
+        background: ${({ theme }) => theme.progressHighlight};
     }
 `
+
+const DescriptionContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: absolute;
+    width: calc(100% - 20px);
+    top: 70%;
+    height: 20px;
+`
+
+const Description = styled.p`
+    font-size: 10px;
+    text-align: center;
+    width: 60px;
+    color: ${({ theme }) => theme.progressBarColor};
+    &.description-selected {
+        color: ${({ theme }) => theme.progressHighlight};
+    }
+
+`
+
 
 const PlayPauseReset = ({ resetter, script, stepInterval}) => {
 
     const [ play, setPlay ] = useState(false);
     const [ currentPoint, setCurrentPoint ] = useState(0);
 
-    const dots = script.map((s, i) => {
-        return(
-            <Dot key={i} className={classnames({'dot-selected': i  === currentPoint - 1})}/>
-        )
-    })
+    let dots = [];
+    let descriptions = [];
+    script.forEach((element, i) => {
+        const dot = <Dot key={i} className={classnames({'dot-selected': i === currentPoint - 1})}/>
+        const descript = <Description key={i} className={classnames({'description-selected': i === currentPoint - 1})}>{element.description}</Description>
+        dots.push(dot);
+        descriptions.push(descript);
+    });
+
 
     const reset = () => {
         setCurrentPoint(0);
@@ -96,7 +125,7 @@ const PlayPauseReset = ({ resetter, script, stepInterval}) => {
                     if(s >= script.length) {
                         reset()
                     } else {
-                        script[s]()
+                        script[s]['action']()
                         return s + 1
                     }
                   
@@ -107,7 +136,7 @@ const PlayPauseReset = ({ resetter, script, stepInterval}) => {
                 clearInterval(interval);
             }
         return () => clearInterval(interval);
-    }, [play, currentPoint]);
+    }, [play, currentPoint, stepInterval, reset, script]);
 
     return (
         <Wrapper>
@@ -125,6 +154,10 @@ const PlayPauseReset = ({ resetter, script, stepInterval}) => {
                 <DotsContainer>
                     {dots}
                 </DotsContainer>
+                <DescriptionContainer>
+                    {descriptions}
+
+                </DescriptionContainer>
 
             </ProgressWrapper>
         </Wrapper>
