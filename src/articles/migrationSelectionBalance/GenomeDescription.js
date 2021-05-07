@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames'
 
@@ -42,25 +42,9 @@ const StyledBuddy = styled.img`
     }
 `
 
-const StyledCanvas = styled.canvas`
-    position: absolute;
-    top: calc(50% - 125px);
-    left: calc(50% - 50px);
-    width: 100px;
-    height: 250px;
-    background: #fffff7;
-    border-radius: 50px;
-    border: 2px solid #303030;
-    opacity: 0;
-    transition: opacity 1s;
-    &.example-genome-show {
-        opacity: 1;
-    }
-`
-
 const StyledGenome = styled(Genome)`
     position: absolute;
-    top: calc(50% - 125px);
+    top: calc(50% - 135px);
     left: calc(50% - 50px);
     width: 100px;
     height: 250px;
@@ -74,31 +58,37 @@ const StyledGenome = styled(Genome)`
     }
 `
 
-const ind = [ 0.5, 0, 0, 0.5, 0.4, 0.5, 0, 0, 0, 0, 0.6, 0.6, 0.5, 0.3, 0.1, 0, 0, 0, 0, 0.5]
+const rand = (prob) => Math.random() < prob;
+
+const generateData = () => {
+    let data = []
+    let defaultProb = 0.20;
+    const modifier = 0.05;
+    for(let i = 0; i < 100; i++){
+        const mutate = rand(defaultProb);
+        let value;
+        if (mutate) {
+            defaultProb += modifier;
+            value = Math.random();
+        } else {
+            defaultProb = 0.2;
+            value = 0
+        }
+        data.push(value);
+    }
+    return data;
+
+}
+const ind = generateData();
 
 const GenomeDescription = ({}) => {
     const [ showGenomeExample, setShowGenomeExample ] = useState(false)
-    // const ref = useRef()
-
-    // useEffect(() => {
-    //     const canvas = ref.current;
-    //     const context = canvas.getContext('2d');
-    //     // console.log(canvas.height, canvas.width)
-    //     canvas.height = 250
-    //     canvas.width = 100;
-
-    //     // context.clearRect(0, 0, canvas.width, canvas.height)
-    //     ind.forEach((d, i) => {
-    //         context.fillRect(0, i * (1/ind.length), canvas.width, i * (1/ind.length) * 2)
-    //         context.fillStyle = 'red'
-    //     })
-    // }, [ref])
+ 
     
     return (
         <Wrapper>
             <DrawingArea>
                 <StyledBuddy src={buddyRed} className={classnames({'example-buddy-disappear': showGenomeExample})}/>
-                {/* <StyledCanvas ref={ref} className={classnames({'example-genome-show': showGenomeExample})}/> */}
                 <StyledGenome data={ind} className={classnames({'example-genome-show': showGenomeExample})}/>
             </DrawingArea>
             <ButtonBar>

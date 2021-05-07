@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { scaleLinear, scaleBand, interpolateHcl } from 'd3'
-import { range } from 'lodash';
+import {  scaleBand, interpolateHcl } from 'd3'
 
 const StyledCanvas = styled.canvas`
 `
-
 
 const Genome = ({data, ...rest}) => {
     const ref = useRef();
@@ -24,7 +22,7 @@ const Genome = ({data, ...rest}) => {
             if (i === 0 || i === data.length - 1) {
                 console.log(yBand(i))
             }
-             context.fillStyle = d === 0 ? '#fffff7' : d >= 0.5 ? 'red' : 'blue';
+             context.fillStyle = d === 0 ? '#fffff7' : d >= 0.5 ? '#eb4034' : '#0082e6';
             context.fillRect(0, yBand(i) , canvas.width, yBand.bandwidth())
         })
     }, [ref, data])
