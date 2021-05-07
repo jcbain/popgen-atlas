@@ -1,19 +1,25 @@
 import { useState, useEffect } from 'react';
 
-const useParams = (data) => {
-   
+const useParams = (data, isStatic) => {
     const [ paramOptions, setParamOptions ] = useState({})
-    const [ chosenSet, setChosenSet ] = useState("")
+    const [ chosenSet, setChosenSet ] = useState({
+        'lineSet': "",
+        'histoSet': "",
+        'genomeSet': ""
+    })
     const [ loadedSet, setLoadedSet ] = useState(false) 
-    
+    const [ chartFocus, setChartFocus] = useState("");
+
     useEffect(() => {
         const paramSetStrings = Object.keys(data);
         const allOpts = paramSetStrings.flatMap(d => d.split("_"))
         let optValPairs = {}
         let order = 0;
+
         allOpts.forEach(o => {
             const [ param, value ] = o.match(/[a-z]+|[^a-z]+/gi)
             const numericVal = Number(value)
+
             if(!optValPairs[param]){
                 const paramObj = { paramName: param, values: [numericVal], selectedValue: numericVal, order: order}
                 optValPairs[param] = paramObj;
@@ -26,12 +32,10 @@ const useParams = (data) => {
         })
   
         for ( const [key, v] of Object.entries(optValPairs)) {
-            if (v.values.length > 1) {
-                optValPairs[key] = {...v, isVariable: true}
-            } else {
-                optValPairs[key] = {...v, isVariable: false}
-            }
+            const bool = (v.values.length > 1) ? true : false;
+            optValPairs[key] = {...v, isVariable: bool}
         }
+
         setParamOptions(optValPairs)
     }, [data])
 
@@ -47,18 +51,29 @@ const useParams = (data) => {
             paramStringArray.push(stringVal)
         })
         const paramSet = paramStringArray.join("_")
-        setChosenSet(paramSet)
+
+        if(!isStatic) {
+            setChosenSet({
+                lineSet: paramSet,
+                histoSet: paramSet,
+                genomeSet: paramSet
+            })
+        } else {
+            setChosenSet({[chartFocus]:paramSet})
+        }
+        
         setLoadedSet(true)
     }, [paramOptions])
 
 
-    const changeParam = (param, value) => {
+    const changeParam = (param, value, focus) => {
         setParamOptions(prev => {
             return {...prev, [param]: {...prev[param], selectedValue: value}}
         })
+        setChartFocus(focus);
     }
 
- 
+
     return {
         paramOptions,
         chosenSet,

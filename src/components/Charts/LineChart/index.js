@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import useFonts from '../../../hooks/useFonts'
+import useFonts from '../../../hooks/useFonts';
 import GroupedLines from './GroupedLines';
-// import Line from './Line';
+import VariableParamBar from '../../dashboards/VariableParamBar';
 
 const Wrapper = styled.div`
     width: 100%;
 `;
 
 
-const LineChart = ({ data, xVar, yVar, theme, ...rest }) => {
+const LineChart = ({ data, xVar, yVar, theme, isStatic, paramOptions, setStatic, changeParam, ...rest }) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -19,8 +19,30 @@ const LineChart = ({ data, xVar, yVar, theme, ...rest }) => {
 
     return (
         <Wrapper {...rest}>
-            <GroupedLines data={data} xVar={xVar} yVar={yVar} theme={theme} upperLimit={upper} lowerLimit={lower} setUpperLimit={setUpper} setLowerLimit={setLower}/>
+            { isStatic && 
+                <VariableParamBar
+                    style={{ background: theme.dashboardBackground, margin:'-4%', marginBottom: '4%'}}
+                    theme={theme}
+                    paramOptions={paramOptions}
+                    isStatic={isStatic}
+                    setStatic={setStatic}
+                    changeParam={changeParam}
+                    isGlobal={false}
+                    isInline={true}
+                    focus={'lineSet'}
+                />
+            }
 
+            <GroupedLines
+                data={data}
+                xVar={xVar}
+                yVar={yVar}
+                theme={theme}
+                upperLimit={upper}
+                lowerLimit={lower}
+                setUpperLimit={setUpper} 
+                setLowerLimit={setLower}
+            />
         </Wrapper>
     )
 }

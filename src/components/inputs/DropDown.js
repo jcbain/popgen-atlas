@@ -7,10 +7,9 @@ import useOutsideAlerter from '../../hooks/useOutsideAlerter'
 const Wrapper = styled.div`
     position: relative;
     width: 100%;
-    margin: 10px auto;
     font-family: 'Lato', sans-serif;
-
 `
+
 const Header = styled.div`
     position: relative;
     display: grid;
@@ -24,19 +23,19 @@ const Header = styled.div`
 
 const Title = styled.div`
     position: absolute;
-    top: -9px;
+    top: -1em;
     left: 10px;
-    background: white;
-    font-size: 12px;
+    font-size: 16px;
     padding-right: 1px;
 `
 
 const Selection = styled.p`
     width: 100%;
     margin-block-start: 0px;
+    padding: 0 13px;
     margin-block-end: 0px;
     line-height: 40px;
-
+    background-color: ${({ theme }) => theme.paramCardBackground};
 `
 
 const Arrow = styled.div`
@@ -56,7 +55,7 @@ const StyledDownArrow = styled(DownArrow)`
 
 const List = styled.div`
     position: absolute;
-    width: 100%;
+    width: 99%;
     z-index: 100;
     background: ${({ theme }) => theme.dropDownItemsColor};
     border: 2px solid ${({ theme }) => theme.dropDownItemsBorder};
@@ -65,7 +64,7 @@ const List = styled.div`
 
 const ListItem = styled.div`
     height: 40px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 10px;
     border-bottom: 0px solid white;
     border-top: 0px solid white;
@@ -79,7 +78,6 @@ const Option = styled.p`
     margin-block-start: 0px;
     margin-block-end: 0px;
     line-height: 40px;
-
 `
 
 const DropDown = ({ options, selection, param, makeSelection, ...rest }) => {
@@ -105,16 +103,12 @@ const DropDown = ({ options, selection, param, makeSelection, ...rest }) => {
     return (
         <Wrapper ref={ref} {...rest}>
             <Header onClick={() => setOpen(prev => !prev)}>
-                <Title>{param}</Title>
-                <Selection >{selection}</Selection>
-                <Arrow >{open ? <StyledUpArrow /> : <StyledDownArrow /> }</Arrow>
-
+                <Title> {param} </Title>
+                <Selection> {selection} </Selection>
+                <Arrow> { open ? <StyledUpArrow/> : <StyledDownArrow/> } </Arrow>
             </Header>
-            {open && <List >
-                    {optionItems}
-                </List>
-            }
 
+            {open && <List> {optionItems} </List>}
         </Wrapper>
     )
 }

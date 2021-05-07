@@ -15,9 +15,8 @@ const HistogramGroup = ({data, variable, uniqVals, setGroup, theme, sliderLabel}
 
     return (
         <Charts>
-            <Histogram data={data} variable={variable} theme={theme} />
+            <Histogram data={data} variable={variable} theme={theme}/>
             <Slider data={uniqVals} setValue={setGroup} label={sliderLabel}/>
-
         </Charts>
     )
 }

@@ -1,4 +1,3 @@
-  
 import React from 'react'
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -8,7 +7,7 @@ import Close from "@material-ui/icons/Close";
 
 
 const TabState = (props) => {
-    const {handleChangeTab,handleAddTab,handleDeleteTab,value,tabList} = props
+    const { handleChangeTab, handleAddTab, handleDeleteTab, value, tabList } = props
 
     return (
         <div>
@@ -19,16 +18,16 @@ const TabState = (props) => {
                 variant="scrollable"
                 scrollButtons="auto"
                 aria-label="chart tabs"
-                style={{width: "100px"}}
             >
                 { tabList.map(tab => (
                     <Tab
                         key={tab.key}
                         value={tab.id}
                         label={"D"+tab.key}
+                        style={{ minWidth: "90%", background: 'white' }}
                         icon={<Close 
-                            id={tab.id} 
-                            style={{ display: "inline-block", marginLeft:"-100px", fontSize: "20px", gridArea: "tab"}} 
+                            id={tab.id}
+                            style={{ display: "inline-block", marginRight:"90%", fontSize: "1.5em"}}
                             onClick={handleDeleteTab}/>}
                         className="mytab"
                     />

@@ -14,9 +14,7 @@ const StyledG = styled.g`
     }
 `
 
-
 const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
-
     const brushRef = useRef(null);
 
     let horizontalBrush = brushX()
@@ -30,9 +28,7 @@ const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
             setUpperLimit(x1)
             setLowerLimit(x0)
             select(brushRef.current).transition().duration(0).call(horizontalBrush.move, x1 > x0 ? [x0, x1].map(xScale) : null);
-
         }
-  
     }
 
     function centerBrushOnTouch(e) {
@@ -52,7 +48,6 @@ const Brush = ({ width, height, xScale, setUpperLimit, setLowerLimit }) => {
                 )
     }
 
- 
 
     useEffect(() => {
         select(brushRef.current)

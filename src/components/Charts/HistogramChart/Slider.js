@@ -102,7 +102,6 @@ const Slider = ({data, setValue, label}) => {
 
     return (
         <SliderWrapper>
-
             <SliderDiv ref={sliderRef}>
                 <Thumb ref={thumbRef} onMouseDown={handleMouseDown} leftposition={leftPosition}><Inner>{cleanValue(currentVal)}</Inner></Thumb>
             </SliderDiv>

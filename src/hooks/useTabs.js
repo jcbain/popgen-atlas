@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react'
 
-const useTabs = (genes,phens,paramOptions) => {
+const useTabs = (genes, phens, histo, paramOptions) => {
     const maxTab = 4;
     const [value, setValue] = useState(0);
     const tabProperties = {
         geneData: genes,
         phenData: phens,
+        histoData: histo,
         parameter: paramOptions
     };
     const [tabList, setTabList] = useState([{
@@ -16,58 +17,59 @@ const useTabs = (genes,phens,paramOptions) => {
     const [tabData, setTabData] = useState([tabProperties]);
 
     useEffect(() => {
-        let tempTabData = [...tabData];
-        let newTabData = [tempTabData[value]];
+        let tempTabData = [...tabData]
+        let newTabData = [tempTabData[value]]
 
-        newTabData.geneData = genes;
-        newTabData.phenData = phens;
-        newTabData.parameter = paramOptions;
+        newTabData.geneData = genes
+        newTabData.phenData = phens
+        newTabData.histoData = histo
+        newTabData.parameter = paramOptions
 
-        tempTabData[value] = newTabData;
-        setTabData(tempTabData);
+        tempTabData[value] = newTabData
+        setTabData(tempTabData)
 
-    }, [genes, phens, paramOptions]);
+    }, [genes, phens, histo, paramOptions]);
 
     const handleChangeTab = (event, newValue) => {
-        setValue(newValue);
+        setValue(newValue)
     }
 
     const handleAddTab = () => {
-        let id = tabList[tabList.length - 1].id + 1;
+        let id = tabList[tabList.length - 1].id + 1
         const newTab =  {
             key: id+1,
             id: id
         }
 
         if (tabList.length <= maxTab) {
-            setTabList([ ...tabList, newTab ]);
-            setTabData([ ...tabData, tabProperties ]);
+            setTabList([ ...tabList, newTab ])
+            setTabData([ ...tabData, tabProperties ])
         }
     }
 
     const handleDeleteTab = (e) => {
-        let curValue = value;
-        let tabId = parseInt(e.target.id);
-        e.stopPropagation();
+        let curValue = value
+        let tabId = parseInt(e.target.id)
+        e.stopPropagation()
         
         if (tabList.length !== 1 && tabId >= 0) {
-            let newTabData = tabData.filter((prop, index) => (tabId !== index));
-            let tabs = tabList.filter((value) => value.id !== tabId);
+            let newTabData = tabData.filter((prop, index) => (tabId !== index))
+            let tabs = tabList.filter((value) => value.id !== tabId)
 
             tabs.map((tab) => {
-                let val = ((tab.id > tabId) ? 1 : 0);
+                let val = ((tab.id > tabId) ? 1 : 0)
 
-                tab.id = tab.id-val;
-                tab.key = tab.key-val;
+                tab.id = tab.id-val
+                tab.key = tab.key-val
             });
 
             if (curValue > 0) {
-                curValue--;
+                curValue--
             }
 
-            setValue(curValue);
-            setTabData(newTabData);
-            setTabList(tabs);
+            setValue(curValue)
+            setTabData(newTabData)
+            setTabList(tabs)
         }
     };
 

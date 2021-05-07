@@ -1,42 +1,51 @@
 import { useState, useEffect } from 'react';
 import { tidy, summarize, sum, groupBy, mutate } from '@tidyjs/tidy'
 
-// const defaultParams = ['m', 'mu', 'sigsqr', 'pop',  'r'];
 const defaultGroupParams = ['m', 'mu', 'sigsqr', 'pop', 'output_gen', 'r']
 
 const useFilteredData = (data, loaded, colorVar, chosenSet) =>  {
     const [ genes, setGenes ] = useState([]);
     const [ phens, setPhens ] = useState([]);
+    const [ histo, setHisto ] = useState([]);
     const [ geneLoaded, setGeneLoaded ] = useState(false);
     const [ phenLoaded, setPhenLoaded ] = useState(false);
-    // const [ selectedParamSet, setSelectedParamSet ] = useState("m0.001_mu0.00001_r0.00625_sigsqr25_n1000_pop1")
+    const [ histoLoaded, setHistoLoaded ] = useState(false);
 
     useEffect(() => {
-        if(data[chosenSet]) {
-            setGenes(data[chosenSet])
+        if(data[chosenSet.genomeSet]) {
+            setGenes(data[chosenSet.genomeSet])
             setGeneLoaded(true)
         }
         
-    }, [data, chosenSet])
+    }, [chosenSet.genomeSet])
+
+    useEffect(() => {
+        if(data[chosenSet.histoSet]) {
+            setHisto(data[chosenSet.histoSet])
+            setHistoLoaded(true)
+        }
+        
+    }, [chosenSet.histoSet])
 
     useEffect(() => { 
-        if(data[chosenSet]) {
-            const grouped = tidy(data[chosenSet], 
+        if(data[chosenSet.lineSet]) {
+            const grouped = tidy(data[chosenSet.lineSet], 
                 groupBy(defaultGroupParams, [summarize({ phen_diff: sum(colorVar) })]),
                 mutate({ 'phen_diff': d => d.phen_diff * 2})
             )
             setPhens(grouped)
             setPhenLoaded(true)
-
         }
+    }, [chosenSet.lineSet])
 
-    }, [data, chosenSet])
 
     return {
         genes, 
         geneLoaded,
         phens,
-        phenLoaded
+        phenLoaded,
+        histo,
+        histoLoaded
     }
 
 }

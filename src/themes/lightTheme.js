@@ -46,6 +46,7 @@ const lightTheme = {
     dropDownArrowColor: colors.blacks.black2,
     dropDownItemsColor: colors.whites.white1,
     dropDownItemsBorder: colors.blacks.black2,
+    dropDownItemsBorder2: hexToRGB(colors.purples.purple1, 0.3),
     dropDownHighLightGradient1: colors.purples.purple3,
     dropDownHighLightGradient2: colors.purples.purple2,
     thumbSliderColor: colors.whites.white2,

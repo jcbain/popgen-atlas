@@ -17,7 +17,7 @@ const Label = styled.p`
     color: ${({ theme }) => theme.paramCardOutline};
     margin-block-end: 0;
     margin-block-start: 0;
-    font-size: 12px;
+    font-size: 0.9em;
 `
 
 const Value = styled.p`
@@ -25,7 +25,7 @@ const Value = styled.p`
     color: ${({ theme }) => theme.paramCardOutline};
     margin-block-end: 0;
     margin-block-start: 0;
-    font-size: 20px;
+    font-size: 1.3em;
 `
 
 const ParamCard = ({label, value, ...rest}) => {
