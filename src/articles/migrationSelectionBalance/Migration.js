@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import classnames from 'classnames'
 
 import PlayPauseReset from '../../components/inputs/PlayPauseReset'
+import usePlayPauseReset from '../../hooks/usePlayPauseReset';
 
 import buddyRed from '../../images/buddy_red.png';
 import buddyBlue from '../../images/buddy_blue.png';
@@ -169,11 +170,13 @@ const Migration = ({}) => {
         {action: () => {}, description: ''}
     ]
 
-    const reset = () => {   
+    const resetter = () => {   
         setMigrate(false)
         setOffspring(false)
         setGrow(false)
     }
+
+    const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 2)
 
 
     const buds = buddyPositions.map((b, i) => {
@@ -208,7 +211,7 @@ const Migration = ({}) => {
                 {buds}
             </DrawingArea>
             <ButtonBar>
-                <PlayPauseReset script={script} resetter={reset} stepInterval={2}/>
+                <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
             </ButtonBar>
         </Wrapper>
     )

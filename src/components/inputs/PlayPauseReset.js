@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Play, Pause, Reset } from '@styled-icons/boxicons-regular';
 import classnames from 'classnames';
@@ -96,53 +95,30 @@ const Description = styled.p`
 `
 
 
-const PlayPauseReset = ({ resetter, script, stepInterval}) => {
+const PlayPauseReset = ({ 
+    script, 
+    setPlay, 
+    reset,
+    isPlaying,
+    currentPosition
+}) => {
 
-    const [ play, setPlay ] = useState(false);
-    const [ currentPoint, setCurrentPoint ] = useState(0);
 
     let dots = [];
     let descriptions = [];
     script.forEach((element, i) => {
-        const dot = <Dot key={i} className={classnames({'dot-selected': i === currentPoint - 1})}/>
-        const descript = <Description key={i} className={classnames({'description-selected': i === currentPoint - 1})}>{element.description}</Description>
+        const dot = <Dot key={i} className={classnames({'dot-selected': i === currentPosition - 1})}/>
+        const descript = <Description key={i} className={classnames({'description-selected': i === currentPosition - 1})}>{element.description}</Description>
         dots.push(dot);
         descriptions.push(descript);
     });
 
 
-    const reset = () => {
-        setCurrentPoint(0);
-        resetter()
-        setPlay(false);
-    }
-
-    useEffect(() => {
-        let interval = null;
-        if (play) {
-            interval = setInterval(() => {
-                setCurrentPoint(s => {
-                    if(s >= script.length) {
-                        reset()
-                    } else {
-                        script[s]['action']()
-                        return s + 1
-                    }
-                  
-                } );
-
-             }, 1000 * stepInterval);
-            } else if (!play && currentPoint !== 0) {
-                clearInterval(interval);
-            }
-        return () => clearInterval(interval);
-    }, [play, currentPoint, stepInterval, reset, script]);
-
     return (
         <Wrapper>
             <PlayResetWrapper>
                 <ButtonWrapper onClick={() => setPlay(prev => !prev)}>
-                    {play ? <StyledPause /> : <StyledPlay />}
+                    {isPlaying ? <StyledPause /> : <StyledPlay />}
                 </ButtonWrapper>
                 <ButtonWrapper onClick={reset}>
                     <StyledReset />
