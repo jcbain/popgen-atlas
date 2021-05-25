@@ -31,8 +31,7 @@ const DrawingArea = styled.div`
     height: 100%;
     grid-template-columns: 1fr 1fr;
     border-radius: 5px;
-    border: 2px solid;
-    
+    border: 2px solid; 
 `
 
 const LandDivider = styled.div`
