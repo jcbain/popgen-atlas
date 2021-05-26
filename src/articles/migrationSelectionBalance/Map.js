@@ -50,6 +50,7 @@ const Map = () => {
             pitch: 60, // pitch in degrees
             bearing: -60, // bearing in degrees
         });
+
     }, [])
     
     return (
