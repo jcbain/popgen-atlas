@@ -37,7 +37,8 @@ const Map = () => {
     const [map, setMap] = useState(null)
     const [lng, setLng] = useState(-115.9);
     const [lat, setLat] = useState(51.35);
-    const [zoom, setZoom] = useState(15);
+    const [zoom, setZoom] = useState(11);
+    const [active, setActive] = useState(false)
 
     useEffect(() => {
         // if (map.current) return; // initialize map only once
@@ -73,24 +74,24 @@ const Map = () => {
                 }
               })
 
-              map.addLayer({
-                "id": "countours",
-                "type": "line",
-                "source": {
-                  type: 'vector',
-                  url: 'mapbox://mapbox.mapbox-terrain-v2'
-                },
-                "source-layer": "contour",
-                'layout': {
-                  'visibility': 'visible',
-                  'line-join': 'round',
-                  'line-cap': 'round'
-                },
-                'paint': {
-                  'line-color': '#877b59',
-                  'line-width': 1
-                }
-              })
+            //   map.addLayer({
+            //     "id": "countours",
+            //     "type": "line",
+            //     "source": {
+            //       type: 'vector',
+            //       url: 'mapbox://mapbox.mapbox-terrain-v2'
+            //     },
+            //     "source-layer": "contour",
+            //     'layout': {
+            //       'visibility': 'visible',
+            //       'line-join': 'round',
+            //       'line-cap': 'round'
+            //     },
+            //     'paint': {
+            //       'line-color': '#877b59',
+            //       'line-width': 1
+            //     }
+            //   })
 
             setMap(map);
         })
@@ -98,13 +99,68 @@ const Map = () => {
         return () => map.remove();
 
     }, [])
+
+    useEffect(() => {
+        move()
+    }, [active])
+
+    const move = () => {
+        if(map && active){
+            map.addSource('mapbox-dem', {
+                'type': 'raster-dem',
+                'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                'tileSize': 512,
+                'maxzoom': 14
+                });
+                // add the DEM source as a terrain layer with exaggerated height
+                map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+                 
+                // add a sky layer that will show when the map is highly pitched
+                map.addLayer({
+                'id': 'sky',
+                'type': 'sky',
+                'paint': {
+                'sky-type': 'atmosphere',
+                'sky-atmosphere-sun': [0.0, 0.0],
+                'sky-atmosphere-sun-intensity': 15
+                }
+                });
+            // map.setPitchBearing(70, -70)
+            
+            // map.addSource('mapbox-dem', {
+            //     'type': 'raster-dem',
+            //     'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            //     'tileSize': 512,
+            //     'maxzoom': 14
+            // });
+            // console.log(map)
+            // map.addLayer({
+            //     "id": "countours",
+            //     "type": "line",
+            //     "source": {
+            //       type: 'vector',
+            //       url: 'mapbox://mapbox.mapbox-terrain-v2'
+            //     },
+            //     "source-layer": "contour",
+            //     'layout': {
+            //       'visibility': 'visible',
+            //       'line-join': 'round',
+            //       'line-cap': 'round'
+            //     },
+            //     'paint': {
+            //       'line-color': '#877b59',
+            //       'line-width': 1
+            //     }
+            //   })
+        }
+    }
     
     return (
         <Wrapper>
             <DrawingArea>
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
-            <ButtonBar></ButtonBar>
+            <ButtonBar><button onClick={() => setActive(prev => !prev)}>click me</button></ButtonBar>
         </Wrapper>
     )
 }
