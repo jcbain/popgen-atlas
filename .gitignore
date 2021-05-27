@@ -12,8 +12,7 @@
 /build
 
 # data files
-**/data/**
-**/DATA/**
+data/
 
 # misc
 .DS_Store

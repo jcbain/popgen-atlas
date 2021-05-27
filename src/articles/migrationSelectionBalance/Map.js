@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import distribution from './data/pinucont.json'
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY
 
 
@@ -37,7 +39,7 @@ const Map = () => {
     const [map, setMap] = useState(null)
     const [lng, setLng] = useState(-115.9);
     const [lat, setLat] = useState(51.35);
-    const [zoom, setZoom] = useState(8);
+    const [zoom, setZoom] = useState(3);
     const [active, setActive] = useState(false)
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const Map = () => {
             zoom: zoom,
             interactive: false,
             pitch: 15, // pitch in degrees
-            bearing: -90, // bearing in degrees
+            bearing: 0, // bearing in degrees
         });
 
         map.on('load', () => {
@@ -59,19 +61,35 @@ const Map = () => {
                 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
                 'tileSize': 512,
                 'maxzoom': 14
-                });
+            });
                 // add the DEM source as a terrain layer with exaggerated height
-                map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+            map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
                  
                 // add a sky layer that will show when the map is highly pitched
-                map.addLayer({
+            map.addLayer({
                 'id': 'sky',
                 'type': 'sky',
                 'paint': {
-                'sky-type': 'atmosphere',
-                'sky-atmosphere-sun': [0.0, 0.0],
-                'sky-atmosphere-sun-intensity': 12
+                    'sky-type': 'atmosphere',
+                    'sky-atmosphere-sun': [0.0, 0.0],
+                    'sky-atmosphere-sun-intensity': 12
                 }
+            });
+
+            map.addSource('lodgepole-dist', {
+                'type': 'geojson',
+                'data': distribution
+            })
+
+            map.addLayer({
+                'id': 'park-boundary',
+                'type': 'fill',
+                'source': 'lodgepole-dist',
+                'paint': {
+                'fill-color': 'red',
+                'fill-opacity': 0.4
+                },
+                'filter': ['==', '$type', 'Polygon']
                 });
 
 
@@ -91,7 +109,8 @@ const Map = () => {
             map.flyTo({
                 center: [-117, 52], 
                 zoom: 11, 
-                pitch: 75
+                pitch: 75,
+                bearing: 90
             })
 
         }
