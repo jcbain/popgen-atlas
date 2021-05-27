@@ -39,8 +39,9 @@ const Map = () => {
     const [map, setMap] = useState(null)
     const [lng, setLng] = useState(-115.9);
     const [lat, setLat] = useState(51.35);
-    const [zoom, setZoom] = useState(3);
+    const [zoom, setZoom] = useState(2.5);
     const [active, setActive] = useState(false)
+    const [addLayer, setAddLayer] = useState(false)
 
     useEffect(() => {
         // if (map.current) return; // initialize map only once
@@ -81,16 +82,16 @@ const Map = () => {
                 'data': distribution
             })
 
-            map.addLayer({
-                'id': 'park-boundary',
-                'type': 'fill',
-                'source': 'lodgepole-dist',
-                'paint': {
-                'fill-color': 'red',
-                'fill-opacity': 0.4
-                },
-                'filter': ['==', '$type', 'Polygon']
-                });
+            // map.addLayer({
+            //     'id': 'tree-boundary',
+            //     'type': 'fill',
+            //     'source': 'lodgepole-dist',
+            //     'paint': {
+            //     'fill-color': 'red',
+            //     'fill-opacity': 0.4
+            //     },
+            //     'filter': ['==', '$type', 'Polygon']
+            //     });
 
 
             setMap(map);
@@ -104,6 +105,10 @@ const Map = () => {
         move()
     }, [active])
 
+    useEffect(() => {
+        addDistributionLayer()
+    }, [addLayer])
+
     const move = () => {
         if(map && active){
             map.flyTo({
@@ -115,13 +120,31 @@ const Map = () => {
 
         }
     }
+
+    const addDistributionLayer = () => {
+        if(map) {
+            map.addLayer({
+                'id': 'tree-boundary',
+                'type': 'fill',
+                'source': 'lodgepole-dist',
+                'paint': {
+                'fill-color': 'red',
+                'fill-opacity': addLayer ? 0.4 : 0
+                },
+                'filter': ['==', '$type', 'Polygon']
+                });
+        }
+    }
     
     return (
         <Wrapper>
             <DrawingArea>
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
-            <ButtonBar><button onClick={() => setActive(prev => !prev)}>click me</button></ButtonBar>
+            <ButtonBar>
+                <button onClick={() => setAddLayer(prev => !prev)}>add distribution</button>
+                <button onClick={() => setActive(prev => !prev)}>move</button>
+            </ButtonBar>
         </Wrapper>
     )
 }
