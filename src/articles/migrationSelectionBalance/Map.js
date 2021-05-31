@@ -5,6 +5,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import distribution from './data/pinucont.json'
 
+import PlayPauseReset from '../../components/inputs/PlayPauseReset'
+import usePlayPauseReset from '../../hooks/usePlayPauseReset';
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY
 
 
@@ -45,6 +48,20 @@ const Map = () => {
         {zoom: 2.5, pitch: 0, bearing: 0},
         {zoom: 13, pitch: 80, bearing: 93}
     ]
+
+    const script = [
+        {action: () => setAddLayer(true), description: 'distribution'},
+        {action: () => {}, description: ''},
+        {action: () => setFocusMap(true), description: 'valley view'},
+        {action: () => {}, description: ''}
+    ]
+
+    const resetter = () => {   
+        setAddLayer(false)
+        setFocusMap(false)
+    }
+
+    const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 2)
 
     useEffect(() => {
         // if (map.current) return; // initialize map only once
@@ -149,8 +166,10 @@ const Map = () => {
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
             <ButtonBar>
-                <button onClick={() => setAddLayer(prev => !prev)}>add distribution</button>
-                <button onClick={() => setFocusMap(prev => !prev)}>move</button>
+                <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
+
+                {/* <button onClick={() => setAddLayer(prev => !prev)}>add distribution</button>
+                <button onClick={() => setFocusMap(prev => !prev)}>move</button> */}
             </ButtonBar>
         </Wrapper>
     )
