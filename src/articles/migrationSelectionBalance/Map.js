@@ -37,22 +37,25 @@ const MapDiv = styled.div`
 const Map = () => {
     const mapContainer = useRef(null);
     const [map, setMap] = useState(null)
-    const [lng, setLng] = useState(-115.9);
-    const [lat, setLat] = useState(51.35);
-    const [zoom, setZoom] = useState(2.5);
-    const [active, setActive] = useState(false)
+    const [focusMap, setFocusMap] = useState(false)
     const [addLayer, setAddLayer] = useState(false)
+
+    const coords = {lng: -115.42, lat: 51.07}
+    const positions = [
+        {zoom: 2.5, pitch: 0, bearing: 0},
+        {zoom: 13, pitch: 80, bearing: 93}
+    ]
 
     useEffect(() => {
         // if (map.current) return; // initialize map only once
          const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y',
-            center: [lng, lat],
-            zoom: zoom,
+            center: [coords.lng, coords.lat],
+            zoom: positions[0].zoom,
             interactive: false,
-            pitch: 15, // pitch in degrees
-            bearing: 0, // bearing in degrees
+            pitch: positions[0].pitch, // pitch in degrees
+            bearing: positions[0].bearing, // bearing in degrees
         });
 
         map.on('load', () => {
@@ -103,20 +106,27 @@ const Map = () => {
 
     useEffect(() => {
         move()
-    }, [active])
+    }, [focusMap])
 
     useEffect(() => {
         addDistributionLayer()
     }, [addLayer])
 
     const move = () => {
-        if(map && active){
-            map.flyTo({
-                center: [-117, 52], 
-                zoom: 11, 
-                pitch: 75,
-                bearing: 90
-            })
+        if(map){
+            if(focusMap){
+                map.flyTo({
+                    zoom: positions[1].zoom, 
+                    pitch: positions[1].pitch,
+                    bearing: -positions[1].bearing
+                })
+            } else {
+                map.flyTo({
+                    zoom: positions[0].zoom, 
+                    pitch: positions[0].pitch,
+                    bearing: -positions[0].bearing
+                })
+            }
 
         }
     }
@@ -143,7 +153,7 @@ const Map = () => {
             </DrawingArea>
             <ButtonBar>
                 <button onClick={() => setAddLayer(prev => !prev)}>add distribution</button>
-                <button onClick={() => setActive(prev => !prev)}>move</button>
+                <button onClick={() => setFocusMap(prev => !prev)}>move</button>
             </ButtonBar>
         </Wrapper>
     )
