@@ -51,7 +51,6 @@ const Map = () => {
 
     const script = [
         {action: () => setAddLayer(true), description: 'distribution'},
-        {action: () => {}, description: ''},
         {action: () => setFocusMap(true), description: 'valley view'},
         {action: () => {}, description: ''}
     ]
@@ -61,10 +60,9 @@ const Map = () => {
         setFocusMap(false)
     }
 
-    const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 2)
+    const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 4)
 
     useEffect(() => {
-        // if (map.current) return; // initialize map only once
          const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y',
@@ -167,9 +165,6 @@ const Map = () => {
             </DrawingArea>
             <ButtonBar>
                 <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
-
-                {/* <button onClick={() => setAddLayer(prev => !prev)}>add distribution</button>
-                <button onClick={() => setFocusMap(prev => !prev)}>move</button> */}
             </ButtonBar>
         </Wrapper>
     )
