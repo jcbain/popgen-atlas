@@ -60,7 +60,7 @@ const Map = () => {
 
         map.on('load', () => {
       
-              map.addSource('mapbox-dem', {
+            map.addSource('mapbox-dem', {
                 'type': 'raster-dem',
                 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
                 'tileSize': 512,
@@ -85,16 +85,17 @@ const Map = () => {
                 'data': distribution
             })
 
-            // map.addLayer({
-            //     'id': 'tree-boundary',
-            //     'type': 'fill',
-            //     'source': 'lodgepole-dist',
-            //     'paint': {
-            //     'fill-color': 'red',
-            //     'fill-opacity': 0.4
-            //     },
-            //     'filter': ['==', '$type', 'Polygon']
-            //     });
+            map.addLayer({
+                'id': 'tree-boundary',
+                'type': 'line',
+                'source': 'lodgepole-dist',
+                'paint': {
+                    'line-color': 'red',
+                    // 'fill-opacity': 0.4,
+                    'line-width': 0
+                },
+                'filter': ['==', '$type', 'Polygon']
+            });
 
 
             setMap(map);
@@ -133,16 +134,12 @@ const Map = () => {
 
     const addDistributionLayer = () => {
         if(map) {
-            map.addLayer({
-                'id': 'tree-boundary',
-                'type': 'fill',
-                'source': 'lodgepole-dist',
-                'paint': {
-                'fill-color': 'red',
-                'fill-opacity': addLayer ? 0.4 : 0
-                },
-                'filter': ['==', '$type', 'Polygon']
-                });
+            if(addLayer){
+                map.setPaintProperty('tree-boundary', 'line-width', 1)
+            } else {
+                map.setPaintProperty('tree-boundary', 'line-width', 0)
+            }
+
         }
     }
     
