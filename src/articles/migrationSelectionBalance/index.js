@@ -11,7 +11,6 @@ import ArticleText  from '../../components/articleComponents/ArticleText';
 
 import InfoModal from '../../components/widgets/InfoModal';
 import usePopup from '../../hooks/usePopup';
-import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 
 // import StickyNavCushion from '../../components/pageComponents/StickyNavCushion';
 
@@ -28,13 +27,7 @@ const MigrationSelectionBalance = () => {
 
     const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
     const [ popupSelection, setPopupSelection, handleOpenSelection ] = usePopup(false, articleRef)
-    useOutsideAlerter(migrationPopupRef, () => {
-        setPopupMigration(false)
-    })
-
-    useOutsideAlerter(selectionPopupRef, () => {
-        setPopupSelection(false)
-    })
+ 
     const headers = [
         {text: 'Heading 1'},
         {text: 'Heading 2'},
@@ -42,8 +35,8 @@ const MigrationSelectionBalance = () => {
     ]
     return (
         <ThemeProvider theme={msTheme}>
-            {popupMigration && <InfoModal ref={migrationPopupRef} title="migration rate (m)"><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
-            {popupSelection && <InfoModal ref={selectionPopupRef} title="selection coefficient (s)"><p>If a seed from a cold-adapted parent moved to a hot patch and competed with seeds adapted to the hot patch, then the difference in their fitness would be equal to s. So if the hot-adapted seeds make 10% more seeds than the cold-adapted seeds or have a 10% higher chance of surviving to maturity, then s = 0.1.</p></InfoModal>}
+            {popupMigration && <InfoModal ref={migrationPopupRef} title="migration rate (m)" xAction={() => setPopupMigration(false)}><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
+            {popupSelection && <InfoModal ref={selectionPopupRef} title="selection coefficient (s)" xAction={() => setPopupSelection(false)}><p>If a seed from a cold-adapted parent moved to a hot patch and competed with seeds adapted to the hot patch, then the difference in their fitness would be equal to s. So if the hot-adapted seeds make 10% more seeds than the cold-adapted seeds or have a 10% higher chance of surviving to maturity, then s = 0.1.</p></InfoModal>}
 
             <ArticleWrapper ref={articleRef}>
             

@@ -1,5 +1,8 @@
 import { forwardRef } from 'react';
 import styled from 'styled-components';
+import { X } from '@styled-icons/boxicons-regular';
+
+import useOutsideAlerter from '../../hooks/useOutsideAlerter'
 
 const ModalWrapper = styled.div`
     position: fixed;
@@ -30,13 +33,25 @@ const Title = styled.p`
 
 const InfoContainer = styled.div`
     text-align: center;
-
 `
 
-const InfoModal = forwardRef(({title, children}, ref) => {
+const XContainer = styled.div`
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+`
+
+const InfoModal = forwardRef(({title, xAction, children}, ref) => {
+
+    useOutsideAlerter(ref, xAction)
 
     return (
         <ModalWrapper ref={ref}>
+            <XContainer onClick={xAction}>
+                <X/>
+            </XContainer>
             <ContentWrapper>
                 <Title>{title}</Title>
                 <InfoContainer>{children}</InfoContainer>
