@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const ModalWrapper = styled.div`
@@ -32,16 +33,16 @@ const InfoContainer = styled.div`
 
 `
 
-const InfoModal = ({title, children}) => {
+const InfoModal = forwardRef(({title, children}, ref) => {
 
     return (
-        <ModalWrapper>
+        <ModalWrapper ref={ref}>
             <ContentWrapper>
                 <Title>{title}</Title>
                 <InfoContainer>{children}</InfoContainer>
             </ContentWrapper>
         </ModalWrapper>
     )
-}
+})
 
 export default InfoModal;

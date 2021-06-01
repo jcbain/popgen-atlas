@@ -11,6 +11,7 @@ import ArticleText  from '../../components/articleComponents/ArticleText';
 
 import InfoModal from '../../components/widgets/InfoModal';
 import usePopup from '../../hooks/usePopup';
+import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 
 // import StickyNavCushion from '../../components/pageComponents/StickyNavCushion';
 
@@ -21,8 +22,10 @@ import msTheme from './theme';
 
 const MigrationSelectionBalance = () => {
     const articleRef = useRef()
+    const migrationPopupRef = useRef()
 
     const [ popupMigration, setPopupMigration ] = usePopup(false, articleRef)
+    useOutsideAlerter(migrationPopupRef, () => setPopupMigration(false))
     const headers = [
         {text: 'Heading 1'},
         {text: 'Heading 2'},
@@ -30,7 +33,7 @@ const MigrationSelectionBalance = () => {
     ]
     return (
         <ThemeProvider theme={msTheme}>
-            {popupMigration && <InfoModal title="migration rate (m)"><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
+            {popupMigration && <InfoModal ref={migrationPopupRef} title="migration rate (m)"><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
 
             <ArticleWrapper ref={articleRef}>
             
