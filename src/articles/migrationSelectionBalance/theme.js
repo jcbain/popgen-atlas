@@ -37,6 +37,7 @@ const msTheme = {
     progressBarColor: colors.grays.gray1,
     progressHighlight: colors.blues.blue2,
     playPauseColor: colors.blacks.black2,
+    spanColor: colors.blues.blue2
     
 }
 

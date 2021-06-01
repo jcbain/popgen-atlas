@@ -8,7 +8,7 @@ const ModalWrapper = styled.div`
     position: fixed;
     top: calc(50% - 200px);
     left: calc(50% - 250px);
-    border: 1px solid black;
+    border: 1px solid #303030;
     border-radius: 5px;
     /* height: 400px; */
     max-height: 400px;
@@ -41,6 +41,8 @@ const XContainer = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
+    cursor: pointer;
+
 `
 
 const InfoModal = forwardRef(({title, xAction, children}, ref) => {

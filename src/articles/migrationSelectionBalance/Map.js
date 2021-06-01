@@ -43,10 +43,10 @@ const Map = () => {
     const [focusMap, setFocusMap] = useState(false)
     const [addLayer, setAddLayer] = useState(false)
 
-    const coords = {lng: -115.42, lat: 51.07}
+    const coords = {lng: -115.49, lat: 51.12}
     const positions = [
         {zoom: 2.5, pitch: 0, bearing: 0},
-        {zoom: 13, pitch: 80, bearing: 93}
+        {zoom: 13, pitch: 110, bearing: -5}
     ]
 
     const script = [
@@ -105,7 +105,7 @@ const Map = () => {
                 'type': 'line',
                 'source': 'lodgepole-dist',
                 'paint': {
-                    'line-color': 'red',
+                    'line-color': '#682CFE',
                     // 'fill-opacity': 0.4,
                     'line-width': 0
                 },

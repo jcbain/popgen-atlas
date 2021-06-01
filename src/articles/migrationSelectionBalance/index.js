@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import ArticleHeader from '../../components/articleComponents/ArticleHeader';
 import ArticleWrapper from '../../components/articleComponents/ArticleWrapper';
@@ -18,6 +18,12 @@ import Map from './Map';
 import Migration from './Migration';
 import GenomeDescription from './GenomeDescription'
 import msTheme from './theme';
+
+const StyledSpan = styled.span`
+    color: ${({ theme }) => theme.spanColor};
+    font-weight: 600;
+    cursor: pointer;
+`
 
 const MigrationSelectionBalance = () => {
     const articleRef = useRef()
@@ -58,7 +64,7 @@ const MigrationSelectionBalance = () => {
                             In lodgepole pine, dispersal happens through movement of the seeds and wind-blown pollen transport. If either seeds or pollen have a high chance of ending up in an environment that is not well suited to their genetically-determined traits, they will pay a fitness cost for being maladapted to the new conditions. Local adaptation will only emerge when the rate of dispersal between environments is not too high, relative to the fitness costs of being mismatched to the new environment. 
                         </ArticleText> 
                         <ArticleText>
-                            Evolutionary theory provides a way to formally study these trade-offs by using simplified models where individuals can inhabit one of two places with different environments (e.g. a hot or cold climate, represented here by red and blue circles). There are two main parameters that affect evolution in this model: the rate at which offspring move and end up in a different patch than their parents (termed the <span onClick={handleOpenMigration}>“migration rate”</span>, m), and the effect of the difference between the two environments on an individual’s fitness (the <span onClick={handleOpenSelection}>“selection coefficient”</span>, s). 
+                            Evolutionary theory provides a way to formally study these trade-offs by using simplified models where individuals can inhabit one of two places with different environments (e.g. a hot or cold climate, represented here by red and blue circles). There are two main parameters that affect evolution in this model: the rate at which offspring move and end up in a different patch than their parents (termed the <StyledSpan onClick={handleOpenMigration}>“migration rate”</StyledSpan>, m), and the effect of the difference between the two environments on an individual’s fitness (the <StyledSpan onClick={handleOpenSelection}>“selection coefficient”</StyledSpan>, s). 
                         </ArticleText>  
                         <ArticleText>
                             One of the earliest models by Haldane (1930) and Wright (1931) showed that if a single genetic locus affects the fit of an organism to its environment, local adaptation would only tend to evolve when the migration rate is lower than the selection coefficient (m {"<"} s). We could use this model to predict that if the migration rate from the lowlands up to the mountainside is 1%, then a new mutation that was better at tolerating the cold conditions of the mountainside would only establish if it increased the fitness there by {">"}1%. Of course, as this is a very simplified model of just a single genetic locus, it neglects important effects such as genetic drift and interactions with other loci, so there are many reasons why this prediction might not hold up in nature. To study some of these more complicated interactions, we can use evolutionary simulations to study how local adaptation is affected by different parameters of interest.
