@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.main`
@@ -5,13 +6,13 @@ const Wrapper = styled.main`
     margin: 0;
 `
 
-const ArticleWrapper = ({children}) => {
+const ArticleWrapper = forwardRef(({children}, ref) => {
     
     return (
-        <Wrapper>
+        <Wrapper ref={ref}>
             {children}
         </Wrapper>
         )
-}
+})
 
 export default ArticleWrapper;
