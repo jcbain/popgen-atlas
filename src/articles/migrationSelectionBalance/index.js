@@ -23,9 +23,18 @@ import msTheme from './theme';
 const MigrationSelectionBalance = () => {
     const articleRef = useRef()
     const migrationPopupRef = useRef()
+    const selectionPopupRef = useRef()
 
-    const [ popupMigration, setPopupMigration ] = usePopup(false, articleRef)
-    useOutsideAlerter(migrationPopupRef, () => setPopupMigration(false))
+
+    const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
+    const [ popupSelection, setPopupSelection, handleOpenSelection ] = usePopup(false, articleRef)
+    useOutsideAlerter(migrationPopupRef, () => {
+        setPopupMigration(false)
+    })
+
+    useOutsideAlerter(selectionPopupRef, () => {
+        setPopupSelection(false)
+    })
     const headers = [
         {text: 'Heading 1'},
         {text: 'Heading 2'},
@@ -34,6 +43,7 @@ const MigrationSelectionBalance = () => {
     return (
         <ThemeProvider theme={msTheme}>
             {popupMigration && <InfoModal ref={migrationPopupRef} title="migration rate (m)"><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
+            {popupSelection && <InfoModal ref={selectionPopupRef} title="selection coefficient (s)"><p>If a seed from a cold-adapted parent moved to a hot patch and competed with seeds adapted to the hot patch, then the difference in their fitness would be equal to s. So if the hot-adapted seeds make 10% more seeds than the cold-adapted seeds or have a 10% higher chance of surviving to maturity, then s = 0.1.</p></InfoModal>}
 
             <ArticleWrapper ref={articleRef}>
             
@@ -55,7 +65,7 @@ const MigrationSelectionBalance = () => {
                             In lodgepole pine, dispersal happens through movement of the seeds and wind-blown pollen transport. If either seeds or pollen have a high chance of ending up in an environment that is not well suited to their genetically-determined traits, they will pay a fitness cost for being maladapted to the new conditions. Local adaptation will only emerge when the rate of dispersal between environments is not too high, relative to the fitness costs of being mismatched to the new environment. 
                         </ArticleText> 
                         <ArticleText>
-                            Evolutionary theory provides a way to formally study these trade-offs by using simplified models where individuals can inhabit one of two places with different environments (e.g. a hot or cold climate, represented here by red and blue circles). There are two main parameters that affect evolution in this model: the rate at which offspring move and end up in a different patch than their parents (termed the <span onClick={() => setPopupMigration(true)}>“migration rate”</span>, m), and the effect of the difference between the two environments on an individual’s fitness (the “selection coefficient”, s). 
+                            Evolutionary theory provides a way to formally study these trade-offs by using simplified models where individuals can inhabit one of two places with different environments (e.g. a hot or cold climate, represented here by red and blue circles). There are two main parameters that affect evolution in this model: the rate at which offspring move and end up in a different patch than their parents (termed the <span onClick={handleOpenMigration}>“migration rate”</span>, m), and the effect of the difference between the two environments on an individual’s fitness (the <span onClick={handleOpenSelection}>“selection coefficient”</span>, s). 
                         </ArticleText>  
                         <ArticleText>
                             One of the earliest models by Haldane (1930) and Wright (1931) showed that if a single genetic locus affects the fit of an organism to its environment, local adaptation would only tend to evolve when the migration rate is lower than the selection coefficient (m {"<"} s). We could use this model to predict that if the migration rate from the lowlands up to the mountainside is 1%, then a new mutation that was better at tolerating the cold conditions of the mountainside would only establish if it increased the fitness there by {">"}1%. Of course, as this is a very simplified model of just a single genetic locus, it neglects important effects such as genetic drift and interactions with other loci, so there are many reasons why this prediction might not hold up in nature. To study some of these more complicated interactions, we can use evolutionary simulations to study how local adaptation is affected by different parameters of interest.
