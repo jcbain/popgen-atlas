@@ -33,7 +33,7 @@ const colors = {
 
 const lightTheme = {
     simpleFont: 'Roboto',
-    funFont: 'Rubik',
+    funFont: 'Baloo Tammudu 2',
     serifFont: 'Orelega One',
     smallPaddingH: '20px',
     smallPaddingV: '20px',

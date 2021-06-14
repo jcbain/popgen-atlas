@@ -10,7 +10,8 @@ const colors = {
     },
     grays: {
         gray1: '#e0e0e0',
-        gray2: '#9e9e9e'
+        gray2: '#9e9e9e',
+        gray3: '#6e6e6e'
     },
     purples: {
         purple1: '#5d0096', 
@@ -37,7 +38,9 @@ const msTheme = {
     progressBarColor: colors.grays.gray1,
     progressHighlight: colors.blues.blue2,
     playPauseColor: colors.blacks.black2,
-    spanColor: colors.blues.blue2
+    spanColor: colors.blues.blue2,
+    modalTitleColor: colors.blacks.black2,
+    modalContentColor: colors.grays.gray3,
     
 }
 

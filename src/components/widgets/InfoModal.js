@@ -8,7 +8,7 @@ const ModalWrapper = styled.div`
     position: fixed;
     top: calc(50% - 200px);
     left: calc(50% - 250px);
-    border: 1px solid #303030;
+    border: 2px solid #303030;
     border-radius: 5px;
     /* height: 400px; */
     max-height: 400px;
@@ -29,10 +29,12 @@ const Title = styled.p`
     text-align: center;
     font-weight: bold;
     font-size: 22px;
+    color: ${({ theme }) => theme.modalTitleColor};
 `
 
 const InfoContainer = styled.div`
     text-align: center;
+    color: ${({ theme }) => theme.modalContentColor};
 `
 
 const XContainer = styled.div`

@@ -6,7 +6,7 @@ const useFonts = () => {
     useEffect(() => {
         WebFont.load({
           google: {
-            families: ['Roboto', 'Rubik', 'Orelega One']
+            families: ['Roboto', 'Rubik', 'Orelega One', 'Mukta', 'Baloo Tammudu 2']
           }
         });
     }, []);
