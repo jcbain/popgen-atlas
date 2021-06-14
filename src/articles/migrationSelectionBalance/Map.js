@@ -37,11 +37,11 @@ const MapDiv = styled.div`
     height: 100%;
 `
 
-const Map = () => {
+const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
     const mapContainer = useRef(null);
     const [map, setMap] = useState(null)
-    const [focusMap, setFocusMap] = useState(false)
-    const [addLayer, setAddLayer] = useState(false)
+    // const [focusMap, setFocusMap] = useState(false)
+    // const [addLayer, setAddLayer] = useState(false)
 
     const coords = {lng: -115.49, lat: 51.12}
     const positions = [
@@ -107,7 +107,7 @@ const Map = () => {
                 'paint': {
                     'line-color': '#682CFE',
                     // 'fill-opacity': 0.4,
-                    'line-width': 0
+                    'line-width': 1
                 },
                 'filter': ['==', '$type', 'Polygon']
             });

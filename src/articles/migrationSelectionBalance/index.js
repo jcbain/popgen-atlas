@@ -18,8 +18,15 @@ import Map from './Map';
 import Migration from './Migration';
 import GenomeDescription from './GenomeDescription'
 import msTheme from './theme';
+import { set } from 'lodash';
 
 const StyledSpan = styled.span`
+    color: ${({ theme }) => theme.spanColor};
+    font-weight: 600;
+    cursor: pointer;
+`
+
+const ActionButton = styled.span`
     color: ${({ theme }) => theme.spanColor};
     font-weight: 600;
     cursor: pointer;
@@ -31,6 +38,13 @@ const MigrationSelectionBalance = () => {
     const selectionPopupRef = useRef()
     
     const [vizIndex, setVizIndex] = useState('')
+    const [addLayer, setAddLayer] = useState(false);
+    const [focusMap, setFocusMap] = useState(false);
+
+    const handleAddLayer = () => {
+        setVizIndex('map');
+        setAddLayer(prev => !prev)
+    }
 
     const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
     const [ popupSelection, setPopupSelection, handleOpenSelection ] = usePopup(false, articleRef)
@@ -49,7 +63,7 @@ const MigrationSelectionBalance = () => {
                     <ArticleContent>
 
                         <ArticleText>
-                            Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, the natural range of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
+                            Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, the <ActionButton onClick={handleAddLayer}>natural range</ActionButton> of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
                         </ArticleText>
                         <button onClick={() => setVizIndex('map')}>click</button>
                         <button onClick={() => setVizIndex('migration')}>click too</button>
@@ -92,7 +106,11 @@ const MigrationSelectionBalance = () => {
                     </ArticleContent>
                     <ArticleStickyAside>
                         {vizIndex === 'map' && <ArticleAnimationBox show={vizIndex === 'map'}>
-                            <Map />
+                            <Map addLayer={addLayer}
+                                focusMap={focusMap}
+                                setAddLayer={setAddLayer}
+                                setFocusMap={setFocusMap}
+                            />
                         </ArticleAnimationBox>}
                         {vizIndex === 'migration' && <ArticleAnimationBox show={vizIndex === 'migration'}>
                             <Migration />
