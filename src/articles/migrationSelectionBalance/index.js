@@ -5,10 +5,9 @@ import ArticleHeader from '../../components/articleComponents/ArticleHeader';
 import ArticleWrapper from '../../components/articleComponents/ArticleWrapper';
 import ArticleBody from '../../components/articleComponents/ArticleBody'
 import ArticleContent from '../../components/articleComponents/ArticleContent'
-import ArticleToc from '../../components/articleComponents/ArticleToc';
 import ArticleAnimationBox from '../../components/articleComponents/ArticleAnimationBox';
 import ArticleText  from '../../components/articleComponents/ArticleText';
-
+import ArticleStickyAside from '../../components/articleComponents/ArticleStickyAside'
 
 import InfoModal from '../../components/widgets/InfoModal';
 import usePopup from '../../hooks/usePopup';
@@ -35,11 +34,7 @@ const MigrationSelectionBalance = () => {
     const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
     const [ popupSelection, setPopupSelection, handleOpenSelection ] = usePopup(false, articleRef)
  
-    const headers = [
-        {text: 'Heading 1'},
-        {text: 'Heading 2'},
-        {text: 'Heading 3'}
-    ]
+
     return (
         <ThemeProvider theme={msTheme}>
             {popupMigration && <InfoModal ref={migrationPopupRef} title="migration rate (m)" xAction={() => setPopupMigration(false)}><p>If a seed from a parent tree had a 1% chance of moving to the other patch, then this would be a migration rate of m = 0.01.</p></InfoModal>}
@@ -71,7 +66,7 @@ const MigrationSelectionBalance = () => {
                             One of the earliest models by Haldane (1930) and Wright (1931) showed that if a single genetic locus affects the fit of an organism to its environment, local adaptation would only tend to evolve when the migration rate is lower than the selection coefficient (m {"<"} s). We could use this model to predict that if the migration rate from the lowlands up to the mountainside is 1%, then a new mutation that was better at tolerating the cold conditions of the mountainside would only establish if it increased the fitness there by {">"}1%. Of course, as this is a very simplified model of just a single genetic locus, it neglects important effects such as genetic drift and interactions with other loci, so there are many reasons why this prediction might not hold up in nature. To study some of these more complicated interactions, we can use evolutionary simulations to study how local adaptation is affected by different parameters of interest.
                         </ArticleText>
 
-                        <Map />
+                        {/* <Map /> */}
                         <ArticleText>
                             We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
 
@@ -91,10 +86,12 @@ const MigrationSelectionBalance = () => {
 
                         </ArticleText>
                     </ArticleContent>
-                    <ArticleAnimationBox>
-                        
-                    </ArticleAnimationBox>
-                    {/* <ArticleToc headers={headers}/> */}
+                    <ArticleStickyAside>
+                        <ArticleAnimationBox show={true}>
+                            <Map />
+                        </ArticleAnimationBox>
+
+                    </ArticleStickyAside>
                 </ArticleBody>
             </ArticleWrapper>
         </ThemeProvider>

@@ -1,17 +1,19 @@
+import classNames from 'classnames';
 import styled from 'styled-components';
 
 const Wrapper = styled.aside`
     width: 100%;
-    position: sticky;
-    top: 50px;
-    height: 400px;
-    background: blue;
+    display: block;
+    &.no-show {
+        display: none;
+    }
+    /* background: blue; */
 `
 
-const ArticleAnimationBox = ({children}) => {
+const ArticleAnimationBox = ({show, children}) => {
 
     return (
-        <Wrapper>
+        <Wrapper className={classNames({'no-show': !show})}>
             {children}
         </Wrapper>
     )

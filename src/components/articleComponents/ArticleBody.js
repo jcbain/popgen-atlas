@@ -14,7 +14,7 @@ const InnerWrapper = styled.div`
     margin-right: auto;
     &.wrapper-toc {
         display: grid;
-        grid-template-columns: 70% 30%;
+        grid-template-columns: 55% 45%;
     }
 `
 
