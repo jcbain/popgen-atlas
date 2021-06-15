@@ -30,6 +30,12 @@ const ActionButton = styled.span`
     color: ${({ theme }) => theme.spanColor};
     font-weight: 600;
     cursor: pointer;
+    background: ${({ theme }) => theme.linkBackgroundColor};
+    padding-right: 3px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding-left: 3px;
+    border-bottom: 2px solid ${({ theme }) => theme.spanColor};
 `
 
 const MigrationSelectionBalance = () => {
@@ -63,7 +69,7 @@ const MigrationSelectionBalance = () => {
                     <ArticleContent>
 
                         <ArticleText>
-                            Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, the <ActionButton onClick={handleAddLayer}>natural range</ActionButton> of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
+                            Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, <ActionButton onClick={handleAddLayer}>the natural range</ActionButton> of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
                         </ArticleText>
                         <button onClick={() => setVizIndex('map')}>click</button>
                         <button onClick={() => setVizIndex('migration')}>click too</button>

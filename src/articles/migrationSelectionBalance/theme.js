@@ -6,7 +6,8 @@ const colors = {
     },
     whites: {
         white1: '#ffffff',
-        white2: '#fffff7'
+        white2: '#fffff7',
+        white3: '#f5f5f5'
     },
     grays: {
         gray1: '#e0e0e0',
@@ -22,7 +23,8 @@ const colors = {
     },
     blues: {
         blue1: '#0082e6', 
-        blue2: '#026dd9'
+        blue2: '#026dd9',
+        blue3: '#f0f8ff'
     },
     yellows: {
         yellow1: '#ffd000'
@@ -41,7 +43,10 @@ const msTheme = {
     spanColor: colors.blues.blue2,
     modalTitleColor: colors.blacks.black2,
     modalContentColor: colors.grays.gray3,
-    
+    articleHeaderColor: colors.whites.white3,
+    articleTitleColor: colors.blacks.black2,
+    articleBodyColor: colors.whites.white1,
+    linkBackgroundColor: colors.blues.blue3
 }
 
 function hexToRGB(hex, alpha) {

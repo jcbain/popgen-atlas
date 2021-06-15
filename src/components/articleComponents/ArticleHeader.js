@@ -5,7 +5,7 @@ import StickyNavCushion from '../pageComponents/StickyNavCushion';
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 500px;
+    height: 80vh;
     background: ${({ theme }) => theme.articleHeaderColor};
 `
 
@@ -16,7 +16,9 @@ const Title = styled.h1`
     text-align: center;
     color: ${({ theme }) => theme.articleTitleColor};
     font-family: ${({ theme }) => theme.serifFont};
-    line-height: 500px;
+    /* line-height: 500px; */
+    font-size: 100px;
+    padding-top: 100px;
 `
 
 const ArticleHeader = ({title}) => {

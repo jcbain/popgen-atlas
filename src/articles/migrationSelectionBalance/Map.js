@@ -112,6 +112,18 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 'filter': ['==', '$type', 'Polygon']
             });
 
+            map.addLayer({
+                'id': 'tree-boundary-fill',
+                'type': 'fill',
+                'source': 'lodgepole-dist',
+                'paint': {
+                    'fill-color': '#682CFE',
+                    'fill-opacity': 0.4,
+                    // 'line-width': 1
+                },
+                'filter': ['==', '$type', 'Polygon']
+            });
+
 
             setMap(map);
         })
@@ -151,8 +163,10 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
         if(map) {
             if(addLayer){
                 map.setPaintProperty('tree-boundary', 'line-width', 1)
+                map.setPaintProperty('tree-boundary-fill', 'fill-opacity', 0.4)
             } else {
                 map.setPaintProperty('tree-boundary', 'line-width', 0)
+                map.setPaintProperty('tree-boundary-fill', 'fill-opacity', 0)
             }
 
         }
