@@ -26,6 +26,9 @@ const Wrapper = styled.div`
 const ButtonBar = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
+    & > button {
+        margin-right: 10px;
+    }
 `
 
 const DrawingArea = styled.div`
@@ -182,8 +185,8 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
             <ButtonBar>
-                <ActionButton className={classNames({'not-triggered': !addLayer, 'triggered': addLayer})}>View Distribution</ActionButton>
-                <ActionButton className={classNames({'not-triggered': !focusMap, 'triggered': focusMap})}>Valley View</ActionButton>
+                <ActionButton className={classNames({'not-triggered': !addLayer, 'triggered': addLayer})} onClick={() => setAddLayer(prev => !prev)}>View Distribution</ActionButton>
+                <ActionButton className={classNames({'not-triggered': !focusMap, 'triggered': focusMap})} onClick={() => setFocusMap(prev => !prev)}>Valley View</ActionButton>
                 {/* <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} /> */}
             </ButtonBar>
         </Wrapper>
