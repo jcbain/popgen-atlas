@@ -24,7 +24,8 @@ const colors = {
     blues: {
         blue1: '#0082e6', 
         blue2: '#026dd9',
-        blue3: '#f0f8ff'
+        blue3: '#f0f8ff',
+        blue4: '#012b57'
     },
     yellows: {
         yellow1: '#ffd000'
@@ -46,7 +47,10 @@ const msTheme = {
     articleHeaderColor: colors.whites.white3,
     articleTitleColor: colors.blacks.black2,
     articleBodyColor: colors.whites.white1,
-    linkBackgroundColor: colors.blues.blue3
+    linkBackgroundColor: colors.blues.blue3,
+    buttonPrimary: colors.blues.blue1,
+    buttonSecondary: colors.blues.blue4,
+    buttonTertiary: colors.blues.blue3
 }
 
 function hexToRGB(hex, alpha) {
