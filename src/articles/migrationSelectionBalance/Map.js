@@ -1,12 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames'
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import distribution from './data/pinucont.json'
 
+import ActionButton from './ActionButton'
 import PlayPauseReset from '../../components/inputs/PlayPauseReset'
 import usePlayPauseReset from '../../hooks/usePlayPauseReset';
+
+
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY
 
@@ -49,18 +53,18 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
         {zoom: 13, pitch: 110, bearing: 5}
     ]
 
-    const script = [
-        {action: () => setAddLayer(true), description: 'distribution'},
-        {action: () => setFocusMap(true), description: 'valley view'},
-        {action: () => {}, description: ''}
-    ]
+    // const script = [
+    //     {action: () => setAddLayer(true), description: 'distribution'},
+    //     {action: () => setFocusMap(true), description: 'valley view'},
+    //     {action: () => {}, description: ''}
+    // ]
 
-    const resetter = () => {   
-        setAddLayer(false)
-        setFocusMap(false)
-    }
+    // const resetter = () => {   
+    //     setAddLayer(false)
+    //     setFocusMap(false)
+    // }
 
-    const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 4)
+    // const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 4)
 
     useEffect(() => {
          const map = new mapboxgl.Map({
@@ -178,7 +182,9 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
             <ButtonBar>
-                <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
+                <ActionButton className={classNames({'not-triggered': !addLayer, 'triggered': addLayer})}>View Distribution</ActionButton>
+                <ActionButton className={classNames({'not-triggered': !focusMap, 'triggered': focusMap})}>Valley View</ActionButton>
+                {/* <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} /> */}
             </ButtonBar>
         </Wrapper>
     )
