@@ -18,7 +18,6 @@ import Map from './Map';
 import Migration from './Migration';
 import GenomeDescription from './GenomeDescription'
 import msTheme from './theme';
-import { set } from 'lodash';
 
 const StyledSpan = styled.span`
     color: ${({ theme }) => theme.spanColor};
@@ -49,7 +48,14 @@ const MigrationSelectionBalance = () => {
 
     const handleAddLayer = () => {
         setVizIndex('map');
+        setFocusMap(false)
         setAddLayer(prev => !prev)
+    }
+
+    const handleZoomIn = () => {
+        setVizIndex('map')
+        setAddLayer(false)
+        setFocusMap(prev => !prev)
     }
 
     const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
@@ -78,7 +84,7 @@ const MigrationSelectionBalance = () => {
                             One evolutionary response to a variable environment is “local adaptation”, where different populations become genetically adapted to the conditions they commonly encounter where they live. This specialization arises by the gradual evolution of genetically-based differences in the traits that help the organism survive, grow, and produce seeds for the next generation. Trees grown from seeds collected in the Yukon territory will be more cold-tolerant, stop growing at an earlier date in the autumn, and grow more slowly than trees started from seeds collected in California. Local adaptation tends to involve constraints and trade-offs between traits, where it isn’t possible to optimise all traits at once. For lodgepole pine, the Yukon-adapted genotypes avoid autumn frost damage by stopping growth early and setting buds that are better able to tolerate cold temperatures in winter. But while this shorter growing season helps avoid frost damage, it also limits how much they can grow and compete. By contrast, the California genotypes grow much faster, but are more susceptible to frost damage and would die in the harsh northern winters. 
                         </ArticleText>
                         <ArticleText>
-                            Will local adaptation always evolve in response to a spatially variable environment? What if the environment varies over a small spatial scale? Lodgepole pine inhabits valleys where it grows on both the colder mountainsides and the warmer lowlands [link/pointer to picture]. Will the trees growing higher on the mountain evolve to be different than the trees in the lowlands? Or will all the trees adapt to the average conditions across both environments?
+                            Will local adaptation always evolve in response to a spatially variable environment? What if the environment varies over a small spatial scale? <ActionButton onClick={handleZoomIn}>Lodgepole pine inhabits valleys</ActionButton> where it grows on both the colder mountainsides and the warmer lowlands [link/pointer to picture]. Will the trees growing higher on the mountain evolve to be different than the trees in the lowlands? Or will all the trees adapt to the average conditions across both environments?
                         </ArticleText>
                         <ArticleText>
                             In lodgepole pine, dispersal happens through movement of the seeds and wind-blown pollen transport. If either seeds or pollen have a high chance of ending up in an environment that is not well suited to their genetically-determined traits, they will pay a fitness cost for being maladapted to the new conditions. Local adaptation will only emerge when the rate of dispersal between environments is not too high, relative to the fitness costs of being mismatched to the new environment. 

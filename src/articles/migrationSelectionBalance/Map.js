@@ -46,7 +46,7 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
     const coords = {lng: -115.49, lat: 51.12}
     const positions = [
         {zoom: 2.5, pitch: 0, bearing: 0},
-        {zoom: 13, pitch: 110, bearing: -5}
+        {zoom: 13, pitch: 110, bearing: 5}
     ]
 
     const script = [
@@ -67,10 +67,10 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y',
             center: [coords.lng, coords.lat],
-            zoom: positions[0].zoom,
+            zoom: focusMap ? positions[1].zoom : positions[0].zoom,
             interactive: false,
-            pitch: positions[0].pitch, // pitch in degrees
-            bearing: positions[0].bearing, // bearing in degrees
+            pitch: focusMap ? positions[1].pitch : positions[0].pitch, // pitch in degrees
+            bearing: focusMap ? positions[1].bearing : positions[0].bearing, // bearing in degrees
         });
 
         map.on('load', () => {
@@ -82,7 +82,7 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 'maxzoom': 14
             });
                 // add the DEM source as a terrain layer with exaggerated height
-            map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+            map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1 });
                  
                 // add a sky layer that will show when the map is highly pitched
             map.addLayer({
@@ -107,7 +107,7 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 'paint': {
                     'line-color': '#682CFE',
                     // 'fill-opacity': 0.4,
-                    'line-width': 1
+                    'line-width': addLayer ? 1 : 0
                 },
                 'filter': ['==', '$type', 'Polygon']
             });
@@ -118,7 +118,7 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 'source': 'lodgepole-dist',
                 'paint': {
                     'fill-color': '#682CFE',
-                    'fill-opacity': 0.4,
+                    'fill-opacity': addLayer ? 0.4 : 0,
                     // 'line-width': 1
                 },
                 'filter': ['==', '$type', 'Polygon']
