@@ -17,6 +17,7 @@ import usePopup from '../../hooks/usePopup';
 
 import Map from './Map';
 import Migration from './Migration';
+import StabilizingSelectionDiagram from './StabilizingSelectionDiagram';
 import GenomeDescription from './GenomeDescription'
 import msTheme from './theme';
 
@@ -106,7 +107,7 @@ const MigrationSelectionBalance = () => {
                             The simulations we will study follow a scenario with two patches in different environments with equal migration rates between them. Individuals grow, reproduce, and potentially migrate to a different environment, with their probability of survival determined by their fitness. Individuals that match their environment better therefore have a higher chance of surviving and passing on their genotype to the next generation. Each individual’s phenotype is determined by a multi-locus genotype by adding up the effects of all mutations, which can either increase or decrease the value of the phenotype.
 
                         </ArticleText>
-                        <Migration />
+                        <Migration showDiagram={() => setVizIndex('stabilizing')}/>
                         <ArticleText>
                             We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
 
@@ -129,9 +130,9 @@ const MigrationSelectionBalance = () => {
                                 setFocusMap={setFocusMap}
                             />
                         </ArticleAnimationBox>}
-                        {/* {vizIndex === 'migration' && <ArticleAnimationBox show={vizIndex === 'migration'}>
-                            <Migration />
-                        </ArticleAnimationBox>} */}
+                        {vizIndex === 'stabilizing' && <ArticleAnimationBox show={vizIndex === 'stabilizing'}>
+                            <StabilizingSelectionDiagram />
+                        </ArticleAnimationBox>}
                     </ArticleStickyAside>
                 </ArticleBody>
             </ArticleWrapper>

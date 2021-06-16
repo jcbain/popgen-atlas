@@ -153,14 +153,16 @@ const buddyPositions = [
 
 
 
-const Migration = ({}) => {
+const Migration = ({showDiagram}) => {
     const [ migrate, setMigrate ] = useState(false)
-    const [ die, setDie ] = useState(false);
     const [ offspring, setOffspring ] = useState(false);
     const [ grow, setGrow ] = useState(false);
 
     const script = [
-        {action: () => setMigrate(true), description: 'migration'},
+        {action: () => {
+            showDiagram()
+            setMigrate(true)
+        }, description: 'migration'},
         {action: () => setOffspring(true), description: 'offspring'},
         {action: () => {
             setGrow(true)
