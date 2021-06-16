@@ -160,7 +160,7 @@ const Migration = ({showDiagram}) => {
 
     const script = [
         {action: () => {
-            showDiagram()
+            // showDiagram()
             setMigrate(true)
         }, description: 'migration'},
         {action: () => setOffspring(true), description: 'offspring'},
@@ -179,6 +179,10 @@ const Migration = ({showDiagram}) => {
 
     const [ setPlay, reset, isPlaying, currentPosition ] = usePlayPauseReset(script, resetter, 2)
 
+    const playAction = () => {
+        setPlay(prev => !prev)
+        showDiagram();
+    }
 
     const buds = buddyPositions.map((b, i) => {
         return (
@@ -212,7 +216,7 @@ const Migration = ({showDiagram}) => {
                 {buds}
             </DrawingArea>
             <ButtonBar>
-                <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
+                <PlayPauseReset script={script} setPlay={playAction} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} />
             </ButtonBar>
         </Wrapper>
     )
