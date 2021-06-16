@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { line, scaleLinear, extent, select } from 'd3'
-
 import styled from 'styled-components';
+import classNames from 'classnames';
 
 import buddyRed from '../../images/buddy_red.png';
 import buddyBlue from '../../images/buddy_blue.png';
 import buddyPurple from '../../images/buddy_purple.png';
 import normalData from './data/normal.json'
+import FunButton from '../../components/buttons/FunButton'
 
 const buddies = { red: buddyRed, blue: buddyBlue, purple: buddyPurple };
 
@@ -30,7 +31,10 @@ const DrawingArea = styled.div`
     height: 100%;
     border-radius: 5px;
     border: 2px solid; 
-    background: ${({ theme }) => theme.hotSideColor};;
+    background: ${({ theme }) => theme.hotSideColor};
+    &.cold {
+        background: ${({ theme }) => theme.coldSideColor};
+    }
 `
 
 
@@ -39,6 +43,7 @@ const BuddyImg = styled.img`
     top: ${({ toppix }) => toppix}px;
     left: ${({ leftpix }) => leftpix}px;
     width: 10%;
+    transition: all 0.5s;
 `
 
 const PhenotypeBar = styled.div`
@@ -47,9 +52,14 @@ const PhenotypeBar = styled.div`
     left: 60px;
     width: calc(100% - 80px);
     height: 12px;
-    background: linear-gradient(to right, darkred 0%, red 50%, purple 75%, blue 100% );
+    background: linear-gradient(to right, ${({ theme }) => theme.legendHigh} 0%, ${({ theme }) => theme.legendMidHigh} 50%, ${({ theme }) => theme.legendMidLow} 75%, ${({ theme }) => theme.legendLow} 100% );
     border: 2px solid #303030;
     border-radius: 4px;
+    transition: all 0.5s;
+
+    &.cold {
+        background: linear-gradient(to right, ${({ theme }) => theme.legendLow} 0%, ${({ theme }) => theme.legendMidLow} 50%, ${({ theme }) => theme.legendMidHigh} 75%, ${({ theme }) => theme.legendHigh} 100% );
+    }
 `
 
 const Label = styled.p`
@@ -57,7 +67,7 @@ const Label = styled.p`
     top: 90%;
     left: 64px;
     font-size: 12px;
-    color: #fffff7;
+    color: #ffffff;
     font-weight: 800;
 
 `
@@ -82,9 +92,9 @@ const ArrowPointLeft = styled.div`
     position: absolute;
     top: 10;
     height: 2px;
-    width: 100%;
+    width: 40%;
     transform: rotate(60deg);
-    translate: 5px 9px;
+    translate: 8px 3px;
     background: #303030;
 `
 
@@ -92,9 +102,9 @@ const ArrowPointRight = styled.div`
     position: absolute;
     top: 10;
     height: 2px;
-    width: 100%;
+    width: 40%;
     transform: rotate(-60deg);
-    translate: -5px 9px;
+    translate: 4px 3px;
     background: #303030;
 `
 
@@ -108,51 +118,10 @@ const SecondLabel = styled.p`
     transform: rotate(90deg);
 `
 
-// const normal = () => {
-//     let x = 0,
-//         y = 0,
-//         rds, c;
-//     do {
-//         x = Math.random() * 2 - 1;
-//         y = Math.random() * 2 - 1;
-//         rds = x * x + y * y;
-//     } while (rds == 0 || rds > 1);
-//         c = Math.sqrt(-2 * Math.log(rds) / rds); // Box-Muller transform
-//     return x * c; // throw away extra sample y * c
-// }
-
-// const gaussian = (x) => {
-//     const gaussianConstant = 1 / Math.sqrt(2 * Math.PI),
-// 	    mean = 0,
-//     	sigma = 1;
-
-//     x = (x - mean) / sigma;
-//     return gaussianConstant * Math.exp(-.5 * x * x) / sigma;
-// };
-
-// const getData = () => {
-//     let data = []
-//     for (var i = 0; i < 1000; i++) {
-//         const q = normal() // calc random draw from normal dist
-//         const p = gaussian(q) // calc prob of rand draw
-//         const el = {
-//             "q": q,
-//             "p": p
-//         }
-//         data.push(el)
-//     };
-    
-//     // need to sort for plotting
-//     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-//     data.sort(function(x, y) {
-//         return x.q - y.q;
-//     });	
-
-//     return data;
-// }
 
 const StabilizingSelectionDiagram = ({}) => {
     const ref = useRef()
+    const [isCold, setIsCold] = useState(false)
 
     const data = normalData;
 
@@ -205,12 +174,12 @@ const StabilizingSelectionDiagram = ({}) => {
 
     return (
         <Wrapper>
-            <DrawingArea ref={ref}>
-                <BuddyImg src={buddies.red} toppix={30} leftpix={215}/>
+            <DrawingArea className={classNames({'cold': isCold})} ref={ref}>
+                <BuddyImg src={buddies.red} toppix={isCold ? 290 : 30} leftpix={isCold ? 335 : 215}/>
                 <BuddyImg src={buddies.purple} toppix={160} leftpix={275}/>
-                <BuddyImg src={buddies.blue} toppix={290} leftpix={335}/>
+                <BuddyImg src={buddies.blue} toppix={isCold ? 30 : 290} leftpix={isCold ? 215 : 335}/>
                 
-                <PhenotypeBar />
+                <PhenotypeBar className={classNames({'cold': isCold})} />
                 <Label>individual phenotype</Label>
                 <Arrow>
                     <ArrowLine />
@@ -219,6 +188,15 @@ const StabilizingSelectionDiagram = ({}) => {
                 </Arrow>
                 <SecondLabel>fitness</SecondLabel>
             </DrawingArea>
+            <ButtonBar>
+                <FunButton className={classNames({'not-triggered': isCold, 'triggered': !isCold})} onClick={() => setIsCold(prev => !prev)}>
+                    Warm Environment
+                </FunButton>
+                <FunButton className={classNames({'not-triggered': !isCold, 'triggered': isCold})} onClick={() => setIsCold(prev => !prev)}>
+                    Cold Environment
+                </FunButton>
+
+            </ButtonBar>
         </Wrapper>
     )
 }
