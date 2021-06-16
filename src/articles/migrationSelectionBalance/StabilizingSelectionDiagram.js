@@ -44,8 +44,8 @@ const BuddyImg = styled.img`
 const PhenotypeBar = styled.div`
     position: absolute;
     top: 93%;
-    left: 20px;
-    width: calc(100% - 40px);
+    left: 60px;
+    width: calc(100% - 80px);
     height: 12px;
     background: linear-gradient(to right, darkred 0%, red 50%, purple 75%, blue 100% );
     border: 2px solid #303030;
@@ -55,11 +55,57 @@ const PhenotypeBar = styled.div`
 const Label = styled.p`
     position: absolute;
     top: 90%;
-    left: 24px;
+    left: 64px;
     font-size: 12px;
     color: #fffff7;
     font-weight: 800;
 
+`
+
+const Arrow = styled.div`
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    height: calc(100% - 110px);
+    width: 20px;
+`
+
+const ArrowLine = styled.div`
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    left: calc(50% - 1px);
+    background: #303030;
+`
+
+const ArrowPointLeft = styled.div`
+    position: absolute;
+    top: 10;
+    height: 2px;
+    width: 100%;
+    transform: rotate(60deg);
+    translate: 5px 9px;
+    background: #303030;
+`
+
+const ArrowPointRight = styled.div`
+    position: absolute;
+    top: 10;
+    height: 2px;
+    width: 100%;
+    transform: rotate(-60deg);
+    translate: -5px 9px;
+    background: #303030;
+`
+
+const SecondLabel = styled.p`
+    position: absolute;
+    top: 72%;
+    left: 15px;
+    font-size: 12px;
+    color: #303030;
+    font-weight: 800;
+    transform: rotate(90deg);
 `
 
 // const normal = () => {
@@ -117,7 +163,7 @@ const StabilizingSelectionDiagram = ({}) => {
                 top: 40,
                 right: 20,
                 bottom: 70,
-                left: 20
+                left: 60
             }
     
             const width = ref.current.clientWidth - margin.left - margin.right;
@@ -160,12 +206,18 @@ const StabilizingSelectionDiagram = ({}) => {
     return (
         <Wrapper>
             <DrawingArea ref={ref}>
-                <BuddyImg src={buddies.red} toppix={30} leftpix={195}/>
-                <BuddyImg src={buddies.purple} toppix={160} leftpix={255}/>
+                <BuddyImg src={buddies.red} toppix={30} leftpix={215}/>
+                <BuddyImg src={buddies.purple} toppix={160} leftpix={275}/>
                 <BuddyImg src={buddies.blue} toppix={290} leftpix={335}/>
                 
                 <PhenotypeBar />
                 <Label>individual phenotype</Label>
+                <Arrow>
+                    <ArrowLine />
+                    <ArrowPointLeft />
+                    <ArrowPointRight />
+                </Arrow>
+                <SecondLabel>fitness</SecondLabel>
             </DrawingArea>
         </Wrapper>
     )
