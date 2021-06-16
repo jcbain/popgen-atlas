@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { line, scaleLinear, extent, select } from 'd3'
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import classNames from 'classnames';
 
 import buddyRed from '../../images/buddy_red.png';
@@ -22,6 +22,9 @@ const Wrapper = styled.div`
 const ButtonBar = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
+    & > button {
+        margin-right: 10px;
+    }
 `
 
 const DrawingArea = styled.div`
@@ -118,6 +121,18 @@ const SecondLabel = styled.p`
     transform: rotate(90deg);
 `
 
+const colors = {reds: {
+    red1: '#eb4034',
+    red2: '#962921',
+    red3: '#ffcdc9'
+}}
+
+const warmTheme = {
+    buttonPrimary: colors.reds.red1,
+    buttonSecondary: colors.reds.red2,
+    buttonTertiary: colors.reds.red3,
+}
+
 
 const StabilizingSelectionDiagram = ({}) => {
     const ref = useRef()
@@ -189,9 +204,12 @@ const StabilizingSelectionDiagram = ({}) => {
                 <SecondLabel>fitness</SecondLabel>
             </DrawingArea>
             <ButtonBar>
-                <FunButton className={classNames({'not-triggered': isCold, 'triggered': !isCold})} onClick={() => setIsCold(prev => !prev)}>
-                    Warm Environment
-                </FunButton>
+                <ThemeProvider theme={warmTheme}>
+                    <FunButton className={classNames({'not-triggered': isCold, 'triggered': !isCold})} onClick={() => setIsCold(prev => !prev)}>
+                        Warm Environment
+                    </FunButton>
+                </ThemeProvider>
+                
                 <FunButton className={classNames({'not-triggered': !isCold, 'triggered': isCold})} onClick={() => setIsCold(prev => !prev)}>
                     Cold Environment
                 </FunButton>

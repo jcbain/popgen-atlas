@@ -32,7 +32,8 @@ const colors = {
     },
     reds: {
         red1: '#eb4034',
-        red2: '#962921'
+        red2: '#962921',
+        red3: '#ffcdc9'
     }
 }
 
@@ -52,11 +53,14 @@ const msTheme = {
     buttonPrimary: colors.blues.blue1,
     buttonSecondary: colors.blues.blue4,
     buttonTertiary: colors.blues.blue3,
+    buttonPrimaryAlt: colors.reds.red1,
+    buttonSecondaryAlt: colors.reds.red2,
+    buttonTertiaryAlt: colors.reds.red3,
     legendHigh: colors.reds.red2,
     legendMidHigh: colors.reds.red1,
     legendMidLow: colors.purples.purple4,
     legendLow: colors.blues.blue1, 
-    
+
 }
 
 function hexToRGB(hex, alpha) {
