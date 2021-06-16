@@ -6,7 +6,7 @@ import StickyNavCushion from '../pageComponents/StickyNavCushion';
 const Wrapper = styled.div`
     width: 100%;
     height: 80vh;
-    background: ${({ theme }) => theme.articleHeaderColor};
+    background: linear-gradient(${({ theme }) => theme.articleHeaderColor} 0%, transparent 100%);
 `
 
 const Title = styled.h1`

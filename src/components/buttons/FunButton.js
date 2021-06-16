@@ -90,6 +90,6 @@ const SpecialButton = styled.button`
     }
 `;
 
-const ActionButton = ({children, ...rest}) => <SpecialButton {...rest}>{children}</SpecialButton>
+const FunButton = ({children, ...rest}) => <SpecialButton {...rest}>{children}</SpecialButton>
 
-export default ActionButton;
+export default FunButton;

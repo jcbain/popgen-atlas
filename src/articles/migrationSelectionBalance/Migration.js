@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     height: 400px;
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
 `
 
 const ButtonBar = styled.div`

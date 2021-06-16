@@ -37,7 +37,7 @@ const lightTheme = {
     serifFont: 'Orelega One',
     smallPaddingH: '20px',
     smallPaddingV: '20px',
-    headerHeight: '50px',
+    headerHeight: '75px',
     articleMaxWidth: '1024px',
     articleHeaderColor: colors.blues.blue1,
     articleTitleColor: colors.whites.white2,

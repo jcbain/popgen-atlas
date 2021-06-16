@@ -44,7 +44,7 @@ const msTheme = {
     spanColor: colors.blues.blue2,
     modalTitleColor: colors.blacks.black2,
     modalContentColor: colors.grays.gray3,
-    articleHeaderColor: colors.whites.white3,
+    articleHeaderColor: colors.blues.blue3,
     articleTitleColor: colors.blacks.black2,
     articleBodyColor: colors.whites.white1,
     linkBackgroundColor: colors.blues.blue3,

@@ -2,10 +2,14 @@ import styled from 'styled-components';
 import { Play, Pause, Reset } from '@styled-icons/boxicons-regular';
 import classnames from 'classnames';
 
+import FunButton from '../buttons/FunButton'
+import classNames from 'classnames';
+
 const Wrapper = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 0.3fr 1fr;
+    /* margin-bottom: 20px; */
 `
 
 const PlayResetWrapper = styled.div`
@@ -15,27 +19,27 @@ const PlayResetWrapper = styled.div`
     column-gap: 10px;
 `
 
-const ButtonWrapper = styled.button`
-    border: 2px solid ${({ theme }) => theme.playPauseColor};;
-    background-color: white;
-    color: ${({ theme }) => theme.playPauseColor};
-    border-radius: 5px;
-    width: 100%;
-`
+// const ButtonWrapper = styled.button`
+//     border: 2px solid ${({ theme }) => theme.playPauseColor};;
+//     background-color: white;
+//     color: ${({ theme }) => theme.playPauseColor};
+//     border-radius: 5px;
+//     width: 100%;
+// `
 
 const StyledPlay = styled(Play)`
     width: 25px;
-    color: ${({ theme }) => theme.playPauseColor};
+    /* color: ${({ theme }) => theme.playPauseColor}; */
 `
 
 const StyledPause = styled(Pause)`
     width: 25px;
-    color: ${({ theme }) => theme.playPauseColor};
+    /* color: ${({ theme }) => theme.playPauseColor}; */
 `
 
 const StyledReset = styled(Reset)`
     width: 25px;
-    color: ${({ theme }) => theme.playPauseColor};
+    /* color: ${({ theme }) => theme.playPauseColor}; */
 `
 
 const ProgressWrapper = styled.div`
@@ -79,7 +83,7 @@ const DescriptionContainer = styled.div`
     justify-content: space-around;
     position: absolute;
     width: calc(100% - 20px);
-    top: 70%;
+    top: 50%;
     height: 20px;
 `
 
@@ -117,12 +121,12 @@ const PlayPauseReset = ({
     return (
         <Wrapper>
             <PlayResetWrapper>
-                <ButtonWrapper onClick={() => setPlay(prev => !prev)}>
+                <FunButton className={classNames({'not-triggered': !isPlaying, 'triggered': isPlaying})} onClick={() => setPlay(prev => !prev)}>
                     {isPlaying ? <StyledPause /> : <StyledPlay />}
-                </ButtonWrapper>
-                <ButtonWrapper onClick={reset}>
+                </FunButton>
+                <FunButton className={'not-triggered'} onClick={reset}>
                     <StyledReset />
-                </ButtonWrapper>
+                </FunButton>
 
             </PlayResetWrapper>
             <ProgressWrapper>

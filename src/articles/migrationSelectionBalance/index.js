@@ -8,6 +8,7 @@ import ArticleContent from '../../components/articleComponents/ArticleContent'
 import ArticleAnimationBox from '../../components/articleComponents/ArticleAnimationBox';
 import ArticleText  from '../../components/articleComponents/ArticleText';
 import ArticleStickyAside from '../../components/articleComponents/ArticleStickyAside'
+import ArticleSectionTitle from '../../components/articleComponents/ArticleSectionTitle';
 
 import InfoModal from '../../components/widgets/InfoModal';
 import usePopup from '../../hooks/usePopup';
@@ -37,93 +38,7 @@ const ActionButton = styled.span`
     border-bottom: 2px solid ${({ theme }) => theme.spanColor};
 `
 
-const SpecialButton = styled.button`
-    outline: none;
-    border: 0;
-    vertical-align: middle;
-    text-decoration: none;
-    &.not-triggered {
-        font-weight: 600;
-        /* color: ${({ theme }) => theme.buttonSecondary}; */
-        text-transform: uppercase;
-        padding: 1em 1em;
-        background: ${({ theme }) => theme.buttonTertiary};
-        border: 2px solid ${({ theme }) => theme.buttonSecondary};
-        border-radius: 0.75em;
-        transform-style: preserve-3d;
-        transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
-        &::before {
-            position: absolute;
-            content: '';
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: ${({ theme }) => theme.buttonPrimary};
-            border-radius: inherit;
-            box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonSecondary}, 0 0.5em 0 0 ${({ theme }) => theme.buttonTertiary};;
-            transform: translate3d(0, 0.75em, -1em);
-            transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
-        }
-        &:hover {
-            transform: translate(0, 0.25em);
-            &::before {
-                box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonSecondary}, 0 0.5em 0 0 ${({ theme }) => theme.buttonTertiary};
-                transform: translate3d(0, 0.5em, -1em);
-            }
-        }
-        &:active {
-            transform: translate(0em, 0.75em);
-            &::before {
-                box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonPrimary}, 0 0 ${({ theme }) => theme.buttonPrimary};
-                transform: translate3d(0, 0, -1em);
-            }
-        }
 
-    }
-    &.triggered {
-        font-weight: 600;
-        color: ${({ theme }) => theme.buttonTertiary};
-        text-transform: uppercase;
-        padding: 1em 1em;
-        background: ${({ theme }) => theme.buttonSecondary};
-        border: 2px solid ${({ theme }) => theme.buttonSecondary};
-        border-radius: 0.75em;
-        transform-style: preserve-3d;
-        transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
-        &::before {
-            position: absolute;
-            content: '';
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: ${({ theme }) => theme.buttonPrimary};
-            border-radius: inherit;
-            box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonSecondary}, 0 0.5em 0 0 ${({ theme }) => theme.buttonTertiary};;
-            transform: translate3d(0, 0.5em, -1em);
-            transition: transform 150ms cubic-bezier(0, 0, 0.8, 1), box-shadow 150ms cubic-bezier(0, 0, 0.8, 1);
-        }
-        &:hover {
-            &::before {
-                box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonSecondary}, 0 0.5em 0 0 ${({ theme }) => theme.buttonTertiary};
-                transform: translate3d(0, 0.25em, -1em);
-            }
-        }
-        &:active {
-            transform: translate(0em, 0.75em);
-            &::before {
-                box-shadow: 0 0 0 2px ${({ theme }) => theme.buttonPrimary}, 0 0 ${({ theme }) => theme.buttonPrimary};
-                transform: translate3d(0, 0, -1em);
-            }
-        }
-
-    }
-`
 
 const MigrationSelectionBalance = () => {
     const articleRef = useRef()
@@ -161,16 +76,18 @@ const MigrationSelectionBalance = () => {
                 <ArticleHeader title={"Migration Selection Balance"}/>
                 <ArticleBody hasTOC={true}>
                     <ArticleContent>
-
+                        <ArticleSectionTitle>The challenge of a variable environment</ArticleSectionTitle>
                         <ArticleText>
                             Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, <ActionButton onClick={handleAddLayer}>the natural range</ActionButton> of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
                         </ArticleText>
-                        <SpecialButton className={'not-triggered'} onClick={() => setVizIndex('map')}>click</SpecialButton>
-                        <button onClick={() => setVizIndex('migration')}>click too</button>
-                        <button onClick={() => setVizIndex('')}>click again</button>
+                        {/* <SpecialButton className={'not-triggered'} onClick={() => setVizIndex('map')}>click</SpecialButton> */}
+                        {/* <button onClick={() => setVizIndex('migration')}>click too</button>
+                        <button onClick={() => setVizIndex('')}>click again</button> */}
                         <ArticleText>
                             One evolutionary response to a variable environment is “local adaptation”, where different populations become genetically adapted to the conditions they commonly encounter where they live. This specialization arises by the gradual evolution of genetically-based differences in the traits that help the organism survive, grow, and produce seeds for the next generation. Trees grown from seeds collected in the Yukon territory will be more cold-tolerant, stop growing at an earlier date in the autumn, and grow more slowly than trees started from seeds collected in California. Local adaptation tends to involve constraints and trade-offs between traits, where it isn’t possible to optimise all traits at once. For lodgepole pine, the Yukon-adapted genotypes avoid autumn frost damage by stopping growth early and setting buds that are better able to tolerate cold temperatures in winter. But while this shorter growing season helps avoid frost damage, it also limits how much they can grow and compete. By contrast, the California genotypes grow much faster, but are more susceptible to frost damage and would die in the harsh northern winters. 
                         </ArticleText>
+
+                        <ArticleSectionTitle>Why does local adaptation evolve?</ArticleSectionTitle>
                         <ArticleText>
                             Will local adaptation always evolve in response to a spatially variable environment? What if the environment varies over a small spatial scale? <ActionButton onClick={handleZoomIn}>Lodgepole pine inhabits valleys</ActionButton> where it grows on both the colder mountainsides and the warmer lowlands [link/pointer to picture]. Will the trees growing higher on the mountain evolve to be different than the trees in the lowlands? Or will all the trees adapt to the average conditions across both environments?
                         </ArticleText>
@@ -186,10 +103,10 @@ const MigrationSelectionBalance = () => {
 
                         {/* <Map /> */}
                         <ArticleText>
-                            We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
+                            The simulations we will study follow a scenario with two patches in different environments with equal migration rates between them. Individuals grow, reproduce, and potentially migrate to a different environment, with their probability of survival determined by their fitness. Individuals that match their environment better therefore have a higher chance of surviving and passing on their genotype to the next generation. Each individual’s phenotype is determined by a multi-locus genotype by adding up the effects of all mutations, which can either increase or decrease the value of the phenotype.
 
                         </ArticleText>
-                        {/* <Migration /> */}
+                        <Migration />
                         <ArticleText>
                             We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
 
@@ -212,9 +129,9 @@ const MigrationSelectionBalance = () => {
                                 setFocusMap={setFocusMap}
                             />
                         </ArticleAnimationBox>}
-                        {vizIndex === 'migration' && <ArticleAnimationBox show={vizIndex === 'migration'}>
+                        {/* {vizIndex === 'migration' && <ArticleAnimationBox show={vizIndex === 'migration'}>
                             <Migration />
-                        </ArticleAnimationBox>}
+                        </ArticleAnimationBox>} */}
                     </ArticleStickyAside>
                 </ArticleBody>
             </ArticleWrapper>

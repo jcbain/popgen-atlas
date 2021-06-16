@@ -6,9 +6,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import distribution from './data/pinucont.json'
 
-import ActionButton from './ActionButton'
-import PlayPauseReset from '../../components/inputs/PlayPauseReset'
-import usePlayPauseReset from '../../hooks/usePlayPauseReset';
+import FunButton from '../../components/buttons/FunButton'
+// import PlayPauseReset from '../../components/inputs/PlayPauseReset'
+// import usePlayPauseReset from '../../hooks/usePlayPauseReset';
 
 
 
@@ -185,8 +185,8 @@ const Map = ({addLayer, focusMap, setAddLayer, setFocusMap}) => {
                 <MapDiv ref={mapContainer}/>
             </DrawingArea>
             <ButtonBar>
-                <ActionButton className={classNames({'not-triggered': !addLayer, 'triggered': addLayer})} onClick={() => setAddLayer(prev => !prev)}>View Distribution</ActionButton>
-                <ActionButton className={classNames({'not-triggered': !focusMap, 'triggered': focusMap})} onClick={() => setFocusMap(prev => !prev)}>Valley View</ActionButton>
+                <FunButton className={classNames({'not-triggered': !addLayer, 'triggered': addLayer})} onClick={() => setAddLayer(prev => !prev)}>Lodgepole Range</FunButton>
+                <FunButton className={classNames({'not-triggered': !focusMap, 'triggered': focusMap})} onClick={() => setFocusMap(prev => !prev)}>Valley View</FunButton>
                 {/* <PlayPauseReset script={script} setPlay={setPlay} reset={reset} isPlaying={isPlaying} currentPosition={currentPosition} /> */}
             </ButtonBar>
         </Wrapper>
