@@ -61,7 +61,7 @@ const PhenotypeBar = styled.div`
     transition: all 0.5s;
 
     &.cold {
-        background: linear-gradient(to right, ${({ theme }) => theme.legendLow} 0%, ${({ theme }) => theme.legendMidLow} 50%, ${({ theme }) => theme.legendMidHigh} 75%, ${({ theme }) => theme.legendHigh} 100% );
+        background: linear-gradient(to right, ${({ theme }) => theme.legendLowLow} 0%, ${({ theme }) => theme.legendLow} 50%, ${({ theme }) => theme.legendMidLow} 60%, ${({ theme }) => theme.legendMidHigh} 100% );
     }
 `
 

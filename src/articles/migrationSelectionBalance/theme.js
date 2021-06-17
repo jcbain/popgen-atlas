@@ -60,6 +60,7 @@ const msTheme = {
     legendMidHigh: colors.reds.red1,
     legendMidLow: colors.purples.purple4,
     legendLow: colors.blues.blue1, 
+    legendLowLow: colors.blues.blue4
 
 }
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames'
+import { RightArrowAlt } from '@styled-icons/boxicons-regular'
 
 import buddyRed from '../../images/buddy_red.png';
 import Genome from './Genome';
@@ -32,30 +33,37 @@ const DrawingArea = styled.div`
 
 const StyledBuddy = styled.img`
     position: absolute;
-    top: calc(50% - 125px);
-    left: calc(50% - 100px);
-    width: 200px;
-    opacity: 1;
+    top: calc(50% - 100px);
+    left: calc(25% - 75px);
+    width: 150px;
+    /* opacity: 1; */
     transition: opacity 0.5s;
-    &.example-buddy-disappear {
+    /* &.example-buddy-disappear {
         opacity: 0;
-    }
+    } */
 `
 
 const StyledGenome = styled(Genome)`
     position: absolute;
-    top: calc(50% - 135px);
-    left: calc(50% - 50px);
+    top: calc(50% - 100px);
+    left: calc(75% - 50px);
     width: 100px;
-    height: 250px;
+    height: 200px;
     background: #fffff7;
     border-radius: 50px;
     border: 2px solid #303030;
-    opacity: 0;
+    /* opacity: 0; */
     transition: opacity 1s;
-    &.example-genome-show {
+    /* &.example-genome-show {
         opacity: 1;
-    }
+    } */
+`
+
+const StyledArrow = styled(RightArrowAlt)`
+    position: absolute;
+    width: 50px;
+    top: 40%;
+    left: calc(50% - 25px);
 `
 
 const rand = (prob) => Math.random() < prob;
@@ -90,10 +98,11 @@ const GenomeDescription = ({}) => {
             <DrawingArea>
                 <StyledBuddy src={buddyRed} className={classnames({'example-buddy-disappear': showGenomeExample})}/>
                 <StyledGenome data={ind} className={classnames({'example-genome-show': showGenomeExample})}/>
+                <StyledArrow />
             </DrawingArea>
-            <ButtonBar>
+            {/* <ButtonBar>
                 <button onClick={() => setShowGenomeExample(prev => !prev)}> Click me</button>
-            </ButtonBar>
+            </ButtonBar> */}
         </Wrapper>
     )
 

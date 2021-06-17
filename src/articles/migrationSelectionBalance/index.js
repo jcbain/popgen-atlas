@@ -81,9 +81,6 @@ const MigrationSelectionBalance = () => {
                         <ArticleText>
                             Many species inhabit spatially variable environments, where the conditions change from one place to another. For example, <ActionButton onClick={handleAddLayer}>the natural range</ActionButton> of lodgepole pine spans from the temperate climates of northern California up to the subarctic in the Yukon territory. How does one species manage to thrive in such different environments?
                         </ArticleText>
-                        {/* <SpecialButton className={'not-triggered'} onClick={() => setVizIndex('map')}>click</SpecialButton> */}
-                        {/* <button onClick={() => setVizIndex('migration')}>click too</button>
-                        <button onClick={() => setVizIndex('')}>click again</button> */}
                         <ArticleText>
                             One evolutionary response to a variable environment is “local adaptation”, where different populations become genetically adapted to the conditions they commonly encounter where they live. This specialization arises by the gradual evolution of genetically-based differences in the traits that help the organism survive, grow, and produce seeds for the next generation. Trees grown from seeds collected in the Yukon territory will be more cold-tolerant, stop growing at an earlier date in the autumn, and grow more slowly than trees started from seeds collected in California. Local adaptation tends to involve constraints and trade-offs between traits, where it isn’t possible to optimise all traits at once. For lodgepole pine, the Yukon-adapted genotypes avoid autumn frost damage by stopping growth early and setting buds that are better able to tolerate cold temperatures in winter. But while this shorter growing season helps avoid frost damage, it also limits how much they can grow and compete. By contrast, the California genotypes grow much faster, but are more susceptible to frost damage and would die in the harsh northern winters. 
                         </ArticleText>
@@ -101,26 +98,32 @@ const MigrationSelectionBalance = () => {
                         <ArticleText>
                             One of the earliest models by Haldane (1930) and Wright (1931) showed that if a single genetic locus affects the fit of an organism to its environment, local adaptation would only tend to evolve when the migration rate is lower than the selection coefficient (m {"<"} s). We could use this model to predict that if the migration rate from the lowlands up to the mountainside is 1%, then a new mutation that was better at tolerating the cold conditions of the mountainside would only establish if it increased the fitness there by {">"}1%. Of course, as this is a very simplified model of just a single genetic locus, it neglects important effects such as genetic drift and interactions with other loci, so there are many reasons why this prediction might not hold up in nature. To study some of these more complicated interactions, we can use evolutionary simulations to study how local adaptation is affected by different parameters of interest.
                         </ArticleText>
-
-                        {/* <Map /> */}
+                        <ArticleSectionTitle>The two-patch model of local adaptation</ArticleSectionTitle>
                         <ArticleText>
-                            The simulations we will study follow a scenario with two patches in different environments with equal migration rates between them. Individuals grow, reproduce, and potentially migrate to a different environment, with their probability of survival determined by their fitness. Individuals that match their environment better therefore have a higher chance of surviving and passing on their genotype to the next generation. Each individual’s phenotype is determined by a multi-locus genotype by adding up the effects of all mutations, which can either increase or decrease the value of the phenotype.
+                            The simulations we will study follow a scenario with two patches in different environments with equal migration rates between them. Individuals grow, reproduce, and potentially migrate to a different environment, with their probability of survival determined by their <ActionButton onClick={() => setVizIndex('stabilizing')}>fitness</ActionButton>. Individuals that match their environment better therefore have a higher chance of surviving and passing on their genotype to the next generation. Each individual’s phenotype is determined by a multi-locus genotype by adding up the effects of all mutations, which can either increase or decrease the value of the <ActionButton onClick={() => setVizIndex('description')}>phenotype</ActionButton>.
 
                         </ArticleText>
-                        <Migration showDiagram={() => setVizIndex('stabilizing')}/>
+                        <Migration showDiagram={() => {}}/>
                         <ArticleText>
-                            We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
+                            The simulations allow us to control various parameters of interest, such as:
+
+                           <ul>
+                               <li>The number of loci that affect a phenotype</li>
+                               <li>The rate of new mutations per locus</li>
+                               <li>The population size in each patch</li>
+                               <li>The width of the fitness function, which controls the strength of natural selection</li>
+                               <li>The migration rate between patches</li>
+                               <li>The recombination rate between loci</li>
+                           </ul>
+
+                           Here, we will hold some of these factors constant and explore the effect of varying other parameters. How will changing these parameters affect how evolution works?
+                        </ArticleText>
+                        <ArticleSectionTitle>How do we study what happens in our simulations?</ArticleSectionTitle>
+                        <ArticleText>
+                            After the simulations run, we may want to observe various aspects of the evolutionary changes that have happened. 
 
                         </ArticleText>
-                        <ArticleText>
-                            We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
-
-                        </ArticleText>
-                        <GenomeDescription />
-                        <ArticleText>
-                            We pride ourselves not only on our robust feature set, but our back-end performance and non-complex use is frequently considered a terrific achievement. That is a remarkable achievement taking into account this month's financial state of things! If all of this comes off as mixed-up to you, that's because it is! Quick: do you have a infinitely reconfigurable scheme for coping with emerging methodologies? Is it more important for something to be leading-edge or to be customer-directed? What does the industry jargon 'C2B2B' really mean? We apply the proverb 'Look before you leap' not only to our content but our power shifts but our power shifts but our power to repurpose. Have you ever needed to matrix your cutting-edge feature set? Without filling out any forms? If all of this may seem remarkable to you, that's because it is! A company that can streamline elegantly will (at some unspecified point in the future) be able to engineer easily. What do we harness? Anything and everything, regardless of obscureness! Our feature set is unparalleled in the industry, but our C2C2C paradigms and easy configuration is always considered a terrific achievement. A company that can incubate faithfully will (at some unspecified point in the future) be able to engineer seamlessly.
-
-                        </ArticleText>
+                        
                     </ArticleContent>
                     <ArticleStickyAside>
                         {vizIndex === 'map' && <ArticleAnimationBox show={vizIndex === 'map'}>
@@ -133,6 +136,11 @@ const MigrationSelectionBalance = () => {
                         {vizIndex === 'stabilizing' && <ArticleAnimationBox show={vizIndex === 'stabilizing'}>
                             <StabilizingSelectionDiagram />
                         </ArticleAnimationBox>}
+                        {vizIndex === 'description' && <ArticleAnimationBox show={vizIndex === 'description'}>
+                            <GenomeDescription />
+                        </ArticleAnimationBox>}
+                        
+
                     </ArticleStickyAside>
                 </ArticleBody>
             </ArticleWrapper>
