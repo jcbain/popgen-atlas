@@ -124,7 +124,7 @@ const SecondLabel = styled.p`
 const colors = {reds: {
     red1: '#eb4034',
     red2: '#962921',
-    red3: '#ffcdc9'
+    red3: '#ffeae8'
 }}
 
 const warmTheme = {
