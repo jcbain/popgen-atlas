@@ -32,9 +32,9 @@ const Architecture = ({ data, xVar, yVar, colorVar, theme, upperLimit,
     const heightModifier = addBrush ? .6 : .75;
     const heightPerc = heightModifier * 100;
 
-    const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >=lowerLimit)
+    const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] > lowerLimit)
     const { minY, maxY, uniqX } = useDataSummaries(newData, xVar, yVar)
-    const brushClickRange = (uniqX[1] - uniqX[0] )* 25
+    const brushClickRange = (uniqX[1] - uniqX[0] ) * 25
 
     const uniqY = range(minY, maxY + 1)
     

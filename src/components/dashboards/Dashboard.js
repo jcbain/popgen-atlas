@@ -10,11 +10,10 @@ import LineChart from '../charts/LineChart';
 import VariableParamBar from './VariableParamBar'
 import ConstParamBar from './ConstParamBar';
 
-
-
 const Wrapper = styled.div`
     width: 1200px;
     display: grid;
+    padding-top: 200px;
     grid-template-columns: 1fr .25fr;
     grid-template-rows: 70px 1fr;
     grid-template-areas: 
