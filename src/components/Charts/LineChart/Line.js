@@ -41,7 +41,7 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
     useEffect(() => {
         const canvas = ref.current;
         const context = canvas.getContext('2d');
-        canvas.width = 1000;
+        canvas.width = 500;
         context.clearRect(0, 0, canvas.width, canvas.height)
 
         const xScale = scaleLinear().domain([minX, maxX]).range([(canvas.width * leftPaddingModifier), canvas.width])
