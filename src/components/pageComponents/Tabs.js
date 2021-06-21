@@ -25,6 +25,7 @@ const Tabs = ({theme}) => {
 
     const [tabs, setTabs] = useState(['james'])
     const [index, setIndex] = useState(0)
+    const [ defaultChosenSet, setDefaultChosenSet ] = useState("")
 
     const addTab = () => {
         setTabs(prev => [...prev, 'james'])
@@ -32,7 +33,7 @@ const Tabs = ({theme}) => {
 
     const dashboards = tabs.map((t, i) => {
         return (
-            <Dashboard theme={theme} data={data} loaded={loaded} className={classNames({'hidden': index === i})}/>
+            <Dashboard theme={theme} data={data} loaded={loaded} defaultSet={defaultChosenSet} setDefaultSet={setDefaultChosenSet} className={classNames({'hidden': index !== i})}/>
         )
     })
 

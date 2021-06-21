@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import styled from 'styled-components';
 
 import useData from '../../hooks/useData'
@@ -45,13 +45,16 @@ const ChartHolder = styled.div`
     background-color: ${({ theme }) => theme.chartCardBackground};
 `
 
-const Dashboard = ({theme, data, loaded, ...rest}) => {
+const Dashboard = ({theme, data, loaded, defaultSet = "", setDefaultSet = () => {},...rest}) => {
     
     // const { data, loaded } = useData()
-    const { paramOptions, chosenSet, changeParam } = useParams(data, 'm0.001_mu0.000001_r0.00625_sigsqr5_n1000_pop1_alpha0.05')
+    const { paramOptions, chosenSet, changeParam } = useParams(data, defaultSet)
     const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
-    console.log(chosenSet)
+    useEffect(() => {
+        setDefaultSet(chosenSet)
+    }, [chosenSet])
+    
     return (
         <Wrapper {...rest}>
             <ConstParamBar style={{gridArea: 'constbar', paddingLeft: theme.smallPaddingH, paddingTop: '10px', paddingRight: theme.smallPaddingH} } paramOptions={paramOptions}/>
