@@ -70,6 +70,7 @@ const lightTheme = {
     paramDescriptionColor: colors.grays.gray2,
     paramCardBackground: colors.whites.white1,
     paramCardOutline: colors.purples.purple4,
+    tabFontColor: colors.grays.gray2
 }
 
 function hexToRGB(hex, alpha) {
