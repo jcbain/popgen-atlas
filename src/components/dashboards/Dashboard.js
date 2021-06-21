@@ -13,7 +13,7 @@ import ConstParamBar from './ConstParamBar';
 const Wrapper = styled.div`
     width: 1200px;
     display: grid;
-    padding-top: 200px;
+    /* padding-top: 200px; */
     grid-template-columns: 1fr .25fr;
     grid-template-rows: 70px 1fr;
     grid-template-areas: 
@@ -42,12 +42,13 @@ const ChartHolder = styled.div`
     background-color: ${({ theme }) => theme.chartCardBackground};
 `
 
-const Dashboard = ({theme}) => {
-
-    const { data, loaded } = useData()
-    const { paramOptions, chosenSet, changeParam } = useParams(data)
+const Dashboard = ({theme, data, loaded}) => {
+    
+    // const { data, loaded } = useData()
+    const { paramOptions, chosenSet, changeParam } = useParams(data, 'm0.001_mu0.000001_r0.00625_sigsqr5_n10000_pop1_alpha0.1')
     const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
+    console.log(chosenSet)
     return (
         <Wrapper>
             <ConstParamBar style={{gridArea: 'constbar', paddingLeft: theme.smallPaddingH, paddingTop: '10px', paddingRight: theme.smallPaddingH} } paramOptions={paramOptions}/>

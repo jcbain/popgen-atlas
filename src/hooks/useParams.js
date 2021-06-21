@@ -1,19 +1,36 @@
 import { useState, useEffect } from 'react';
 
-const useParams = (data) => {
+const useParams = (data, defaultSet) => {
    
     const [ paramOptions, setParamOptions ] = useState({})
-    const [ chosenSet, setChosenSet ] = useState("")
+    const [ chosenSet, setChosenSet ] = useState(defaultSet || "")
     const [ loadedSet, setLoadedSet ] = useState(false) 
 
     useEffect(() => {
         const paramSetStrings = Object.keys(data);
+        
         const allOpts = paramSetStrings.flatMap(d => d.split("_"))
         let optValPairs = {}
         let order = 0;
+
+        if(chosenSet !== "") {
+            const defaultParamSplit = chosenSet.split("_")
+             
+            defaultParamSplit.map(o => {
+                const [param, value] = o.match(/[a-z]+|[^a-z]+/gi)
+                const numericVal = Number(value)
+                const paramObj = { paramName: param, values: [numericVal], selectedValue: numericVal, order: order}
+                optValPairs[param] = paramObj;
+                order += 1;
+
+            })
+        }
+
         allOpts.forEach(o => {
             const [ param, value ] = o.match(/[a-z]+|[^a-z]+/gi)
             const numericVal = Number(value)
+
+          
             if(!optValPairs[param]){
                 const paramObj = { paramName: param, values: [numericVal], selectedValue: numericVal, order: order}
                 optValPairs[param] = paramObj;
@@ -38,6 +55,7 @@ const useParams = (data) => {
 
 
     useEffect(() => {
+
         const paramArray = Object.values(paramOptions).map((v, i) => {
             return v
         })
@@ -50,6 +68,7 @@ const useParams = (data) => {
         const paramSet = paramStringArray.join("_")
         setChosenSet(paramSet)
         setLoadedSet(true)
+
     }, [paramOptions])
 
 

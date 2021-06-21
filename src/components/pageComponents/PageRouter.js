@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Dashboard from '../dashboards/Dashboard'
+// import Dashboard from '../dashboards/Dashboard'
+import Tabs from './Tabs'
 import MigrationSelectionBalance from '../../articles/migrationSelectionBalance'
 import NewNav from './NewNav';
 
@@ -24,7 +25,8 @@ const PageRouter = ({theme}) => {
                     <MigrationSelectionBalance />
                 </Route>
                 <Route path={'/dashboards'}>
-                    <Dashboard theme={theme}/>
+                    {/* <Dashboard theme={theme}/> */}
+                    <Tabs theme={theme} />
                 </Route>
                 <Route path={'/about'}>
                     <div>hello for the last time</div>
