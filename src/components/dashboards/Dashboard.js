@@ -21,6 +21,9 @@ const Wrapper = styled.div`
         "plots varbar";
     column-gap: ${({ theme }) => theme.smallPaddingH};
     background-color: ${({ theme }) => theme.dashboardBackground};
+    &.hidden {
+        display: none;
+    }
 `
 
 const Grid = styled.div`
@@ -42,15 +45,15 @@ const ChartHolder = styled.div`
     background-color: ${({ theme }) => theme.chartCardBackground};
 `
 
-const Dashboard = ({theme, data, loaded}) => {
+const Dashboard = ({theme, data, loaded, ...rest}) => {
     
     // const { data, loaded } = useData()
-    const { paramOptions, chosenSet, changeParam } = useParams(data, 'm0.001_mu0.000001_r0.00625_sigsqr5_n10000_pop1_alpha0.1')
+    const { paramOptions, chosenSet, changeParam } = useParams(data, 'm0.001_mu0.000001_r0.00625_sigsqr5_n1000_pop1_alpha0.05')
     const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
     console.log(chosenSet)
     return (
-        <Wrapper>
+        <Wrapper {...rest}>
             <ConstParamBar style={{gridArea: 'constbar', paddingLeft: theme.smallPaddingH, paddingTop: '10px', paddingRight: theme.smallPaddingH} } paramOptions={paramOptions}/>
             <Grid style={{gridArea: 'plots'} }>
                 <ChartHolder style={{gridArea:'genome'}}>

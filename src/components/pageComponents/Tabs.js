@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames'
+
 import Dashboard from '../dashboards/Dashboard';
 
 import useData from '../../hooks/useData';
@@ -22,14 +24,21 @@ const Tabs = ({theme}) => {
     const { data, loaded } = useData()
 
     const [tabs, setTabs] = useState(['james'])
+    const [index, setIndex] = useState(0)
 
     const addTab = () => {
         setTabs(prev => [...prev, 'james'])
     }
 
+    const dashboards = tabs.map((t, i) => {
+        return (
+            <Dashboard theme={theme} data={data} loaded={loaded} className={classNames({'hidden': index === i})}/>
+        )
+    })
+
     const tabButtons = tabs.map((t, i) => {
         return (
-            <button key={i} onClick={addTab}>new tab</button>
+            <button key={i} onClick={() => setIndex(i)}>new tab</button>
         )
     })
 
@@ -38,8 +47,12 @@ const Tabs = ({theme}) => {
             {loaded && <>
                 <TabContainer>
                     {tabButtons}
+                    <button onClick={addTab}>ADD</button>
                 </TabContainer>
-                <Dashboard theme={theme} data={data} loaded={loaded}/>
+                {/* <Dashboard theme={theme} data={data} loaded={loaded}/> */}
+                <div>
+                {dashboards}
+                </div>
             </>}
         </Wrapper>
     )
