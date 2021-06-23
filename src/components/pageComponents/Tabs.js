@@ -87,10 +87,7 @@ const Tabs = ({theme}) => {
                     {tabButtons}
                     <AddButton onClick={addTab}><StyledPlus /></AddButton>
                 </TabContainer>
-                {/* <Dashboard theme={theme} data={data} loaded={loaded}/> */}
-                <div>
                 {dashboards}
-                </div>
             </>}
         </Wrapper>
     )
