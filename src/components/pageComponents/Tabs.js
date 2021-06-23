@@ -70,7 +70,7 @@ const Tabs = ({theme}) => {
 
     const dashboards = tabs.map((t, i) => {
         return (
-            <Dashboard theme={theme} data={data} loaded={loaded} defaultSet={defaultChosenSet} setDefaultSet={setDefaultChosenSet} className={classNames({'hidden': index !== i})}/>
+            <Dashboard key={i} theme={theme} data={data} loaded={loaded} defaultSet={defaultChosenSet} setDefaultSet={setDefaultChosenSet} className={classNames({'hidden': index !== i})}/>
         )
     })
 
