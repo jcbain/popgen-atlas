@@ -28,9 +28,8 @@ const useParams = (data, defaultSet) => {
 
         allOpts.forEach(o => {
             const [ param, value ] = o.match(/[a-z]+|[^a-z]+/gi)
-            const numericVal = Number(value)
-
-          
+            const numericVal = Number(value).toFixed(11).replace(/\.?0+$/,"")
+      
             if(!optValPairs[param]){
                 const paramObj = { paramName: param, values: [numericVal], selectedValue: numericVal, order: order}
                 optValPairs[param] = paramObj;
