@@ -1,68 +1,66 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![yarn](https://img.shields.io/badge/yarn->=v1.22.0-blue)
+![storybook](https://img.shields.io/badge/storybook->=v6.1.21-blue)
 
-## Available Scripts
+# Atlas of Population Genetics
 
-In the project directory, you can run:
+An application for presenting evolutionary phenomena using visualizations and animations.
 
-### `yarn start`
+## Maintainer
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+James Bain
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<jamescbain@gmail.com>
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation and running
 
-### `yarn build`
+### mapbox
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project actively uses [mapbox](https://docs.mapbox.com/) for its mapping features. In order to get those features to work in development, you must first create an account and generate an api key. The api key should then be set in your `.env.local` file as `REACT_APP_MAPBOX_API_KEY`. 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+# .env.local
+REACT_APP_MAPBOX_API_KEY="your key goes here"
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**locally**
 
-### `yarn eject`
+Open a terminal and download the repo. Navigate to the top level of the repository and run `yarn` to install the application dependencies.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+cd path/to/popgen-atlas && yarn
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To start a development session of the application, run 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```sh
+yarn start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+and navigate to <localhost:3000/>
 
-## Learn More
+**docker**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can also run a docker container as your development environment. First build the image:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+docker build -t <tag-name> .
+```
 
-### Code Splitting
+Then run a container with a development version of the application
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```sh
+docker run -it <tag-name> yarn start
+```
 
-### Analyzing the Bundle Size
+port 3000 is exposed so you can then navigate to <localhost:3000/>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+You can also run storybook to build components through this container by running 
 
-### Making a Progressive Web App
+```sh
+docker run -it <tag-name> yarn storybook
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Then navigate to <localhost:6006/>
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
