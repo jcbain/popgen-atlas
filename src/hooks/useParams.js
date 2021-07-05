@@ -1,3 +1,4 @@
+import { min } from 'lodash';
 import { useState, useEffect } from 'react';
 
 const useParams = (data, defaultSet) => {
@@ -5,6 +6,7 @@ const useParams = (data, defaultSet) => {
     const [ paramOptions, setParamOptions ] = useState({})
     const [ chosenSet, setChosenSet ] = useState(defaultSet || "")
     const [ loadedSet, setLoadedSet ] = useState(false) 
+    const [ cutoff, setCutoff ] = useState(0)
 
     useEffect(() => {
         const paramSetStrings = Object.keys(data);
@@ -70,6 +72,18 @@ const useParams = (data, defaultSet) => {
 
     }, [paramOptions])
 
+    useEffect(() => {
+        // TODO: Make cutoff logic dynamic
+        if(paramOptions['alpha']) {
+
+            const v1 = 0.01 * Number(paramOptions['alpha'].selectedValue)
+            const v2 = 10 * Number(paramOptions['alpha'].selectedValue) / ( 2 * Number(paramOptions['n'].selectedValue))
+
+            setCutoff(min([v1, v2]))
+        }
+
+    }, [paramOptions])
+
 
     const changeParam = (param, value) => {
         setParamOptions(prev => {
@@ -82,7 +96,8 @@ const useParams = (data, defaultSet) => {
         paramOptions,
         chosenSet,
         loadedSet,
-        changeParam
+        changeParam, 
+        cutoff
     }
 } 
 

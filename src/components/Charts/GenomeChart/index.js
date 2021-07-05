@@ -20,7 +20,7 @@ const LegendWrapper = styled.div`
 `
 
 
-const GenomeChart = ({ data, xVar, yVar, colorVar, theme, ...rest}) => {
+const GenomeChart = ({ data, xVar, yVar, colorVar, cutoff, theme, ...rest}) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -28,8 +28,7 @@ const GenomeChart = ({ data, xVar, yVar, colorVar, theme, ...rest}) => {
     const [ maxVal, setMaxVal ] = useState()
 
     const { friendlyLabels } = useFriendlyLabels()
-    
-    const tmpFiltered = data.filter(d => d[colorVar] !== 0)
+    const tmpFiltered = data.filter(d => d[colorVar] > cutoff || d[colorVar] < -cutoff)
 
     useEffect(() => {
         setMinVal(min(tmpFiltered.map(d => d[colorVar])))

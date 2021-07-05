@@ -62,5 +62,3 @@ docker run -it <tag-name> yarn storybook
 ```
 
 Then navigate to <localhost:6006/>
-
-

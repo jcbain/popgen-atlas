@@ -48,8 +48,8 @@ const ChartHolder = styled.div`
 const Dashboard = ({theme, data, loaded, defaultSet = "", setDefaultSet = () => {},...rest}) => {
     
     // const { data, loaded } = useData()
-    const { paramOptions, chosenSet, changeParam } = useParams(data, defaultSet)
-    const {genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
+    const { paramOptions, chosenSet, changeParam, cutoff } = useParams(data, defaultSet)
+    const { genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 
     useEffect(() => {
         setDefaultSet(chosenSet)
@@ -60,7 +60,7 @@ const Dashboard = ({theme, data, loaded, defaultSet = "", setDefaultSet = () => 
             <ConstParamBar style={{gridArea: 'constbar', paddingLeft: theme.smallPaddingH, paddingTop: '10px', paddingRight: theme.smallPaddingH} } paramOptions={paramOptions}/>
             <Grid style={{gridArea: 'plots'} }>
                 <ChartHolder style={{gridArea:'genome'}}>
-                    {geneLoaded && <GenomeChart  data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} theme={theme}  />}
+                    {geneLoaded && <GenomeChart  data={genes} xVar={'output_gen'} yVar={'position'} colorVar={'effect_size_freq_diff'} cutoff={cutoff} theme={theme}  />}
                 </ChartHolder>
                 <ChartHolder style={{gridArea:'line'}}>
                     {phenLoaded && <LineChart  data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme}/>}
