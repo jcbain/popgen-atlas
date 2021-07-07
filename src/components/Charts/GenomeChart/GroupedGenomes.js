@@ -10,7 +10,7 @@ const Charts = styled.div`
     row-gap: 10px;
 `
 
-const GroupedGenomes = ({  data, xVar, yVar, colorVar, theme, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, minVal, maxVal }) => {
+const GroupedGenomes = ({  data, xVar, yVar, colorVar, theme, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, minVal, maxVal, showBrush}) => {
     return (
         <Charts>
             <Architecture data={data} 
@@ -24,7 +24,7 @@ const GroupedGenomes = ({  data, xVar, yVar, colorVar, theme, upperLimit, lowerL
                 maxVal={maxVal}
                 addBrush={false}
                 />
-            <Architecture data={data} 
+            {showBrush && <Architecture data={data} 
                 xVar={xVar} 
                 yVar={yVar} 
                 colorVar={colorVar}
@@ -37,7 +37,7 @@ const GroupedGenomes = ({  data, xVar, yVar, colorVar, theme, upperLimit, lowerL
                 secondaryLL={lowerLimit} 
                 secondaryUL={upperLimit} 
                 minVal={minVal} 
-                maxVal={maxVal}/>
+                maxVal={maxVal}/>}
         </Charts>
     )
 }

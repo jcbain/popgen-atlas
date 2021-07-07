@@ -21,6 +21,7 @@ import StabilizingSelectionDiagram from './StabilizingSelectionDiagram';
 import GenomeDescription from './GenomeDescription'
 import AveragePhenotype from './AveragePhenotype';
 import Histogram from './Histogram'
+import GenomeExample from './GenomeExample'
 import msTheme from './theme';
 
 const StyledSpan = styled.span`
@@ -131,6 +132,10 @@ const MigrationSelectionBalance = () => {
                         <ArticleText>
                             At any point in time, we can take a census of the population and examine the genetic basis of the divergence in phenotype between the two populations. If a given allele is very common in one population but very rare in another, then this allele is strongly divergent between populations and may be driving some of the phenotypic divergence. We can express its contribution to divergence mathematically as the difference in allele frequency (i.e. proportion of individuals with the allele) between patches, multiplied by the effect of the allele on phenotype. We can then plot a histogram showing the distribution of the contribution to divergence for each locus (d) present in the population at any given <ActionButton onClick={() => setVizIndex('histogram')}>time</ActionButton>. A positive value means that this locus is contributing to divergence by making population #1 closer to the optimum of +1, whereas the reverse is true for a negative value.
                         </ArticleText>
+                        <ArticleText>
+                            Depending on how evolution has progressed, a given difference in phenotypes between the patches could be driven by many alleles of small effect or a few alleles of large effect, which is represented by the distribution of (d) values. The number, effect size, and chromosomal position of the alleles that contribute to divergence is referred to as the “genetic architecture” of the trait divergence. We can study changes in genetic architecture over time by plotting the change in d at each locus over <ActionButton onClick={() => setVizIndex('genome-example')}>time</ActionButton>.
+
+                        </ArticleText>
                         
                     </ArticleContent>
                     <ArticleStickyAside>
@@ -152,6 +157,9 @@ const MigrationSelectionBalance = () => {
                         </ArticleAnimationBox>}
                         {vizIndex === 'histogram' && <ArticleAnimationBox show={vizIndex === 'histogram'}>
                             <Histogram />
+                        </ArticleAnimationBox>}
+                        {vizIndex === 'genome-example' && <ArticleAnimationBox show={vizIndex === 'genome-example'}>
+                            <GenomeExample />
                         </ArticleAnimationBox>}
                         
 

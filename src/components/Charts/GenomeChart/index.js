@@ -20,7 +20,7 @@ const LegendWrapper = styled.div`
 `
 
 
-const GenomeChart = ({ data, xVar, yVar, colorVar, cutoff, theme, ...rest}) => {
+const GenomeChart = ({ data, xVar, yVar, colorVar, cutoff, theme, showBrush=true, ...rest}) => {
 
     const [ upper, setUpper ] = useState(250000)
     const [ lower, setLower ] = useState(1000)
@@ -50,7 +50,10 @@ const GenomeChart = ({ data, xVar, yVar, colorVar, cutoff, theme, ...rest}) => {
                 setUpperLimit={setUpper} 
                 setLowerLimit={setLower} 
                 minVal={minVal} 
-                maxVal={maxVal}/>
+                maxVal={maxVal}
+                showBrush={showBrush}
+                />
+                
         </Wrapper>
     )
 }
