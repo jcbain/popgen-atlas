@@ -70,7 +70,7 @@ const useParams = (data, defaultSet) => {
         setChosenSet(paramSet)
         setLoadedSet(true)
 
-    }, [paramOptions])
+    }, [paramOptions, defaultSet])
 
     useEffect(() => {
         // TODO: Make cutoff logic dynamic

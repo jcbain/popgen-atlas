@@ -22,6 +22,7 @@ import GenomeDescription from './GenomeDescription'
 import AveragePhenotype from './AveragePhenotype';
 import Histogram from './Histogram'
 import GenomeExample from './GenomeExample'
+import GenePhen from './GenePhen'
 import msTheme from './theme';
 
 const StyledSpan = styled.span`
@@ -52,6 +53,7 @@ const MigrationSelectionBalance = () => {
     const [vizIndex, setVizIndex] = useState('')
     const [addLayer, setAddLayer] = useState(false);
     const [focusMap, setFocusMap] = useState(false);
+    const [dataset, setDataset] = useState('m0.1_mu0.00001_r0.00625_sigsqr25_n10000_pop1_alpha0.05')
 
     const handleAddLayer = () => {
         setVizIndex('map');
@@ -63,6 +65,11 @@ const MigrationSelectionBalance = () => {
         setVizIndex('map')
         setAddLayer(false)
         setFocusMap(prev => !prev)
+    }
+
+    const handleSetParam = (paramSet) => {
+        setVizIndex('genephen')
+        setDataset(paramSet)
     }
 
     const [ popupMigration, setPopupMigration, handleOpenMigration ] = usePopup(false, articleRef)
@@ -136,6 +143,10 @@ const MigrationSelectionBalance = () => {
                             Depending on how evolution has progressed, a given difference in phenotypes between the patches could be driven by many alleles of small effect or a few alleles of large effect, which is represented by the distribution of (d) values. The number, effect size, and chromosomal position of the alleles that contribute to divergence is referred to as the “genetic architecture” of the trait divergence. We can study changes in genetic architecture over time by plotting the change in d at each locus over <ActionButton onClick={() => setVizIndex('genome-example')}>time</ActionButton>.
 
                         </ArticleText>
+                        <ArticleSectionTitle>The effect of migration rate</ArticleSectionTitle>
+                        <ArticleText>
+                            Migration rate has one of the greatest effects on how the simulations evolve. If migration rate is low, then the populations rapidly diverge in phenotype and the genetic architecture tends to be very constant over time <ActionButton onClick={() => handleSetParam('m0.0001_mu0.00001_r0.00625_sigsqr2_n10000_pop1_alpha0.05')}>(m = 0.001)</ActionButton>. At higher migration rates, we tend to see a change in genetic architecture: simulations start with many loci making small contributions to divergence but over time evolve towards a more clustered architecture with fewer, larger, and more tightly clustered alleles driving the divergence <ActionButton onClick={() => handleSetParam('m0.1_mu0.00001_r0.00625_sigsqr2_n10000_pop1_alpha0.05')}>(m = 0.1)</ActionButton>. These simulations show very strong selection – if we weaken the strength of selection at very high migration rates, we see a change to a transient architecture where no locus contributes to divergence for long and there is little phenotypic divergence maintained [link to set #2, vs = 25, m = 0.1]
+                        </ArticleText>
                         
                     </ArticleContent>
                     <ArticleStickyAside>
@@ -160,6 +171,9 @@ const MigrationSelectionBalance = () => {
                         </ArticleAnimationBox>}
                         {vizIndex === 'genome-example' && <ArticleAnimationBox show={vizIndex === 'genome-example'}>
                             <GenomeExample />
+                        </ArticleAnimationBox>}
+                        {vizIndex === 'genephen' && <ArticleAnimationBox show={vizIndex === 'genephen'}>
+                            <GenePhen set={dataset} />
                         </ArticleAnimationBox>}
                         
 
