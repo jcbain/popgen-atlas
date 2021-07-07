@@ -76,10 +76,12 @@ const useParams = (data, defaultSet) => {
         // TODO: Make cutoff logic dynamic
         if(paramOptions['alpha']) {
 
-            const v1 = 0.01 * Number(paramOptions['alpha'].selectedValue)
-            const v2 = 10 * Number(paramOptions['alpha'].selectedValue) / ( 2 * Number(paramOptions['n'].selectedValue))
+            // const v1 = 0.01 * Number(paramOptions['alpha'].selectedValue)
+            // const v2 = 10 * Number(paramOptions['alpha'].selectedValue) / ( 2 * Number(paramOptions['n'].selectedValue))
 
-            setCutoff(min([v1, v2]))
+            // setCutoff(min([v1, v2]))
+
+            setCutoff(50 * Number(paramOptions['alpha'].selectedValue) / ( 2 * Number(paramOptions['n'].selectedValue)))
         }
 
     }, [paramOptions])
