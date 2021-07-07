@@ -20,6 +20,7 @@ import Migration from './Migration';
 import StabilizingSelectionDiagram from './StabilizingSelectionDiagram';
 import GenomeDescription from './GenomeDescription'
 import AveragePhenotype from './AveragePhenotype';
+import Histogram from './Histogram'
 import msTheme from './theme';
 
 const StyledSpan = styled.span`
@@ -124,6 +125,12 @@ const MigrationSelectionBalance = () => {
                             After the simulations run, we may want to observe various aspects of the evolutionary changes that have happened. 
 
                         </ArticleText>
+                        <ArticleText>
+                            One of the most obvious things that changes is the average phenotype of individuals in each patch. In these simulations, the locally optimal phenotypes are +1 and -1 in patch #1 and #2, respectively, which you can think of as being like red and blue or hot and cold. <ActionButton onClick={() => setVizIndex('phenotype')}>The phenotype graph</ActionButton> tracks the change in the average phenotype found in patch #1 over 250,000 generations of evolution, starting from 0 and gradually evolving closer to the local optimum of +1. 
+                        </ArticleText>
+                        <ArticleText>
+                            At any point in time, we can take a census of the population and examine the genetic basis of the divergence in phenotype between the two populations. If a given allele is very common in one population but very rare in another, then this allele is strongly divergent between populations and may be driving some of the phenotypic divergence. We can express its contribution to divergence mathematically as the difference in allele frequency (i.e. proportion of individuals with the allele) between patches, multiplied by the effect of the allele on phenotype. We can then plot a histogram showing the distribution of the contribution to divergence for each locus (d) present in the population at any given <ActionButton onClick={() => setVizIndex('histogram')}>time</ActionButton>. A positive value means that this locus is contributing to divergence by making population #1 closer to the optimum of +1, whereas the reverse is true for a negative value.
+                        </ArticleText>
                         
                     </ArticleContent>
                     <ArticleStickyAside>
@@ -142,6 +149,9 @@ const MigrationSelectionBalance = () => {
                         </ArticleAnimationBox>}
                         {vizIndex === 'phenotype' && <ArticleAnimationBox show={vizIndex === 'phenotype'}>
                             <AveragePhenotype />
+                        </ArticleAnimationBox>}
+                        {vizIndex === 'histogram' && <ArticleAnimationBox show={vizIndex === 'histogram'}>
+                            <Histogram />
                         </ArticleAnimationBox>}
                         
 
