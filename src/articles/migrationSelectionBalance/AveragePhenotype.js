@@ -35,7 +35,7 @@ const AveragePhenotype = ({}) => {
     return (
         <Wrapper>
             <DrawingArea>
-                {phenLoaded && <Line data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme} upperLimit={250000} lowerLimit={2000}/>}
+                {phenLoaded && <Line data={phens} xVar={'output_gen'} yVar={'phen_diff'} theme={theme} upperLimit={250000} lowerLimit={2000} yMaxOverride={2.5} yMinOverride={-0.5}/>}
             </DrawingArea>
         </Wrapper>
     )

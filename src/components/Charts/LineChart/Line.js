@@ -20,7 +20,7 @@ const StyledForeign = styled.foreignObject`
     height: 100%;
 `
 
-const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, secondaryLL, secondaryUL}) => {
+const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpperLimit, setLowerLimit, secondaryLL, secondaryUL, yMinOverride, yMaxOverride}) => {
     const ref = useRef();
     const { friendlyLabels } = useFriendlyLabels()
     const [ svgRef, observedEntry ] = useResizeObserver();
@@ -33,7 +33,7 @@ const Line = ({data, xVar, yVar, theme, addBrush, upperLimit, lowerLimit, setUpp
 
     const newData = data.filter( d => d[xVar] <= upperLimit && d[xVar] >= lowerLimit)
     const { minX, maxX, uniqX } = useDataSummaries(newData, xVar, yVar)
-    const { minY, maxY } = useDataSummaries(data, xVar, yVar)
+    const { minY, maxY } = useDataSummaries(data, xVar, yVar, undefined, undefined, yMaxOverride, yMinOverride)
 
     const brushClickRange = (uniqX[1] - uniqX[0] )* 25
   
