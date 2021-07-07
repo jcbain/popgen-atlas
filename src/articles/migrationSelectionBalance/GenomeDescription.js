@@ -15,11 +15,6 @@ const Wrapper = styled.div`
     margin-bottom: 80px;
 `
 
-const ButtonBar = styled.div`
-    padding-top: 10px;
-    padding-bottom: 10px;
-`
-
 const DrawingArea = styled.div`
     position: relative;
     display: grid;

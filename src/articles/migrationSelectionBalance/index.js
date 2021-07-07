@@ -19,6 +19,7 @@ import Map from './Map';
 import Migration from './Migration';
 import StabilizingSelectionDiagram from './StabilizingSelectionDiagram';
 import GenomeDescription from './GenomeDescription'
+import AveragePhenotype from './AveragePhenotype';
 import msTheme from './theme';
 
 const StyledSpan = styled.span`
@@ -138,6 +139,9 @@ const MigrationSelectionBalance = () => {
                         </ArticleAnimationBox>}
                         {vizIndex === 'description' && <ArticleAnimationBox show={vizIndex === 'description'}>
                             <GenomeDescription />
+                        </ArticleAnimationBox>}
+                        {vizIndex === 'phenotype' && <ArticleAnimationBox show={vizIndex === 'phenotype'}>
+                            <AveragePhenotype />
                         </ArticleAnimationBox>}
                         
 
