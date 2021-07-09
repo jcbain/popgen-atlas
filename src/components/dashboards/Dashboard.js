@@ -48,6 +48,7 @@ const ChartHolder = styled.div`
 const Dashboard = ({theme, data, loaded, defaultSet = "", setDefaultSet = () => {},...rest}) => {
     
     // const { data, loaded } = useData()
+    console.log(defaultSet)
     const { paramOptions, chosenSet, changeParam, cutoff } = useParams(data, defaultSet)
     const { genes, phens, geneLoaded, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
 

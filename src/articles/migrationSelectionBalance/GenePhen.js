@@ -45,13 +45,13 @@ const GenePhen = ({set}) => {
 
     const { theme } = useTheme();
     const { data, loaded } = useData()
-    console.log(set)
+    console.log('set', set)
     // const defaultSet = 'm0.0001_mu0.0000001_r0.00625_sigsqr25_n10000_pop1_alpha0.05'
     const { chosenSet } = useParams(data, set)
     console.log('chosen set', chosenSet)
 
     const { genes, geneLoaded, phens, phenLoaded } = useFilteredData(data, loaded, 'effect_size_freq_diff', chosenSet)
-    console.log(phens)
+    console.log('phens',phens)
 
     return (
         <Wrapper>

@@ -73,6 +73,10 @@ const useParams = (data, defaultSet) => {
     }, [paramOptions, defaultSet])
 
     useEffect(() => {
+        setChosenSet(defaultSet)
+    }, [defaultSet])
+
+    useEffect(() => {
         // TODO: Make cutoff logic dynamic
         if(paramOptions['alpha']) {
 
